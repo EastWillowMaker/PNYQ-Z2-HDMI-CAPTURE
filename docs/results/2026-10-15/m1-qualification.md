@@ -5,7 +5,9 @@
 The sustained capture criterion passes on build013 and sender v5:
 PC USB-C/HDMI adapter → PYNQ-Z2 HDMI IN → LiteX frame gate → VDMA/PS DDR →
 PS Ethernet → Python RGB888. This is real HDMI, not synthetic network delivery
-or the M0 base overlay. The remaining physical cable-removal check is pending.
+or the M0 base overlay. Full M1 completion remains pending: accepted P4 source
+sequence/drop accounting is not yet satisfied, and physical cable removal has
+not been tested. Passing delivered-image checks does not close either gap.
 
 | Measurement | Observed result |
 |---|---:|
@@ -54,7 +56,7 @@ The PL continues accepting approximately 60 frames/s; software samples about
 identify physical frames: the difference between PL counts and acquisitions is
 not silently labelled zero overrun or precisely attributed loss. Source skips
 and DDR-ring overwrite counts remain unknown. Whole software drops are counted;
-physical per-buffer sequence/drop attribution remains a limitation.
+physical per-buffer sequence/drop attribution remains an unmet M1 requirement.
 
 HDMI format/range metadata remains unknown. No gamma/range correction, reference
 recapture, lossy compression, or tolerant pixel comparison was used. The controlled

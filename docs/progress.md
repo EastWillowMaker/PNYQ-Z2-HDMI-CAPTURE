@@ -1,7 +1,7 @@
 # Progress and handoff
 
 2026-10-15 Asia/Taipei — real LiteX HDMI capture sustained criterion passed;
-physical cable-removal follow-up pending. User explicitly requests incremental
+source accounting and physical cable-removal qualification remain incomplete. User explicitly requests incremental
 local commits as progress is verified; no push is authorized.
 
 ## Working path and evidence
@@ -32,15 +32,27 @@ I/O gaps, vendor waivers and startup simulation diagnostics are documented.
 
 ## Current operator step and runtime
 
-The user has been asked to remove only the HDMI IN cable and reply, then await
-instruction to reconnect. This physical step has not yet been confirmed.
-Current board sender is v5 with build013, PID13150, port9021, 600second duration;
-log `/tmp/hdmi-capture-m1/m1-013-v5-recovery.log`. PC source uses frame IDs50000+
-and the 59.94Hz mode; read-only scanout logging accompanies it. Do not reload an
-overlay or kill a process while DMA may be active. Cooperative SIGTERM is handled;
-background nohup SIGINT was ignored. Confirm Halted before buffer release.
-If native stop cannot complete, retain process/BOs and recover physical hardware;
-never add forced SIGKILL. Actual runtime must be rechecked before continuing.
+The bounded recovery sender PID13150 exited normally after 600 seconds. Its
+log confirms VDMA Halted before all five buffers were released, with
+`dma_shutdown_safe=true`; the board remained alive. The source renderer and
+scanout logger also exited with status zero. Evidence:
+`results/2026-10-15/m1-recovery-duration-check.log`. The existing UIO destructor
+warning occurred after safe cleanup. No current sender or pattern is armed.
+
+The user was subsequently asked to reply when available, and to leave the cable
+connected until a new test is armed. Physical removal has not been confirmed.
+Do not reload an overlay or kill a process while DMA may be active. Cooperative
+SIGTERM is handled; background nohup SIGINT was ignored. Confirm Halted before
+buffer release. If native stop cannot complete, retain process/BOs and recover
+physical hardware; never add forced SIGKILL. Recheck actual runtime before use.
+
+Completion audit found an unmet P4 requirement: global PL counters and software
+read IDs do not associate source frames with individual DMA buffers. The
+36,000 selected / 32,359 acquired endpoint deltas cannot establish 3,641 overruns.
+The delivered pixel test passed, but physical source skips and ring overwrite
+counts remain unknown. Per-slot ownership metadata and a single-credit capture
+alternative are being evaluated against the actual installed DMA driver before
+implementation. This is required M1 work, not an optional later enhancement.
 
 Board UART is `/dev/serial/by-id/usb-Xilinx_TUL_1234-tul-if01-port0`,115200.
 `tools/board_console.py` uses the already-authenticated session; sudo was renewed
@@ -56,8 +68,10 @@ verified safe sender cleanup. No SD repair/reimage or global package change.
 [Quickstart](quickstart.md), [build](build.md), [sender](board-capture.md),
 [protocol](protocol.md) and [qualification](qualification.md) document setup.
 Build013 artifacts are `artifacts/m1-project-013/{capture.bit,capture.hwh,build-manifest.json}`.
-Rebuild scripts pin vendor/RTL dependencies. A complete clean-checkout build was
-not rerun:013 reused HLS outputs generated locally in001. Real arrays remain in
+Rebuild scripts pin vendor/RTL dependencies. A complete isolated clean-checkout replay is now running in
+`artifacts/clean-replay-001`; fresh pinned RTL and both HLS packages have been
+rebuilt, and implementation is in progress. Final CAD results remain pending.
+Build013 itself reused HLS outputs generated locally in001. Real arrays remain in
 ignored artifacts and were not uploaded. Web/bypass/LCD remain deferred.
 
 User already confirmed640×480p≈60RGB888,>=1freshFPS for10minutes/>=600frames,

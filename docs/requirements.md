@@ -1,6 +1,6 @@
 # Requirements and decision record
 
-Date: 2026-10-15 (Asia/Taipei). Status: M1 sustained capture, gate, client reconnect and mode restart verified; physical cable test pending.
+Date: 2026-10-15 (Asia/Taipei). Status: M1 sustained capture, gate, client reconnect and mode restart verified; P4 source accounting and physical cable test incomplete.
 Normative source: [complete user prompt](../PYNQ_Z2_LiteX_HDMI_Capture_Codex_Prompt.md),
 SHA256 `38b149ac12077729ded5e6183f715d06e281df6ea6ba70aa7124c5cb24a744ae`.
 The complete source remains applicable; this record indexes it rather than replacing it.
