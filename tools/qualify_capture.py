@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Bounded real-HDMI analytic-pattern qualification; never starts board services."""
+"""Bounded real-HDMI delivered-image criterion; never starts board services."""
 
 import argparse
 from contextlib import ExitStack
@@ -120,6 +120,11 @@ def run(args, *, client_factory=CaptureClient, clock=time.monotonic):
                    metadata_failures=0, transport_errors=0, storage_errors=0, payload_bytes=0,
                    transport_frame_id_gaps=0, stop_reason=None, error=None,
                    physical_source_sequence_verified=False,
+                   full_m1_qualification=False,
+                   unmet_m1_requirements=[
+                       "Physical source frame sequence and per-frame DMA association are unverified",
+                       "Exact source-frame sampling/drop accounting is unverified",
+                       "Complete M1 requires separate interruption, mode and resource evidence"],
                    source_health_required=args.require_litex,
                    litex_snapshot_association="Sequential non-atomic snapshots; no per-frame association")
     seen = set()
@@ -247,7 +252,12 @@ def run(args, *, client_factory=CaptureClient, clock=time.monotonic):
                              ("pixel_failures", "mixed_frames", "repeated_optical_frames",
                               "metadata_failures", "transport_errors", "storage_errors"))
                              and summary["stop_reason"] != "interrupted")
-        summary["qualification_scope"] = "M1 exact HDMI path" if args.require_litex else "M0 baseline exact HDMI path"
+        # Keep passed and the CLI exit status as the existing image criterion.
+        # This runner does not validate physical-source sequencing or complete M1.
+        summary["criterion_passed"] = summary["passed"]
+        summary["qualification_scope"] = (
+            "Sustained delivered-image criterion with LiteX health checks" if args.require_litex
+            else "Sustained delivered-image criterion for the M0 baseline")
         json.dump(summary, output, indent=2)
         output.write("\n")
     return summary

@@ -113,3 +113,14 @@ Primary evidence:
 
 Actual frame arrays remain local under ignored `artifacts/`; they were not viewed
 through external image tools or uploaded.
+
+## Qualification report scope correction
+
+The qualifier now labels its `passed` result as the sustained delivered-image
+criterion and separately reports `criterion_passed`, `full_m1_qualification=false`
+and the unverified M1 evidence. Existing saved reports remain unchanged historical
+evidence. Accepted inputs, image/health rejection paths and CLI exit behavior are
+unchanged; no new metadata class is accepted by this reporting-only change.
+The legacy build013 null-source-sequence fixture passes the image criterion while
+explicitly remaining incomplete for M1. All 24 qualification tests pass locally;
+this scope correction has not been rerun against board hardware or hosted CI.

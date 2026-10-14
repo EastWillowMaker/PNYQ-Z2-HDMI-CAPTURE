@@ -67,6 +67,25 @@ def test_requires_both_window_and_distinct_exact_frames(tmp_path):
     assert [entry["host_received_monotonic_seconds"] for entry in entries] == [1, 2, 3]
 
 
+def test_legacy_013_delivered_images_do_not_claim_full_m1(tmp_path):
+    samples = [frame(i) for i in range(3)]
+    for sample in samples:
+        sample.metadata.update(source_sequence=None, frame_source_id=None,
+            capture_artifact_sha256="33f6a640cf2a6e068515f8a4e8e85ff60d4015d323a6ce67b5332479cd0e7a73")
+        sample.metadata["counters"].update(source_skips=None, source_overruns=None,
+                                           source_invalid_frames=None)
+    args, factory, clock = setup_run(tmp_path, samples)
+    report = run(args, client_factory=factory, clock=clock)
+    assert report["passed"] is True
+    assert report["criterion_passed"] is True
+    assert report["full_m1_qualification"] is False
+    assert report["physical_source_sequence_verified"] is False
+    assert report["qualification_scope"] == "Sustained delivered-image criterion with LiteX health checks"
+    assert any("sampling/drop accounting" in item for item in report["unmet_m1_requirements"])
+    assert report["first_metadata"]["source_sequence"] is None
+    assert report["last_metadata"]["counters"]["source_skips"] is None
+
+
 def test_pixel_failure_logged_and_continues(tmp_path):
     bad = frame(1)
     bad.rgb[80, 250, 0] ^= 1
