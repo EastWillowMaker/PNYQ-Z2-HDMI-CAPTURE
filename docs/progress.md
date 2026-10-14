@@ -50,13 +50,18 @@ Completion audit found an unmet P4 requirement: global PL counters and software
 read IDs do not associate source frames with individual DMA buffers. The
 36,000 selected / 32,359 acquired endpoint deltas cannot establish 3,641 overruns.
 The delivered pixel test passed, but physical source skips and ring overwrite
-counts remain unknown. Per-slot ownership metadata and a single-credit capture
-alternative are being evaluated against the actual installed DMA driver before
-implementation. This is required M1 work, not an optional later enhancement.
+counts remain unknown. A single-credit gate and fixed-slot one-frame VDMA reader are now being
+implemented. Completion requires gate end-of-frame plus VDMA auto-Halted;
+frame-count IRQ alone occurs at transfer start and is insufficient. Source ID
+remains stable through the software copy/lease. Native VSYNC versus AXI SOF
+tracking must distinguish lost input from intentional unselected frames. This is required M1 work, not an optional later enhancement.
 
 Board UART is `/dev/serial/by-id/usb-Xilinx_TUL_1234-tul-if01-port0`,115200.
 `tools/board_console.py` uses the already-authenticated session; sudo was renewed
-locally after reset. No passwords belong in chat. Board link-local address is
+locally after reset, but the latest read-only preflight now reports its
+credential cache expired (`artifacts/operator/credit-preflight.log`). Board is
+alive and no sender was found. Renew authentication only when the next board
+experiment is ready, to avoid another idle expiry. No passwords belong in chat. Board link-local address is
 `fe80::200:5ff:fe6b:1a0%enx98fc84e0c4e8` on this host. Temporary dedicated NM profile
 `codex-hdmi-m0` remains active; prior connection UUID
 `864ebd1d-48cd-3cc5-bddd-93475bb4700e` is saved. Temporary display snapshots are in
@@ -68,10 +73,14 @@ verified safe sender cleanup. No SD repair/reimage or global package change.
 [Quickstart](quickstart.md), [build](build.md), [sender](board-capture.md),
 [protocol](protocol.md) and [qualification](qualification.md) document setup.
 Build013 artifacts are `artifacts/m1-project-013/{capture.bit,capture.hwh,build-manifest.json}`.
-Rebuild scripts pin vendor/RTL dependencies. A complete isolated clean-checkout replay is now running in
-`artifacts/clean-replay-001`; fresh pinned RTL and both HLS packages have been
-rebuilt, and implementation is in progress. Final CAD results remain pending.
-Build013 itself reused HLS outputs generated locally in001. Real arrays remain in
+Rebuild scripts pin vendor/RTL dependencies. An isolated clean-checkout replay of `aa4e86e` completed with fresh pinned RTL,
+both HLS packages and bitstream in `artifacts/clean-replay-001`. Setup/hold margins
+are 0.568/0.017 ns; all 41 bus-skew checks pass, with no critical CDC/DRC or
+internal unconstrained endpoints. Retained warnings and source hashes are in
+[the clean-build report](results/2026-10-15/clean-build-report.md). This proves
+legacy-path reproducibility, not on-board qualification of the newly built
+artifact or the pending source-accounting changes. Build013 itself reused HLS
+outputs generated locally in001. Real arrays remain in
 ignored artifacts and were not uploaded. Web/bypass/LCD remain deferred.
 
 User already confirmed640×480p≈60RGB888,>=1freshFPS for10minutes/>=600frames,

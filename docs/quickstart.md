@@ -9,8 +9,12 @@ Keep any existing board bitstream/HWH and stop other capture/DMA applications.
 
 Build from a clean checkout using [the pinned bootstrap/build recipe](build.md#reproduce),
 or use the CAD-reviewed, matching `013` outputs from this session. This session's
-`013` implementation reused previously built HLS packages; a complete fresh
-bootstrap/build has not been executed end to end. The board's active metadata
+`013` implementation reused previously built HLS packages. A separate
+[clean-checkout replay](results/2026-10-15/clean-build-report.md) successfully
+ran fresh dependencies, both HLS builds, and full implementation after fixing
+the inherited package-index issue. Its new bit/HWH pair was not board-loaded;
+normal-user SSH deployment from that checkout remains unexecuted. The board's
+active metadata
 parser needs the real AXI INTC in `013`; the CAD-passing `012` failed before DMA
 start. A first frame is a smoke test, not the [ten-minute qualification](qualification.md).
 
@@ -27,8 +31,8 @@ Migen/LiteX source commits and content hashes are separately pinned in
 export PYTHON_BIN=python3.12 # Or the path to your installed CPython 3.12.
 "$PYTHON_BIN" --version
 "$PYTHON_BIN" -m venv .venv
-.venv/bin/python -m pip install 'numpy==2.5.4' 'Pillow==12.3.0'
-.venv/bin/python -m pip install --no-deps -e .
+.venv/bin/python -m pip install --index-url https://pypi.org/simple 'numpy==2.5.4' 'Pillow==12.3.0'
+.venv/bin/python -m pip install --index-url https://pypi.org/simple --no-deps -e .
 .venv/bin/hdmi-capture --help
 mkdir -p artifacts
 .venv/bin/python -m pip freeze > artifacts/host-python.txt

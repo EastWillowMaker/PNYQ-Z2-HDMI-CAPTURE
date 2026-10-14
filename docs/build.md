@@ -25,7 +25,7 @@ export PYTHON_BIN=python3.12 # Or the path to your installed CPython 3.12.
 "$PYTHON_BIN" --version
 mkdir -p artifacts/vendor
 "$PYTHON_BIN" -m venv artifacts/gate-venv
-artifacts/gate-venv/bin/python -m pip install \
+artifacts/gate-venv/bin/python -m pip install --index-url https://pypi.org/simple \
   'migen @ git+https://github.com/m-labs/migen.git@e19524c963a8342952840983047557707fbe0b6a' \
   'litex @ git+https://github.com/enjoy-digital/litex.git@b2759f69bcae8be0357fb2ee5eebe216365d1f00'
 git clone --branch v3.0.1 https://github.com/Xilinx/PYNQ.git artifacts/vendor/PYNQ-v3.0.1
@@ -48,11 +48,14 @@ export VITIS_RUN_BIN=/opt/Xilinx/2025.2/Vitis/bin/vitis-run
 Use a new output directory on every attempt. The tested Migen/LiteX revisions
 and installed Python-source hashes are recorded in `gateware/dependencies.json`;
 generation rejects differing source content or versions. Source checkouts used
-for qualification were clean at those exact commits. The fresh-venv commands
-above are the portable bootstrap recipe; they were not independently executed
-as a complete clean-checkout build in this session. `013` reused the isolated
-HLS packages successfully built in `001`, while its remaining synthesis and
-implementation ran afresh. The recipe's `bitstream` stage rebuilds both HLS IPs.
+for qualification were clean at those exact commits. A separate clean checkout
+at `aa4e86e` executed this bootstrap with an explicit
+public PyPI index, both fresh HLS builds, and complete implementation/export;
+see [the replay report](results/2026-10-15/clean-build-report.md). The explicit
+index avoids inheriting a stalled host-specific package mirror. The source
+hash checks passed in the fresh environment. `013` itself reused HLS001; the
+separate replay confirms the recipe's fresh-HLS path and is a different paired
+artifact, not an additional physical qualification.
 
 `--stage prepare` verifies the source commit and writes extracted RX Tcl and
 constraints without vendor tools. `hls` rebuilds just `color_convert` and
