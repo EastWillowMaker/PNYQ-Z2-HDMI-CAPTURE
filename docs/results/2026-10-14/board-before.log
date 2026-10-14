@@ -1,0 +1,10 @@
+ip -s link show eth0; LD_LIBRARY_PATH=/tmp/codex-iperf-20261014/usr/lib/arm-linux-gnueabihf /tmp/codex-iperf-20261014/usr/bin/iperf3 -s -6 -B fe80::200:5ff:fe6b:1a0%eth0 -p 5201 > /tmp/codex-iperf-20261014/server.log 2>&1 & echo BENCH_PID=$!
+[?2004l3: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
+    link/ether 00:00:05:6b:01:a0 brd ff:ff:ff:ff:ff:ff
+    RX:  bytes packets errors dropped  missed   mcast           
+         99981      88      0       0       0       2 
+    TX:  bytes packets errors dropped carrier collsns           
+         16686     108      0       0       0       0 
+[1] 1079
+BENCH_PID=1079
+[?2004hxilinx@pynq:~$ 

@@ -1,0 +1,11 @@
+cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq; cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor; cat /sys/class/net/eth0/duplex; ip -s link show eth0
+[?2004lcat: /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq: No such file or directory
+cat: /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor: No such file or directory
+full
+3: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
+    link/ether 00:00:05:6b:01:a0 brd ff:ff:ff:ff:ff:ff
+    RX:  bytes packets errors dropped  missed   mcast           
+    2418381584 1660108    382       0       0       4 
+    TX:  bytes packets errors dropped carrier collsns           
+     552240109  492119      0       0       0       0 
+[?2004hxilinx@pynq:~$ 

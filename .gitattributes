@@ -1,0 +1,3 @@
+# Preserve captured terminal output and tool-generated evidence verbatim.
+docs/results/**/*.log -text -whitespace
+docs/results/**/*.json -text -whitespace

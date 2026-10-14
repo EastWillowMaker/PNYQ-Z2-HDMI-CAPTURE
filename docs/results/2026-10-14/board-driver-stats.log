@@ -1,0 +1,53 @@
+ethtool -S eth0; echo STATS_DONE
+[?2004lNIC statistics:
+     tx_octets: 1204511715
+     tx_frames: 921453
+     tx_broadcast_frames: 127
+     tx_multicast_frames: 11
+     tx_pause_frames: 0
+     tx_64_byte_frames: 42
+     tx_65_127_byte_frames: 134132
+     tx_128_255_byte_frames: 1
+     tx_256_511_byte_frames: 47
+     tx_512_1023_byte_frames: 1
+     tx_1024_1518_byte_frames: 787230
+     tx_greater_than_1518_byte_frames: 0
+     tx_underrun: 0
+     tx_single_collision_frames: 0
+     tx_multiple_collision_frames: 0
+     tx_excessive_collisions: 0
+     tx_late_collisions: 0
+     tx_deferred_frames: 0
+     tx_carrier_sense_errors: 0
+     rx_octets: 2454867818
+     rx_frames: 1733489
+     rx_broadcast_frames: 19
+     rx_multicast_frames: 4
+     rx_pause_frames: 0
+     rx_64_byte_frames: 0
+     rx_65_127_byte_frames: 123327
+     rx_128_255_byte_frames: 59
+     rx_256_511_byte_frames: 128
+     rx_512_1023_byte_frames: 240
+     rx_1024_1518_byte_frames: 1609735
+     rx_greater_than_1518_byte_frames: 0
+     rx_undersized_frames: 0
+     rx_oversize_frames: 0
+     rx_jabbers: 0
+     rx_frame_check_sequence_errors: 0
+     rx_length_field_frame_errors: 0
+     rx_symbol_errors: 0
+     rx_alignment_errors: 0
+     rx_resource_errors: 219
+     rx_overruns: 163
+     rx_ip_header_checksum_errors: 0
+     rx_tcp_checksum_errors: 0
+     rx_udp_checksum_errors: 0
+     q0_rx_packets: 1733487
+     q0_rx_bytes: 2423664872
+     q0_rx_dropped: 0
+     q0_tx_packets: 921453
+     q0_tx_bytes: 1200826331
+     q0_tx_dropped: 0
+STATS_DONE
+[?2004hxilinx@pynq:~$ 

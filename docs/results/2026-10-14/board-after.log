@@ -1,0 +1,191 @@
+kill 1079; wait 1079; ip -s link show eth0; ethtool -S eth0; cat /tmp/codex-iperf-20261014/server.log; rm -rf /tmp/codex-iperf-20261014; test ! -e /tmp/codex-iperf-20261014 && echo CLEANUP_OK
+[?2004l[1]+  Exit 1                  LD_LIBRARY_PATH=/tmp/codex-iperf-20261014/usr/lib/arm-linux-gnueabihf /tmp/codex-iperf-20261014/usr/bin/iperf3 -s -6 -B fe80::200:5ff:fe6b:1a0%eth0 -p 5201 > /tmp/codex-iperf-20261014/server.log 2>&1
+3: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
+    link/ether 00:00:05:6b:01:a0 brd ff:ff:ff:ff:ff:ff
+    RX:  bytes packets errors dropped  missed   mcast           
+     718332622 3529621    706       0       0       4 
+    TX:  bytes packets errors dropped carrier collsns           
+    1879577945 1511571      0       0       0       0 
+NIC statistics:
+     tx_octets: 1885623701
+     tx_frames: 1511571
+     tx_broadcast_frames: 150
+     tx_multicast_frames: 12
+     tx_pause_frames: 0
+     tx_64_byte_frames: 54
+     tx_65_127_byte_frames: 283432
+     tx_128_255_byte_frames: 1
+     tx_256_511_byte_frames: 58
+     tx_512_1023_byte_frames: 3
+     tx_1024_1518_byte_frames: 1228023
+     tx_greater_than_1518_byte_frames: 0
+     tx_underrun: 0
+     tx_single_collision_frames: 0
+     tx_multiple_collision_frames: 0
+     tx_excessive_collisions: 0
+     tx_late_collisions: 0
+     tx_deferred_frames: 0
+     tx_carrier_sense_errors: 0
+     rx_octets: 5076833096
+     rx_frames: 3529621
+     rx_broadcast_frames: 19
+     rx_multicast_frames: 4
+     rx_pause_frames: 0
+     rx_64_byte_frames: 0
+     rx_65_127_byte_frames: 196357
+     rx_128_255_byte_frames: 91
+     rx_256_511_byte_frames: 201
+     rx_512_1023_byte_frames: 398
+     rx_1024_1518_byte_frames: 3332574
+     rx_greater_than_1518_byte_frames: 0
+     rx_undersized_frames: 0
+     rx_oversize_frames: 0
+     rx_jabbers: 0
+     rx_frame_check_sequence_errors: 0
+     rx_length_field_frame_errors: 0
+     rx_symbol_errors: 0
+     rx_alignment_errors: 0
+     rx_resource_errors: 417
+     rx_overruns: 289
+     rx_ip_header_checksum_errors: 0
+     rx_tcp_checksum_errors: 0
+     rx_udp_checksum_errors: 0
+     q0_rx_packets: 3529621
+     q0_rx_bytes: 718332622
+     q0_rx_dropped: 0
+     q0_tx_packets: 1511571
+     q0_tx_bytes: 1879577945
+     q0_tx_dropped: 0
+-----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+Accepted connection from fe80::63dc:5fe7:852f:12bc, port 50896
+[  5] local fe80::200:5ff:fe6b:1a0 port 5201 connected to fe80::63dc:5fe7:852f:12bc port 50912
+[ ID] Interval           Transfer     Bitrate
+[  5]   0.00-2.33   sec  14.5 MBytes  52.3 Mbits/sec                  (omitted)
+[  5]   2.33-3.00   sec  48.5 MBytes   601 Mbits/sec                  (omitted)
+[  5]   0.00-1.00   sec  71.9 MBytes   601 Mbits/sec                  
+[  5]   1.00-2.00   sec  71.8 MBytes   601 Mbits/sec                  
+[  5]   2.00-3.00   sec  69.6 MBytes   585 Mbits/sec                  
+[  5]   3.00-4.00   sec  71.4 MBytes   598 Mbits/sec                  
+[  5]   4.00-5.00   sec  71.2 MBytes   598 Mbits/sec                  
+[  5]   5.00-6.00   sec  66.5 MBytes   557 Mbits/sec                  
+[  5]   6.00-7.00   sec  66.0 MBytes   555 Mbits/sec                  
+[  5]   7.00-8.00   sec  75.4 MBytes   631 Mbits/sec                  
+[  5]   8.00-9.00   sec  71.9 MBytes   602 Mbits/sec                  
+[  5]   9.00-10.00  sec  71.6 MBytes   602 Mbits/sec                  
+[  5]  10.00-11.00  sec  71.6 MBytes   600 Mbits/sec                  
+[  5]  11.00-12.00  sec  71.8 MBytes   602 Mbits/sec                  
+[  5]  12.00-13.00  sec  71.5 MBytes   600 Mbits/sec                  
+[  5]  13.00-14.00  sec  70.8 MBytes   594 Mbits/sec                  
+[  5]  14.00-15.00  sec  71.6 MBytes   601 Mbits/sec                  
+[  5]  15.00-16.00  sec  71.5 MBytes   600 Mbits/sec                  
+[  5]  16.00-17.00  sec  71.0 MBytes   595 Mbits/sec                  
+[  5]  17.00-18.00  sec  71.8 MBytes   602 Mbits/sec                  
+[  5]  18.00-19.00  sec  70.0 MBytes   587 Mbits/sec                  
+[  5]  19.00-20.00  sec  71.2 MBytes   598 Mbits/sec                  
+[  5]  20.00-21.00  sec  71.2 MBytes   598 Mbits/sec                  
+[  5]  21.00-22.00  sec  65.8 MBytes   550 Mbits/sec                  
+[  5]  22.00-23.00  sec  67.8 MBytes   570 Mbits/sec                  
+[  5]  23.00-24.00  sec  71.5 MBytes   600 Mbits/sec                  
+[  5]  24.00-25.00  sec  71.5 MBytes   599 Mbits/sec                  
+[  5]  25.00-26.00  sec  71.6 MBytes   601 Mbits/sec                  
+[  5]  26.00-27.00  sec  71.4 MBytes   599 Mbits/sec                  
+[  5]  27.00-28.00  sec  71.6 MBytes   601 Mbits/sec                  
+[  5]  28.00-29.00  sec  71.5 MBytes   600 Mbits/sec                  
+[  5]  29.00-30.00  sec  71.6 MBytes   601 Mbits/sec                  
+[  5]  30.00-30.05  sec  3.25 MBytes   591 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval           Transfer     Bitrate
+[  5]   0.00-30.05  sec  2.08 GBytes   594 Mbits/sec                  receiver
+-----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+Accepted connection from fe80::c516:e869:63f3:82ca, port 55112
+[  5] local fe80::200:5ff:fe6b:1a0 port 5201 connected to fe80::c516:e869:63f3:82ca port 55120
+[ ID] Interval           Transfer     Bitrate         Retr  Cwnd
+[  5]   0.00-1.03   sec  72.7 MBytes   594 Mbits/sec    0    201 KBytes       (omitted)
+[  5]   1.03-2.04   sec  71.0 MBytes   588 Mbits/sec    0    220 KBytes       (omitted)
+[  5]   2.04-3.04   sec  45.0 MBytes   376 Mbits/sec    0    257 KBytes       (omitted)
+[  5]   0.00-1.03   sec  51.2 MBytes   418 Mbits/sec    0    257 KBytes       
+[  5]   1.03-2.03   sec  50.0 MBytes   419 Mbits/sec    0    257 KBytes       
+[  5]   2.03-3.03   sec  50.0 MBytes   419 Mbits/sec    0    257 KBytes       
+[  5]   3.03-4.03   sec  50.0 MBytes   418 Mbits/sec    0    257 KBytes       
+[  5]   4.03-5.03   sec  50.0 MBytes   419 Mbits/sec    0    257 KBytes       
+[  5]   5.03-6.03   sec  48.8 MBytes   412 Mbits/sec    0    257 KBytes       
+[  5]   6.03-7.03   sec  50.0 MBytes   418 Mbits/sec    0    257 KBytes       
+[  5]   7.03-8.03   sec  50.0 MBytes   419 Mbits/sec    0    257 KBytes       
+[  5]   8.03-9.03   sec  50.0 MBytes   419 Mbits/sec    0    257 KBytes       
+[  5]   9.03-10.03  sec  50.0 MBytes   419 Mbits/sec    0    257 KBytes       
+[  5]  10.03-11.04  sec  50.0 MBytes   416 Mbits/sec    0    257 KBytes       
+[  5]  11.04-12.03  sec  47.5 MBytes   402 Mbits/sec    0    257 KBytes       
+[  5]  12.03-13.05  sec  50.0 MBytes   411 Mbits/sec    0    257 KBytes       
+[  5]  13.05-14.04  sec  48.8 MBytes   412 Mbits/sec    0    257 KBytes       
+[  5]  14.04-15.03  sec  41.2 MBytes   350 Mbits/sec    0    257 KBytes       
+[  5]  15.03-16.05  sec  50.0 MBytes   413 Mbits/sec    0    257 KBytes       
+[  5]  16.05-17.03  sec  48.8 MBytes   418 Mbits/sec    0    257 KBytes       
+[  5]  17.03-18.03  sec  50.0 MBytes   416 Mbits/sec    0    257 KBytes       
+[  5]  18.03-19.05  sec  50.0 MBytes   415 Mbits/sec    0    257 KBytes       
+[  5]  19.05-20.05  sec  50.0 MBytes   418 Mbits/sec    0    257 KBytes       
+[  5]  20.05-21.05  sec  50.0 MBytes   419 Mbits/sec    0    257 KBytes       
+[  5]  21.05-22.05  sec  50.0 MBytes   419 Mbits/sec    0    257 KBytes       
+[  5]  22.05-23.05  sec  50.0 MBytes   419 Mbits/sec    0    257 KBytes       
+[  5]  23.05-24.05  sec  50.0 MBytes   420 Mbits/sec    0    257 KBytes       
+[  5]  24.05-25.04  sec  48.8 MBytes   413 Mbits/sec    0    257 KBytes       
+[  5]  25.04-26.04  sec  50.0 MBytes   418 Mbits/sec    0    257 KBytes       
+[  5]  26.04-27.04  sec  50.0 MBytes   419 Mbits/sec    0    257 KBytes       
+[  5]  27.04-28.03  sec  48.8 MBytes   414 Mbits/sec    0    257 KBytes       
+[  5]  28.03-29.03  sec  48.8 MBytes   408 Mbits/sec    0    257 KBytes       
+[  5]  29.03-30.00  sec  47.5 MBytes   413 Mbits/sec    0    257 KBytes       
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval           Transfer     Bitrate         Retr
+[  5]   0.00-30.00  sec  1.45 GBytes   414 Mbits/sec    0             sender
+-----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+Accepted connection from fe80::c516:e869:63f3:82ca, port 43096
+[  5] local fe80::200:5ff:fe6b:1a0 port 5201 connected to fe80::c516:e869:63f3:82ca port 43098
+[ ID] Interval           Transfer     Bitrate
+[  5]   0.00-1.00   sec  69.6 MBytes   583 Mbits/sec                  (omitted)
+[  5]   1.00-2.00   sec  71.5 MBytes   600 Mbits/sec                  (omitted)
+[  5]   2.00-3.00   sec  72.0 MBytes   604 Mbits/sec                  (omitted)
+[  5]   0.00-1.00   sec  72.1 MBytes   603 Mbits/sec                  
+[  5]   1.00-2.00   sec  71.8 MBytes   603 Mbits/sec                  
+[  5]   2.00-3.00   sec  71.9 MBytes   603 Mbits/sec                  
+[  5]   3.00-4.00   sec  71.5 MBytes   600 Mbits/sec                  
+[  5]   4.00-5.00   sec  71.9 MBytes   603 Mbits/sec                  
+[  5]   5.00-6.00   sec  70.4 MBytes   591 Mbits/sec                  
+[  5]   6.00-7.00   sec  71.5 MBytes   599 Mbits/sec                  
+[  5]   7.00-8.00   sec  71.5 MBytes   600 Mbits/sec                  
+[  5]   8.00-9.00   sec  62.1 MBytes   521 Mbits/sec                  
+[  5]   9.00-10.00  sec  71.5 MBytes   599 Mbits/sec                  
+[  5]  10.00-11.00  sec  71.8 MBytes   601 Mbits/sec                  
+[  5]  11.00-12.00  sec  71.9 MBytes   603 Mbits/sec                  
+[  5]  12.00-13.00  sec  72.0 MBytes   605 Mbits/sec                  
+[  5]  13.00-14.00  sec  71.9 MBytes   603 Mbits/sec                  
+[  5]  14.00-15.00  sec  72.0 MBytes   604 Mbits/sec                  
+[  5]  15.00-16.00  sec  70.9 MBytes   595 Mbits/sec                  
+[  5]  16.00-17.00  sec  71.1 MBytes   597 Mbits/sec                  
+[  5]  17.00-18.00  sec  71.9 MBytes   603 Mbits/sec                  
+[  5]  18.00-19.00  sec  71.8 MBytes   602 Mbits/sec                  
+[  5]  19.00-20.00  sec  71.9 MBytes   604 Mbits/sec                  
+[  5]  20.00-21.00  sec  71.8 MBytes   601 Mbits/sec                  
+[  5]  21.00-22.00  sec  70.9 MBytes   595 Mbits/sec                  
+[  5]  22.00-23.00  sec  71.6 MBytes   600 Mbits/sec                  
+[  5]  23.00-24.00  sec  71.5 MBytes   601 Mbits/sec                  
+[  5]  24.00-25.00  sec  67.9 MBytes   568 Mbits/sec                  
+[  5]  25.00-26.00  sec  65.5 MBytes   550 Mbits/sec                  
+[  5]  26.00-27.00  sec  72.0 MBytes   604 Mbits/sec                  
+[  5]  27.00-28.00  sec  71.8 MBytes   602 Mbits/sec                  
+[  5]  28.00-29.00  sec  72.1 MBytes   605 Mbits/sec                  
+[  5]  29.00-30.00  sec  71.8 MBytes   602 Mbits/sec                  
+[  5]  30.00-30.04  sec  2.75 MBytes   595 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval           Transfer     Bitrate
+[  5]   0.00-30.04  sec  2.08 GBytes   595 Mbits/sec                  receiver
+iperf3: interrupt - the server has terminated
+-----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+CLEANUP_OK
+[?2004hxilinx@pynq:~$ 

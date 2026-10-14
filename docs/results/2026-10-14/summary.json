@@ -1,0 +1,33 @@
+{
+  "status": "measured",
+  "path": "PYNQ Linux ARM PS Ethernet, not LiteX/LiteEth",
+  "protocol": "IPv6 TCP single stream",
+  "duration_seconds": 30,
+  "omit_seconds": 3,
+  "mtu": 1500,
+  "results": [
+    {
+      "direction": "Host \u2192 PYNQ",
+      "received_mbps": 594.295979094865,
+      "retransmits": 112,
+      "file": "host-to-pynq.json"
+    },
+    {
+      "direction": "PYNQ \u2192 host",
+      "received_mbps": 413.80206280178476,
+      "retransmits": 0,
+      "file": "pynq-to-host-retry.json"
+    },
+    {
+      "direction": "Host \u2192 PYNQ repeat",
+      "received_mbps": 595.4983416026295,
+      "retransmits": 97,
+      "file": "host-to-pynq-repeat.json"
+    }
+  ],
+  "board_rx_resource_errors_final": 417,
+  "board_rx_overruns_final": 289,
+  "board_crc_errors_final": 0,
+  "failed_attempt": "pynq-to-host.json: host NetworkManager disconnected before connection",
+  "cleanup": "Temporary server stopped, board /tmp runtime removed, temporary host profile deleted"
+}

@@ -1,0 +1,10 @@
+
+[?2004l[?2004hxilinx@pynq:~$ ip -br addr; command -v iperf3 iperf; cat /sys/class/net/eth0/speed; sudo -n true; echo CHECK_DONE
+[?2004llo               UNKNOWN        127.0.0.1/8 ::1/128 
+dummy0           DOWN           
+eth0             UP             fe80::200:5ff:fe6b:1a0/64 
+sit0@NONE        DOWN           
+1000
+sudo: a password is required
+CHECK_DONE
+[?2004hxilinx@pynq:~$ 
