@@ -1,0 +1,46 @@
+{
+  "delivered_frames": 30,
+  "payload_bytes": 27648000,
+  "detected_errors": 0,
+  "observed_frame_id_gaps": 280,
+  "error": null,
+  "stop_reason": "count",
+  "elapsed_seconds": 5.924071649991674,
+  "delivered_fps": 5.064084597971086,
+  "payload_goodput_mbps": 37.336482923921224,
+  "last_metadata": {
+    "width": 640,
+    "height": 480,
+    "pixel_format": "RGB888",
+    "stride": 1920,
+    "frame_id": 1199,
+    "acquisition_id": 1199,
+    "session_id": "ce9d55a5-9184-4c81-a6b6-4f12f90c47c7",
+    "source_sequence": 1198,
+    "timestamp_ns": 2027460173442,
+    "timestamp_clock": "sender_monotonic",
+    "timestamp_sample_point": "after_pattern_generation",
+    "flags": [
+      "synthetic"
+    ],
+    "source_origin": "synthetic",
+    "source_color_format": "RGB",
+    "source_quantization_range": "full",
+    "baseline_only": false,
+    "source_fps": 60,
+    "source_progressive": true,
+    "counters": {
+      "acquired": 1199,
+      "startup_discarded": 0,
+      "intentional_sampling_drops": 1095,
+      "network_backpressure_drops": 73,
+      "client_discarded": 1,
+      "transport_enqueued": 29,
+      "source_errors": 0,
+      "network_errors": 0,
+      "source_skips": null,
+      "source_overruns": null,
+      "source_invalid_frames": null
+    }
+  }
+}

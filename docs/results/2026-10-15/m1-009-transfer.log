@@ -1,0 +1,11 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-m1$ mkdir -p /tmp/hdmi-capture-m1/build009 && cd /tmp/hdmi-capture-m1/build009 && curl -g --noproxy '*' --max-time 20 'http://[fe80::560f:ee4c:ed84:e6ce%eth0]:8765/m1-009.tar.gz' -o artifact.tar.gz && sha256sum artifact.tar.gz && tar -xzf artifact.tar.gz && sudo -n true; printf "\nCONSOLE_DONE_a138d6aaca1d426d8a3085727b608a06:%s\n" "$?"
+[?2004l  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100  272k  100  272k    0     0  13.1M      0 --:--:-- --:--:-- --:--:-- 14.0M
+00556e66148b39b1d80ba4813889ff4109af24038ab0c8571da24390e3b9b70e  artifact.tar.gz
+tar: capture.bit: time stamp 2026-10-14 17:06:03 is 125599043.157742283 s in the future
+tar: capture.hwh: time stamp 2026-10-14 16:59:52 is 125598672.14268925 s in the future
+tar: build-manifest.json: time stamp 2026-10-14 17:06:12.7066154 is 125599052.848501653 s in the future
+
+CONSOLE_DONE_a138d6aaca1d426d8a3085727b608a06:0

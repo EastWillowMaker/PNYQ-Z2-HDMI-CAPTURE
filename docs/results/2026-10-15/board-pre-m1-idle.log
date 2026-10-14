@@ -1,0 +1,10 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-m1/build009$ sudo -n true; uptime; dmesg | tail -4; printf "\nCONSOLE_DONE_68a561a77ba34e6faf9a5bd13fad4048:%s\n" "$?"
+[?2004l 00:30:21 up 13 min,  1 user,  load average: 0.06, 0.25, 0.30
+[   95.772860] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(823)
+[  305.155302] EXT4-fs (mmcblk0p2): error count since last fsck: 40
+[  305.155365] EXT4-fs (mmcblk0p2): initial error at time 1666393627: __ext4_find_entry:1623: inode 83481
+[  305.155396] EXT4-fs (mmcblk0p2): last error at time 1666393643: __ext4_find_entry:1623: inode 83481
+
+CONSOLE_DONE_68a561a77ba34e6faf9a5bd13fad4048:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-m1/build009$ 

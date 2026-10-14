@@ -1,0 +1,28 @@
+{"driver": "wayland", "GL_version": "OpenGL ES 3.2 Mesa 26.0.3-1ubuntu1", "GL_renderer": "AMD Radeon 890M Graphics (radeonsi, strix1, ACO, DRM 3.64, 7.0.0-38-generic)", "channel_bits": {"red": {"SDL": 8, "GL": 8}, "green": {"SDL": 8, "GL": 8}, "blue": {"SDL": 8, "GL": 8}, "alpha": {"SDL": 0, "GL": 0}}}
+Synthetic framebuffer exact: checks=1, frame-id=30000, bytes=921600
+Fixture ready: monitor-index=1, frame-id=30000, renderer=GLES
+Synthetic framebuffer exact: checks=50, frame-id=30049, bytes=921600
+Synthetic framebuffer exact: checks=100, frame-id=30099, bytes=921600
+Synthetic framebuffer exact: checks=150, frame-id=30149, bytes=921600
+Synthetic framebuffer exact: checks=200, frame-id=30199, bytes=921600
+Synthetic framebuffer exact: checks=250, frame-id=30249, bytes=921600
+Synthetic framebuffer exact: checks=300, frame-id=30299, bytes=921600
+Synthetic framebuffer exact: checks=350, frame-id=30349, bytes=921600
+Synthetic framebuffer exact: checks=400, frame-id=30399, bytes=921600
+Synthetic framebuffer exact: checks=450, frame-id=30449, bytes=921600
+Synthetic framebuffer exact: checks=500, frame-id=30499, bytes=921600
+Synthetic framebuffer exact: checks=550, frame-id=30549, bytes=921600
+Synthetic framebuffer exact: checks=600, frame-id=30599, bytes=921600
+Traceback (most recent call last):
+  File "/home/eastwillow/Documents/litex-hdmi-capture/tools/hdmi_pattern_gl.py", line 340, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/home/eastwillow/Documents/litex-hdmi-capture/tools/hdmi_pattern_gl.py", line 324, in main
+    run(sdl, gl, args.monitor_index, args.frame_id, args.animate,
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        args.interval_ms, args.duration, args.self_check, events)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eastwillow/Documents/litex-hdmi-capture/tools/hdmi_pattern_gl.py", line 269, in run
+    sdl.SDL_GL_SwapWindow(window)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+KeyboardInterrupt

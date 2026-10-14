@@ -1,0 +1,10 @@
+{
+  "archive": "artifacts/deploy/bit-m1-012.tar.gz",
+  "archive_sha256": "4ff808928ddd3c04cbe6c06b37c035c392ef414b382a1ec521990041bad5fb88",
+  "files": {
+    "capture.bit": "6378c1f7cb7d490fd06845230be52a023b0e6f996a13c9d307388f34ad3afe34",
+    "capture.hwh": "c27f1cad24599bb4c8f39afb2a92ead3f1061a78cd09478007f11e4b958afe74",
+    "build-manifest.json": "66045c24654395f6e56d0d792b813b358cf5c1b73ae4ddd9a5eb14843d67f3dd"
+  },
+  "state": "packaged; board loading pending full build review"
+}

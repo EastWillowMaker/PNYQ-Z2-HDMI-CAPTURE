@@ -1,0 +1,8 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-ps-check$ cd /tmp/hdmi-ps-check && curl -g --noproxy '*' --max-time 10 'http://[fe80::560f:ee4c:ed84:e6ce%eth0]:8765/board_resources.py' -o board_resources.py && nohup /usr/local/share/pynq-venv/bin/python -u board_resources.py 1243 --count 20 --interval 5 > resources.jsonl 2>&1 < /dev/null & printf "\nCONSOLE_DONE_813873c91fbb4f2d8c237c4a3f165ccb:%s\n" "$?"
+[?2004l[2] 1479
+
+CONSOLE_DONE_813873c91fbb4f2d8c237c4a3f165ccb:0
+[?2004hxilinx@pynq:/tmp/hdmi-ps-check$   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100  2178  100  2178    0     0   150k      0 --:--:-- --:--:-- --:--:--  163k

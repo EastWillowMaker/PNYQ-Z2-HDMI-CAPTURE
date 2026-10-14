@@ -1,0 +1,8 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-m1$ cd /tmp/hdmi-capture-m1 && curl -g --noproxy '*' --max-time 15 'http://[fe80::560f:ee4c:ed84:e6ce%eth0]:8765/inspect-overlay.py' -o inspect-overlay.py && sudo -n env XILINX_XRT=/usr /usr/local/share/pynq-venv/bin/python inspect-overlay.py build012/capture.bit > inspect-overlay.log 2>&1 & printf "\nCONSOLE_DONE_f254f373a48a475a86302b3563f1a487:%s\n" "$?"
+[?2004l[1] 7399
+
+CONSOLE_DONE_f254f373a48a475a86302b3563f1a487:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-m1$   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   366  100   366    0     0  30740      0 --:--:-- --:--:-- --:--:-- 33272

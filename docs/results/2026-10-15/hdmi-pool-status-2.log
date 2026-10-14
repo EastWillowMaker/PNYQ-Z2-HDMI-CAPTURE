@@ -1,0 +1,16 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-m0$ cat /tmp/hdmi-capture-m0/hdmi-pool.log; ps -eo pid,ppid,stat,pcpu,etime,args | grep "[h]dmi_capture.sender"; printf "\nCONSOLE_DONE_e47168c9c444439aaa68e4bec248221e:%s\n" "$?"
+[?2004l{"event": "source_startup", "stage": "pynq_import", "timestamp_ns": 2796411442499}
+{"event": "source_startup", "stage": "overlay_load", "timestamp_ns": 2805039048289}
+{"event": "source_startup", "stage": "hdmi_configure_wait_input_lock", "timestamp_ns": 2813758843304}
+{"event": "source_startup", "stage": "hdmi_mode_check", "timestamp_ns": 2828234227824}
+{"event": "source_startup", "stage": "dma_start", "timestamp_ns": 2828234739750}
+{"event": "source_startup", "stage": "source_ready", "timestamp_ns": 2828267393442}
+{"listening": ["::", 9021, 0, 0], "source": "hdmi", "session_id": "44afe1cf-73ff-4d0e-8fc5-956947fd21cb"}
+ 9172     1 S     0.1       00:44 sudo -n env XILINX_XRT=/usr timeout --signal=INT --kill-after=5 240 /usr/local/share/pynq-venv/bin/python -u -m [01;31m[Khdmi_capture.sender[m[K --source pynq --host :: --port 9021 --fps 2 --duration 180 --startup-diagnostics
+ 9177  9172 Ss+   0.0       00:44 sudo -n env XILINX_XRT=/usr timeout --signal=INT --kill-after=5 240 /usr/local/share/pynq-venv/bin/python -u -m [01;31m[Khdmi_capture.sender[m[K --source pynq --host :: --port 9021 --fps 2 --duration 180 --startup-diagnostics
+ 9178  9177 S     0.0       00:44 timeout --signal=INT --kill-after=5 240 /usr/local/share/pynq-venv/bin/python -u -m [01;31m[Khdmi_capture.sender[m[K --source pynq --host :: --port 9021 --fps 2 --duration 180 --startup-diagnostics
+ 9179  9178 S    82.1       00:44 /usr/local/share/pynq-venv/bin/python -u -m [01;31m[Khdmi_capture.sender[m[K --source pynq --host :: --port 9021 --fps 2 --duration 180 --startup-diagnostics
+
+CONSOLE_DONE_e47168c9c444439aaa68e4bec248221e:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-m0$ 

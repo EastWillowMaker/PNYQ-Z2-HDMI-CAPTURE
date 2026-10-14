@@ -1,0 +1,14 @@
+{
+  "archive": "artifacts/deploy/sender-m1-v2.tar.gz",
+  "sha256": "1fcb781813c6785a98c30e7b3f85772cf4057ce0da4c533fcec14519c5ae2b8e",
+  "files": {
+    "src/hdmi_capture/__init__.py": "2b9eb60f3d6cdca5b5bfba25440cc508016d746844a1f1bdf8554caf953ed39a",
+    "src/hdmi_capture/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "src/hdmi_capture/cli.py": "eb01a928fdbb2396e323b24b303fd1e8820d286e7411820e1330b1aa145f9279",
+    "src/hdmi_capture/client.py": "72d792ca910b6306696ae57c1ead7032d49fb4a3e2125eac499663c12debc047",
+    "src/hdmi_capture/protocol.py": "f47e8bd7bac61cb4a7d40cb1c765c9b256f1bd7c4d809d10ab1ea5f88f93fde2",
+    "src/hdmi_capture/sender.py": "648e050128675fd1a248da6aff00244ce2a123fd058f6689bd0d0cd2f1d04583",
+    "src/hdmi_capture/sources.py": "34ca8157f7b3dd8672369901a3982f179108e45fabf2f95bf988242aa5194ce1"
+  },
+  "purpose": "M1-capable sender with halt diagnostics, unsafe-shutdown hold, GPIO-only control attach; not yet hardware qualified"
+}

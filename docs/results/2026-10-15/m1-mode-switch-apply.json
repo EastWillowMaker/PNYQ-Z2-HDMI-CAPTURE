@@ -1,0 +1,130 @@
+{
+  "verified": true,
+  "applied": true,
+  "requested": {
+    "serial": 13,
+    "configs": [
+      [
+        0,
+        0,
+        1.0,
+        0,
+        true,
+        [
+          [
+            "HDMI-1",
+            "2560x1440@59.951",
+            {
+              "color-mode": 0,
+              "rgb-range": 1
+            }
+          ]
+        ]
+      ],
+      [
+        2560,
+        0,
+        1.0,
+        0,
+        false,
+        [
+          [
+            "DP-2",
+            "640x480@59.940",
+            {
+              "color-mode": 0,
+              "rgb-range": 1,
+              "underscanning": false
+            }
+          ]
+        ]
+      ]
+    ],
+    "properties": {
+      "layout-mode": 1
+    },
+    "identities": {
+      "eDP-1": [
+        "eDP-1",
+        "BOE",
+        "NE140QDM-NX7",
+        "0x00000000"
+      ],
+      "HDMI-1": [
+        "HDMI-1",
+        "AUS",
+        "XG27AQMR",
+        "R1LMTF027892"
+      ],
+      "DP-2": [
+        "DP-2",
+        "DGL",
+        "LiteX VGA",
+        "0x00000000"
+      ]
+    }
+  },
+  "after": {
+    "serial": 13,
+    "configs": [
+      [
+        0,
+        0,
+        1.0,
+        0,
+        true,
+        [
+          [
+            "HDMI-1",
+            "2560x1440@59.951",
+            {
+              "color-mode": 0,
+              "rgb-range": 1
+            }
+          ]
+        ]
+      ],
+      [
+        2560,
+        0,
+        1.0,
+        0,
+        false,
+        [
+          [
+            "DP-2",
+            "640x480@59.940",
+            {
+              "color-mode": 0,
+              "rgb-range": 1,
+              "underscanning": false
+            }
+          ]
+        ]
+      ]
+    ],
+    "properties": {
+      "layout-mode": 1
+    },
+    "identities": {
+      "eDP-1": [
+        "eDP-1",
+        "BOE",
+        "NE140QDM-NX7",
+        "0x00000000"
+      ],
+      "HDMI-1": [
+        "HDMI-1",
+        "AUS",
+        "XG27AQMR",
+        "R1LMTF027892"
+      ],
+      "DP-2": [
+        "DP-2",
+        "DGL",
+        "LiteX VGA",
+        "0x00000000"
+      ]
+    }
+  }
+}

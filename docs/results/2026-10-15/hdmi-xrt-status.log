@@ -1,0 +1,8 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-m0$ cat /tmp/hdmi-capture-m0/hdmi-xrt.log; ps -o pid,ppid,stat,args -p 6983 --ppid 6983; printf "\nCONSOLE_DONE_c1a4fc09901b46fc9bf90fd6151677d9:%s\n" "$?"
+[?2004l  PID  PPID STAT COMMAND
+ 6983   637 S    sudo -n env XILINX_XRT=/usr timeout --signal=INT --kill-after=5
+ 6989  6983 Ss+  sudo -n env XILINX_XRT=/usr timeout --signal=INT --kill-after=5
+
+CONSOLE_DONE_c1a4fc09901b46fc9bf90fd6151677d9:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-m0$ 

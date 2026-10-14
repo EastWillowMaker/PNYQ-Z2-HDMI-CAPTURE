@@ -1,0 +1,46 @@
+{
+  "delivered_frames": 595,
+  "payload_bytes": 548352000,
+  "detected_errors": 1,
+  "observed_frame_id_gaps": 5745,
+  "error": "FrameEOF: EOF after 0 of 20 bytes",
+  "stop_reason": "error",
+  "elapsed_seconds": 119.08657031500479,
+  "delivered_fps": 4.99636523603057,
+  "payload_goodput_mbps": 36.837201612206194,
+  "last_metadata": {
+    "width": 640,
+    "height": 480,
+    "pixel_format": "RGB888",
+    "stride": 1920,
+    "frame_id": 8201,
+    "acquisition_id": 8201,
+    "session_id": "2697559f-7a44-4f99-a9b8-83fe9e3facd9",
+    "source_sequence": 8200,
+    "timestamp_ns": 331195677496,
+    "timestamp_clock": "sender_monotonic",
+    "timestamp_sample_point": "after_pattern_generation",
+    "flags": [
+      "synthetic"
+    ],
+    "source_origin": "synthetic",
+    "source_color_format": "RGB",
+    "source_quantization_range": "full",
+    "baseline_only": false,
+    "source_fps": 60,
+    "source_progressive": true,
+    "counters": {
+      "acquired": 8201,
+      "startup_discarded": 0,
+      "intentional_sampling_drops": 7451,
+      "network_backpressure_drops": 154,
+      "client_discarded": 1,
+      "transport_enqueued": 594,
+      "source_errors": 0,
+      "network_errors": 0,
+      "source_skips": null,
+      "source_overruns": null,
+      "source_invalid_frames": null
+    }
+  }
+}

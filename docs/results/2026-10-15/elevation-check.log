@@ -1,0 +1,7 @@
+
+[?2004l[?2004hxilinx@pynq:~$ printf 'ELEVATION_BEGIN\n'; sudo -n true; printf 'SUDO_STATUS=%s\n' "$?"; printf 'ELEVATION_END\n'
+[?2004lELEVATION_BEGIN
+sudo: a password is required
+SUDO_STATUS=1
+ELEVATION_END
+[?2004hxilinx@pynq:~$ 

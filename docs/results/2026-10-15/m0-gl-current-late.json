@@ -1,0 +1,11 @@
+{
+  "delivered_frames": 0,
+  "payload_bytes": 0,
+  "detected_errors": 1,
+  "observed_frame_id_gaps": 0,
+  "error": "ConnectionRefusedError: [Errno 111] Connection refused",
+  "stop_reason": "error",
+  "elapsed_seconds": 0.001044920994900167,
+  "delivered_fps": 0.0,
+  "payload_goodput_mbps": 0.0
+}

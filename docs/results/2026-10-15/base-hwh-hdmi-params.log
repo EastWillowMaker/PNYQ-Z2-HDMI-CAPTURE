@@ -1,0 +1,63 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-m0$ grep -E "kClkRange|dvi2rgb|kEdidFileName" /usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/overlays/base/base.hwh; printf "\nCONSOLE_DONE_39b02f98b9594e5e89056af47163e047:%s\n" "$?"
+[?2004l    <PORT DIR="I" NAME="hdmi_in_ddc_scl_i" SIGIS="undef" SIGNAME="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0_DDC_SCL_I">
+        <CONNECTION INSTANCE="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0" PORT="DDC_SCL_I"/>
+    <PORT DIR="O" NAME="hdmi_in_ddc_scl_o" SIGIS="undef" SIGNAME="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0_DDC_SCL_O">
+        <CONNECTION INSTANCE="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0" PORT="DDC_SCL_O"/>
+    <PORT DIR="O" NAME="hdmi_in_ddc_scl_t" SIGIS="undef" SIGNAME="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0_DDC_SCL_T">
+        <CONNECTION INSTANCE="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0" PORT="DDC_SCL_T"/>
+    <PORT DIR="I" NAME="hdmi_in_ddc_sda_i" SIGIS="undef" SIGNAME="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0_DDC_SDA_I">
+        <CONNECTION INSTANCE="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0" PORT="DDC_SDA_I"/>
+    <PORT DIR="O" NAME="hdmi_in_ddc_sda_o" SIGIS="undef" SIGNAME="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0_DDC_SDA_O">
+        <CONNECTION INSTANCE="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0" PORT="DDC_SDA_O"/>
+    <PORT DIR="O" NAME="hdmi_in_ddc_sda_t" SIGIS="undef" SIGNAME="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0_DDC_SDA_T">
+        <CONNECTION INSTANCE="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0" PORT="DDC_SDA_T"/>
+    <PORT CLKFREQUENCY="100000000" DIR="I" NAME="hdmi_in_clk_p" SIGIS="clk" SIGNAME="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0_TMDS_Clk_p">
+        <CONNECTION INSTANCE="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0" PORT="TMDS_Clk_p"/>
+    <PORT CLKFREQUENCY="100000000" DIR="I" NAME="hdmi_in_clk_n" SIGIS="clk" SIGNAME="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0_TMDS_Clk_n">
+        <CONNECTION INSTANCE="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0" PORT="TMDS_Clk_n"/>
+    <PORT DIR="I" LEFT="2" NAME="hdmi_in_data_p" RIGHT="0" SIGIS="undef" SIGNAME="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0_TMDS_Data_p">
+        <CONNECTION INSTANCE="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0" PORT="TMDS_Data_p"/>
+    <PORT DIR="I" LEFT="2" NAME="hdmi_in_data_n" RIGHT="0" SIGIS="undef" SIGNAME="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0_TMDS_Data_n">
+        <CONNECTION INSTANCE="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0" PORT="TMDS_Data_n"/>
+    <BUSINTERFACE BUSNAME="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0_DDC" NAME="hdmi_in_ddc" TYPE="INITIATOR">
+            <CONNECTION INSTANCE="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0" PORT="RefClk"/>
+            <CONNECTION INSTANCE="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0" PORT="aRst_n"/>
+        <PORT DIR="I" LEFT="0" NAME="gpio2_io_i" RIGHT="0" SIGIS="undef" SIGNAME="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0_aPixelClkLckd">
+            <CONNECTION INSTANCE="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0" PORT="aPixelClkLckd"/>
+            <CONNECTION INSTANCE="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0" PORT="vid_pHSync"/>
+            <CONNECTION INSTANCE="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0" PORT="vid_pData"/>
+            <CONNECTION INSTANCE="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0" PORT="vid_pVDE"/>
+            <CONNECTION INSTANCE="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0" PORT="vid_pVSync"/>
+        <BUSINTERFACE BUSNAME="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0_RGB" NAME="pixel_input" TYPE="TARGET" VLNV="xilinx.com:interface:vid_io:1.0">
+    <MODULE COREREVISION="3" FULLNAME="/video/hdmi_in/frontend/[01;31m[Kdvi2rgb[m[K_0" HWVERSION="1.7" INSTANCE="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="[01;31m[Kdvi2rgb[m[K" VLNV="digilentinc.com:ip:[01;31m[Kdvi2rgb[m[K:1.7">
+        <DOCUMENT SOURCE="/home/jenkins/workspace/PYNQ_v3.0.1/sdbuild/build/PYNQ/boards/ip/[01;31m[Kdvi2rgb[m[K_v1_7/docs/[01;31m[Kdvi2rgb[m[K.pdf"/>
+        <PARAMETER NAME="[01;31m[KkClkRange[m[K" VALUE="1"/>
+        <PARAMETER NAME="[01;31m[KkEdidFileName[m[K" VALUE="720p_edid.data"/>
+        <PARAMETER NAME="Component_Name" VALUE="base_[01;31m[Kdvi2rgb[m[K_0_0"/>
+        <PORT DIR="I" NAME="TMDS_Clk_p" SIGIS="clk" SIGNAME="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0_TMDS_Clk_p">
+        <PORT DIR="I" NAME="TMDS_Clk_n" SIGIS="clk" SIGNAME="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0_TMDS_Clk_n">
+        <PORT DIR="I" LEFT="2" NAME="TMDS_Data_p" RIGHT="0" SIGIS="undef" SIGNAME="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0_TMDS_Data_p">
+        <PORT DIR="I" LEFT="2" NAME="TMDS_Data_n" RIGHT="0" SIGIS="undef" SIGNAME="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0_TMDS_Data_n">
+        <PORT CLKFREQUENCY="100000000" DIR="O" NAME="PixelClk" SIGIS="clk" SIGNAME="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0_PixelClk">
+        <PORT DIR="O" NAME="aPixelClkLckd" SIGIS="undef" SIGNAME="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0_aPixelClkLckd">
+        <PORT DIR="I" NAME="DDC_SDA_I" SIGIS="undef" SIGNAME="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0_DDC_SDA_I">
+        <PORT DIR="O" NAME="DDC_SDA_O" SIGIS="undef" SIGNAME="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0_DDC_SDA_O">
+        <PORT DIR="O" NAME="DDC_SDA_T" SIGIS="undef" SIGNAME="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0_DDC_SDA_T">
+        <PORT DIR="I" NAME="DDC_SCL_I" SIGIS="undef" SIGNAME="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0_DDC_SCL_I">
+        <PORT DIR="O" NAME="DDC_SCL_O" SIGIS="undef" SIGNAME="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0_DDC_SCL_O">
+        <PORT DIR="O" NAME="DDC_SCL_T" SIGIS="undef" SIGNAME="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0_DDC_SCL_T">
+        <BUSINTERFACE BUSNAME="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0_DDC" NAME="DDC" TYPE="INITIATOR" VLNV="xilinx.com:interface:iic:1.0">
+        <BUSINTERFACE BUSNAME="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0_RGB" NAME="RGB" TYPE="INITIATOR" VLNV="xilinx.com:interface:vid_io:1.0">
+        <PORT CLKFREQUENCY="100000000" DIR="I" NAME="vid_io_in_clk" SIGIS="clk" SIGNAME="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0_PixelClk">
+            <CONNECTION INSTANCE="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0" PORT="PixelClk"/>
+        <PORT CLKFREQUENCY="100000000" DIR="I" NAME="clk" SIGIS="clk" SIGNAME="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0_PixelClk">
+            <CONNECTION INSTANCE="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0" PORT="PixelClk"/>
+        <PARAMETER NAME="[01;31m[KkClkRange[m[K" VALUE="2"/>
+        <PORT CLKFREQUENCY="100000000" DIR="I" NAME="slowest_sync_clk" SIGIS="clk" SIGNAME="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0_PixelClk">
+            <CONNECTION INSTANCE="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0" PORT="PixelClk"/>
+        <PORT DIR="I" NAME="aux_reset_in" POLARITY="ACTIVE_LOW" SIGIS="rst" SIGNAME="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0_aPixelClkLckd">
+            <CONNECTION INSTANCE="video_hdmi_in_frontend_[01;31m[Kdvi2rgb[m[K_0" PORT="aPixelClkLckd"/>
+
+CONSOLE_DONE_39b02f98b9594e5e89056af47163e047:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-m0$ 

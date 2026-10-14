@@ -1,0 +1,4 @@
+Command: .venv/bin/python -m pytest -q tests hardware/test_build_manifest.py
+Result: 171 passed, 1 skipped in 1.95s
+Skip: optional gateware dependencies absent in host client environment; dedicated gateware checks reported separately.
+Source revision: uncommitted working tree, sender v4 VideoIn import correction.

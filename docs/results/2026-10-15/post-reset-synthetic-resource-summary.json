@@ -1,0 +1,9 @@
+{
+  "scope": "Post-reset synthetic TCP only, no HDMI DMA",
+  "sample_count": 14,
+  "cpu_percent_one_core_mean": 84.65562374042251,
+  "rss_bytes_min": 27074560,
+  "rss_bytes_max": 27893760,
+  "sampling_interval_seconds": 5,
+  "notes": "150s sender ended normally before requested120s host window completed; host595frames119.09s thenEOF, not clean120s qualification"
+}

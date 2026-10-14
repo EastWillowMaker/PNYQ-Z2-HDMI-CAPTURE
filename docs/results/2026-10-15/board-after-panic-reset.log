@@ -1,0 +1,88 @@
+
+[?2004l[?2004hxilinx@pynq:~$ uptime; sudo -n true; dmesg | tail -80; ls /tmp/hdmi-capture-m0; printf "\nCONSOLE_DONE_15c416097dfe42abb3f3b22b224da9c4:%s\n" "$?"
+[?2004l 00:17:59 up 1 min,  1 user,  load average: 2.55, 0.72, 0.25
+sudo: a password is required
+[    3.346263] platform regulatory.0: Direct firmware load for regulatory.db failed with error -2
+[    3.353608] cfg80211: failed to load regulatory.db
+[    3.355250] clk: Not disabling unused clocks
+[    3.360098] ALSA device list:
+[    3.361765]   No soundcards found.
+[    3.609765] random: fast init done
+[    4.754785] EXT4-fs (mmcblk0p2): warning: mounting fs with errors, running e2fsck is recommended
+[    4.774231] EXT4-fs (mmcblk0p2): recovery complete
+[    4.783088] EXT4-fs (mmcblk0p2): mounted filesystem with ordered data mode. Opts: (null). Quota mode: disabled.
+[    4.792012] VFS: Mounted root (ext4 filesystem) on device 179:2.
+[    4.798906] devtmpfs: mounted
+[    4.803408] Freeing unused kernel image (initmem) memory: 1024K
+[    4.808493] Run /sbin/init as init process
+[    4.811294]   with arguments:
+[    4.811301]     /sbin/init
+[    4.811308]     earlyprintk
+[    4.811315]   with environment:
+[    4.811321]     HOME=/
+[    4.811328]     TERM=linux
+[    5.728149] systemd[1]: System time before build time, advancing clock.
+[    5.822867] systemd[1]: Failed to find module 'autofs4'
+[    5.906625] systemd[1]: systemd 249.11-0ubuntu3 running in system mode (+PAM +AUDIT +SELINUX +APPARMOR +IMA +SMACK +SECCOMP +GCRYPT +GNUTLS -OPENSSL +ACL +BLKID +CURL +ELFUTILS -FIDO2 +IDN2 -IDN +IPTC +KMOD +LIBCRYPTSETUP -LIBFDISK +PCRE2 -PWQUALITY -P11KIT -QRENCODE +BZIP2 +LZ4 +XZ +ZLIB +ZSTD -XKBCOMMON +UTMP +SYSVINIT default-hierarchy=unified)
+[    5.937029] systemd[1]: Detected architecture arm.
+[    5.977597] systemd[1]: Hostname set to <pynq>.
+[    7.423460] systemd[1]: Queued start job for default target Multi-User System.
+[    7.432115] random: systemd: uninitialized urandom read (16 bytes read)
+[    7.443117] systemd[1]: Created slice Slice /system/modprobe.
+[    7.475541] random: systemd: uninitialized urandom read (16 bytes read)
+[    7.484010] systemd[1]: Created slice Slice /system/serial-getty.
+[    7.515539] random: systemd: uninitialized urandom read (16 bytes read)
+[    7.523132] systemd[1]: Created slice User and Session Slice.
+[    7.556215] systemd[1]: Started Dispatch Password Requests to Console Directory Watch.
+[    7.595932] systemd[1]: Started Forward Password Requests to Wall Directory Watch.
+[    7.636163] systemd[1]: Condition check resulted in Arbitrary Executable File Formats File System Automount Point being skipped.
+[    7.646929] systemd[1]: Reached target Local Encrypted Volumes.
+[    7.685974] systemd[1]: Reached target Remote File Systems.
+[    7.725555] systemd[1]: Reached target Slice Units.
+[    7.755869] systemd[1]: Reached target Local Verity Protected Volumes.
+[    7.798228] systemd[1]: Listening on Syslog Socket.
+[    7.826059] systemd[1]: Listening on initctl Compatibility Named Pipe.
+[    7.878510] systemd[1]: Condition check resulted in Journal Audit Socket being skipped.
+[    7.886663] systemd[1]: Listening on Journal Socket (/dev/log).
+[    7.926663] systemd[1]: Listening on Journal Socket.
+[    7.958834] systemd[1]: Listening on udev Control Socket.
+[    7.996489] systemd[1]: Listening on udev Kernel Socket.
+[    8.036570] systemd[1]: Condition check resulted in Huge Pages File System being skipped.
+[    8.050017] systemd[1]: Mounting POSIX Message Queue File System...
+[    8.102809] systemd[1]: Mounting Kernel Debug File System...
+[    8.136388] systemd[1]: Condition check resulted in Kernel Trace File System being skipped.
+[    8.155887] systemd[1]: Starting Journal Service...
+[    8.196420] systemd[1]: Starting Restore / save the current clock...
+[    8.254228] systemd[1]: Starting Set the console keyboard layout...
+[    8.295895] systemd[1]: Condition check resulted in Create List of Static Device Nodes being skipped.
+[    8.313751] systemd[1]: Starting Load Kernel Module configfs...
+[    8.368504] systemd[1]: Starting Load Kernel Module drm...
+[    8.406279] systemd[1]: Starting Load Kernel Module fuse...
+[    8.442807] systemd[1]: Started Nameserver information manager.
+[    8.506376] systemd[1]: Reached target Preparation for Network.
+[    8.568928] systemd[1]: Starting Load Kernel Modules...
+[    8.602674] systemd[1]: Starting Remount Root and Kernel File Systems...
+[    8.663067] systemd[1]: Starting Coldplug All udev Devices...
+[    8.711568] systemd[1]: Started Journal Service.
+[    9.360262] Adding 524284k swap on /var/swap.  Priority:-2 extents:1 across:524284k SS
+[    9.429014] systemd-journald[110]: Received client request to flush runtime journal.
+[    9.500204] systemd-journald[110]: File /var/log/journal/b4e19d1e11f24633a2f2e1fe2798cbe4/system.journal corrupted or uncleanly shut down, renaming and replacing.
+[   12.636020] zocl: loading out-of-tree module taints kernel.
+[   12.644336] [drm] Probing for xlnx,zocl
+[   12.644388] zocl-drm axi:zyxclmm_drm: IRQ index 0 not found
+[   12.687110] [drm] PR[0] Isolation addr 0x0
+[   12.775504] [drm] Initialized zocl 0.0.0  for axi:zyxclmm_drm on minor 0
+[   13.585327] random: crng init done
+[   13.585348] random: 7 urandom warning(s) missed due to ratelimiting
+[   16.921415] FAT-fs (mmcblk0p1): Volume was not properly unmounted. Some data may be corrupt. Please run fsck.
+[   17.286482] macb e000b000.ethernet eth0: PHY [e000b000.ethernet-ffffffff:00] driver [RTL8211E Gigabit Ethernet] (irq=POLL)
+[   17.286521] macb e000b000.ethernet eth0: configuring for phy/rgmii-id link mode
+[   20.428930] macb e000b000.ethernet eth0: Link is Up - 1Gbps/Full - flow control tx
+[   20.429008] IPv6: ADDRCONF(NETDEV_CHANGE): eth0: link becomes ready
+[   54.080975] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(336), ret: 0
+[   54.081126] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(336)
+[   54.081758] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(336), ret: 0
+ls: cannot access '/tmp/hdmi-capture-m0': No such file or directory
+
+CONSOLE_DONE_15c416097dfe42abb3f3b22b224da9c4:2
+[?2004hxilinx@pynq:~$ 

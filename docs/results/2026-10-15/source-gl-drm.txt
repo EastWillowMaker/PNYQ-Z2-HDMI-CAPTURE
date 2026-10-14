@@ -1,0 +1,20 @@
+DP-2 connectorid=446 encoder=445
+property EDID=498
+property DPMS=0
+property link-status=0
+property non-desktop=0
+property TILE=0
+property scaling mode=0
+property Broadcast RGB=0
+property underscan=0
+property underscan hborder=0
+property underscan vborder=0
+property max bpc=16
+property Colorspace=0
+property HDR_OUTPUT_METADATA=0
+property vrr_capable=0
+property Content Protection=0
+property HDCP Content Type=0
+property subconnector=11
+crtc=417 fb=500 mode=640x480 clock=25175
+fb=640x480 format=XR24 modifier=144115188348910340

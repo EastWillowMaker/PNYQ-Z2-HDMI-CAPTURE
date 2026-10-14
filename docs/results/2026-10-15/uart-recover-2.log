@@ -1,0 +1,25 @@
+^Z
+Kernel panic - not syncing: Attempted to kill init! exitcode=0x0000008b
+CPU0: stopping
+CPU: 0 PID: 637 Comm: bash Tainted: G           O      5.15.19-xilinx-v2022.1 #1
+Hardware name: Xilinx Zynq Platform
+[<c010d090>] (unwind_backtrace) from [<c0108f00>] (show_stack+0x10/0x14)
+[<c0108f00>] (show_stack) from [<c09b65e0>] (dump_stack_lvl+0x40/0x4c)
+[<c09b65e0>] (dump_stack_lvl) from [<c010b680>] (do_handle_IPI+0x80/0x140)
+[<c010b680>] (do_handle_IPI) from [<c010b754>] (ipi_handler+0x14/0x20)
+[<c010b754>] (ipi_handler) from [<c01624cc>] (handle_percpu_devid_irq+0x4c/0xe8)
+[<c01624cc>] (handle_percpu_devid_irq) from [<c015d460>] (handle_irq_desc+0x24/0x34)
+[<c015d460>] (handle_irq_desc) from [<c015dae4>] (handle_domain_irq+0x40/0x54)
+[<c015dae4>] (handle_domain_irq) from [<c04d8f38>] (gic_handle_irq+0x68/0x78)
+[<c04d8f38>] (gic_handle_irq) from [<c0100afc>] (__irq_svc+0x5c/0x90)
+Exception stack(0xc26f7ef0 to 0xc26f7f38)
+7ee0:                                     00000000 00000001 00000000 00000000
+7f00: 00000000 c26f7fb0 c26f6000 00000000 00000000 c26f7f40 ffffe000 0059805c
+7f20: f7f812e7 c26f7f40 c01ee1a8 c01088f0 600e0113 ffffffff
+[<c0100afc>] (__irq_svc) from [<c01088f0>] (do_work_pending+0x80/0x3e8)
+[<c01088f0>] (do_work_pending) from [<c01000c0>] (slow_work_pending+0xc/0x20)
+Exception stack(0xc26f7fb0 to 0xc26f7ff8)
+7fa0:                                     00002d23 be9be11c b6eee000 597e4358
+7fc0: 00000000 00002d23 00000000 b6f81300 0059ddac 005923b4 00093c62 0059805c
+7fe0: 00000072 be9be088 b6e57833 b6e578a8 600e0030 ffffffff
+---[ end Kernel panic - not syncing: Attempted to kill init! exitcode=0x0000008b ]---

@@ -1,0 +1,67 @@
+{
+  "timestamp": "2026-10-15T00:05:23.173392+08:00",
+  "commands": [
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1"
+      ],
+      "exit_code": 0,
+      "stdout": "?? GLOSSARY.md\n?? PYNQ_Z2_LiteX_HDMI_Capture_Codex_Prompt.md\n?? docs/progress.md\n?? docs/requirements.md\n?? docs/research.md\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit_code": 0,
+      "stdout": "abd512e29bdc6e9c6db5bb69468efe93f55c30c5\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "ip",
+        "-brief",
+        "address"
+      ],
+      "exit_code": 0,
+      "stdout": "lo               UNKNOWN        127.0.0.1/8 ::1/128 \nwlp99s0          UP             192.168.1.22/24 \nmpqemubr0        UP             10.46.167.1/24 fe80::5054:ff:fed0:222c/64 \ntap-f4fbc86384f  UP             fe80::80a6:2aff:fe94:e89a/64 \nvirbr0           DOWN           192.168.122.1/24 \nenx98fc84e0c4e8  UP             fe80::63dc:5fe7:852f:12bc/64 \n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "ip",
+        "neigh"
+      ],
+      "exit_code": 0,
+      "stdout": "192.168.1.2 dev wlp99s0 lladdr 90:09:d0:8f:03:bf DELAY \n192.168.1.1 dev wlp99s0 lladdr fc:12:63:5e:9f:40 REACHABLE \n10.46.167.246 dev mpqemubr0 lladdr 52:54:00:45:c8:39 REACHABLE \n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "lsusb"
+      ],
+      "exit_code": 0,
+      "stdout": "Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub\nBus 001 Device 002: ID 3277:0018 Sonix Technology Co., Ltd. ASUS FHD webcam\nBus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub\nBus 003 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub\nBus 003 Device 002: ID 046d:c548 Logitech, Inc. Logi Bolt Receiver\nBus 003 Device 004: ID 0489:e0f6 Foxconn / Hon Hai Wireless_Device\nBus 003 Device 010: ID 0bda:5411 Realtek Semiconductor Corp. RTS5411 Hub\nBus 004 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub\nBus 004 Device 003: ID 0bda:0411 Realtek Semiconductor Corp. Hub\nBus 005 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub\nBus 005 Device 005: ID 2109:2822 VIA Labs, Inc. USB2.0 Hub             \nBus 005 Device 007: ID 0403:6010 Future Technology Devices International, Ltd FT2232C/D/H Dual UART/FIFO IC\nBus 006 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub\nBus 006 Device 008: ID 2109:0822 VIA Labs, Inc. USB3.1 Hub             \nBus 006 Device 009: ID 0bda:8153 Realtek Semiconductor Corp. RTL8153 Gigabit Ethernet Adapter\nBus 007 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub\nBus 008 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "ls",
+        "-l",
+        "/dev/serial/by-id/"
+      ],
+      "exit_code": 0,
+      "stdout": "total 0\nlrwxrwxrwx+1 root root 13 Oct 14 23:46 usb-Xilinx_TUL_1234-tul-if00-port0 -> ../../ttyUSB0\nlrwxrwxrwx+1 root root 13 Oct 14 23:46 usb-Xilinx_TUL_1234-tul-if01-port0 -> ../../ttyUSB1\n",
+      "stderr": ""
+    }
+  ],
+  "nic": {
+    "carrier": "1",
+    "speed": "1000",
+    "duplex": "full"
+  }
+}

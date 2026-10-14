@@ -1,0 +1,4 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-m1$ mkdir -p /tmp/hdmi-metadata-export && cd /usr/local/share/pynq-venv/lib/python3.10/site-packages && tar czf /tmp/hdmi-metadata-export/metadata.tar.gz pynq/metadata pynqmetadata pynqmetadata-*.dist-info/METADATA pynqutils pynqutils-*.dist-info/METADATA pydantic-*.dist-info/METADATA && cd /tmp/hdmi-metadata-export && (nohup /usr/local/share/pynq-venv/bin/python -m http.server 8766 --bind :: > server.log 2>&1 </dev/null & echo $! > server.pid); printf "\nCONSOLE_DONE_4e2dfb088a504650afc4a9e739fcfcc4:%s\n" "$?"
+[?2004l
+CONSOLE_DONE_4e2dfb088a504650afc4a9e739fcfcc4:0

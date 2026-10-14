@@ -1,0 +1,3 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-m0$ ps -eo pid,etime,args | grep hdmi_capture | grep -v grep; date; tail -4 /tmp/hdmi-capture-m0/hdmi-gl.log; printf "\nCONSOLE_DONE_18c09a08123f485984e540cb027d7160:%s\n" "$?"
+[?2004l

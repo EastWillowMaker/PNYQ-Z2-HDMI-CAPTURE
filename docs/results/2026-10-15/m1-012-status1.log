@@ -1,0 +1,41 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-m1$ cat /tmp/hdmi-capture-m1/m1-012.log; ps -eo pid,stat,comm | tail -n 12; printf "\nCONSOLE_DONE_dfec391b2a0b476491c7f4b7449cf91d:%s\n" "$?"
+[?2004l{"event": "source_startup", "timestamp_ns": 1946893302128, "stage": "litex_artifact_verification"}
+{"event": "source_startup", "timestamp_ns": 1947342014195, "stage": "pynq_import"}
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/usr/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/tmp/hdmi-capture-m1/hdmi_capture/sender.py", line 327, in <module>
+    main()
+  File "/tmp/hdmi-capture-m1/hdmi_capture/sender.py", line 301, in main
+    asyncio.run(sender.run(args.host, args.port, args.duration))
+  File "/usr/lib/python3.10/asyncio/runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 646, in run_until_complete
+    return future.result()
+  File "/tmp/hdmi-capture-m1/hdmi_capture/sender.py", line 166, in run
+    address = await self.start(host, port)
+  File "/tmp/hdmi-capture-m1/hdmi_capture/sender.py", line 156, in start
+    self.source.start()
+  File "/tmp/hdmi-capture-m1/hdmi_capture/sources.py", line 386, in start
+    self.load_overlay()
+  File "/tmp/hdmi-capture-m1/hdmi_capture/sources.py", line 361, in load_overlay
+    from pynq.lib.video import PIXEL_BGR, VideoIn
+ImportError: cannot import name 'VideoIn' from 'pynq.lib.video' (/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/lib/video/__init__.py)
+ 3879 I    kworker/1:0-mm_percpu_wq
+ 4885 I<   kworker/0:2H
+ 4980 I<   kworker/1:2H
+ 5746 I    kworker/1:1-events
+ 5794 I<   kworker/0:0H
+ 6474 I<   kworker/1:0H
+ 6736 I    kworker/u4:2-flush-179:0
+ 6737 I    kworker/1:2-mm_percpu_wq
+ 6738 S    dhclient-script
+ 6742 S    ping
+ 6744 R+   ps
+ 6745 S+   tail
+
+CONSOLE_DONE_dfec391b2a0b476491c7f4b7449cf91d:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-m1$ 

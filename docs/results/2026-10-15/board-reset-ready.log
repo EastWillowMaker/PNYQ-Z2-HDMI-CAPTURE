@@ -1,0 +1,12 @@
+
+[?2004l[?2004hxilinx@pynq:~$ sudo -n true; ip -brief address show eth0; free -m; df -h / /tmp; printf "\nCONSOLE_DONE_be4340dd740a4d9b97738d93f8277879:%s\n" "$?"
+[?2004leth0             UP             fe80::200:5ff:fe6b:1a0/64 
+               total        used        free      shared  buff/cache   available
+Mem:             493          98         174           1         220         382
+Swap:            511           0         511
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        15G  6.0G  7.9G  43% /
+/dev/root        15G  6.0G  7.9G  43% /
+
+CONSOLE_DONE_be4340dd740a4d9b97738d93f8277879:0
+[?2004hxilinx@pynq:~$ 

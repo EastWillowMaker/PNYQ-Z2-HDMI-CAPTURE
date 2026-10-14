@@ -1,0 +1,79 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-m0$ cat /tmp/hdmi-capture-m0/probe.log; sudo -n dmesg | tail -35; printf "\nCONSOLE_DONE_059805e2d2d04c69aea7bb43dd866aec:%s\n" "$?"
+[?2004lPROBE import
+Timeout (0:00:10)!
+Thread 0xb6f08020 (most recent call first):
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/lib/pmod/pmod_als.py", line 20 in <module>
+  File "<frozen importlib._bootstrap>", line 241 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 883 in exec_module
+  File "<frozen importlib._bootstrap>", line 688 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1006 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1027 in _find_and_load
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/lib/pmod/__init__.py", line 17 in <module>
+  File "<frozen importlib._bootstrap>", line 241 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 883 in exec_module
+  File "<frozen importlib._bootstrap>", line 688 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1006 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1027 in _find_and_load
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/lib/__init__.py", line 27 in <module>
+  File "<frozen importlib._bootstrap>", line 241 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 883 in exec_module
+  File "<frozen importlib._bootstrap>", line 688 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1006 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1027 in _find_and_load
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/overlays/base/base.py", line 7 in <module>
+  File "<frozen importlib._bootstrap>", line 241 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 883 in exec_module
+  File "<frozen importlib._bootstrap>", line 688 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1006 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1027 in _find_and_load
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/overlays/base/__init__.py", line 4 in <module>
+  File "<frozen importlib._bootstrap>", line 241 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 883 in exec_module
+  File "<frozen importlib._bootstrap>", line 688 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1006 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1027 in _find_and_load
+  File "/tmp/hdmi-capture-m0/probe.py", line 6 in <module>
+PROBE load
+PROBE loaded ['switches_gpio', 'btns_gpio', 'video/hdmi_in/frontend/axi_gpio_hdmiin', 'video/hdmi_out/frontend/hdmi_out_hpd_video', 'rgbleds_gpio', 'leds_gpio', 'system_interrupts', 'video/axi_vdma', 'audio_codec_ctrl_0', 'video/hdmi_out/frontend/axi_dynclk', 'video/hdmi_out/frontend/vtc_out', 'video/hdmi_in/frontend/vtc_in', 'video/hdmi_in/pixel_pack', 'video/hdmi_in/color_convert', 'video/hdmi_out/color_convert', 'video/hdmi_out/pixel_unpack', 'trace_analyzer_pmodb/axi_dma_0', 'trace_analyzer_pi/axi_dma_0', 'trace_analyzer_pi/trace_cntrl_64_0', 'trace_analyzer_pmodb/trace_cntrl_32_0', 'ps7_0']
+PROBE clocks 100.0 142.857143 200.0 100.0
+PROBE frontend constructed
+PROBE configure
+[ 2127.777099] [drm] found kind 6(MEM_TOPOLOGY)
+[ 2127.777230] [drm] Memory 0 is not reserved in device tree. Will allocate memory from CMA
+[ 2127.777294] [drm] Memory 1 is not reserved in device tree. Will allocate memory from CMA
+[ 2127.777352] [drm] Memory 2 is not reserved in device tree. Will allocate memory from CMA
+[ 2127.777408] [drm] Memory 3 is not reserved in device tree. Will allocate memory from CMA
+[ 2127.777464] [drm] Memory 4 is not reserved in device tree. Will allocate memory from CMA
+[ 2127.777510] [drm] zocl_xclbin_read_axlf d39bf0cc-e8bd-d66d-3f28-37a166bf63ca ret: 0
+[ 2127.802964] [drm] bitstream d39bf0cc-e8bd-d66d-3f28-37a166bf63ca locked, ref=1
+[ 2127.803019] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_add_context: Client pid(6991) add context Domain(0) CU(0xffffffff) shared(true)
+[ 2127.803111] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_del_context: Client pid(6991) del context Domain(0) CU(0xffffffff)
+[ 2127.803138] [drm] bitstream d39bf0cc-e8bd-d66d-3f28-37a166bf63ca unlocked, ref=0
+[ 2131.432166] 8<--- cut here ---
+[ 2131.433935] Unhandled fault: external abort on non-linefetch (0x1018) at 0xb6f8c024
+[ 2131.440298] pgd = b3e172b4
+[ 2131.441704] [b6f8c024] *pgd=0f6b1831, *pte=43c30743, *ppte=43c30c33
+[ 2132.934828] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(6991)
+[ 2200.330904] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(7313), ret: 0
+[ 2200.331013] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(7313)
+[ 2200.331603] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(7313), ret: 0
+[ 2208.372454] fpga_manager fpga0: writing base.bin to Xilinx Zynq FPGA Manager
+[ 2208.453688] [drm] skip kind 29(AIE_RESOURCES) return code: -22
+[ 2208.453733] [drm] skip kind 8(IP_LAYOUT) return code: -22
+[ 2208.453747] [drm] skip kind 9(DEBUG_IP_LAYOUT) return code: -22
+[ 2208.453759] [drm] skip kind 25(AIE_METADATA) return code: -22
+[ 2208.453770] [drm] skip kind 7(CONNECTIVITY) return code: -22
+[ 2208.453781] [drm] found kind 6(MEM_TOPOLOGY)
+[ 2208.453907] [drm] Memory 0 is not reserved in device tree. Will allocate memory from CMA
+[ 2208.453971] [drm] Memory 1 is not reserved in device tree. Will allocate memory from CMA
+[ 2208.454029] [drm] Memory 2 is not reserved in device tree. Will allocate memory from CMA
+[ 2208.454086] [drm] Memory 3 is not reserved in device tree. Will allocate memory from CMA
+[ 2208.454141] [drm] Memory 4 is not reserved in device tree. Will allocate memory from CMA
+[ 2208.454188] [drm] zocl_xclbin_read_axlf 97bbe933-8799-9e80-9f9e-2ff5ed027258 ret: 0
+[ 2208.478441] [drm] bitstream 97bbe933-8799-9e80-9f9e-2ff5ed027258 locked, ref=1
+[ 2208.478495] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_add_context: Client pid(7313) add context Domain(0) CU(0xffffffff) shared(true)
+[ 2208.478582] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_del_context: Client pid(7313) del context Domain(0) CU(0xffffffff)
+
+CONSOLE_DONE_059805e2d2d04c69aea7bb43dd866aec:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-m0$ 

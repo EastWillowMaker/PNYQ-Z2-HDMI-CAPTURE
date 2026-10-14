@@ -1,0 +1,46 @@
+{
+  "delivered_frames": 1,
+  "payload_bytes": 921600,
+  "detected_errors": 0,
+  "observed_frame_id_gaps": 0,
+  "error": null,
+  "stop_reason": "count",
+  "elapsed_seconds": 0.2316521060129162,
+  "delivered_fps": 4.316818082129775,
+  "payload_goodput_mbps": 31.8270363559264,
+  "last_metadata": {
+    "width": 640,
+    "height": 480,
+    "pixel_format": "RGB888",
+    "stride": 1920,
+    "frame_id": 9524,
+    "acquisition_id": 9524,
+    "session_id": "b57583a8-a6ef-4be1-a612-d375bea0a733",
+    "source_sequence": null,
+    "timestamp_ns": 3525596711585,
+    "timestamp_clock": "board_monotonic",
+    "timestamp_sample_point": "after_dma_read_complete",
+    "flags": [
+      "baseline_only"
+    ],
+    "source_origin": "hdmi",
+    "source_color_format": "unknown",
+    "source_quantization_range": "unknown",
+    "baseline_only": true,
+    "source_fps": null,
+    "source_progressive": null,
+    "counters": {
+      "acquired": 9524,
+      "startup_discarded": 1,
+      "intentional_sampling_drops": 9191,
+      "network_backpressure_drops": 295,
+      "client_discarded": 3,
+      "transport_enqueued": 31,
+      "source_errors": 0,
+      "network_errors": 2,
+      "source_skips": null,
+      "source_overruns": null,
+      "source_invalid_frames": null
+    }
+  }
+}

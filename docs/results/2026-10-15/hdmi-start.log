@@ -1,0 +1,8 @@
+
+[?2004l[1]+  Done                    nohup /usr/local/share/pynq-venv/bin/python -u -m hdmi_capture.sender --source synthetic --host :: --fps 5 --duration 40 > synthetic.log 2>&1 < /dev/null
+[?2004hxilinx@pynq:/tmp/hdmi-capture-m0$ cd /tmp/hdmi-capture-m0; nohup sudo -n timeout --signal=INT --kill-after=5 240 /usr/local/share/pynq-venv/bin/python -u -m hdmi_capture.sender --source pynq --host :: --port 9021 --fps 1 --duration 180 > hdmi.log 2>&1 < /dev/null & echo $! > hdmi.pid; cat hdmi.pid; printf "\nCONSOLE_DONE_1241f4d817ab428fb3da1bf907800f51:%s\n" "$?"
+[?2004l[1] 6825
+6825
+
+CONSOLE_DONE_1241f4d817ab428fb3da1bf907800f51:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-m0$ 

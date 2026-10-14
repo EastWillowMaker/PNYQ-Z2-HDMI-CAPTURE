@@ -1,0 +1,29 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-m1$ tail -n 24 /tmp/hdmi-capture-m1/m1-013-v4.log; ps -p 9375 -o pid,stat,args; uptime; printf "\nCONSOLE_DONE_6be1194b5077474080f4715775594e21:%s\n" "$?"
+[?2004l{"event": "source_startup", "timestamp_ns": 2803499802470, "stage": "litex_artifact_verification"}
+{"event": "source_startup", "timestamp_ns": 2803997167183, "stage": "pynq_import"}
+{"event": "source_startup", "timestamp_ns": 2812368115146, "stage": "overlay_load"}
+{"event": "source_startup", "timestamp_ns": 2816711834204, "stage": "hdmi_configure_wait_input_lock"}
+{"event": "source_startup", "timestamp_ns": 2833846360148, "stage": "hdmi_mode_check"}
+{"event": "source_startup", "timestamp_ns": 2833846835434, "stage": "dma_start"}
+{"event": "source_startup", "timestamp_ns": 2833877979145, "stage": "source_ready"}
+{"event": "source_startup", "timestamp_ns": 2833878342499, "stage": "capture_enable_after_dma_start"}
+{"event": "source_startup", "timestamp_ns": 2833878917489, "stage": "integrity_baseline", "counters": {"enabled": true, "observed_frames": 66, "selected_frames": 0, "completed_frames": 64, "dropped_frames": 66, "invalid_frames": 1, "snapshot_begin_ns": 2833878639206, "snapshot_end_ns": 2833878868505, "timestamp_clock": "board_monotonic", "snapshot_atomic": false, "sample_point": "sequential_gpio_reads_after_dma_start_before_first_read", "counter_bits": 32, "frontend_overflow_episodes": 0, "native_vsync_edges": 66, "overflow_units": "assertion_episodes_not_lost_frames", "frontend_underflow_episodes": 0}}
+{"listening": ["::", 9021, 0, 0], "source": "hdmi", "session_id": "f303b88f-5278-4cd1-9e13-4ea96207a5fc"}
+{"event": "source_cleanup", "timestamp_ns": 2962108053631, "stage": "dma_stop_begin"}
+{"event": "source_cleanup", "timestamp_ns": 2962108612640, "stage": "dma_stop_status_before", "control": 69635, "status": 65536}
+{"event": "source_cleanup", "timestamp_ns": 2962109656271, "stage": "dma_stop_status_after", "control": 69632, "status": 65537}
+{"event": "source_cleanup", "timestamp_ns": 2962110141557, "stage": "dma_stop_complete"}
+{"event": "source_cleanup", "timestamp_ns": 2962110505471, "stage": "pool_free_begin", "buffers": 5}
+{"event": "source_cleanup", "timestamp_ns": 2962114674338, "stage": "pool_free_complete"}
+{"session_id": "f303b88f-5278-4cd1-9e13-4ea96207a5fc", "counters": {"acquired": 7386, "startup_discarded": 1, "intentional_sampling_drops": 7128, "network_backpressure_drops": 250, "client_discarded": 2, "transport_enqueued": 2, "source_errors": 0, "network_errors": 2, "source_skips": null, "source_overruns": null, "source_invalid_frames": null}, "dma_shutdown_safe": true, "source_integrity": {"startup": {"enabled": true, "observed_frames": 66, "selected_frames": 0, "completed_frames": 64, "dropped_frames": 66, "invalid_frames": 1, "snapshot_begin_ns": 2833878639206, "snapshot_end_ns": 2833878868505, "timestamp_clock": "board_monotonic", "snapshot_atomic": false, "sample_point": "sequential_gpio_reads_after_dma_start_before_first_read", "counter_bits": 32, "frontend_overflow_episodes": 0, "native_vsync_edges": 66, "overflow_units": "assertion_episodes_not_lost_frames", "frontend_underflow_episodes": 0}, "last": {"enabled": true, "observed_frames": 7760, "selected_frames": 7664, "completed_frames": 7758, "dropped_frames": 96, "invalid_frames": 1, "snapshot_begin_ns": 2962098561501, "snapshot_end_ns": 2962098820504, "timestamp_clock": "board_monotonic", "snapshot_atomic": false, "sample_point": "sequential_gpio_reads_after_dma_read_complete", "counter_bits": 32, "frontend_overflow_episodes": 0, "native_vsync_edges": 7760, "overflow_units": "assertion_episodes_not_lost_frames", "frontend_underflow_episodes": 0}, "failure": null}}
+Exception ignored in: <function UioController.__del__ at 0xb3419100>
+Traceback (most recent call last):
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/uio.py", line 79, in __del__
+  File "/usr/lib/python3.10/asyncio/events.py", line 656, in get_event_loop
+RuntimeError: There is no current event loop in thread 'MainThread'.
+  PID STAT COMMAND
+ 01:06:30 up 49 min,  1 user,  load average: 0.49, 0.33, 0.22
+
+CONSOLE_DONE_6be1194b5077474080f4715775594e21:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-m1$ 

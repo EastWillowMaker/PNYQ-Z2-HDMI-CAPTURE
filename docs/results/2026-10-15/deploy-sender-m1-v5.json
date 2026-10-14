@@ -1,0 +1,6 @@
+{
+  "archive": "artifacts/deploy/sender-m1-v5.tar.gz",
+  "sha256": "5b54cb9cb20a96f3491363afaca9557e882ed6b43346d11e2e94a187dead735d",
+  "sources_sha256": "8dca42b6c90cad92c684cab1f727ef12b49597741727e71a962f4696a615ec35",
+  "reason": "Disabled-before-enable baseline with verified reset default; 47 focused tests pass"
+}

@@ -1,0 +1,669 @@
+{
+  "frames": 30,
+  "exact_matches": 30,
+  "distinct_optical_ids": 30,
+  "mixed_frames": 0,
+  "max_absolute_error": 0,
+  "reports": [
+    {
+      "file": "frame-000001.npy",
+      "expected_id": 273,
+      "expected_id_source": "majority_valid_optical_rows",
+      "valid_marker_rows": 480,
+      "invalid_marker_rows": [],
+      "optical_ids": {
+        "273": 480
+      },
+      "mixed_optical_ids": false,
+      "exact_match": true,
+      "mismatched_pixels": 0,
+      "mismatched_bytes": 0,
+      "mismatched_bytes_by_channel": [
+        0,
+        0,
+        0
+      ],
+      "mismatched_rows": [],
+      "first_mismatch_y_x": null,
+      "max_absolute_error": 0
+    },
+    {
+      "file": "frame-000002.npy",
+      "expected_id": 275,
+      "expected_id_source": "majority_valid_optical_rows",
+      "valid_marker_rows": 480,
+      "invalid_marker_rows": [],
+      "optical_ids": {
+        "275": 480
+      },
+      "mixed_optical_ids": false,
+      "exact_match": true,
+      "mismatched_pixels": 0,
+      "mismatched_bytes": 0,
+      "mismatched_bytes_by_channel": [
+        0,
+        0,
+        0
+      ],
+      "mismatched_rows": [],
+      "first_mismatch_y_x": null,
+      "max_absolute_error": 0
+    },
+    {
+      "file": "frame-000003.npy",
+      "expected_id": 277,
+      "expected_id_source": "majority_valid_optical_rows",
+      "valid_marker_rows": 480,
+      "invalid_marker_rows": [],
+      "optical_ids": {
+        "277": 480
+      },
+      "mixed_optical_ids": false,
+      "exact_match": true,
+      "mismatched_pixels": 0,
+      "mismatched_bytes": 0,
+      "mismatched_bytes_by_channel": [
+        0,
+        0,
+        0
+      ],
+      "mismatched_rows": [],
+      "first_mismatch_y_x": null,
+      "max_absolute_error": 0
+    },
+    {
+      "file": "frame-000004.npy",
+      "expected_id": 278,
+      "expected_id_source": "majority_valid_optical_rows",
+      "valid_marker_rows": 480,
+      "invalid_marker_rows": [],
+      "optical_ids": {
+        "278": 480
+      },
+      "mixed_optical_ids": false,
+      "exact_match": true,
+      "mismatched_pixels": 0,
+      "mismatched_bytes": 0,
+      "mismatched_bytes_by_channel": [
+        0,
+        0,
+        0
+      ],
+      "mismatched_rows": [],
+      "first_mismatch_y_x": null,
+      "max_absolute_error": 0
+    },
+    {
+      "file": "frame-000005.npy",
+      "expected_id": 280,
+      "expected_id_source": "majority_valid_optical_rows",
+      "valid_marker_rows": 480,
+      "invalid_marker_rows": [],
+      "optical_ids": {
+        "280": 480
+      },
+      "mixed_optical_ids": false,
+      "exact_match": true,
+      "mismatched_pixels": 0,
+      "mismatched_bytes": 0,
+      "mismatched_bytes_by_channel": [
+        0,
+        0,
+        0
+      ],
+      "mismatched_rows": [],
+      "first_mismatch_y_x": null,
+      "max_absolute_error": 0
+    },
+    {
+      "file": "frame-000006.npy",
+      "expected_id": 282,
+      "expected_id_source": "majority_valid_optical_rows",
+      "valid_marker_rows": 480,
+      "invalid_marker_rows": [],
+      "optical_ids": {
+        "282": 480
+      },
+      "mixed_optical_ids": false,
+      "exact_match": true,
+      "mismatched_pixels": 0,
+      "mismatched_bytes": 0,
+      "mismatched_bytes_by_channel": [
+        0,
+        0,
+        0
+      ],
+      "mismatched_rows": [],
+      "first_mismatch_y_x": null,
+      "max_absolute_error": 0
+    },
+    {
+      "file": "frame-000007.npy",
+      "expected_id": 284,
+      "expected_id_source": "majority_valid_optical_rows",
+      "valid_marker_rows": 480,
+      "invalid_marker_rows": [],
+      "optical_ids": {
+        "284": 480
+      },
+      "mixed_optical_ids": false,
+      "exact_match": true,
+      "mismatched_pixels": 0,
+      "mismatched_bytes": 0,
+      "mismatched_bytes_by_channel": [
+        0,
+        0,
+        0
+      ],
+      "mismatched_rows": [],
+      "first_mismatch_y_x": null,
+      "max_absolute_error": 0
+    },
+    {
+      "file": "frame-000008.npy",
+      "expected_id": 286,
+      "expected_id_source": "majority_valid_optical_rows",
+      "valid_marker_rows": 480,
+      "invalid_marker_rows": [],
+      "optical_ids": {
+        "286": 480
+      },
+      "mixed_optical_ids": false,
+      "exact_match": true,
+      "mismatched_pixels": 0,
+      "mismatched_bytes": 0,
+      "mismatched_bytes_by_channel": [
+        0,
+        0,
+        0
+      ],
+      "mismatched_rows": [],
+      "first_mismatch_y_x": null,
+      "max_absolute_error": 0
+    },
+    {
+      "file": "frame-000009.npy",
+      "expected_id": 288,
+      "expected_id_source": "majority_valid_optical_rows",
+      "valid_marker_rows": 480,
+      "invalid_marker_rows": [],
+      "optical_ids": {
+        "288": 480
+      },
+      "mixed_optical_ids": false,
+      "exact_match": true,
+      "mismatched_pixels": 0,
+      "mismatched_bytes": 0,
+      "mismatched_bytes_by_channel": [
+        0,
+        0,
+        0
+      ],
+      "mismatched_rows": [],
+      "first_mismatch_y_x": null,
+      "max_absolute_error": 0
+    },
+    {
+      "file": "frame-000010.npy",
+      "expected_id": 290,
+      "expected_id_source": "majority_valid_optical_rows",
+      "valid_marker_rows": 480,
+      "invalid_marker_rows": [],
+      "optical_ids": {
+        "290": 480
+      },
+      "mixed_optical_ids": false,
+      "exact_match": true,
+      "mismatched_pixels": 0,
+      "mismatched_bytes": 0,
+      "mismatched_bytes_by_channel": [
+        0,
+        0,
+        0
+      ],
+      "mismatched_rows": [],
+      "first_mismatch_y_x": null,
+      "max_absolute_error": 0
+    },
+    {
+      "file": "frame-000011.npy",
+      "expected_id": 291,
+      "expected_id_source": "majority_valid_optical_rows",
+      "valid_marker_rows": 480,
+      "invalid_marker_rows": [],
+      "optical_ids": {
+        "291": 480
+      },
+      "mixed_optical_ids": false,
+      "exact_match": true,
+      "mismatched_pixels": 0,
+      "mismatched_bytes": 0,
+      "mismatched_bytes_by_channel": [
+        0,
+        0,
+        0
+      ],
+      "mismatched_rows": [],
+      "first_mismatch_y_x": null,
+      "max_absolute_error": 0
+    },
+    {
+      "file": "frame-000012.npy",
+      "expected_id": 293,
+      "expected_id_source": "majority_valid_optical_rows",
+      "valid_marker_rows": 480,
+      "invalid_marker_rows": [],
+      "optical_ids": {
+        "293": 480
+      },
+      "mixed_optical_ids": false,
+      "exact_match": true,
+      "mismatched_pixels": 0,
+      "mismatched_bytes": 0,
+      "mismatched_bytes_by_channel": [
+        0,
+        0,
+        0
+      ],
+      "mismatched_rows": [],
+      "first_mismatch_y_x": null,
+      "max_absolute_error": 0
+    },
+    {
+      "file": "frame-000013.npy",
+      "expected_id": 295,
+      "expected_id_source": "majority_valid_optical_rows",
+      "valid_marker_rows": 480,
+      "invalid_marker_rows": [],
+      "optical_ids": {
+        "295": 480
+      },
+      "mixed_optical_ids": false,
+      "exact_match": true,
+      "mismatched_pixels": 0,
+      "mismatched_bytes": 0,
+      "mismatched_bytes_by_channel": [
+        0,
+        0,
+        0
+      ],
+      "mismatched_rows": [],
+      "first_mismatch_y_x": null,
+      "max_absolute_error": 0
+    },
+    {
+      "file": "frame-000014.npy",
+      "expected_id": 297,
+      "expected_id_source": "majority_valid_optical_rows",
+      "valid_marker_rows": 480,
+      "invalid_marker_rows": [],
+      "optical_ids": {
+        "297": 480
+      },
+      "mixed_optical_ids": false,
+      "exact_match": true,
+      "mismatched_pixels": 0,
+      "mismatched_bytes": 0,
+      "mismatched_bytes_by_channel": [
+        0,
+        0,
+        0
+      ],
+      "mismatched_rows": [],
+      "first_mismatch_y_x": null,
+      "max_absolute_error": 0
+    },
+    {
+      "file": "frame-000015.npy",
+      "expected_id": 299,
+      "expected_id_source": "majority_valid_optical_rows",
+      "valid_marker_rows": 480,
+      "invalid_marker_rows": [],
+      "optical_ids": {
+        "299": 480
+      },
+      "mixed_optical_ids": false,
+      "exact_match": true,
+      "mismatched_pixels": 0,
+      "mismatched_bytes": 0,
+      "mismatched_bytes_by_channel": [
+        0,
+        0,
+        0
+      ],
+      "mismatched_rows": [],
+      "first_mismatch_y_x": null,
+      "max_absolute_error": 0
+    },
+    {
+      "file": "frame-000016.npy",
+      "expected_id": 301,
+      "expected_id_source": "majority_valid_optical_rows",
+      "valid_marker_rows": 480,
+      "invalid_marker_rows": [],
+      "optical_ids": {
+        "301": 480
+      },
+      "mixed_optical_ids": false,
+      "exact_match": true,
+      "mismatched_pixels": 0,
+      "mismatched_bytes": 0,
+      "mismatched_bytes_by_channel": [
+        0,
+        0,
+        0
+      ],
+      "mismatched_rows": [],
+      "first_mismatch_y_x": null,
+      "max_absolute_error": 0
+    },
+    {
+      "file": "frame-000017.npy",
+      "expected_id": 303,
+      "expected_id_source": "majority_valid_optical_rows",
+      "valid_marker_rows": 480,
+      "invalid_marker_rows": [],
+      "optical_ids": {
+        "303": 480
+      },
+      "mixed_optical_ids": false,
+      "exact_match": true,
+      "mismatched_pixels": 0,
+      "mismatched_bytes": 0,
+      "mismatched_bytes_by_channel": [
+        0,
+        0,
+        0
+      ],
+      "mismatched_rows": [],
+      "first_mismatch_y_x": null,
+      "max_absolute_error": 0
+    },
+    {
+      "file": "frame-000018.npy",
+      "expected_id": 305,
+      "expected_id_source": "majority_valid_optical_rows",
+      "valid_marker_rows": 480,
+      "invalid_marker_rows": [],
+      "optical_ids": {
+        "305": 480
+      },
+      "mixed_optical_ids": false,
+      "exact_match": true,
+      "mismatched_pixels": 0,
+      "mismatched_bytes": 0,
+      "mismatched_bytes_by_channel": [
+        0,
+        0,
+        0
+      ],
+      "mismatched_rows": [],
+      "first_mismatch_y_x": null,
+      "max_absolute_error": 0
+    },
+    {
+      "file": "frame-000019.npy",
+      "expected_id": 306,
+      "expected_id_source": "majority_valid_optical_rows",
+      "valid_marker_rows": 480,
+      "invalid_marker_rows": [],
+      "optical_ids": {
+        "306": 480
+      },
+      "mixed_optical_ids": false,
+      "exact_match": true,
+      "mismatched_pixels": 0,
+      "mismatched_bytes": 0,
+      "mismatched_bytes_by_channel": [
+        0,
+        0,
+        0
+      ],
+      "mismatched_rows": [],
+      "first_mismatch_y_x": null,
+      "max_absolute_error": 0
+    },
+    {
+      "file": "frame-000020.npy",
+      "expected_id": 308,
+      "expected_id_source": "majority_valid_optical_rows",
+      "valid_marker_rows": 480,
+      "invalid_marker_rows": [],
+      "optical_ids": {
+        "308": 480
+      },
+      "mixed_optical_ids": false,
+      "exact_match": true,
+      "mismatched_pixels": 0,
+      "mismatched_bytes": 0,
+      "mismatched_bytes_by_channel": [
+        0,
+        0,
+        0
+      ],
+      "mismatched_rows": [],
+      "first_mismatch_y_x": null,
+      "max_absolute_error": 0
+    },
+    {
+      "file": "frame-000021.npy",
+      "expected_id": 310,
+      "expected_id_source": "majority_valid_optical_rows",
+      "valid_marker_rows": 480,
+      "invalid_marker_rows": [],
+      "optical_ids": {
+        "310": 480
+      },
+      "mixed_optical_ids": false,
+      "exact_match": true,
+      "mismatched_pixels": 0,
+      "mismatched_bytes": 0,
+      "mismatched_bytes_by_channel": [
+        0,
+        0,
+        0
+      ],
+      "mismatched_rows": [],
+      "first_mismatch_y_x": null,
+      "max_absolute_error": 0
+    },
+    {
+      "file": "frame-000022.npy",
+      "expected_id": 312,
+      "expected_id_source": "majority_valid_optical_rows",
+      "valid_marker_rows": 480,
+      "invalid_marker_rows": [],
+      "optical_ids": {
+        "312": 480
+      },
+      "mixed_optical_ids": false,
+      "exact_match": true,
+      "mismatched_pixels": 0,
+      "mismatched_bytes": 0,
+      "mismatched_bytes_by_channel": [
+        0,
+        0,
+        0
+      ],
+      "mismatched_rows": [],
+      "first_mismatch_y_x": null,
+      "max_absolute_error": 0
+    },
+    {
+      "file": "frame-000023.npy",
+      "expected_id": 314,
+      "expected_id_source": "majority_valid_optical_rows",
+      "valid_marker_rows": 480,
+      "invalid_marker_rows": [],
+      "optical_ids": {
+        "314": 480
+      },
+      "mixed_optical_ids": false,
+      "exact_match": true,
+      "mismatched_pixels": 0,
+      "mismatched_bytes": 0,
+      "mismatched_bytes_by_channel": [
+        0,
+        0,
+        0
+      ],
+      "mismatched_rows": [],
+      "first_mismatch_y_x": null,
+      "max_absolute_error": 0
+    },
+    {
+      "file": "frame-000024.npy",
+      "expected_id": 316,
+      "expected_id_source": "majority_valid_optical_rows",
+      "valid_marker_rows": 480,
+      "invalid_marker_rows": [],
+      "optical_ids": {
+        "316": 480
+      },
+      "mixed_optical_ids": false,
+      "exact_match": true,
+      "mismatched_pixels": 0,
+      "mismatched_bytes": 0,
+      "mismatched_bytes_by_channel": [
+        0,
+        0,
+        0
+      ],
+      "mismatched_rows": [],
+      "first_mismatch_y_x": null,
+      "max_absolute_error": 0
+    },
+    {
+      "file": "frame-000025.npy",
+      "expected_id": 318,
+      "expected_id_source": "majority_valid_optical_rows",
+      "valid_marker_rows": 480,
+      "invalid_marker_rows": [],
+      "optical_ids": {
+        "318": 480
+      },
+      "mixed_optical_ids": false,
+      "exact_match": true,
+      "mismatched_pixels": 0,
+      "mismatched_bytes": 0,
+      "mismatched_bytes_by_channel": [
+        0,
+        0,
+        0
+      ],
+      "mismatched_rows": [],
+      "first_mismatch_y_x": null,
+      "max_absolute_error": 0
+    },
+    {
+      "file": "frame-000026.npy",
+      "expected_id": 320,
+      "expected_id_source": "majority_valid_optical_rows",
+      "valid_marker_rows": 480,
+      "invalid_marker_rows": [],
+      "optical_ids": {
+        "320": 480
+      },
+      "mixed_optical_ids": false,
+      "exact_match": true,
+      "mismatched_pixels": 0,
+      "mismatched_bytes": 0,
+      "mismatched_bytes_by_channel": [
+        0,
+        0,
+        0
+      ],
+      "mismatched_rows": [],
+      "first_mismatch_y_x": null,
+      "max_absolute_error": 0
+    },
+    {
+      "file": "frame-000027.npy",
+      "expected_id": 321,
+      "expected_id_source": "majority_valid_optical_rows",
+      "valid_marker_rows": 480,
+      "invalid_marker_rows": [],
+      "optical_ids": {
+        "321": 480
+      },
+      "mixed_optical_ids": false,
+      "exact_match": true,
+      "mismatched_pixels": 0,
+      "mismatched_bytes": 0,
+      "mismatched_bytes_by_channel": [
+        0,
+        0,
+        0
+      ],
+      "mismatched_rows": [],
+      "first_mismatch_y_x": null,
+      "max_absolute_error": 0
+    },
+    {
+      "file": "frame-000028.npy",
+      "expected_id": 323,
+      "expected_id_source": "majority_valid_optical_rows",
+      "valid_marker_rows": 480,
+      "invalid_marker_rows": [],
+      "optical_ids": {
+        "323": 480
+      },
+      "mixed_optical_ids": false,
+      "exact_match": true,
+      "mismatched_pixels": 0,
+      "mismatched_bytes": 0,
+      "mismatched_bytes_by_channel": [
+        0,
+        0,
+        0
+      ],
+      "mismatched_rows": [],
+      "first_mismatch_y_x": null,
+      "max_absolute_error": 0
+    },
+    {
+      "file": "frame-000029.npy",
+      "expected_id": 325,
+      "expected_id_source": "majority_valid_optical_rows",
+      "valid_marker_rows": 480,
+      "invalid_marker_rows": [],
+      "optical_ids": {
+        "325": 480
+      },
+      "mixed_optical_ids": false,
+      "exact_match": true,
+      "mismatched_pixels": 0,
+      "mismatched_bytes": 0,
+      "mismatched_bytes_by_channel": [
+        0,
+        0,
+        0
+      ],
+      "mismatched_rows": [],
+      "first_mismatch_y_x": null,
+      "max_absolute_error": 0
+    },
+    {
+      "file": "frame-000030.npy",
+      "expected_id": 327,
+      "expected_id_source": "majority_valid_optical_rows",
+      "valid_marker_rows": 480,
+      "invalid_marker_rows": [],
+      "optical_ids": {
+        "327": 480
+      },
+      "mixed_optical_ids": false,
+      "exact_match": true,
+      "mismatched_pixels": 0,
+      "mismatched_bytes": 0,
+      "mismatched_bytes_by_channel": [
+        0,
+        0,
+        0
+      ],
+      "mismatched_rows": [],
+      "first_mismatch_y_x": null,
+      "max_absolute_error": 0
+    }
+  ]
+}

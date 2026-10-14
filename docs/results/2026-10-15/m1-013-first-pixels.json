@@ -1,0 +1,21 @@
+{
+  "expected_id": 30078,
+  "expected_id_source": "majority_valid_optical_rows",
+  "valid_marker_rows": 480,
+  "invalid_marker_rows": [],
+  "optical_ids": {
+    "30078": 480
+  },
+  "mixed_optical_ids": false,
+  "exact_match": true,
+  "mismatched_pixels": 0,
+  "mismatched_bytes": 0,
+  "mismatched_bytes_by_channel": [
+    0,
+    0,
+    0
+  ],
+  "mismatched_rows": [],
+  "first_mismatch_y_x": null,
+  "max_absolute_error": 0
+}

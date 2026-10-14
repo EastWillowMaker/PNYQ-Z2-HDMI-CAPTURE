@@ -1,0 +1,6 @@
+{
+  "archive": "artifacts/deploy/sender-m1-v4.tar.gz",
+  "sha256": "9020c91ea0d1fce69d183582d0795cb825d098e2c8622e8b83a7ed7d3dfa9752",
+  "sources_sha256": "ee090f6b0e46e4c514da11c0cdd5f5198a0f01a5bb1b9788915780377bb807c1",
+  "reason": "Fix VideoIn import to exact PYNQ 3.0.1 hierarchies module; 42 focused tests pass"
+}

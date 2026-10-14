@@ -1,0 +1,14 @@
+{
+  "archive": "artifacts/deploy/sender-m1-v3.tar.gz",
+  "sha256": "786631cac0e58efc3b821fa1b4ee19b0c4c13dd54a30c8082cab662032affd9a",
+  "files": {
+    "src/hdmi_capture/__init__.py": "2b9eb60f3d6cdca5b5bfba25440cc508016d746844a1f1bdf8554caf953ed39a",
+    "src/hdmi_capture/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "src/hdmi_capture/cli.py": "eb01a928fdbb2396e323b24b303fd1e8820d286e7411820e1330b1aa145f9279",
+    "src/hdmi_capture/client.py": "72d792ca910b6306696ae57c1ead7032d49fb4a3e2125eac499663c12debc047",
+    "src/hdmi_capture/protocol.py": "f47e8bd7bac61cb4a7d40cb1c765c9b256f1bd7c4d809d10ab1ea5f88f93fde2",
+    "src/hdmi_capture/sender.py": "88fe1285409122b3c9a7b19aeb1aeeec11758fe245fe044018e66ee546cb8d81",
+    "src/hdmi_capture/sources.py": "409e692d51f5a646b2e6953e397b9e5dabb32c030659ec41ee7ffcf763df34a2"
+  },
+  "purpose": "010 source-health integrity checks, startup gate-off sequencing, halt diagnostics, unsafe-shutdown hold, GPIO-only control attach; not yet hardware qualified"
+}

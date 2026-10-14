@@ -1,0 +1,50 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-m0$ cat /tmp/hdmi-capture-m0/hdmi-640.log; cat /tmp/hdmi-capture-m0/hdmi.pid; ps -eo pid,ppid,stat,args | grep "[h]dmi_capture.sender"; printf "\nCONSOLE_DONE_f560564cf7124d928228b4a001655a7c:%s\n" "$?"
+[?2004l{"listening": ["::", 9021, 0, 0], "source": "hdmi", "session_id": "2cd36664-3f0d-4802-90ff-6077458704c8"}
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/usr/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/tmp/hdmi-capture-m0/hdmi_capture/sender.py", line 218, in <module>
+    main()
+  File "/tmp/hdmi-capture-m0/hdmi_capture/sender.py", line 211, in main
+    asyncio.run(Sender(source, fps=args.fps, read_timeout=args.read_timeout,
+  File "/usr/lib/python3.10/asyncio/runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 646, in run_until_complete
+    return future.result()
+  File "/tmp/hdmi-capture-m0/hdmi_capture/sender.py", line 160, in run
+    await self.close()
+  File "/tmp/hdmi-capture-m0/hdmi_capture/sender.py", line 174, in close
+    await self._capture_task
+  File "/tmp/hdmi-capture-m0/hdmi_capture/sender.py", line 158, in run
+    self._capture_task.result()
+  File "/tmp/hdmi-capture-m0/hdmi_capture/sender.py", line 64, in _capture
+    sample = await asyncio.wait_for(self.source.read(), self.read_timeout)
+  File "/usr/lib/python3.10/asyncio/tasks.py", line 445, in wait_for
+    return fut.result()
+  File "/tmp/hdmi-capture-m0/hdmi_capture/sources.py", line 123, in read
+    pixels = await self.hdmi.readframe_async()
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/lib/video/hierarchies.py", line 167, in readframe_async
+    return await self._vdma.readchannel.readframe_async()
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/lib/video/dma.py", line 199, in readframe_async
+    return self._readframe_internal()
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/lib/video/dma.py", line 163, in _readframe_internal
+    captured.invalidate()
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/buffer.py", line 112, in invalidate
+    self.device.invalidate(
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/pl_server/xrt_device.py", line 403, in invalidate
+    raise RuntimeError("Invalidate Failed: " + str(ret))
+RuntimeError: Invalidate Failed: 4294967274
+Exception ignored in: <function UioController.__del__ at 0xb341c268>
+Traceback (most recent call last):
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/uio.py", line 79, in __del__
+  File "/usr/lib/python3.10/asyncio/events.py", line 656, in get_event_loop
+RuntimeError: There is no current event loop in thread 'MainThread'.
+double free or corruption (out)
+timeout: the monitored command dumped core
+8050
+
+CONSOLE_DONE_f560564cf7124d928228b4a001655a7c:1
+[?2004hxilinx@pynq:/tmp/hdmi-capture-m0$ 

@@ -1,0 +1,24 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-m0$ cat /tmp/hdmi-capture-m0/hdmi-pool.log; ps -o pid,stat,pcpu,pmem,rss,etime,args -p 9179; cat /proc/meminfo | head -5; printf "\nCONSOLE_DONE_f2aae93399e6447396ebeedb22862477:%s\n" "$?"
+[?2004l{"event": "source_startup", "stage": "pynq_import", "timestamp_ns": 2796411442499}
+{"event": "source_startup", "stage": "overlay_load", "timestamp_ns": 2805039048289}
+{"event": "source_startup", "stage": "hdmi_configure_wait_input_lock", "timestamp_ns": 2813758843304}
+{"event": "source_startup", "stage": "hdmi_mode_check", "timestamp_ns": 2828234227824}
+{"event": "source_startup", "stage": "dma_start", "timestamp_ns": 2828234739750}
+{"event": "source_startup", "stage": "source_ready", "timestamp_ns": 2828267393442}
+{"listening": ["::", 9021, 0, 0], "source": "hdmi", "session_id": "44afe1cf-73ff-4d0e-8fc5-956947fd21cb"}
+{"session_id": "44afe1cf-73ff-4d0e-8fc5-956947fd21cb", "counters": {"acquired": 10352, "startup_discarded": 1, "intentional_sampling_drops": 9991, "network_backpressure_drops": 322, "client_discarded": 3, "transport_enqueued": 31, "source_errors": 0, "network_errors": 3, "source_skips": null, "source_overruns": null, "source_invalid_frames": null}}
+Exception ignored in: <function UioController.__del__ at 0xb33b1a90>
+Traceback (most recent call last):
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/uio.py", line 79, in __del__
+  File "/usr/lib/python3.10/asyncio/events.py", line 656, in get_event_loop
+RuntimeError: There is no current event loop in thread 'MainThread'.
+  PID STAT %CPU %MEM   RSS     ELAPSED COMMAND
+MemTotal:         505428 kB
+MemFree:          196400 kB
+MemAvailable:     391496 kB
+Buffers:           27676 kB
+Cached:           168036 kB
+
+CONSOLE_DONE_f2aae93399e6447396ebeedb22862477:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-m0$ 

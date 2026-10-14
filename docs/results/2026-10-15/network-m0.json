@@ -1,0 +1,75 @@
+{
+  "timestamp": "2026-10-15T00:17:16.297412+08:00",
+  "authorization": "User Q2 ok",
+  "interface": "enx98fc84e0c4e8",
+  "original_connection_uuid": "864ebd1d-48cd-3cc5-bddd-93475bb4700e",
+  "original_state": "connecting IPv4 with no IP at immediate pre-setup inspection",
+  "temporary_connection_uuid": "3c670070-9c7b-4993-bed7-7f8161e80d6c",
+  "temporary_connection_name": "codex-hdmi-m0",
+  "temporary_persistent": false,
+  "commands": [
+    {
+      "argv": [
+        "nmcli",
+        "-t",
+        "-f",
+        "NAME,UUID,TYPE,DEVICE",
+        "connection",
+        "show"
+      ],
+      "exit_code": 0,
+      "stdout": "UD_HOME:3af90b9a-b02a-476a-a5b8-2b0b199450f5:802-11-wireless:wlp99s0\ncodex-hdmi-m0:3c670070-9c7b-4993-bed7-7f8161e80d6c:802-3-ethernet:enx98fc84e0c4e8\nlo:2ad21673-efae-4458-a2b6-b1f77dbf7d7a:loopback:lo\nmpqemubr0:2e7a2044-91ef-49e9-8bc0-b0ba017e03f3:bridge:mpqemubr0\ntap-f4fbc86384f:8f7b7165-4767-4c22-bdbc-1839f223d062:tun:tap-f4fbc86384f\nvirbr0:558d7f74-1670-4129-ace8-e599c9f8e8f1:bridge:virbr0\nWired connection 1:864ebd1d-48cd-3cc5-bddd-93475bb4700e:802-3-ethernet:\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "ip",
+        "-j",
+        "address",
+        "show",
+        "dev",
+        "enx98fc84e0c4e8"
+      ],
+      "exit_code": 0,
+      "stdout": "[{\"ifindex\":12,\"ifname\":\"enx98fc84e0c4e8\",\"flags\":[\"BROADCAST\",\"MULTICAST\",\"UP\",\"LOWER_UP\"],\"mtu\":1500,\"qdisc\":\"fq_codel\",\"operstate\":\"UP\",\"group\":\"default\",\"txqlen\":1000,\"link_type\":\"ether\",\"address\":\"98:fc:84:e0:c4:e8\",\"broadcast\":\"ff:ff:ff:ff:ff:ff\",\"addr_info\":[{\"family\":\"inet6\",\"local\":\"fe80::560f:ee4c:ed84:e6ce\",\"prefixlen\":64,\"scope\":\"link\",\"noprefixroute\":true,\"valid_life_time\":4294967295,\"preferred_life_time\":4294967295}]}]\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "ip",
+        "-j",
+        "route",
+        "show"
+      ],
+      "exit_code": 0,
+      "stdout": "[{\"dst\":\"default\",\"gateway\":\"192.168.1.1\",\"dev\":\"wlp99s0\",\"protocol\":\"dhcp\",\"prefsrc\":\"192.168.1.22\",\"metric\":600,\"flags\":[]},{\"dst\":\"10.46.167.0/24\",\"dev\":\"mpqemubr0\",\"protocol\":\"kernel\",\"scope\":\"link\",\"prefsrc\":\"10.46.167.1\",\"flags\":[]},{\"dst\":\"192.168.1.0/24\",\"dev\":\"wlp99s0\",\"protocol\":\"kernel\",\"scope\":\"link\",\"prefsrc\":\"192.168.1.22\",\"metric\":600,\"flags\":[]},{\"dst\":\"192.168.122.0/24\",\"dev\":\"virbr0\",\"protocol\":\"kernel\",\"scope\":\"link\",\"prefsrc\":\"192.168.122.1\",\"flags\":[\"linkdown\"]}]\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "ip",
+        "-6",
+        "-j",
+        "route",
+        "show"
+      ],
+      "exit_code": 0,
+      "stdout": "[{\"dst\":\"fe80::/64\",\"dev\":\"tap-f4fbc86384f\",\"protocol\":\"kernel\",\"metric\":256,\"flags\":[],\"pref\":\"medium\"},{\"dst\":\"fe80::/64\",\"dev\":\"mpqemubr0\",\"protocol\":\"kernel\",\"metric\":256,\"flags\":[],\"pref\":\"medium\"},{\"dst\":\"fe80::/64\",\"dev\":\"enx98fc84e0c4e8\",\"protocol\":\"kernel\",\"metric\":1024,\"flags\":[],\"pref\":\"medium\"}]\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "ping",
+        "-6",
+        "-c",
+        "3",
+        "-W",
+        "2",
+        "fe80::200:5ff:fe6b:1a0%enx98fc84e0c4e8"
+      ],
+      "exit_code": 0,
+      "stdout": "PING fe80::200:5ff:fe6b:1a0%enx98fc84e0c4e8 (fe80::200:5ff:fe6b:1a0%enx98fc84e0c4e8) 56 data bytes\n64 bytes from fe80::200:5ff:fe6b:1a0%enx98fc84e0c4e8: icmp_seq=1 ttl=64 time=0.327 ms\n64 bytes from fe80::200:5ff:fe6b:1a0%enx98fc84e0c4e8: icmp_seq=2 ttl=64 time=0.306 ms\n64 bytes from fe80::200:5ff:fe6b:1a0%enx98fc84e0c4e8: icmp_seq=3 ttl=64 time=0.280 ms\n\n--- fe80::200:5ff:fe6b:1a0%enx98fc84e0c4e8 ping statistics ---\n3 packets transmitted, 3 received, 0% packet loss, time 2066ms\nrtt min/avg/max/mdev = 0.280/0.304/0.327/0.019 ms\n",
+      "stderr": ""
+    }
+  ]
+}

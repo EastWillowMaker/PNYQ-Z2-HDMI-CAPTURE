@@ -1,0 +1,58 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-m1$ cat /tmp/hdmi-capture-m1/m1-013-v5.log; uptime; printf "\nCONSOLE_DONE_c0e601e84657420bb70b1a228126a096:%s\n" "$?"
+[?2004l{"event": "source_startup", "timestamp_ns": 3192393036487, "stage": "litex_artifact_verification"}
+{"event": "source_startup", "timestamp_ns": 3192892339730, "stage": "pynq_import"}
+{"event": "source_startup", "timestamp_ns": 3201203283699, "stage": "overlay_load"}
+{"event": "source_startup", "timestamp_ns": 3203293868742, "stage": "hdmi_configure_wait_input_lock"}
+{"event": "source_startup", "timestamp_ns": 3217637217551, "stage": "hdmi_mode_check"}
+{"event": "source_startup", "timestamp_ns": 3217637691890, "stage": "dma_start"}
+{"event": "source_startup", "timestamp_ns": 3217657758173, "stage": "source_ready"}
+{"event": "source_startup", "timestamp_ns": 3217658409982, "stage": "integrity_baseline", "counters": {"enabled": false, "observed_frames": 66, "selected_frames": 0, "completed_frames": 64, "dropped_frames": 66, "invalid_frames": 1, "snapshot_begin_ns": 3217658125213, "snapshot_end_ns": 3217658364234, "timestamp_clock": "board_monotonic", "snapshot_atomic": false, "sample_point": "sequential_gpio_reads_after_dma_start_before_capture_enable", "counter_bits": 32, "frontend_overflow_episodes": 0, "native_vsync_edges": 66, "overflow_units": "assertion_episodes_not_lost_frames", "frontend_underflow_episodes": 0}}
+{"event": "source_startup", "timestamp_ns": 3217658789841, "stage": "capture_enable_after_disabled_baseline"}
+{"listening": ["::", 9021, 0, 0], "source": "hdmi", "session_id": "7e7df424-ce4c-489f-ba4c-003beb80801b"}
+{"event": "source_cleanup", "timestamp_ns": 3927458291232, "stage": "dma_stop_begin"}
+{"event": "source_cleanup", "timestamp_ns": 3927458793761, "stage": "dma_stop_status_before", "control": 69635, "status": 65536}
+{"event": "source_cleanup", "timestamp_ns": 3927459531737, "stage": "dma_stop_status_after", "control": 69632, "status": 65537}
+{"event": "source_cleanup", "timestamp_ns": 3927459801946, "stage": "dma_stop_complete"}
+{"event": "source_cleanup", "timestamp_ns": 3927460130340, "stage": "pool_free_begin", "buffers": 5}
+{"event": "source_cleanup", "timestamp_ns": 3927463453718, "stage": "pool_free_complete"}
+{"session_id": "7e7df424-ce4c-489f-ba4c-003beb80801b", "counters": {"acquired": 38671, "startup_discarded": 1, "intentional_sampling_drops": 37250, "network_backpressure_drops": 191, "client_discarded": 4, "transport_enqueued": 1220, "source_errors": 1, "network_errors": 4, "source_skips": null, "source_overruns": null, "source_invalid_frames": null}, "dma_shutdown_safe": true, "source_integrity": {"startup": {"enabled": false, "observed_frames": 66, "selected_frames": 0, "completed_frames": 64, "dropped_frames": 66, "invalid_frames": 1, "snapshot_begin_ns": 3217658125213, "snapshot_end_ns": 3217658364234, "timestamp_clock": "board_monotonic", "snapshot_atomic": false, "sample_point": "sequential_gpio_reads_after_dma_start_before_capture_enable", "counter_bits": 32, "frontend_overflow_episodes": 0, "native_vsync_edges": 66, "overflow_units": "assertion_episodes_not_lost_frames", "frontend_underflow_episodes": 0}, "last": {"enabled": true, "observed_frames": 42654, "selected_frames": 42588, "completed_frames": 42652, "dropped_frames": 66, "invalid_frames": 1, "snapshot_begin_ns": 3927440568937, "snapshot_end_ns": 3927440791374, "timestamp_clock": "board_monotonic", "snapshot_atomic": false, "sample_point": "sequential_gpio_reads_after_dma_read_complete", "counter_bits": 32, "frontend_overflow_episodes": 0, "native_vsync_edges": 42654, "overflow_units": "assertion_episodes_not_lost_frames", "frontend_underflow_episodes": 0}, "failure": null}}
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/usr/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/tmp/hdmi-capture-m1/hdmi_capture/sender.py", line 327, in <module>
+    main()
+  File "/tmp/hdmi-capture-m1/hdmi_capture/sender.py", line 301, in main
+    asyncio.run(sender.run(args.host, args.port, args.duration))
+  File "/usr/lib/python3.10/asyncio/runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 646, in run_until_complete
+    return future.result()
+  File "/tmp/hdmi-capture-m1/hdmi_capture/sender.py", line 178, in run
+    await self.close()
+  File "/tmp/hdmi-capture-m1/hdmi_capture/sender.py", line 199, in close
+    await self._capture_task
+  File "/tmp/hdmi-capture-m1/hdmi_capture/sender.py", line 175, in run
+    self._capture_task.result()
+  File "/tmp/hdmi-capture-m1/hdmi_capture/sender.py", line 70, in _capture
+    sample = await asyncio.wait_for(self.source.read(), self.read_timeout)
+  File "/usr/lib/python3.10/asyncio/tasks.py", line 445, in wait_for
+    return fut.result()
+  File "/tmp/hdmi-capture-m1/hdmi_capture/sources.py", line 421, in read
+    sample = await super().read()
+  File "/tmp/hdmi-capture-m1/hdmi_capture/sources.py", line 204, in read
+    self._check_mode(self.hdmi.frontend.mode)
+  File "/tmp/hdmi-capture-m1/hdmi_capture/sources.py", line 160, in _check_mode
+    raise SourceError("M0 accepts only 640x480 with 24-bit DMA pixels")
+hdmi_capture.sources.SourceError: M0 accepts only 640x480 with 24-bit DMA pixels
+Exception ignored in: <function UioController.__del__ at 0xb33a90b8>
+Traceback (most recent call last):
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/uio.py", line 79, in __del__
+  File "/usr/lib/python3.10/asyncio/events.py", line 656, in get_event_loop
+RuntimeError: There is no current event loop in thread 'MainThread'.
+ 01:22:53 up  1:05,  1 user,  load average: 0.38, 0.43, 0.34
+
+CONSOLE_DONE_c0e601e84657420bb70b1a228126a096:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-m1$ 

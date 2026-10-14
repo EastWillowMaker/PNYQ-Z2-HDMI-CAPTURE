@@ -1,0 +1,5 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-m1/build013$ cd /tmp/hdmi-capture-m1 && (ulimit -c 0; nohup sudo -n env XILINX_XRT=/usr /usr/local/share/pynq-venv/bin/python -u -m hdmi_capture.sender --source litex --bitfile /tmp/hdmi-capture-m1/build013/capture.bit --manifest /tmp/hdmi-capture-m1/build013/build-manifest.json --host :: --port 9021 --fps 2 --duration 1000 --startup-diagnostics > m1-013-v4.log 2>&1 </dev/null & echo $! > m1-013-v4.pid); printf "\nCONSOLE_DONE_bb0f5f00905d461e9a7028bfb096e31c:%s\n" "$?"
+[?2004l
+CONSOLE_DONE_bb0f5f00905d461e9a7028bfb096e31c:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-m1$ 

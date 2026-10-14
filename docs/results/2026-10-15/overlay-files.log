@@ -1,0 +1,8 @@
+
+[?2004l[?2004hxilinx@pynq:~$ printf 'OVERLAY_FILES_BEGIN\n'; sha256sum /usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/overlays/base/base.bit /usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/overlays/base/base.hwh; cat /sys/class/fpga_manager/fpga0/state; printf 'OVERLAY_FILES_END\n'
+[?2004lOVERLAY_FILES_BEGIN
+ecabdcb5d483c75335ab6f043824a2386971c7b0ffd6e3315f24860bf5088eb6  /usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/overlays/base/base.bit
+cbd90c84f3a46d1eba95dff7ba7d0079812f7e46641a08e2318c9928cd36ce8f  /usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/overlays/base/base.hwh
+operating
+OVERLAY_FILES_END
+[?2004hxilinx@pynq:~$ 

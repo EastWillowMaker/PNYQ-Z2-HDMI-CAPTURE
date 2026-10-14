@@ -1,0 +1,14 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-m1$ mkdir -p /tmp/hdmi-capture-m1/build012 && cd /tmp/hdmi-capture-m1/build012 && curl -g --noproxy '*' --max-time 15 'http://[fe80::560f:ee4c:ed84:e6ce%eth0]:8765/bit-m1-012.tar.gz' -o bit-m1-012.tar.gz && sha256sum bit-m1-012.tar.gz && tar xzf bit-m1-012.tar.gz && sha256sum capture.bit capture.hwh build-manifest.json; printf "\nCONSOLE_DONE_389486c08631470895160af23d8b09c1:%s\n" "$?"
+[?2004l  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100  309k  100  309k    0     0  12.7M      0 --:--:-- --:--:-- --:--:-- 13.1M
+4ff808928ddd3c04cbe6c06b37c035c392ef414b382a1ec521990041bad5fb88  bit-m1-012.tar.gz
+tar: capture.bit: time stamp 2026-10-14 17:26:31 is 125599151.856489434 s in the future
+tar: capture.hwh: time stamp 2026-10-14 17:19:44 is 125598744.839907465 s in the future
+tar: build-manifest.json: time stamp 2026-10-14 17:26:41.5294898 is 125599162.368607973 s in the future
+6378c1f7cb7d490fd06845230be52a023b0e6f996a13c9d307388f34ad3afe34  capture.bit
+c27f1cad24599bb4c8f39afb2a92ead3f1061a78cd09478007f11e4b958afe74  capture.hwh
+66045c24654395f6e56d0d792b813b358cf5c1b73ae4ddd9a5eb14843d67f3dd  build-manifest.json
+
+CONSOLE_DONE_389486c08631470895160af23d8b09c1:0

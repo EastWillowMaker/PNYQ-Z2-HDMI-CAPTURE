@@ -1,0 +1,4 @@
+
+[?2004l[?2004hxilinx@pynq:~$ cd /tmp/hdmi-capture-m0 && nohup /usr/local/share/pynq-venv/bin/python -u -m hdmi_capture.sender --source synthetic --host :: --fps 5 --duration 25 > synthetic.log 2>&1 < /dev/null & ; printf "\nCONSOLE_DONE_5628f02c36fe4f4180b172b1d47c2c62:%s\n" "$?"
+[?2004l-bash: syntax error near unexpected token `;'
+[?2004hxilinx@pynq:~$ 

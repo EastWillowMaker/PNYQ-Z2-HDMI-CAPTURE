@@ -1,0 +1,242 @@
+[
+  {
+    "expected_id": 866,
+    "valid_marker_rows": 480,
+    "mixed_optical_ids": false,
+    "exact_match": false,
+    "mismatched_bytes": 211838,
+    "max_absolute_error": 1
+  },
+  {
+    "expected_id": 868,
+    "valid_marker_rows": 480,
+    "mixed_optical_ids": false,
+    "exact_match": false,
+    "mismatched_bytes": 211866,
+    "max_absolute_error": 1
+  },
+  {
+    "expected_id": 870,
+    "valid_marker_rows": 480,
+    "mixed_optical_ids": false,
+    "exact_match": false,
+    "mismatched_bytes": 211843,
+    "max_absolute_error": 1
+  },
+  {
+    "expected_id": 872,
+    "valid_marker_rows": 480,
+    "mixed_optical_ids": false,
+    "exact_match": false,
+    "mismatched_bytes": 211790,
+    "max_absolute_error": 1
+  },
+  {
+    "expected_id": 874,
+    "valid_marker_rows": 480,
+    "mixed_optical_ids": false,
+    "exact_match": false,
+    "mismatched_bytes": 211827,
+    "max_absolute_error": 1
+  },
+  {
+    "expected_id": 876,
+    "valid_marker_rows": 480,
+    "mixed_optical_ids": false,
+    "exact_match": false,
+    "mismatched_bytes": 211795,
+    "max_absolute_error": 1
+  },
+  {
+    "expected_id": 878,
+    "valid_marker_rows": 480,
+    "mixed_optical_ids": false,
+    "exact_match": false,
+    "mismatched_bytes": 211814,
+    "max_absolute_error": 1
+  },
+  {
+    "expected_id": 880,
+    "valid_marker_rows": 480,
+    "mixed_optical_ids": false,
+    "exact_match": false,
+    "mismatched_bytes": 211821,
+    "max_absolute_error": 1
+  },
+  {
+    "expected_id": 882,
+    "valid_marker_rows": 480,
+    "mixed_optical_ids": false,
+    "exact_match": false,
+    "mismatched_bytes": 211899,
+    "max_absolute_error": 1
+  },
+  {
+    "expected_id": 884,
+    "valid_marker_rows": 480,
+    "mixed_optical_ids": false,
+    "exact_match": false,
+    "mismatched_bytes": 211926,
+    "max_absolute_error": 1
+  },
+  {
+    "expected_id": 886,
+    "valid_marker_rows": 480,
+    "mixed_optical_ids": false,
+    "exact_match": false,
+    "mismatched_bytes": 211940,
+    "max_absolute_error": 1
+  },
+  {
+    "expected_id": 888,
+    "valid_marker_rows": 480,
+    "mixed_optical_ids": false,
+    "exact_match": false,
+    "mismatched_bytes": 211982,
+    "max_absolute_error": 1
+  },
+  {
+    "expected_id": 890,
+    "valid_marker_rows": 480,
+    "mixed_optical_ids": false,
+    "exact_match": false,
+    "mismatched_bytes": 212005,
+    "max_absolute_error": 1
+  },
+  {
+    "expected_id": 892,
+    "valid_marker_rows": 480,
+    "mixed_optical_ids": false,
+    "exact_match": false,
+    "mismatched_bytes": 211992,
+    "max_absolute_error": 1
+  },
+  {
+    "expected_id": 894,
+    "valid_marker_rows": 480,
+    "mixed_optical_ids": false,
+    "exact_match": false,
+    "mismatched_bytes": 211984,
+    "max_absolute_error": 1
+  },
+  {
+    "expected_id": 896,
+    "valid_marker_rows": 480,
+    "mixed_optical_ids": false,
+    "exact_match": false,
+    "mismatched_bytes": 211967,
+    "max_absolute_error": 1
+  },
+  {
+    "expected_id": 898,
+    "valid_marker_rows": 480,
+    "mixed_optical_ids": false,
+    "exact_match": false,
+    "mismatched_bytes": 211997,
+    "max_absolute_error": 1
+  },
+  {
+    "expected_id": 900,
+    "valid_marker_rows": 480,
+    "mixed_optical_ids": false,
+    "exact_match": false,
+    "mismatched_bytes": 211950,
+    "max_absolute_error": 1
+  },
+  {
+    "expected_id": 902,
+    "valid_marker_rows": 480,
+    "mixed_optical_ids": false,
+    "exact_match": false,
+    "mismatched_bytes": 211841,
+    "max_absolute_error": 1
+  },
+  {
+    "expected_id": 904,
+    "valid_marker_rows": 480,
+    "mixed_optical_ids": false,
+    "exact_match": false,
+    "mismatched_bytes": 211890,
+    "max_absolute_error": 1
+  },
+  {
+    "expected_id": 906,
+    "valid_marker_rows": 480,
+    "mixed_optical_ids": false,
+    "exact_match": false,
+    "mismatched_bytes": 211862,
+    "max_absolute_error": 1
+  },
+  {
+    "expected_id": 908,
+    "valid_marker_rows": 480,
+    "mixed_optical_ids": false,
+    "exact_match": false,
+    "mismatched_bytes": 211876,
+    "max_absolute_error": 1
+  },
+  {
+    "expected_id": 910,
+    "valid_marker_rows": 480,
+    "mixed_optical_ids": false,
+    "exact_match": false,
+    "mismatched_bytes": 211846,
+    "max_absolute_error": 1
+  },
+  {
+    "expected_id": 912,
+    "valid_marker_rows": 480,
+    "mixed_optical_ids": false,
+    "exact_match": false,
+    "mismatched_bytes": 211817,
+    "max_absolute_error": 1
+  },
+  {
+    "expected_id": 914,
+    "valid_marker_rows": 480,
+    "mixed_optical_ids": false,
+    "exact_match": false,
+    "mismatched_bytes": 211745,
+    "max_absolute_error": 1
+  },
+  {
+    "expected_id": 916,
+    "valid_marker_rows": 480,
+    "mixed_optical_ids": false,
+    "exact_match": false,
+    "mismatched_bytes": 211717,
+    "max_absolute_error": 1
+  },
+  {
+    "expected_id": 918,
+    "valid_marker_rows": 480,
+    "mixed_optical_ids": false,
+    "exact_match": false,
+    "mismatched_bytes": 211767,
+    "max_absolute_error": 1
+  },
+  {
+    "expected_id": 920,
+    "valid_marker_rows": 480,
+    "mixed_optical_ids": false,
+    "exact_match": false,
+    "mismatched_bytes": 211754,
+    "max_absolute_error": 1
+  },
+  {
+    "expected_id": 922,
+    "valid_marker_rows": 480,
+    "mixed_optical_ids": false,
+    "exact_match": false,
+    "mismatched_bytes": 211696,
+    "max_absolute_error": 1
+  },
+  {
+    "expected_id": 924,
+    "valid_marker_rows": 480,
+    "mixed_optical_ids": false,
+    "exact_match": false,
+    "mismatched_bytes": 211683,
+    "max_absolute_error": 1
+  }
+]

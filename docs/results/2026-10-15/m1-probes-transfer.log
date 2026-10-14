@@ -1,0 +1,11 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-m1/build009$ cd /tmp/hdmi-capture-m1 && curl -g --noproxy '*' --max-time 10 'http://[fe80::560f:ee4c:ed84:e6ce%eth0]:8765/gate-smoke.py' -o gate-smoke.py && curl -g --noproxy '*' --max-time 10 'http://[fe80::560f:ee4c:ed84:e6ce%eth0]:8765/board_resources.py' -o board_resources.py; printf "\nCONSOLE_DONE_900b8500de5943449599e0463a6cd7f3:%s\n" "$?"
+[?2004l  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   779  100   779    0     0  80086      0 --:--:-- --:--:-- --:--:-- 86555
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100  2178  100  2178    0     0   472k      0 --:--:-- --:--:-- --:--:--  708k
+
+CONSOLE_DONE_900b8500de5943449599e0463a6cd7f3:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-m1$ 

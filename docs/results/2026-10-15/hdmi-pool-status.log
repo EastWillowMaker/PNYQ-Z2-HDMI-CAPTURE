@@ -1,0 +1,6 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-m0$ cat /tmp/hdmi-capture-m0/hdmi-pool.log; printf "\nCONSOLE_DONE_3a27bda96939455a9675f8e0259c1f4e:%s\n" "$?"
+[?2004l{"event": "source_startup", "stage": "pynq_import", "timestamp_ns": 2796411442499}
+
+CONSOLE_DONE_3a27bda96939455a9675f8e0259c1f4e:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-m0$ 

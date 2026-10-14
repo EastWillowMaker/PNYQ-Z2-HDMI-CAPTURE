@@ -1,0 +1,6 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-m1$ sudo -n true; uptime; printf "\nCONSOLE_DONE_6f7f9bc72e91436fab951178265b6f9f:%s\n" "$?"
+[?2004l 00:43:00 up 26 min,  1 user,  load average: 0.02, 0.07, 0.15
+
+CONSOLE_DONE_6f7f9bc72e91436fab951178265b6f9f:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-m1$ 

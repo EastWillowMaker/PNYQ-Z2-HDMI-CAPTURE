@@ -1,0 +1,25 @@
+
+[?2004l[1]+  Done                    cd /tmp/hdmi-capture-m1 && nohup /usr/local/share/pynq-venv/bin/python board_resources.py 10604 --count 150 --interval 5 > m1-013-v5-resources.jsonl 2>&1 < /dev/null
+[?2004hxilinx@pynq:/tmp/hdmi-capture-m1$ tail -n 18 /tmp/hdmi-capture-m1/m1-013-v5.log; ps -p 10604 -o pid,stat,args; printf "\nCONSOLE_DONE_5ff9a272c403473589868db3fc405fc4:%s\n" "$?"
+[?2004l  File "/tmp/hdmi-capture-m1/hdmi_capture/sender.py", line 175, in run
+    self._capture_task.result()
+  File "/tmp/hdmi-capture-m1/hdmi_capture/sender.py", line 70, in _capture
+    sample = await asyncio.wait_for(self.source.read(), self.read_timeout)
+  File "/usr/lib/python3.10/asyncio/tasks.py", line 445, in wait_for
+    return fut.result()
+  File "/tmp/hdmi-capture-m1/hdmi_capture/sources.py", line 421, in read
+    sample = await super().read()
+  File "/tmp/hdmi-capture-m1/hdmi_capture/sources.py", line 204, in read
+    self._check_mode(self.hdmi.frontend.mode)
+  File "/tmp/hdmi-capture-m1/hdmi_capture/sources.py", line 160, in _check_mode
+    raise SourceError("M0 accepts only 640x480 with 24-bit DMA pixels")
+hdmi_capture.sources.SourceError: M0 accepts only 640x480 with 24-bit DMA pixels
+Exception ignored in: <function UioController.__del__ at 0xb33a90b8>
+Traceback (most recent call last):
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/uio.py", line 79, in __del__
+  File "/usr/lib/python3.10/asyncio/events.py", line 656, in get_event_loop
+RuntimeError: There is no current event loop in thread 'MainThread'.
+  PID STAT COMMAND
+
+CONSOLE_DONE_5ff9a272c403473589868db3fc405fc4:1
+[?2004hxilinx@pynq:/tmp

@@ -1,0 +1,11 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-m0$ ls /etc/profile.d; printf "XILINX_XRT=%s\n" "$XILINX_XRT"; ls /usr/xrt/setup.sh /opt/xilinx/xrt/setup.sh /usr/lib/libxrt_core.so* 2>/dev/null; cat /etc/profile.d/xrt_setup.sh 2>/dev/null; printf "\nCONSOLE_DONE_1490785c2cb34dc1aac4f85dde031a6d:%s\n" "$?"
+[?2004l01-locale-fix.sh    boardname.sh    debuginfod.sh  gawk.sh       sigrok.sh
+bash_completion.sh  debuginfod.csh  gawk.csh       pynq_venv.sh  xrt_setup.sh
+XILINX_XRT=/usr
+/usr/lib/libxrt_core.so    /usr/lib/libxrt_core.so.2.13.0
+/usr/lib/libxrt_core.so.2
+export XILINX_XRT=/usr
+
+CONSOLE_DONE_1490785c2cb34dc1aac4f85dde031a6d:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-m0$ 

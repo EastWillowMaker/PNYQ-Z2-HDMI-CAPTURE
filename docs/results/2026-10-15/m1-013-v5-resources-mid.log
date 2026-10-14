@@ -1,0 +1,7 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-m1$ tail -n 2 /tmp/hdmi-capture-m1/m1-013-v5-resources.jsonl; sudo -n true; printf "\nCONSOLE_DONE_0ff76be10aa84fa484965acf68ecac74:%s\n" "$?"
+[?2004l{"event": "resource_sample", "pid": 10604, "monotonic_seconds": 3388.06455427, "process_start_ticks": 319046, "process_cpu_percent_one_core": 40.54054595962086, "process_rss_bytes": 78479360, "memory": {"MemTotal_kib": 505428, "MemAvailable_kib": 324868, "SwapFree_kib": 524284, "CmaTotal_kib": 131072, "CmaFree_kib": 45664}}
+{"event": "resource_sample", "pid": 10604, "monotonic_seconds": 3393.070123487, "process_start_ticks": 319046, "process_cpu_percent_one_core": 39.15638591797818, "process_rss_bytes": 78479360, "memory": {"MemTotal_kib": 505428, "MemAvailable_kib": 324824, "SwapFree_kib": 524284, "CmaTotal_kib": 131072, "CmaFree_kib": 45904}}
+
+CONSOLE_DONE_0ff76be10aa84fa484965acf68ecac74:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-m1$ 

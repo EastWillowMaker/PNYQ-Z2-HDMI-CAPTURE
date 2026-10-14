@@ -1,0 +1,5 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-m1$ sudo -n kill -TERM 9375; printf "\nCONSOLE_DONE_4a345978d3104e26bc592729fb2a8956:%s\n" "$?"
+[?2004l
+CONSOLE_DONE_4a345978d3104e26bc592729fb2a8956:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-m1$ 

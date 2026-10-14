@@ -1,0 +1,6 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-metadata-export$ sudo -n true; uptime; printf "\nCONSOLE_DONE_20c572c9b3e648118637804457e7ede5:%s\n" "$?"
+[?2004l 01:00:10 up 43 min,  1 user,  load average: 0.15, 0.16, 0.16
+
+CONSOLE_DONE_20c572c9b3e648118637804457e7ede5:0
+[?2004hxilinx@pynq:/tmp/hdmi-metadata-export$ 

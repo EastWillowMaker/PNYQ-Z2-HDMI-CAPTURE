@@ -1,0 +1,6 @@
+
+[?2004l[?2004hxilinx@pynq:~$ cd /tmp/hdmi-capture-m0; nohup /usr/local/share/pynq-venv/bin/python -u -m hdmi_capture.sender --source synthetic --host :: --fps 5 --duration 40 > synthetic.log 2>&1 < /dev/null & echo $! > synthetic.pid; printf "\nCONSOLE_DONE_7c5bac211a74409c96f1d8abd77f3311:%s\n" "$?"
+[?2004l[1] 6671
+
+CONSOLE_DONE_7c5bac211a74409c96f1d8abd77f3311:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-m0$ 

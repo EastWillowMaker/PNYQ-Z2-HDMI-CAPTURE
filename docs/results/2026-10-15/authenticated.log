@@ -1,0 +1,5 @@
+
+[?2004l[?2004hxilinx@pynq:~$ sudo -n true; printf "\nCONSOLE_DONE_ac1047e5cf62455c95bc80e65bbbe63c:%s\n" "$?"
+[?2004l
+CONSOLE_DONE_ac1047e5cf62455c95bc80e65bbbe63c:0
+[?2004hxilinx@pynq:~$ 

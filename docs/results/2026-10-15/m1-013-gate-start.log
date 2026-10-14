@@ -1,0 +1,6 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-m1$ cd /tmp/hdmi-capture-m1 && sudo -n env XILINX_XRT=/usr /usr/local/share/pynq-venv/bin/python gate-smoke.py build013/capture.bit build013/build-manifest.json > gate-013.log 2>&1 & printf "\nCONSOLE_DONE_e86fd87709a1466dafb517c0fa2040a3:%s\n" "$?"
+[?2004l[1] 9670
+
+CONSOLE_DONE_e86fd87709a1466dafb517c0fa2040a3:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-m1$ 

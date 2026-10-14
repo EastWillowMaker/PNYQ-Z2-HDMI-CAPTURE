@@ -1,0 +1,8 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-m0$ curl -g --noproxy '*' --max-time 10 'http://[fe80::560f:ee4c:ed84:e6ce%eth0]:8765/probe.py' -o /tmp/hdmi-capture-m0/probe.py; cd /tmp/hdmi-capture-m0; (ulimit -c 0; nohup sudo -n env XILINX_XRT=/usr timeout --signal=INT --kill-after=5 80 /usr/local/share/pynq-venv/bin/python -u probe.py > probe.log 2>&1 < /dev/null & echo $! > probe.pid); printf "\nCONSOLE_DONE_b27bb7d384204c6980e971568b4748e5:%s\n" "$?"
+[?2004l  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   746  100   746    0     0  53415      0 --:--:-- --:--:-- --:--:-- 57384
+
+CONSOLE_DONE_b27bb7d384204c6980e971568b4748e5:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-m0$ 

@@ -1,0 +1,6 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-m1$ cd /tmp/hdmi-capture-m1 && nohup /usr/local/share/pynq-venv/bin/python board_resources.py 10604 --count 150 --interval 5 > m1-013-v5-resources.jsonl 2>&1 </dev/null & printf "\nCONSOLE_DONE_2791c0705ec2458b83be11120cae1161:%s\n" "$?"
+[?2004l[1] 10847
+
+CONSOLE_DONE_2791c0705ec2458b83be11120cae1161:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-m1$ 

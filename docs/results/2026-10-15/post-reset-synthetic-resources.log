@@ -1,0 +1,36 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-m1$ cat /tmp/hdmi-ps-check/resources.jsonl; dmesg | tail -15; uptime; printf "\nCONSOLE_DONE_fc272dc5875c4d53ba929969c5b26d5c:%s\n" "$?"
+[?2004l{"event": "resource_sample", "pid": 1243, "monotonic_seconds": 264.931403336, "process_start_ticks": 17946, "process_cpu_percent_one_core": null, "process_rss_bytes": 27611136, "memory": {"MemTotal_kib": 505428, "MemAvailable_kib": 372848, "SwapFree_kib": 524284, "CmaTotal_kib": 131072, "CmaFree_kib": 72788}}
+{"event": "resource_sample", "pid": 1243, "monotonic_seconds": 269.940105248, "process_start_ticks": 17946, "process_cpu_percent_one_core": 85.85058714909619, "process_rss_bytes": 27881472, "memory": {"MemTotal_kib": 505428, "MemAvailable_kib": 372084, "SwapFree_kib": 524284, "CmaTotal_kib": 131072, "CmaFree_kib": 72808}}
+{"event": "resource_sample", "pid": 1243, "monotonic_seconds": 274.94863017, "process_start_ticks": 17946, "process_cpu_percent_one_core": 84.45600383098197, "process_rss_bytes": 27881472, "memory": {"MemTotal_kib": 505428, "MemAvailable_kib": 372088, "SwapFree_kib": 524284, "CmaTotal_kib": 131072, "CmaFree_kib": 72808}}
+{"event": "resource_sample", "pid": 1243, "monotonic_seconds": 279.958070544, "process_start_ticks": 17946, "process_cpu_percent_one_core": 85.23906227454367, "process_rss_bytes": 27074560, "memory": {"MemTotal_kib": 505428, "MemAvailable_kib": 371752, "SwapFree_kib": 524284, "CmaTotal_kib": 131072, "CmaFree_kib": 72808}}
+{"event": "resource_sample", "pid": 1243, "monotonic_seconds": 284.960865103, "process_start_ticks": 17946, "process_cpu_percent_one_core": 84.9525190346719, "process_rss_bytes": 27074560, "memory": {"MemTotal_kib": 505428, "MemAvailable_kib": 371924, "SwapFree_kib": 524284, "CmaTotal_kib": 131072, "CmaFree_kib": 72812}}
+{"event": "resource_sample", "pid": 1243, "monotonic_seconds": 289.968833742, "process_start_ticks": 17946, "process_cpu_percent_one_core": 84.46538516752061, "process_rss_bytes": 27881472, "memory": {"MemTotal_kib": 505428, "MemAvailable_kib": 373008, "SwapFree_kib": 524284, "CmaTotal_kib": 131072, "CmaFree_kib": 72812}}
+{"event": "resource_sample", "pid": 1243, "monotonic_seconds": 294.97716523, "process_start_ticks": 17946, "process_cpu_percent_one_core": 83.4609292538903, "process_rss_bytes": 27881472, "memory": {"MemTotal_kib": 505428, "MemAvailable_kib": 372888, "SwapFree_kib": 524284, "CmaTotal_kib": 131072, "CmaFree_kib": 72812}}
+{"event": "resource_sample", "pid": 1243, "monotonic_seconds": 300.000166847, "process_start_ticks": 17946, "process_cpu_percent_one_core": 85.00893142356357, "process_rss_bytes": 27074560, "memory": {"MemTotal_kib": 505428, "MemAvailable_kib": 371960, "SwapFree_kib": 524284, "CmaTotal_kib": 131072, "CmaFree_kib": 72812}}
+{"event": "resource_sample", "pid": 1243, "monotonic_seconds": 305.05024903, "process_start_ticks": 17946, "process_cpu_percent_one_core": 85.34514575839377, "process_rss_bytes": 27881472, "memory": {"MemTotal_kib": 505428, "MemAvailable_kib": 371788, "SwapFree_kib": 524284, "CmaTotal_kib": 131072, "CmaFree_kib": 72812}}
+{"event": "resource_sample", "pid": 1243, "monotonic_seconds": 310.059174364, "process_start_ticks": 17946, "process_cpu_percent_one_core": 83.65067795198999, "process_rss_bytes": 27074560, "memory": {"MemTotal_kib": 505428, "MemAvailable_kib": 371816, "SwapFree_kib": 524284, "CmaTotal_kib": 131072, "CmaFree_kib": 72812}}
+{"event": "resource_sample", "pid": 1243, "monotonic_seconds": 315.067135975, "process_start_ticks": 17946, "process_cpu_percent_one_core": 83.86645757776382, "process_rss_bytes": 27881472, "memory": {"MemTotal_kib": 505428, "MemAvailable_kib": 371876, "SwapFree_kib": 524284, "CmaTotal_kib": 131072, "CmaFree_kib": 72812}}
+{"event": "resource_sample", "pid": 1243, "monotonic_seconds": 320.076241371, "process_start_ticks": 17946, "process_cpu_percent_one_core": 85.24476253603676, "process_rss_bytes": 27074560, "memory": {"MemTotal_kib": 505428, "MemAvailable_kib": 371672, "SwapFree_kib": 524284, "CmaTotal_kib": 131072, "CmaFree_kib": 72812}}
+{"event": "resource_sample", "pid": 1243, "monotonic_seconds": 325.080203997, "process_start_ticks": 17946, "process_cpu_percent_one_core": 84.33316384245859, "process_rss_bytes": 27881472, "memory": {"MemTotal_kib": 505428, "MemAvailable_kib": 371804, "SwapFree_kib": 524284, "CmaTotal_kib": 131072, "CmaFree_kib": 72812}}
+{"event": "resource_sample", "pid": 1243, "monotonic_seconds": 330.089094611, "process_start_ticks": 17946, "process_cpu_percent_one_core": 84.64948282458148, "process_rss_bytes": 27893760, "memory": {"MemTotal_kib": 505428, "MemAvailable_kib": 372900, "SwapFree_kib": 524284, "CmaTotal_kib": 131072, "CmaFree_kib": 72812}}
+{"event": "process_missing", "pid": 1243, "monotonic_seconds": 335.097191877}
+[   71.168843] [drm] Memory 3 is not reserved in device tree. Will allocate memory from CMA
+[   71.168901] [drm] Memory 4 is not reserved in device tree. Will allocate memory from CMA
+[   71.168965] [drm] zocl_xclbin_read_axlf 6848d1d4-346a-a7f7-1d96-e1d0699d17bc ret: 0
+[   71.233225] [drm] bitstream 6848d1d4-346a-a7f7-1d96-e1d0699d17bc locked, ref=1
+[   71.233290] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_add_context: Client pid(336) add context Domain(0) CU(0xffffffff) shared(true)
+[   71.233397] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_del_context: Client pid(336) del context Domain(0) CU(0xffffffff)
+[   71.233425] [drm] bitstream 6848d1d4-346a-a7f7-1d96-e1d0699d17bc unlocked, ref=0
+[   81.218114] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(336)
+[   83.543465] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(823), ret: 0
+[   83.543605] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(823)
+[   83.544191] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(823), ret: 0
+[   95.772860] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(823)
+[  305.155302] EXT4-fs (mmcblk0p2): error count since last fsck: 40
+[  305.155365] EXT4-fs (mmcblk0p2): initial error at time 1666393627: __ext4_find_entry:1623: inode 83481
+[  305.155396] EXT4-fs (mmcblk0p2): last error at time 1666393643: __ext4_find_entry:1623: inode 83481
+ 00:23:00 up 6 min,  1 user,  load average: 0.52, 0.78, 0.43
+
+CONSOLE_DONE_fc272dc5875c4d53ba929969c5b26d5c:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-m1$ 

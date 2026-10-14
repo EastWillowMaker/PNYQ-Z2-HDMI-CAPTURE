@@ -1,0 +1,14 @@
+
+[?2004l[1]-  Done                    nohup /usr/local/share/pynq-venv/bin/python -u -m hdmi_capture.sender --source synthetic --host :: --port 9021 --fps 5 --duration 150 > synthetic.log 2>&1 < /dev/null  (wd: /tmp/hdmi-ps-check)
+(wd now: /tmp/hdmi-capture-m1)
+[2]+  Done                    cd /tmp/hdmi-ps-check && curl -g --noproxy '*' --max-time 10 'http://[fe80::560f:ee4c:ed84:e6ce%eth0]:8765/board_resources.py' -o board_resources.py && nohup /usr/local/share/pynq-venv/bin/python -u board_resources.py 1243 --count 20 --interval 5 > resources.jsonl 2>&1 < /dev/null  (wd: /tmp/hdmi-ps-check)
+(wd now: /tmp/hdmi-capture-m1)
+[?2004hxilinx@pynq:/tmp/hdmi-capture-m1$ tail -2 /tmp/hdmi-ps-check/synthetic.log; tail -3 /tmp/hdmi-ps-check/resources.jsonl; sudo -n true; printf "\nCONSOLE_DONE_7a47eae61cb243b2b418fc952f10bf66:%s\n" "$?"
+[?2004l{"listening": ["::", 9021, 0, 0], "source": "synthetic", "session_id": "2697559f-7a44-4f99-a9b8-83fe9e3facd9"}
+{"session_id": "2697559f-7a44-4f99-a9b8-83fe9e3facd9", "counters": {"acquired": 8210, "startup_discarded": 0, "intentional_sampling_drops": 7460, "network_backpressure_drops": 154, "client_discarded": 1, "transport_enqueued": 595, "source_errors": 0, "network_errors": 0, "source_skips": null, "source_overruns": null, "source_invalid_frames": null}}
+{"event": "resource_sample", "pid": 1243, "monotonic_seconds": 325.080203997, "process_start_ticks": 17946, "process_cpu_percent_one_core": 84.33316384245859, "process_rss_bytes": 27881472, "memory": {"MemTotal_kib": 505428, "MemAvailable_kib": 371804, "SwapFree_kib": 524284, "CmaTotal_kib": 131072, "CmaFree_kib": 72812}}
+{"event": "resource_sample", "pid": 1243, "monotonic_seconds": 330.089094611, "process_start_ticks": 17946, "process_cpu_percent_one_core": 84.64948282458148, "process_rss_bytes": 27893760, "memory": {"MemTotal_kib": 505428, "MemAvailable_kib": 372900, "SwapFree_kib": 524284, "CmaTotal_kib": 131072, "CmaFree_kib": 72812}}
+{"event": "process_missing", "pid": 1243, "monotonic_seconds": 335.097191877}
+
+CONSOLE_DONE_7a47eae61cb243b2b418fc952f10bf66:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-m1$ 

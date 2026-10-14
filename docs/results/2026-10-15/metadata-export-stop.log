@@ -1,0 +1,5 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-metadata-export$ kill $(cat /tmp/hdmi-metadata-export/server.pid); sudo -n true; printf "\nCONSOLE_DONE_d5f5ac8150694f89869e369f302d4f43:%s\n" "$?"
+[?2004l
+CONSOLE_DONE_d5f5ac8150694f89869e369f302d4f43:0
+[?2004hxilinx@pynq:/tmp/hdmi-metadata-export$ 

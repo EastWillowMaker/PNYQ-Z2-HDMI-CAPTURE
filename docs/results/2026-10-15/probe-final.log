@@ -1,0 +1,52 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-m0$ cat /tmp/hdmi-capture-m0/probe.log; ps -eo pid,ppid,stat,args | grep "[p]robe.py"; printf "\nCONSOLE_DONE_70492d80c6364fa3b1379a1d102d62cb:%s\n" "$?"
+[?2004lPROBE import
+Timeout (0:00:10)!
+Thread 0xb6f08020 (most recent call first):
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/lib/pmod/pmod_als.py", line 20 in <module>
+  File "<frozen importlib._bootstrap>", line 241 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 883 in exec_module
+  File "<frozen importlib._bootstrap>", line 688 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1006 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1027 in _find_and_load
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/lib/pmod/__init__.py", line 17 in <module>
+  File "<frozen importlib._bootstrap>", line 241 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 883 in exec_module
+  File "<frozen importlib._bootstrap>", line 688 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1006 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1027 in _find_and_load
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/lib/__init__.py", line 27 in <module>
+  File "<frozen importlib._bootstrap>", line 241 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 883 in exec_module
+  File "<frozen importlib._bootstrap>", line 688 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1006 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1027 in _find_and_load
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/overlays/base/base.py", line 7 in <module>
+  File "<frozen importlib._bootstrap>", line 241 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 883 in exec_module
+  File "<frozen importlib._bootstrap>", line 688 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1006 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1027 in _find_and_load
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/overlays/base/__init__.py", line 4 in <module>
+  File "<frozen importlib._bootstrap>", line 241 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 883 in exec_module
+  File "<frozen importlib._bootstrap>", line 688 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1006 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1027 in _find_and_load
+  File "/tmp/hdmi-capture-m0/probe.py", line 6 in <module>
+PROBE load
+PROBE loaded ['switches_gpio', 'btns_gpio', 'video/hdmi_in/frontend/axi_gpio_hdmiin', 'video/hdmi_out/frontend/hdmi_out_hpd_video', 'rgbleds_gpio', 'leds_gpio', 'system_interrupts', 'video/axi_vdma', 'audio_codec_ctrl_0', 'video/hdmi_out/frontend/axi_dynclk', 'video/hdmi_out/frontend/vtc_out', 'video/hdmi_in/frontend/vtc_in', 'video/hdmi_in/pixel_pack', 'video/hdmi_in/color_convert', 'video/hdmi_out/color_convert', 'video/hdmi_out/pixel_unpack', 'trace_analyzer_pmodb/axi_dma_0', 'trace_analyzer_pi/axi_dma_0', 'trace_analyzer_pi/trace_cntrl_64_0', 'trace_analyzer_pmodb/trace_cntrl_32_0', 'ps7_0']
+PROBE clocks 100.0 142.857143 200.0 100.0
+PROBE frontend constructed
+PROBE configure
+Timeout (0:00:10)!
+Thread 0xb6f08020 (most recent call first):
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/lib/video/dvi.py", line 45 in start
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/lib/video/hierarchies.py", line 81 in configure
+  File "/tmp/hdmi-capture-m0/probe.py", line 15 in <module>
+PROBE configured VideoMode: width=1280 height=720 bpp=24 fps=60
+PROBE started
+PROBE frame (720, 1280, 3) uint8
+PROBE closed
+
+CONSOLE_DONE_70492d80c6364fa3b1379a1d102d62cb:1

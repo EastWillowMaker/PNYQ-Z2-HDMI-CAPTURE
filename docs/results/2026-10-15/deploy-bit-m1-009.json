@@ -1,0 +1,29 @@
+{
+  "archive": "artifacts/deploy/m1-009.tar.gz",
+  "sha256": "00556e66148b39b1d80ba4813889ff4109af24038ab0c8571da24390e3b9b70e",
+  "scope": "Candidate for limited smoke only; missing source-health monitor",
+  "build_manifest": {
+    "schema_version": 1,
+    "pynq_commit": "93ddd21ab623883590a8c8b07f0b157b2855da4b",
+    "gateware_sha256": "3d170c5815c939ea6849c1c876311a638c6d9e92156149f1d9aac5a730ac3c50",
+    "bitstream_sha256": "ec3686e388537301078ddd2978dbb22d40ec9acea0b95ee092c750f44b5b7422",
+    "hwh_sha256": "6ef0a537bfa8dfa2ce7e02dbeca191b9707b48d15c5d7149811f139dd8d844e0",
+    "geometry": [
+      640,
+      480
+    ],
+    "clock_hz": 142857132,
+    "pixel_clock_hz": 25200000,
+    "supported_pixel_clocks_hz": [
+      25175000,
+      25200000
+    ],
+    "edid_sha256": "e716887ace476531df33bbec6ff03e4b6c1148a243a00d3d237f1b77bff1050d",
+    "receiver_k_clk_range": 5,
+    "receiver_sync_base_sha256": "420b183e14bf84abaf81211acc3acc799d1e0e3a53a98c91f648564c010cc871",
+    "receiver_component_sha256": "d9c5473ee2a766483ef2105dc2cf0c8854cef948a45f17ee9ad698a3d1dbfe60",
+    "tool_version": "2025.2",
+    "setup_slack_ns": 0.229,
+    "hold_slack_ns": 0.017
+  }
+}

@@ -1,0 +1,7 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-m0$ cd /tmp/hdmi-capture-m0; nohup sudo -n env XILINX_XRT=/usr timeout --signal=INT --kill-after=5 240 /usr/local/share/pynq-venv/bin/python -u -m hdmi_capture.sender --source pynq --host :: --port 9021 --fps 1 --duration 180 > hdmi-xrt.log 2>&1 < /dev/null & echo $! > hdmi.pid; cat hdmi.pid; printf "\nCONSOLE_DONE_63dcac09e8a1443f9a21cc14095496ea:%s\n" "$?"
+[?2004l[1] 6983
+6983
+
+CONSOLE_DONE_63dcac09e8a1443f9a21cc14095496ea:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-m0$ 

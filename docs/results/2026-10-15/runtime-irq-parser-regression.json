@@ -1,0 +1,92 @@
+{
+  "evidence_level": "offline_execution_of_board_metadata_sources",
+  "python": "3.10.20 (main, Jun 11 2026, 04:03:45) [Clang 22.1.3 ]",
+  "dependencies": {
+    "pynqmetadata": "0.3.1",
+    "pynqutils": "0.1.0",
+    "pydantic": "1.9.1",
+    "jsonschema": "4.26.0",
+    "numpy": "1.26.4",
+    "setuptools": "80.10.2"
+  },
+  "metadata_source_sha256": {
+    "board-source/pynq/metadata/append_drivers_pass.py": "9f89eaa3bfa4edeff8a0817322faf2cba593c669916cc61211f99e15b131342e",
+    "board-source/pynq/metadata/clock_dict_view.py": "71c5a63a22a0fb695d3fc8350bda26c6840d24e2ebfcf25f70e45a278d9d53fc",
+    "board-source/pynq/metadata/gpio_dict_view.py": "ef01e7d0d8d487407813d856cd3d1e15d486d348b1bd7f156889f9a5f9d0f62f",
+    "board-source/pynq/metadata/hierarchy_dict_view.py": "b3fa8c9e50a4d1b416bfc070848a6470c0a30100e749e25a25a85efdde687567",
+    "board-source/pynq/metadata/interrupt_controllers_view.py": "8471ff6d2ac7e77fea6aab8898761fd1617226fae3bd4dbb2dc5e1317cafe2e2",
+    "board-source/pynq/metadata/interrupt_pins_view.py": "33ce091f6ecef999dc9a149f0ade321450428deee5f14e93ec20865fa7eaa802",
+    "board-source/pynq/metadata/ip_dict_view.py": "9c088a2075a536c5dbc54c3ca0a6d69db98e9cc5dc4216f4deb8f100a34f4c77",
+    "board-source/pynq/metadata/mem_dict_view.py": "032839c06cdd1c7fe10d92fa2bf0fd778215b1ccdbe73b4c71ee5ac7ae6ca165",
+    "board-source/pynq/metadata/metadata_view.py": "7a33853aa5c02d487360bcb3584b9940a19fbba44a25235ebe03a7c0e5232617",
+    "board-source/pynq/metadata/runtime_metadata_parser.py": "944d96b4be347555c26e2e9b38f4ef8bedf78800c2d6b3e34fec0782b36c4e02",
+    "board-source/pynq/metadata/xrt_metadata_extension.py": "3ae78f13ac7f8d25fdc576bcf6a305ea1cd54917e78a8b3b9d34cf100bb6d75a"
+  },
+  "package_namespace_stub": "pynq only; no hardware modules imported",
+  "physical_irq_delivery": "NOT_RUN",
+  "board_uio_mapping": "NOT_RUN",
+  "result": "PASS",
+  "records": [
+    {
+      "build": "012",
+      "hwh": "/home/eastwillow/Documents/litex-hdmi-capture/artifacts/m1-project-012/capture.hwh",
+      "hwh_sha256": "c27f1cad24599bb4c8f39afb2a92ead3f1061a78cd09478007f11e4b958afe74",
+      "parser_type": "pynq.metadata.runtime_metadata_parser.RuntimeMetadataParser",
+      "controllers": {},
+      "pins": {},
+      "vdma_interrupts": {}
+    },
+    {
+      "build": "013",
+      "hwh": "/home/eastwillow/Documents/litex-hdmi-capture/artifacts/m1-project-013/vivado/capture.gen/sources_1/bd/capture/hw_handoff/capture.hwh",
+      "hwh_sha256": "9d2dfef03a329807471635e3f8804e9981f7a41ee7aa905d6eb10024310c6aeb",
+      "parser_type": "pynq.metadata.runtime_metadata_parser.RuntimeMetadataParser",
+      "controllers": {
+        "system_interrupts": {
+          "parent": "",
+          "index": 0,
+          "raw_irq": 61
+        }
+      },
+      "pins": {
+        "video/axi_vdma/s2mm_introut": {
+          "controller": "system_interrupts",
+          "index": 0,
+          "fullpath": "video/axi_vdma/s2mm_introut"
+        },
+        "irq/In0": {
+          "controller": "system_interrupts",
+          "index": 0,
+          "fullpath": "irq/In0"
+        },
+        "video/hdmi_in/frontend/axi_gpio_hdmiin/ip2intc_irpt": {
+          "controller": "system_interrupts",
+          "index": 1,
+          "fullpath": "video/hdmi_in/frontend/axi_gpio_hdmiin/ip2intc_irpt"
+        },
+        "irq/In1": {
+          "controller": "system_interrupts",
+          "index": 1,
+          "fullpath": "irq/In1"
+        },
+        "video/hdmi_in/frontend/vtc_in/irq": {
+          "controller": "system_interrupts",
+          "index": 2,
+          "fullpath": "video/hdmi_in/frontend/vtc_in/irq"
+        },
+        "irq/In2": {
+          "controller": "system_interrupts",
+          "index": 2,
+          "fullpath": "irq/In2"
+        }
+      },
+      "vdma_interrupts": {
+        "s2mm_introut": {
+          "controller": "system_interrupts",
+          "index": 0,
+          "fullpath": "video/axi_vdma/s2mm_introut"
+        }
+      }
+    }
+  ]
+}

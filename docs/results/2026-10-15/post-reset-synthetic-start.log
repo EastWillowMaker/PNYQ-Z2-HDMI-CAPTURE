@@ -1,0 +1,6 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-ps-check$ cd /tmp/hdmi-ps-check; nohup /usr/local/share/pynq-venv/bin/python -u -m hdmi_capture.sender --source synthetic --host :: --port 9021 --fps 5 --duration 150 > synthetic.log 2>&1 < /dev/null & echo $! > synthetic.pid; printf "\nCONSOLE_DONE_b8152f657a614008a9f00761f1eba2cb:%s\n" "$?"
+[?2004l[1] 1243
+
+CONSOLE_DONE_b8152f657a614008a9f00761f1eba2cb:0
+[?2004hxilinx@pynq:/tmp/hdmi-ps-check$ 

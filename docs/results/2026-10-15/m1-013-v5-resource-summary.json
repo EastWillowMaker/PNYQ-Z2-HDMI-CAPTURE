@@ -1,0 +1,40 @@
+{
+  "scope": "Sampled sender process across v5 short/sustained/followup run; not instantaneous peaks",
+  "samples": 133,
+  "board_monotonic_start": 3262.754011823,
+  "board_monotonic_end": 3925.165848669,
+  "cpu_percent_one_core": {
+    "minimum": 33.75050809967105,
+    "mean": 38.94062702160337,
+    "maximum": 41.4555288417286
+  },
+  "rss_bytes": {
+    "minimum": 77369344,
+    "maximum": 81547264
+  },
+  "CmaFree_kib": {
+    "minimum": 44144,
+    "maximum": 47404
+  },
+  "sustained_window": {
+    "scope": "Board monotonic DMA-receipt metadata bounds; CPU samples average preceding ~5sec interval, boundary sample may overlap warmup",
+    "bounds": [
+      3281.772562182,
+      3881.758141411
+    ],
+    "samples": 120,
+    "cpu_percent_one_core": {
+      "min": 36.41933809302415,
+      "mean": 39.29600768795527,
+      "max": 41.4555288417286
+    },
+    "rss_bytes": {
+      "min": 78475264,
+      "max": 81240064
+    },
+    "CmaFree_kib": {
+      "min": 45324,
+      "max": 46552
+    }
+  }
+}

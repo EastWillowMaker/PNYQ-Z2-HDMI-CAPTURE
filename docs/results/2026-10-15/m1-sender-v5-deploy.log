@@ -1,0 +1,16 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-m1$ cd /tmp/hdmi-capture-m1 && curl -g --noproxy '*' --max-time 15 'http://[fe80::560f:ee4c:ed84:e6ce%eth0]:8765/sender-m1-v5.tar.gz' -o package-v5.tar.gz && sha256sum package-v5.tar.gz && tar xzf package-v5.tar.gz && sudo -n true; printf "\nCONSOLE_DONE_b2ba0a5ba1a34a86a55fde311bcb0f81:%s\n" "$?"
+[?2004l  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100 14833  100 14833    0     0  1204k      0 --:--:-- --:--:-- --:--:-- 1316k
+5b54cb9cb20a96f3491363afaca9557e882ed6b43346d11e2e94a187dead735d  package-v5.tar.gz
+tar: hdmi_capture/__init__.py: time stamp 2026-10-14 16:13:16.7008255 is 125593401.381843995 s in the future
+tar: hdmi_capture/__main__.py: time stamp 2026-10-14 16:13:16.7008255 is 125593401.380699214 s in the future
+tar: hdmi_capture/cli.py: time stamp 2026-10-14 16:20:31.1484249 is 125593835.827268121 s in the future
+tar: hdmi_capture/client.py: time stamp 2026-10-14 16:17:44.5704482 is 125593669.248266923 s in the future
+tar: hdmi_capture/protocol.py: time stamp 2026-10-14 16:16:12.4938903 is 125593577.170584106 s in the future
+tar: hdmi_capture/sender.py: time stamp 2026-10-14 17:09:13.7387981 is 125596758.414286725 s in the future
+tar: hdmi_capture/sources.py: time stamp 2026-10-14 17:47:15.9851167 is 125599040.659269158 s in the future
+
+CONSOLE_DONE_b2ba0a5ba1a34a86a55fde311bcb0f81:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-m1$ 

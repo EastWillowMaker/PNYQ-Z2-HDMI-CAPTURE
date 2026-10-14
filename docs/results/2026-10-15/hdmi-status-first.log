@@ -1,0 +1,37 @@
+
+[?2004l[1]+  Exit 1                  nohup sudo -n timeout --signal=INT --kill-after=5 240 /usr/local/share/pynq-venv/bin/python -u -m hdmi_capture.sender --source pynq --host :: --port 9021 --fps 1 --duration 180 > hdmi.log 2>&1 < /dev/null
+[?2004hxilinx@pynq:/tmp/hdmi-capture-m0$ cat /tmp/hdmi-capture-m0/hdmi.log; ps -o pid,ppid,stat,args -p 6825 --ppid 6825; printf "\nCONSOLE_DONE_c1c5148c0f424ce18e45339d454898f0:%s\n" "$?"
+[?2004l/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/pl_server/device.py:56: UserWarning: No devices found, is the XRT environment sourced?
+  warnings.warn(
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/usr/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/tmp/hdmi-capture-m0/hdmi_capture/sender.py", line 218, in <module>
+    main()
+  File "/tmp/hdmi-capture-m0/hdmi_capture/sender.py", line 211, in main
+    asyncio.run(Sender(source, fps=args.fps, read_timeout=args.read_timeout,
+  File "/usr/lib/python3.10/asyncio/runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 646, in run_until_complete
+    return future.result()
+  File "/tmp/hdmi-capture-m0/hdmi_capture/sender.py", line 149, in run
+    address = await self.start(host, port)
+  File "/tmp/hdmi-capture-m0/hdmi_capture/sender.py", line 139, in start
+    self.source.start()
+  File "/tmp/hdmi-capture-m0/hdmi_capture/sources.py", line 108, in start
+    self.overlay = BaseOverlay(self.bitfile)
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/overlays/base/base.py", line 57, in __init__
+    super().__init__(bitfile, **kwargs)
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/overlay.py", line 315, in __init__
+    super().__init__(bitfile_name, dtbo, partial=False, device=device)
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/bitstream.py", line 88, in __init__
+    device = Device.active_device
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/pl_server/device.py", line 71, in active_device
+    raise RuntimeError("No Devices Found")
+RuntimeError: No Devices Found
+  PID  PPID STAT COMMAND
+
+CONSOLE_DONE_c1c5148c0f424ce18e45339d454898f0:1
+[?2004hxilinx@pynq:/tmp/hdmi-capture-m0$ 

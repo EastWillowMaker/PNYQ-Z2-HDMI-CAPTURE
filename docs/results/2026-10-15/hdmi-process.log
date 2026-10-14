@@ -1,0 +1,13 @@
+
+[?2004l[1]+  Bus error               (core dumped) nohup sudo -n env XILINX_XRT=/usr timeout --signal=INT --kill-after=5 240 /usr/local/share/pynq-venv/bin/python -u -m hdmi_capture.sender --source pynq --host :: --port 9021 --fps 1 --duration 180 > hdmi-xrt.log 2>&1 < /dev/null
+[?2004hxilinx@pynq:/tmp/hdmi-capture-m0$ ps -eo pid,ppid,stat,pcpu,etime,args | grep "[h]dmi_capture.sender"; cat /sys/class/fpga_manager/fpga0/state; ls -l /sys/class/gpio; cat /tmp/hdmi-capture-m0/hdmi-xrt.log; printf "\nCONSOLE_DONE_b1d9b1bebbd34ce09f89cbabce227dbc:%s\n" "$?"
+[?2004loperating
+total 0
+--w------- 1 root root 4096 Oct 21 23:30 export
+lrwxrwxrwx 1 root root    0 Oct 21 23:30 gpio968 -> ../../devices/soc0/axi/e000a000.gpio/gpiochip0/gpio/gpio968
+lrwxrwxrwx 1 root root    0 Oct 21 23:28 gpiochip906 -> ../../devices/soc0/axi/e000a000.gpio/gpio/gpiochip906
+--w------- 1 root root 4096 Oct 21 23:28 unexport
+timeout: the monitored command dumped core
+
+CONSOLE_DONE_b1d9b1bebbd34ce09f89cbabce227dbc:0
+[?2004hxilinx@pynq:/

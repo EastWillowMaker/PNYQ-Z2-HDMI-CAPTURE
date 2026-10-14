@@ -1,0 +1,30 @@
+{
+  "kind": "board_synthetic_not_hdmi",
+  "frames": [
+    {
+      "frame_id": 1627,
+      "sequence": 1626,
+      "all_bytes_match": true
+    },
+    {
+      "frame_id": 1637,
+      "sequence": 1636,
+      "all_bytes_match": true
+    },
+    {
+      "frame_id": 1648,
+      "sequence": 1647,
+      "all_bytes_match": true
+    },
+    {
+      "frame_id": 1658,
+      "sequence": 1657,
+      "all_bytes_match": true
+    },
+    {
+      "frame_id": 1669,
+      "sequence": 1668,
+      "all_bytes_match": true
+    }
+  ]
+}

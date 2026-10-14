@@ -1,0 +1,7 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-m0$ cat /tmp/hdmi-capture-m0/synthetic.log; date -Iseconds; sudo -n true; printf "\nCONSOLE_DONE_908cf0aaa56049188e6a67043d61bc3f:%s\n" "$?"
+[?2004l{"listening": ["::", 9020, 0, 0], "source": "synthetic", "session_id": "ce9d55a5-9184-4c81-a6b6-4f12f90c47c7"}
+2022-10-22T00:02:05+00:00
+
+CONSOLE_DONE_908cf0aaa56049188e6a67043d61bc3f:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-m0$ 

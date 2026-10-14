@@ -1,0 +1,6 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-m1$ grep 'fabric' /proc/interrupts; sudo -n true; printf "\nCONSOLE_DONE_b1cb21fa631d4639bd72be8ac5ab1a0b:%s\n" "$?"
+[?2004l 56:      36299          0     GIC-0  61 Level     [01;31m[Kfabric[m[K
+
+CONSOLE_DONE_b1cb21fa631d4639bd72be8ac5ab1a0b:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-m1$ 

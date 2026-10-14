@@ -1,0 +1,63 @@
+
+[?2004l[1]+  Done                    cd /tmp/hdmi-capture-m1 && sudo -n env XILINX_XRT=/usr /usr/local/share/pynq-venv/bin/python gate-smoke.py build013/capture.bit build013/build-manifest.json > gate-013.log 2>&1
+[?2004hxilinx@pynq:/tmp/hdmi-capture-m1$ cat /tmp/hdmi-capture-m1/gate-013.log; sudo -n kill -INT 9375; printf "\nCONSOLE_DONE_40394ac45fa04e33bcba2600a4ae3698:%s\n" "$?"
+[?2004l{
+  "scope": "sequential GPIO snapshots; not per-DMA-frame association",
+  "before": {
+    "enabled": true,
+    "observed_frames": 4891,
+    "selected_frames": 4825,
+    "completed_frames": 4889,
+    "dropped_frames": 66,
+    "invalid_frames": 1,
+    "snapshot_begin_ns": 2914279691191,
+    "snapshot_end_ns": 2914280079727,
+    "timestamp_clock": "board_monotonic",
+    "snapshot_atomic": false,
+    "sample_point": "before_disable",
+    "counter_bits": 32,
+    "frontend_overflow_episodes": 0,
+    "native_vsync_edges": 4891,
+    "overflow_units": "assertion_episodes_not_lost_frames",
+    "frontend_underflow_episodes": 0
+  },
+  "disabled": {
+    "enabled": false,
+    "observed_frames": 4921,
+    "selected_frames": 4825,
+    "completed_frames": 4919,
+    "dropped_frames": 96,
+    "invalid_frames": 1,
+    "snapshot_begin_ns": 2914780845904,
+    "snapshot_end_ns": 2914781101006,
+    "timestamp_clock": "board_monotonic",
+    "snapshot_atomic": false,
+    "sample_point": "after_half_second_disabled",
+    "counter_bits": 32,
+    "frontend_overflow_episodes": 0,
+    "native_vsync_edges": 4921,
+    "overflow_units": "assertion_episodes_not_lost_frames",
+    "frontend_underflow_episodes": 0
+  },
+  "enabled": {
+    "enabled": true,
+    "observed_frames": 4951,
+    "selected_frames": 4855,
+    "completed_frames": 4949,
+    "dropped_frames": 96,
+    "invalid_frames": 1,
+    "snapshot_begin_ns": 2915281752383,
+    "snapshot_end_ns": 2915282010943,
+    "timestamp_clock": "board_monotonic",
+    "snapshot_atomic": false,
+    "sample_point": "after_half_second_enabled",
+    "counter_bits": 32,
+    "frontend_overflow_episodes": 0,
+    "native_vsync_edges": 4951,
+    "overflow_units": "assertion_episodes_not_lost_frames",
+    "frontend_underflow_episodes": 0
+  }
+}
+
+CONSOLE_DONE_40394ac45fa04e33bcba2600a4ae3698:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-m1$ 

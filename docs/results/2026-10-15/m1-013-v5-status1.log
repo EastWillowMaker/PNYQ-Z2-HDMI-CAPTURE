@@ -1,0 +1,9 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-m1$ tail -n 20 /tmp/hdmi-capture-m1/m1-013-v5.log; printf "\nCONSOLE_DONE_5ef356039baa4bd1a75ced38fe7aab80:%s\n" "$?"
+[?2004l{"event": "source_startup", "timestamp_ns": 3192393036487, "stage": "litex_artifact_verification"}
+{"event": "source_startup", "timestamp_ns": 3192892339730, "stage": "pynq_import"}
+{"event": "source_startup", "timestamp_ns": 3201203283699, "stage": "overlay_load"}
+{"event": "source_startup", "timestamp_ns": 3203293868742, "stage": "hdmi_configure_wait_input_lock"}
+
+CONSOLE_DONE_5ef356039baa4bd1a75ced38fe7aab80:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-m1$ 

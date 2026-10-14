@@ -1,0 +1,17 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-m1$ tail -n 18 /tmp/hdmi-capture-m1/m1-013-v4.log; ps -p 9375 -o pid,stat,args; printf "\nCONSOLE_DONE_9c5a0c7ccac545ab926ce8dbab177fac:%s\n" "$?"
+[?2004l{"event": "source_startup", "timestamp_ns": 2803499802470, "stage": "litex_artifact_verification"}
+{"event": "source_startup", "timestamp_ns": 2803997167183, "stage": "pynq_import"}
+{"event": "source_startup", "timestamp_ns": 2812368115146, "stage": "overlay_load"}
+{"event": "source_startup", "timestamp_ns": 2816711834204, "stage": "hdmi_configure_wait_input_lock"}
+{"event": "source_startup", "timestamp_ns": 2833846360148, "stage": "hdmi_mode_check"}
+{"event": "source_startup", "timestamp_ns": 2833846835434, "stage": "dma_start"}
+{"event": "source_startup", "timestamp_ns": 2833877979145, "stage": "source_ready"}
+{"event": "source_startup", "timestamp_ns": 2833878342499, "stage": "capture_enable_after_dma_start"}
+{"event": "source_startup", "timestamp_ns": 2833878917489, "stage": "integrity_baseline", "counters": {"enabled": true, "observed_frames": 66, "selected_frames": 0, "completed_frames": 64, "dropped_frames": 66, "invalid_frames": 1, "snapshot_begin_ns": 2833878639206, "snapshot_end_ns": 2833878868505, "timestamp_clock": "board_monotonic", "snapshot_atomic": false, "sample_point": "sequential_gpio_reads_after_dma_start_before_first_read", "counter_bits": 32, "frontend_overflow_episodes": 0, "native_vsync_edges": 66, "overflow_units": "assertion_episodes_not_lost_frames", "frontend_underflow_episodes": 0}}
+{"listening": ["::", 9021, 0, 0], "source": "hdmi", "session_id": "f303b88f-5278-4cd1-9e13-4ea96207a5fc"}
+  PID STAT COMMAND
+ 9375 R    /usr/local/share/pynq-venv/bin/python -u -m hdmi_capture.sender --sou
+
+CONSOLE_DONE_9c5a0c7ccac545ab926ce8dbab177fac:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-m1$ 
