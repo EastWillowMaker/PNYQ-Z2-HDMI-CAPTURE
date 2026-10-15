@@ -1,5 +1,13 @@
 # Progress and handoff
 
+2026-10-15 22:25 Asia/Taipei — readonly old-card rescue now ACTIVE after
+lsblk--tree correction. Source sdb/sdb1/sdb2 allRO=1, no raw writes. At~7m35s,
+8,174MB/51.16% recovered with0 read errors; rate fell from~50MB/s to variable
+sub-MB/s near8GB. Partial image/map underartifacts/sd-recovery/old-card-backup-001;
+no finalreport or filesystem checks yet. Sub-agent updated audit; no hardware
+health verdict. New-card flasher preparation passed and source reviewed;
+explicit overwrite consent/local execution still pending. New card untouched.
+
 2026-10-15 22:17 Asia/Taipei — user inserted new SD asmmcblk0 (SD64G,
 CID9f544953443634476194980972018201,58.3GiB) and old PYNQ SD assdb
 (14.9GiB, knownPYNQ/root UUIDs). Old boot partition unmounted, root unmounted.

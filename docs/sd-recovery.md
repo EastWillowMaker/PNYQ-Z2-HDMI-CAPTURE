@@ -124,3 +124,15 @@ proof of privileged execution. It has no interactive prompt beyond its explicit
 overwrite is accepted. The old-card helper was statically reviewed and its
 mount/map/partition/result handling tightened before use. Its first actual
 identity failure and the corrected nonprivileged check are recorded above.
+
+## In-progress operator result at22:25
+
+The corrected helper is running; source disk and both partitions readRO=1.
+At7m35s it had recovered8,174MB (51.16%) with0 read errors. The instantaneous
+rate slowed markedly near8GB, sometimes below1MB/s; the filtered host journal
+had no corresponding USB/reset/I/O errors. This is an observed read-performance
+problem, not an established root cause or final media-health verdict. The
+original image/map are still partial, so no filesystem-check conclusion exists.
+The backup process is bounded to1hour; if it times out, keep the partial image
+and map rather than starting over or repairing the source. The new-card write
+is independently prepared and remains unexecuted pending explicit acceptance.

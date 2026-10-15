@@ -37,8 +37,9 @@ recognizes the two partitions, and at 22:03:52 reports:
 
 The captured current-boot journal has no `sdb` medium error, `I/O error`, or
 `Buffer I/O error` line. This only describes the host session so far; it is not
-evidence that all card sectors are readable. The card was not subjected to a
-full read or filesystem check.
+evidence that all card sectors are readable. At the initial metadata-audit
+snapshot, no card-content read or filesystem check had been performed; the
+later partial preservation pass is described below.
 
 The first `dmesg --ctime` attempt failed with `Operation not permitted`.
 `journalctl -k` was readable and supplied the insertion evidence above. No
@@ -47,9 +48,9 @@ itself only as generic mass storage.
 
 The coordinator reports that unprivileged raw reads of `/dev/sdb` are denied
 and `sudo -n` requires interactive authentication. `ddrescue` was not
-installed at the time of this audit; the coordinator is preparing a local
-extracted package for imaging. This audit did not request interactive sudo or
-attempt a raw read.
+installed at the time of the initial metadata audit; a local extracted package
+was prepared for the controlled image pass. I did not request interactive sudo
+or perform any raw read.
 
 ## Assessment
 
@@ -66,13 +67,38 @@ filesystem metadata from an SD/media, reader, or board MMC read-path problem.
 The card's physical health remains unknown. A successful limited read would not
 clear that uncertainty.
 
-No filesystem repair, `fsck`, `e2fsck`, `fstrim`, mount, raw scan, or content
-read was performed here. No execution tests apply to this metadata-only audit.
+I performed no filesystem repair, `fsck`, `e2fsck`, `fstrim`, mount, raw scan,
+or content read. The coordinator later began a single forward ddrescue image
+pass; the sampled progress below is incomplete and does not establish a card
+health verdict. No filesystem checks have been reported yet.
+
+## Preservation pass snapshot (in progress)
+
+The coordinator reports the pass began at 2026-10-15 22:17:12 local. At the
+22:22:45 mapfile update, the saved map covered a `+` range from byte 0 through
+`0x1DD010000`, followed by a `?` range; it listed no bad-sector range. The
+mapfile snapshot therefore lagged the live console output.
+
+The ddrescue console log, last modified 22:23:02 local, shows 8,034 MB
+rescued (50.28%) after 5m50s, zero read errors, zero bad sectors, and zero bad
+areas. Its instantaneous rate varied across the sampled output and was
+349 kB/s at the latest complete progress record; average rate at that record
+was 22,955 kB/s. The coordinator's earlier 22:22:45 observation was about
+8,000 MB at 50.07%, 419 kB/s instantaneous, after an initial rate near
+50 MB/s. These are progress samples only; no cause for the rate variation is
+established.
+
+For the same interval, the filtered host kernel journal had no matching
+`sdb`/USB reset, disconnect, medium-error, `I/O error`, or `Buffer I/O` lines.
+Sysfs reported the reader state `running`; `/dev/sdb`, `/dev/sdb1`, and
+`/dev/sdb2` each reported kernel read-only state `1`. The block stat snapshot
+reported zero writes and two I/Os in progress. These observations do not
+establish whole-card readability or physical health. The image was still
+partial at this snapshot and was not inspected by this audit.
 
 ## Safe next evidence
 
-The parent is preparing a sector image with `ddrescue`; preserve its image and
-mapfile before further checking. After the image is complete, run non-writing
+Wait for the rescue pass and final mapfile/report. Then run non-writing
 filesystem checks against an explicitly read-only loop mapping of the image,
 not the source card. Check FAT and ext4 separately and record command exit
 status plus `e2fsck -fn` diagnostics. If imaging reports unreadable sectors,
