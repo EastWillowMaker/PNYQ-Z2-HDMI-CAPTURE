@@ -1,5 +1,22 @@
 # Progress and handoff
 
+Fresh-card capture replay PREPARED, NOT RUN (after storage pass).
+Unchanged sender-v10 and overlay017 archives copied to
+`/tmp/hdmi-capture-newcard-017-v10`; archives and paired bit/HWH hashes match.
+Fresh board PYNQ3.0.1/NumPy1.21.5 import passes. Dedicated NIC profile restored;
+2/2 scoped IPv6 pings pass. PC DP-2 currently disconnected with empty EDID.
+Prepared frontend-only preload with gate disabled and halted VDMA, followed by
+connected-DGL EDID verification before KMS. No pixel-validation relaxation.
+One operator command `bash artifacts/operator/new-card-kms-test.sh` handles
+local board auth, preload, host VT auth and fresh720s KMS/600s qualification.
+The root board supervisor waits for the sender's650s native timer; it never
+kills a DMA child on timeout. It saves kernel/storage checks after normal exit.
+This removes the need for cached sudo at the end of the long run. Failure to
+obtain a final safety result remains UNKNOWN and forbids another overlay load.
+Static Bash/Python checks pass; complete wrapper is NOT RUN. Actual board
+sudo-n-v requires a password after reboot; operator execution requested.
+`new-card-capture-preparation.json` records helper hashes and remaining checks.
+
 2026-10-15 23:09 Asia/Taipei: new-card normal REBOOT/PERSISTENCE PASSED.
 Operator wrapper completed at23:07:03: 49.202s normal reboot, changed boot ID,
 16,777,216-byte file retained with expected SHA256. All evidence hashes match.

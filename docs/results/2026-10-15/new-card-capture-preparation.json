@@ -1,0 +1,25 @@
+{
+  "status": "PREPARED_NOT_RUN",
+  "board_directory": "/tmp/hdmi-capture-newcard-017-v10",
+  "operator_command": "bash artifacts/operator/new-card-kms-test.sh",
+  "sender_archive_sha256": "8c716223f7928571a3704eb049e3827045c85168081f99b186b1009b24c298ae",
+  "overlay_archive_sha256": "15a5301661f5f67fbbff075d95e2af3729522a4a6c4bab967b3692d00061883c",
+  "helpers_sha256": {
+    "artifacts/operator/new-card-kms-test.sh": "098634d3b9377f840dc63d35a3f39d6527532154302c5ed54dec2833d36ee400",
+    "artifacts/operator/coordinate-new-card-kms.py": "0b63ca246893ffeb3d9dca2baaa7c9ba57ec6526d08cb0bdb8052a96215649d2",
+    "artifacts/operator/preload-new-card-hdmi.py": "a7111fef4c7770ffa3ffacf9587af828fb3f34d391c94f1914a7129e4b4c4663",
+    "artifacts/deploy/new-card-board-session.py": "b02250d4885a66213109696a27d7f3fda5f928a4b524f0746432992c9cf4a126"
+  },
+  "static_checks": [
+    "bash -n new-card-kms-test.sh",
+    "py_compile coordinator/preloader/board supervisor"
+  ],
+  "runtime_pending": [
+    "frontend preload and DGL EDID detection",
+    "fresh 600-second RGB capture",
+    "native DMA cleanup",
+    "post-run dmesg and persistence",
+    "source interruption/recovery and mode-change evidence"
+  ],
+  "full_m1_qualification": false
+}

@@ -1,0 +1,9 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-newcard-017-v10$ cd /tmp/hdmi-capture-newcard-017-v10 && test ! -e new-card-board-session.py && curl -g --noproxy "*" --max-time 20 "http://[fe80::560f:ee4c:ed84:e6ce%eth0]:8765/new-card-board-session.py" -o new-card-board-session.py && printf "b02250d4885a66213109696a27d7f3fda5f928a4b524f0746432992c9cf4a126  new-card-board-session.py\n" | sha256sum -c -; printf "\nCONSOLE_DONE_f444d23ec0684754bf9c2d67025ce601:%s\n" "$?"
+[?2004l  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100  3500  100  3500    0     0   359k      0 --:--:-- --:--:-- --:--:--  427k
+new-card-board-session.py: OK
+
+CONSOLE_DONE_f444d23ec0684754bf9c2d67025ce601:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-newcard-017-v10$ 

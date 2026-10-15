@@ -1,0 +1,9 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-newcard-017-v10$ cd /tmp/hdmi-capture-newcard-017-v10 && test ! -e preload-new-card-hdmi.py && curl -g --noproxy "*" --max-time 20 "http://[fe80::560f:ee4c:ed84:e6ce%eth0]:8765/preload-new-card-hdmi.py" -o preload-new-card-hdmi.py && printf "a7111fef4c7770ffa3ffacf9587af828fb3f34d391c94f1914a7129e4b4c4663  preload-new-card-hdmi.py\n" | sha256sum -c - && /usr/local/share/pynq-venv/bin/python -c "import pynq, numpy; print(pynq.__version__,numpy.__version__)"; printf "\nCONSOLE_DONE_1652078ae3ce4a68a17ef8f6a1799742:%s\n" "$?"
+[?2004l  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100  1048  100  1048    0     0   110k      0 --:--:-- --:--:-- --:--:--  127k
+preload-new-card-hdmi.py: OK
+3.0.1 1.21.5
+
+CONSOLE_DONE_1652078ae3ce4a68a17ef8f6a1799742:0

@@ -1,0 +1,6 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-newcard-017-v10$ sudo -n -v; printf "\nCONSOLE_DONE_3d0120476df34e2a8d653deb60f9423b:%s\n" "$?"
+[?2004lsudo: a password is required
+
+CONSOLE_DONE_3d0120476df34e2a8d653deb60f9423b:1
+[?2004hxilinx@pynq:/tmp/hdmi-capture-newcard-017-v10$ 
