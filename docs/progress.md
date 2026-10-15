@@ -1,5 +1,14 @@
 # Progress and handoff
 
+2026-10-15 20:44 Asia/Taipei — frame difference reproduced and isolated to a
+notification-triggered source-presentation failure mode. The first017 ten-minute
+run failed (1189/1200 exact;7 one-LSB cases and4 damaged-marker cases). Fixed-ID
+real-board notification regression: banners suppressed15/15 exact; enabled10/15
+fail. No FPGA/capture tolerance changed. User authorized temporary suppression;
+15-minute restore timer armed. Animated600s rerun `m1-017-v10-dnd` is active;
+board PID11749, resource sampler11880. Diagnosis and limitations:
+[frame difference](results/2026-10-15/frame-difference-diagnosis.md).
+
 2026-10-15 20:27 Asia/Taipei — build017/v10 first real RGB capture passed:
 11 distinct exact640x480 frames in5.399744s, zero pixel/mixed/repeat/metadata/
 transport errors. Raw DMA0x11001 auto-halted, held IDs and sampling arithmetic

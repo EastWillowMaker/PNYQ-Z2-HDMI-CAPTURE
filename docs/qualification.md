@@ -153,3 +153,21 @@ A failed source session reports physical overruns as unknown and preserves the
 actual last invalid geometry/orphan counter delta when readable. Final cleanup
 errors are separate from acquisition failures; inspect the final sender report
 and halt proof even after this receiver's frame-window criterion passes.
+
+## Desktop source presentation is part of the experiment
+
+The GLES fixture's exact8-bit readback precedes desktop presentation. It does
+not prove the HDMI connector transmits those same values. On the tested GNOME50
+AMD system, showing a notification on the primary monitor caused the fullscreen
+secondary test output to switch from XR24 direct scanout to XR30 composition,
+and real capture changed by up to1LSB. The same fixed source ID was exact before
+and after the notification. Suppressing notification banners passed the short
+controlled trigger test but did not prevent other long-run composition changes.
+
+Keep full byte comparison strict. Do not mask a low bit, learn a golden capture,
+or discard mismatches from the result. Record source events and DRM metadata
+alongside every run; metadata sampling is not continuous physical-output proof.
+`tools/check_hdmi_notification.py --help` describes the bounded real-board
+regression. It intentionally does not change desktop settings and is not a
+substitute for the health/accounting checks in this qualification tool.
+See [evidence and limits](results/2026-10-15/frame-difference-diagnosis.md).

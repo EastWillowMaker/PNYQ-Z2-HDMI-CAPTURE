@@ -12,6 +12,10 @@ Physical HDMI cable removal/reinsertion remains pending.
 M1 is incomplete: the new single-credit path adds required physical source IDs
 and sampling counts. Build017 passed CAD and its first real capture smoke:
 11 distinct byte-exact frames with automatic DMA halt and reconciled source IDs.
+Its first ten-minute run failed pixel comparison (1189/1200 exact). Desktop
+notifications reproducibly trigger one-LSB differences through source composition;
+suppressing banners alone is insufficient. See the
+[diagnosis](docs/results/2026-10-15/frame-difference-diagnosis.md).
 Ten-minute and interruption qualification remain pending. See
 [current progress](docs/progress.md).
 

@@ -1,0 +1,122 @@
+{"driver": "wayland", "GL_version": "OpenGL ES 3.2 Mesa 26.0.3-1ubuntu1", "GL_renderer": "AMD Radeon 890M Graphics (radeonsi, strix1, ACO, DRM 3.64, 7.0.0-38-generic)", "channel_bits": {"red": {"SDL": 8, "GL": 8}, "green": {"SDL": 8, "GL": 8}, "blue": {"SDL": 8, "GL": 8}, "alpha": {"SDL": 0, "GL": 0}}}
+Synthetic framebuffer exact: checks=1, frame-id=100000, bytes=921600
+Fixture ready: monitor-index=1, frame-id=100000, renderer=GLES
+Synthetic framebuffer exact: checks=50, frame-id=100049, bytes=921600
+Synthetic framebuffer exact: checks=100, frame-id=100099, bytes=921600
+Synthetic framebuffer exact: checks=150, frame-id=100149, bytes=921600
+Synthetic framebuffer exact: checks=200, frame-id=100199, bytes=921600
+Synthetic framebuffer exact: checks=250, frame-id=100249, bytes=921600
+Synthetic framebuffer exact: checks=300, frame-id=100299, bytes=921600
+Synthetic framebuffer exact: checks=350, frame-id=100349, bytes=921600
+Synthetic framebuffer exact: checks=400, frame-id=100399, bytes=921600
+Synthetic framebuffer exact: checks=450, frame-id=100449, bytes=921600
+Synthetic framebuffer exact: checks=500, frame-id=100499, bytes=921600
+Synthetic framebuffer exact: checks=550, frame-id=100549, bytes=921600
+Synthetic framebuffer exact: checks=600, frame-id=100599, bytes=921600
+Synthetic framebuffer exact: checks=650, frame-id=100649, bytes=921600
+Synthetic framebuffer exact: checks=700, frame-id=100699, bytes=921600
+Synthetic framebuffer exact: checks=750, frame-id=100749, bytes=921600
+Synthetic framebuffer exact: checks=800, frame-id=100799, bytes=921600
+Synthetic framebuffer exact: checks=850, frame-id=100849, bytes=921600
+Synthetic framebuffer exact: checks=900, frame-id=100899, bytes=921600
+Synthetic framebuffer exact: checks=950, frame-id=100949, bytes=921600
+Synthetic framebuffer exact: checks=1000, frame-id=100999, bytes=921600
+Synthetic framebuffer exact: checks=1050, frame-id=101049, bytes=921600
+Synthetic framebuffer exact: checks=1100, frame-id=101099, bytes=921600
+Synthetic framebuffer exact: checks=1150, frame-id=101149, bytes=921600
+Synthetic framebuffer exact: checks=1200, frame-id=101199, bytes=921600
+Synthetic framebuffer exact: checks=1250, frame-id=101249, bytes=921600
+Synthetic framebuffer exact: checks=1300, frame-id=101299, bytes=921600
+Synthetic framebuffer exact: checks=1350, frame-id=101349, bytes=921600
+Synthetic framebuffer exact: checks=1400, frame-id=101399, bytes=921600
+Synthetic framebuffer exact: checks=1450, frame-id=101449, bytes=921600
+Synthetic framebuffer exact: checks=1500, frame-id=101499, bytes=921600
+Synthetic framebuffer exact: checks=1550, frame-id=101549, bytes=921600
+Synthetic framebuffer exact: checks=1600, frame-id=101599, bytes=921600
+Synthetic framebuffer exact: checks=1650, frame-id=101649, bytes=921600
+Synthetic framebuffer exact: checks=1700, frame-id=101699, bytes=921600
+Synthetic framebuffer exact: checks=1750, frame-id=101749, bytes=921600
+Synthetic framebuffer exact: checks=1800, frame-id=101799, bytes=921600
+Synthetic framebuffer exact: checks=1850, frame-id=101849, bytes=921600
+Synthetic framebuffer exact: checks=1900, frame-id=101899, bytes=921600
+Synthetic framebuffer exact: checks=1950, frame-id=101949, bytes=921600
+Synthetic framebuffer exact: checks=2000, frame-id=101999, bytes=921600
+Synthetic framebuffer exact: checks=2050, frame-id=102049, bytes=921600
+Synthetic framebuffer exact: checks=2100, frame-id=102099, bytes=921600
+Synthetic framebuffer exact: checks=2150, frame-id=102149, bytes=921600
+Synthetic framebuffer exact: checks=2200, frame-id=102199, bytes=921600
+Synthetic framebuffer exact: checks=2250, frame-id=102249, bytes=921600
+Synthetic framebuffer exact: checks=2300, frame-id=102299, bytes=921600
+Synthetic framebuffer exact: checks=2350, frame-id=102349, bytes=921600
+Synthetic framebuffer exact: checks=2400, frame-id=102399, bytes=921600
+Synthetic framebuffer exact: checks=2450, frame-id=102449, bytes=921600
+Synthetic framebuffer exact: checks=2500, frame-id=102499, bytes=921600
+Synthetic framebuffer exact: checks=2550, frame-id=102549, bytes=921600
+Synthetic framebuffer exact: checks=2600, frame-id=102599, bytes=921600
+Synthetic framebuffer exact: checks=2650, frame-id=102649, bytes=921600
+Synthetic framebuffer exact: checks=2700, frame-id=102699, bytes=921600
+Synthetic framebuffer exact: checks=2750, frame-id=102749, bytes=921600
+Synthetic framebuffer exact: checks=2800, frame-id=102799, bytes=921600
+Synthetic framebuffer exact: checks=2850, frame-id=102849, bytes=921600
+Synthetic framebuffer exact: checks=2900, frame-id=102899, bytes=921600
+Synthetic framebuffer exact: checks=2950, frame-id=102949, bytes=921600
+Synthetic framebuffer exact: checks=3000, frame-id=102999, bytes=921600
+Synthetic framebuffer exact: checks=3050, frame-id=103049, bytes=921600
+Synthetic framebuffer exact: checks=3100, frame-id=103099, bytes=921600
+Synthetic framebuffer exact: checks=3150, frame-id=103149, bytes=921600
+Synthetic framebuffer exact: checks=3200, frame-id=103199, bytes=921600
+Synthetic framebuffer exact: checks=3250, frame-id=103249, bytes=921600
+Synthetic framebuffer exact: checks=3300, frame-id=103299, bytes=921600
+Synthetic framebuffer exact: checks=3350, frame-id=103349, bytes=921600
+Synthetic framebuffer exact: checks=3400, frame-id=103399, bytes=921600
+Synthetic framebuffer exact: checks=3450, frame-id=103449, bytes=921600
+Synthetic framebuffer exact: checks=3500, frame-id=103499, bytes=921600
+Synthetic framebuffer exact: checks=3550, frame-id=103549, bytes=921600
+Synthetic framebuffer exact: checks=3600, frame-id=103599, bytes=921600
+Synthetic framebuffer exact: checks=3650, frame-id=103649, bytes=921600
+Synthetic framebuffer exact: checks=3700, frame-id=103699, bytes=921600
+Synthetic framebuffer exact: checks=3750, frame-id=103749, bytes=921600
+Synthetic framebuffer exact: checks=3800, frame-id=103799, bytes=921600
+Synthetic framebuffer exact: checks=3850, frame-id=103849, bytes=921600
+Synthetic framebuffer exact: checks=3900, frame-id=103899, bytes=921600
+Synthetic framebuffer exact: checks=3950, frame-id=103949, bytes=921600
+Synthetic framebuffer exact: checks=4000, frame-id=103999, bytes=921600
+Synthetic framebuffer exact: checks=4050, frame-id=104049, bytes=921600
+Synthetic framebuffer exact: checks=4100, frame-id=104099, bytes=921600
+Synthetic framebuffer exact: checks=4150, frame-id=104149, bytes=921600
+Synthetic framebuffer exact: checks=4200, frame-id=104199, bytes=921600
+Synthetic framebuffer exact: checks=4250, frame-id=104249, bytes=921600
+Synthetic framebuffer exact: checks=4300, frame-id=104299, bytes=921600
+Synthetic framebuffer exact: checks=4350, frame-id=104349, bytes=921600
+Synthetic framebuffer exact: checks=4400, frame-id=104399, bytes=921600
+Synthetic framebuffer exact: checks=4450, frame-id=104449, bytes=921600
+Synthetic framebuffer exact: checks=4500, frame-id=104499, bytes=921600
+Synthetic framebuffer exact: checks=4550, frame-id=104549, bytes=921600
+Synthetic framebuffer exact: checks=4600, frame-id=104599, bytes=921600
+Synthetic framebuffer exact: checks=4650, frame-id=104649, bytes=921600
+Synthetic framebuffer exact: checks=4700, frame-id=104699, bytes=921600
+Synthetic framebuffer exact: checks=4750, frame-id=104749, bytes=921600
+Synthetic framebuffer exact: checks=4800, frame-id=104799, bytes=921600
+Synthetic framebuffer exact: checks=4850, frame-id=104849, bytes=921600
+Synthetic framebuffer exact: checks=4900, frame-id=104899, bytes=921600
+Synthetic framebuffer exact: checks=4950, frame-id=104949, bytes=921600
+Synthetic framebuffer exact: checks=5000, frame-id=104999, bytes=921600
+Synthetic framebuffer exact: checks=5050, frame-id=105049, bytes=921600
+Synthetic framebuffer exact: checks=5100, frame-id=105099, bytes=921600
+Synthetic framebuffer exact: checks=5150, frame-id=105149, bytes=921600
+Synthetic framebuffer exact: checks=5200, frame-id=105199, bytes=921600
+Synthetic framebuffer exact: checks=5250, frame-id=105249, bytes=921600
+Synthetic framebuffer exact: checks=5300, frame-id=105299, bytes=921600
+Traceback (most recent call last):
+  File "/home/eastwillow/Documents/litex-hdmi-capture/tools/hdmi_pattern_gl.py", line 340, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/home/eastwillow/Documents/litex-hdmi-capture/tools/hdmi_pattern_gl.py", line 324, in main
+    run(sdl, gl, args.monitor_index, args.frame_id, args.animate,
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        args.interval_ms, args.duration, args.self_check, events)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eastwillow/Documents/litex-hdmi-capture/tools/hdmi_pattern_gl.py", line 269, in run
+    sdl.SDL_GL_SwapWindow(window)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+KeyboardInterrupt

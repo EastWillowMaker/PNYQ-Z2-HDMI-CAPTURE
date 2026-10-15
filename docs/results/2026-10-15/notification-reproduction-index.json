@@ -1,0 +1,3254 @@
+{
+  "clock": "host_monotonic",
+  "nearest_scanout_is_not_continuous_proof": true,
+  "runs": {
+    "notify-a": [
+      {
+        "received_monotonic": 257369.060708171,
+        "verification": {
+          "expected_id": 105027,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257368992016811,
+          "sample_finished_monotonic_ns": 257368992185480,
+          "unix_time_ns": 1792067981446884064,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 497,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257369.548738151,
+        "verification": {
+          "expected_id": 105029,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257369492277875,
+          "sample_finished_monotonic_ns": 257369492559693,
+          "unix_time_ns": 1792067981947258737,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 497,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257370.048766927,
+        "verification": {
+          "expected_id": 105031,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257369992579549,
+          "sample_finished_monotonic_ns": 257369992834367,
+          "unix_time_ns": 1792067982447533671,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 497,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257370.551559782,
+        "verification": {
+          "expected_id": 105033,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257370492927103,
+          "sample_finished_monotonic_ns": 257370493103171,
+          "unix_time_ns": 1792067982947801705,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 497,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257371.052240883,
+        "verification": {
+          "expected_id": 105035,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257370993225957,
+          "sample_finished_monotonic_ns": 257370993390866,
+          "unix_time_ns": 1792067983448089600,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 497,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257371.55719395,
+        "verification": {
+          "expected_id": 105036,
+          "exact_match": false,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 211307,
+          "max_absolute_error": 1
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257371493495201,
+          "sample_finished_monotonic_ns": 257371493660530,
+          "unix_time_ns": 1792067983948359014,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 499,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR30",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257372.049853144,
+        "verification": {
+          "expected_id": 105038,
+          "exact_match": false,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 211348,
+          "max_absolute_error": 1
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257371993816415,
+          "sample_finished_monotonic_ns": 257371994104483,
+          "unix_time_ns": 1792067984448804047,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 499,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR30",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257372.540171716,
+        "verification": {
+          "expected_id": 105040,
+          "exact_match": false,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 211406,
+          "max_absolute_error": 1
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257372494079709,
+          "sample_finished_monotonic_ns": 257372494238378,
+          "unix_time_ns": 1792067984948937262,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 499,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR30",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257373.043803814,
+        "verification": {
+          "expected_id": 105042,
+          "exact_match": false,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 211401,
+          "max_absolute_error": 1
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257372994353673,
+          "sample_finished_monotonic_ns": 257372994517822,
+          "unix_time_ns": 1792067985449216346,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 499,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR30",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257373.541826026,
+        "verification": {
+          "expected_id": 105044,
+          "exact_match": false,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 211420,
+          "max_absolute_error": 1
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257373494607987,
+          "sample_finished_monotonic_ns": 257373494758306,
+          "unix_time_ns": 1792067985949456590,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 499,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR30",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257374.040032646,
+        "verification": {
+          "expected_id": 105046,
+          "exact_match": false,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 211476,
+          "max_absolute_error": 1
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257373994874682,
+          "sample_finished_monotonic_ns": 257373995178589,
+          "unix_time_ns": 1792067986449877773,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 499,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR30",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257374.532413113,
+        "verification": {
+          "expected_id": 105048,
+          "exact_match": false,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 211509,
+          "max_absolute_error": 1
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257374495195705,
+          "sample_finished_monotonic_ns": 257374495364264,
+          "unix_time_ns": 1792067986950062778,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 497,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257375.030005158,
+        "verification": {
+          "expected_id": 105050,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257374995463930,
+          "sample_finished_monotonic_ns": 257374995643218,
+          "unix_time_ns": 1792067987450342062,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 497,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257375.525311501,
+        "verification": {
+          "expected_id": 105051,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257375495732284,
+          "sample_finished_monotonic_ns": 257375495898683,
+          "unix_time_ns": 1792067987950597467,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 499,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": false
+        }
+      },
+      {
+        "received_monotonic": 257376.032345102,
+        "verification": {
+          "expected_id": 105053,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257375995991338,
+          "sample_finished_monotonic_ns": 257375996150367,
+          "unix_time_ns": 1792067988450849091,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 499,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      }
+    ],
+    "notify-b": [
+      {
+        "received_monotonic": 257382.055968162,
+        "verification": {
+          "expected_id": 105076,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257382001202183,
+          "sample_finished_monotonic_ns": 257382001380102,
+          "unix_time_ns": 1792067994456078806,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 499,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": false
+        }
+      },
+      {
+        "received_monotonic": 257382.540811368,
+        "verification": {
+          "expected_id": 105078,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257382501441247,
+          "sample_finished_monotonic_ns": 257382501598756,
+          "unix_time_ns": 1792067994956297460,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 499,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257383.042628,
+        "verification": {
+          "expected_id": 105079,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257383001703982,
+          "sample_finished_monotonic_ns": 257383001877970,
+          "unix_time_ns": 1792067995456576384,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 499,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257383.545147346,
+        "verification": {
+          "expected_id": 105081,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257383501963496,
+          "sample_finished_monotonic_ns": 257383502134075,
+          "unix_time_ns": 1792067995956832489,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 499,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257384.046242114,
+        "verification": {
+          "expected_id": 105083,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257384002202330,
+          "sample_finished_monotonic_ns": 257384002366989,
+          "unix_time_ns": 1792067996457066123,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 499,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257384.547653909,
+        "verification": {
+          "expected_id": 105085,
+          "exact_match": false,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 211727,
+          "max_absolute_error": 1
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257384502486244,
+          "sample_finished_monotonic_ns": 257384502842802,
+          "unix_time_ns": 1792067996957542466,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 499,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR30",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257385.049239893,
+        "verification": {
+          "expected_id": 105087,
+          "exact_match": false,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 211740,
+          "max_absolute_error": 1
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257385002847918,
+          "sample_finished_monotonic_ns": 257385003166895,
+          "unix_time_ns": 1792067997457866479,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 499,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR30",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257385.545445619,
+        "verification": {
+          "expected_id": 105089,
+          "exact_match": false,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 211744,
+          "max_absolute_error": 1
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257385503163352,
+          "sample_finished_monotonic_ns": 257385503332190,
+          "unix_time_ns": 1792067997958030564,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 497,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR30",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": false
+        }
+      },
+      {
+        "received_monotonic": 257386.049402584,
+        "verification": {
+          "expected_id": 105091,
+          "exact_match": false,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 211732,
+          "max_absolute_error": 1
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257386003427546,
+          "sample_finished_monotonic_ns": 257386003716194,
+          "unix_time_ns": 1792067998458415468,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 497,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR30",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257386.544287781,
+        "verification": {
+          "expected_id": 105093,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257386503719930,
+          "sample_finished_monotonic_ns": 257386504072467,
+          "unix_time_ns": 1792067998958772301,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 497,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257387.039990221,
+        "verification": {
+          "expected_id": 105094,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257387004074483,
+          "sample_finished_monotonic_ns": 257387004288972,
+          "unix_time_ns": 1792067999458988286,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 499,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": false
+        }
+      },
+      {
+        "received_monotonic": 257387.540610242,
+        "verification": {
+          "expected_id": 105096,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257387504369457,
+          "sample_finished_monotonic_ns": 257387504677675,
+          "unix_time_ns": 1792067999959377589,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 499,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257388.036792069,
+        "verification": {
+          "expected_id": 105098,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257388004708841,
+          "sample_finished_monotonic_ns": 257388004900640,
+          "unix_time_ns": 1792068000459599364,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 499,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257388.542332661,
+        "verification": {
+          "expected_id": 105100,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257388504966095,
+          "sample_finished_monotonic_ns": 257388505263033,
+          "unix_time_ns": 1792068000959962067,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 499,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257389.03689637,
+        "verification": {
+          "expected_id": 105102,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257389005264699,
+          "sample_finished_monotonic_ns": 257389005437518,
+          "unix_time_ns": 1792068001460136242,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 499,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      }
+    ],
+    "static-control": [
+      {
+        "received_monotonic": 257460.550800404,
+        "verification": {
+          "expected_id": 105036,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257460547625749,
+          "sample_finished_monotonic_ns": 257460547788557,
+          "unix_time_ns": 1792068073002487351,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 497,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257461.038585446,
+        "verification": {
+          "expected_id": 105036,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257461047896003,
+          "sample_finished_monotonic_ns": 257461048060151,
+          "unix_time_ns": 1792068073502758725,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 497,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257461.536928885,
+        "verification": {
+          "expected_id": 105036,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257461548146187,
+          "sample_finished_monotonic_ns": 257461548314176,
+          "unix_time_ns": 1792068074003012590,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 497,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257462.032672125,
+        "verification": {
+          "expected_id": 105036,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257462048417291,
+          "sample_finished_monotonic_ns": 257462048575980,
+          "unix_time_ns": 1792068074503274564,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 497,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257462.536485162,
+        "verification": {
+          "expected_id": 105036,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257462548664356,
+          "sample_finished_monotonic_ns": 257462548819415,
+          "unix_time_ns": 1792068075003517719,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 497,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257463.031906484,
+        "verification": {
+          "expected_id": 105036,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257463048969510,
+          "sample_finished_monotonic_ns": 257463049242408,
+          "unix_time_ns": 1792068075503941672,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 497,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257463.538906195,
+        "verification": {
+          "expected_id": 105036,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257463549268524,
+          "sample_finished_monotonic_ns": 257463549436152,
+          "unix_time_ns": 1792068076004134866,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 497,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257464.037156335,
+        "verification": {
+          "expected_id": 105036,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257464049509838,
+          "sample_finished_monotonic_ns": 257464049677147,
+          "unix_time_ns": 1792068076504375651,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 497,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257464.533294832,
+        "verification": {
+          "expected_id": 105036,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257464549767132,
+          "sample_finished_monotonic_ns": 257464549933491,
+          "unix_time_ns": 1792068077004632145,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 497,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257465.034153981,
+        "verification": {
+          "expected_id": 105036,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257465050016367,
+          "sample_finished_monotonic_ns": 257465050180935,
+          "unix_time_ns": 1792068077504879639,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 497,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257465.533458163,
+        "verification": {
+          "expected_id": 105036,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257465550288071,
+          "sample_finished_monotonic_ns": 257465550455859,
+          "unix_time_ns": 1792068078005154153,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 497,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257466.038337541,
+        "verification": {
+          "expected_id": 105036,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257466050536295,
+          "sample_finished_monotonic_ns": 257466050699024,
+          "unix_time_ns": 1792068078505397318,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 497,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257466.535055293,
+        "verification": {
+          "expected_id": 105036,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257466550789819,
+          "sample_finished_monotonic_ns": 257466550952728,
+          "unix_time_ns": 1792068079005651512,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 497,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257467.031894824,
+        "verification": {
+          "expected_id": 105036,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257467051089334,
+          "sample_finished_monotonic_ns": 257467051309142,
+          "unix_time_ns": 1792068079506008146,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 497,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257467.528518757,
+        "verification": {
+          "expected_id": 105036,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257467551344338,
+          "sample_finished_monotonic_ns": 257467551537556,
+          "unix_time_ns": 1792068080006236060,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 497,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      }
+    ],
+    "static-notify": [
+      {
+        "received_monotonic": 257479.043312936,
+        "verification": {
+          "expected_id": 105036,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257479059435069,
+          "sample_finished_monotonic_ns": 257479059803986,
+          "unix_time_ns": 1792068091514503980,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 499,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257479.530103086,
+        "verification": {
+          "expected_id": 105036,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257479559747533,
+          "sample_finished_monotonic_ns": 257479559923152,
+          "unix_time_ns": 1792068092014621786,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 499,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257480.030729768,
+        "verification": {
+          "expected_id": 105036,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257480060026467,
+          "sample_finished_monotonic_ns": 257480060195226,
+          "unix_time_ns": 1792068092514893800,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 497,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257480.529569903,
+        "verification": {
+          "expected_id": 105036,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257480560293061,
+          "sample_finished_monotonic_ns": 257480560466650,
+          "unix_time_ns": 1792068093015165374,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 497,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257481.042553747,
+        "verification": {
+          "expected_id": 105036,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257481060548286,
+          "sample_finished_monotonic_ns": 257481060722424,
+          "unix_time_ns": 1792068093515421258,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 497,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257481.537380254,
+        "verification": {
+          "expected_id": 105036,
+          "exact_match": false,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 211307,
+          "max_absolute_error": 1
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257481560807530,
+          "sample_finished_monotonic_ns": 257481560960539,
+          "unix_time_ns": 1792068094015658913,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 499,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR30",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257482.037889797,
+        "verification": {
+          "expected_id": 105036,
+          "exact_match": false,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 211307,
+          "max_absolute_error": 1
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257482061025175,
+          "sample_finished_monotonic_ns": 257482061203263,
+          "unix_time_ns": 1792068094515901837,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 499,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR30",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257482.53573509,
+        "verification": {
+          "expected_id": 105036,
+          "exact_match": false,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 211307,
+          "max_absolute_error": 1
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257482561295049,
+          "sample_finished_monotonic_ns": 257482561459018,
+          "unix_time_ns": 1792068095016157491,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 497,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": false
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257483.03265305,
+        "verification": {
+          "expected_id": 105036,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257483061539913,
+          "sample_finished_monotonic_ns": 257483061717572,
+          "unix_time_ns": 1792068095516416066,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 499,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257483.532966254,
+        "verification": {
+          "expected_id": 105036,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257483561790088,
+          "sample_finished_monotonic_ns": 257483561970806,
+          "unix_time_ns": 1792068096016669650,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 499,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257484.035699399,
+        "verification": {
+          "expected_id": 105036,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257484062099691,
+          "sample_finished_monotonic_ns": 257484062395989,
+          "unix_time_ns": 1792068096517095233,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 499,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257484.534142328,
+        "verification": {
+          "expected_id": 105036,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257484562440115,
+          "sample_finished_monotonic_ns": 257484562604554,
+          "unix_time_ns": 1792068097017303068,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 499,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257485.036852993,
+        "verification": {
+          "expected_id": 105036,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257485062710709,
+          "sample_finished_monotonic_ns": 257485062962927,
+          "unix_time_ns": 1792068097517662521,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 499,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257485.536230214,
+        "verification": {
+          "expected_id": 105036,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257485563011663,
+          "sample_finished_monotonic_ns": 257485563174202,
+          "unix_time_ns": 1792068098017872566,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 499,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      },
+      {
+        "received_monotonic": 257486.03624738,
+        "verification": {
+          "expected_id": 105036,
+          "exact_match": true,
+          "valid_marker_rows": 480,
+          "mismatched_bytes": 0,
+          "max_absolute_error": 0
+        },
+        "nearest_scanout": {
+          "event": "scanout_sample",
+          "sample_started_monotonic_ns": 257486063267587,
+          "sample_finished_monotonic_ns": 257486063426296,
+          "unix_time_ns": 1792068098518124380,
+          "state": {
+            "connector": "DP-2",
+            "connector_id": 446,
+            "connection": 1,
+            "encoder_id": 445,
+            "properties": {
+              "DPMS": 0,
+              "link-status": 0,
+              "Broadcast RGB": 0,
+              "underscan": 0,
+              "max bpc": 16,
+              "Colorspace": 0,
+              "HDR_OUTPUT_METADATA": 0
+            },
+            "active": true,
+            "crtc_id": 417,
+            "fb_id": 499,
+            "width": 640,
+            "height": 480,
+            "mode": {
+              "name": "640x480",
+              "pixel_clock_khz": 25175,
+              "hdisplay": 640,
+              "vdisplay": 480,
+              "htotal": 800,
+              "vtotal": 525,
+              "flags": 10
+            },
+            "framebuffer": {
+              "width": 640,
+              "height": 480,
+              "format": "XR24",
+              "modifier": 144115188348910340
+            },
+            "crtc_fb_unchanged_during_sample": true
+          },
+          "error": null,
+          "state_changed": true
+        }
+      }
+    ]
+  }
+}
