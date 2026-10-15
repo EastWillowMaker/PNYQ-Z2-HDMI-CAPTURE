@@ -204,3 +204,51 @@ probe. Output: artifacts/operator/native-source-008/summary.json and
 artifacts/operator/kms-source-session-008. Coordinator exec session1074.
 The board waiter has a15-minute limit; a much later retry needs fresh state
 inspection rather than reusing these one-run evidence paths.
+
+
+## Retry008 passed actual native input detection
+
+After the operator retried PC authentication, session008 source01 executed
+and returned normally. Actual XR24 VGA25200 readiness, source exit0 and
+original_vt_restored=true are preserved. Native _capture succeeded in about
+1.061seconds after entering the C call and returned640x480. Independent MMIO
+observed VTC detector active0x01e00280, control0xa/status0xf00 and live native
+edges37682→38464 across13.03067seconds (about60Hz). Invalid_frames stayed4,
+with zero selected frames and zero FIFO over/underflow episodes. Every sampled
+S2MM CR/SR retained RS0/Halted1. This is a native input detection pass without
+capture buffers; exact RGB reception and capture cleanup are separate tests.
+
+This supports the new preparation sequence: preserve shared Hub power/UART,
+load017 with DMA halted, assert/pulse HPD, verify DGL/VGA EDID, start direct
+KMS VGA, then initialize the native input. It does not isolate which of the
+Hub reset, cold overlay load, HPD pulse or EDID refresh fixed earlier starts.
+No production adapter acceptance or source-health/pixel tolerance was changed.
+
+Fresh board sudo-n-v succeeded, same boot/ext4count0, and no prior probe/sender
+was running. Staged hash-verified attached sender and new diagnostic supervisor
+009 (same implementation as003 with a new result prefix), plus resource helper.
+Coordinator009 and session008/source02=150seconds now run a7-second exact-pixel
+smoke followed only on success by10-second strict source-accounted capture.
+The45-second sender timer and native cleanup remain unchanged; no forced DMA
+process stop is introduced. Source02 was queued only after source01 exited0
+and restored the original VT. Actual009 pixel/cleanup/storage outcomes remain
+pending. A short pass is not the ten-minute M1 criterion. Results use prefix
+m1-017-newcard-attach-009 in this directory; failed003 evidence is preserved.
+
+
+## Real-frame009 and corrected010
+
+009 delivered15 exact real frames in its smoke, then immediately reconnected
+for the strict qualifier and received EOF before any header. DMA stopped safely,
+root storage checks passed, and the009 qualifier remains failed. A new TCP
+regression identified that sender ignored peer EOF while waiting for frames.
+The corrected v11 monitors EOF independently of capture. See
+reconnect-010-report.md for caller/callee and cancellation/metric impacts,
+before/after tests, startup underflow preparation evidence and runtime limits.
+
+010 repeated the same smoke→strict-client sequence without a retry delay:
+21exact distinct frames/10.395406s/2.020123FPS, metadata/accounting pass and zero
+pixel/transport errors. Native cleanup and post-storage checks passed. This
+is the first fresh-card short strict capture pass; it is not the600s criterion.
+011 is prepared with unchanged strict checks for600seconds after a fresh017
+load. The shared Hub stays connected and no forced DMA stop is used.

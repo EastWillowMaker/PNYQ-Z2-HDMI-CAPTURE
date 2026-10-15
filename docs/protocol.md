@@ -6,6 +6,14 @@ meaning: implementations loop over partial reads and writes. A protocol error,
 timeout, EOF, or socket error ends the connection; close and reconnect rather
 than scan for magic bytes. A new connection resets client frame-ID tracking.
 
+The sender rejects another connection while one client is active. It monitors
+peer EOF separately from frame acquisition, so a disconnected client releases
+its slot even while the source waits for a frame. This closes only the TCP
+handler; capture continues with its bounded ready slot. Incoming client bytes
+are ignored in bounded reads and are not commands. A normal peer EOF is not
+counted as a network error. Reconnection can still be rejected before the old
+connection's EOF has been processed; retry explicitly after that rejection.
+
 ## Wire layout
 
 The 20-byte fixed prefix uses network byte order, Python format `>4sB3xIII`:

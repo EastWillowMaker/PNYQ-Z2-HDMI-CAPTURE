@@ -1,0 +1,13 @@
+{
+  "scope": "frontend_input_probe_only",
+  "native_probe_passed": true,
+  "native_edges_start": 37682,
+  "native_edges_end": 38464,
+  "interval_seconds": 13.03066977100002,
+  "invalid_start": 4,
+  "invalid_end": 4,
+  "all_dma_halted_rs0": true,
+  "capture_frames": 0,
+  "full_m1_qualified": false,
+  "native_hz": 60.01226443021021
+}

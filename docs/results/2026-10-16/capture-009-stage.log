@@ -1,0 +1,17 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-newcard-017-v10$ cd /tmp/hdmi-capture-newcard-017-v10 && curl -g --noproxy "*" --fail --max-time 15 "http://[fe80::560f:ee4c:ed84:e6ce%eth0]:8766/attached-credit-sender.py" -o attached-credit-sender.py && printf "%s\n" 'd51b2fa88d2aecd925fd8e2019021faed050ea4097b63680f8aa6874e6b34b14  attached-credit-sender.py' | sha256sum -c - && curl -g --noproxy "*" --fail --max-time 15 "http://[fe80::560f:ee4c:ed84:e6ce%eth0]:8766/new-card-attach-session-009.py" -o new-card-attach-session-009.py && printf "%s\n" '9368daf3d87419c799dea5848fcaee2b2ffc664433268d8677da8d3b71301de5  new-card-attach-session-009.py' | sha256sum -c - && curl -g --noproxy "*" --fail --max-time 15 "http://[fe80::560f:ee4c:ed84:e6ce%eth0]:8766/board-resources-017.py" -o board-resources-017.py && printf "%s\n" '47a7279555e0297000c1ffd5073450f743f1493d2e02d011675df7159fc3f1b0  board-resources-017.py' | sha256sum -c -; printf "\nCONSOLE_DONE_2f3e181ddb81417ea5f84f9b6c7b0b45:%s\n" "$?"
+[?2004l  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100  1136  100  1136    0     0   252k      0 --:--:-- --:--:-- --:--:--  369k
+attached-credit-sender.py: OK
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100  3513  100  3513    0     0   796k      0 --:--:-- --:--:-- --:--:-- 1143k
+new-card-attach-session-009.py: OK
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100  2178  100  2178    0     0   487k      0 --:--:-- --:--:-- --:--:--  708k
+board-resources-017.py: OK
+
+CONSOLE_DONE_2f3e181ddb81417ea5f84f9b6c7b0b45:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-newcard-017-v10$ 

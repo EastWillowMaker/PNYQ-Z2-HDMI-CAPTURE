@@ -53,6 +53,63 @@ def test_actual_socket_reconnect_fresh_ids_and_single_client():
     asyncio.run(run())
 
 
+@pytest.mark.parametrize("peer_data", [b"", b"unsupported-request"])
+def test_disconnected_client_releases_slot_while_source_is_waiting(peer_data):
+    class PausedSource(SyntheticSource):
+        def __init__(self):
+            super().__init__(20, 10, 100)
+            self.first_frame = asyncio.Event()
+            self.waiting = asyncio.Event()
+            self.resume = asyncio.Event()
+
+        async def read(self):
+            await self.first_frame.wait()
+            if self.sequence:
+                self.waiting.set()
+                await self.resume.wait()
+            return await super().read()
+
+    async def run():
+        source = PausedSource()
+        sender = Sender(source, fps=100)
+        address = await sender.start("127.0.0.1", 0)
+        first = await asyncio.to_thread(socket.create_connection, address, 1)
+        second = None
+        try:
+            for _ in range(100):
+                if sender._client is not None:
+                    break
+                await asyncio.sleep(0.005)
+            assert sender._client is not None
+            source.first_frame.set()
+            frame1 = await asyncio.to_thread(read_frame, first)
+            await source.waiting.wait()
+            if peer_data:
+                first.sendall(peer_data)
+            first.close()
+            for _ in range(100):
+                if sender._client is None:
+                    break
+                await asyncio.sleep(0.005)
+            assert sender._client is None
+            assert not sender._closed
+            assert not sender._capture_task.done()
+            second = await asyncio.to_thread(socket.create_connection, address, 1)
+            source.resume.set()
+            frame2 = await asyncio.to_thread(read_frame, second)
+            assert frame2.metadata["frame_id"] > frame1.metadata["frame_id"]
+            assert frame2.metadata["session_id"] == frame1.metadata["session_id"]
+            assert sender.counters["network_errors"] == 0
+        finally:
+            first.close()
+            if second is not None:
+                second.close()
+            await sender.close()
+        assert not sender._client_tasks
+
+    asyncio.run(run())
+
+
 def test_slow_network_keeps_acquiring_and_sending_copy_stable():
     class SlowWriter:
         def __init__(self):

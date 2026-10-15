@@ -1,0 +1,25 @@
+{
+  "capture_started": false,
+  "error": null,
+  "source_ready": {
+    "event": "kms_ready",
+    "connector_id": 446,
+    "crtc": 421,
+    "format": "XR24",
+    "clock_khz": 25200,
+    "width": 640,
+    "height": 480
+  },
+  "native_probe_exit": 0,
+  "source_result": {
+    "exit_code": 0,
+    "request": {
+      "duration": 90,
+      "frame_id": 1000000
+    },
+    "output": "/home/eastwillow/Documents/litex-hdmi-capture/artifacts/operator/kms-source-session-008/run-01"
+  },
+  "source_restore": {
+    "original_vt_restored": true
+  }
+}

@@ -1,0 +1,11 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-newcard-017-v10$ cd /tmp/hdmi-capture-newcard-017-v10 && sudo -n -v && ! pgrep -f "^/usr/local/share/pynq-venv/bin/python.*(attached-credit-sender|hdmi_capture.sender)" && curl -g --noproxy "*" --fail --max-time 15 "http://[fe80::560f:ee4c:ed84:e6ce%eth0]:8766/new-card-attach-session-011.py" -o new-card-attach-session-011.py && printf "%s\n" '83fa896c25e198f756503d82ff8f4b1f238e3941abcf599c5b74fe10e3056f22  new-card-attach-session-011.py' | sha256sum -c - && sudo -n env XILINX_XRT=/usr PYTHONPATH=/tmp/hdmi-capture-newcard-017-v10 /usr/local/share/pynq-venv/bin/python -c 'from hdmi_capture.sources import LiteXCreditSource;import pynq,json;s=LiteXCreditSource('"'"'overlay-017/capture.bit'"'"','"'"'overlay-017/build-manifest.json'"'"');s.load_overlay(download=False);v=s.overlay.ip_dict['"'"'video/axi_vdma'"'"'];m=pynq.MMIO(v['"'"'phys_addr'"'"'],v['"'"'addr_range'"'"']);cr=m.read(48);sr=m.read(52);assert cr&1==0 and sr&1==1;print(json.dumps(dict(event='"'"'before_reprogram_halted'"'"',cr=hex(cr),sr=hex(sr))))' && sudo -n env XILINX_XRT=/usr PYTHONPATH=/tmp/hdmi-capture-newcard-017-v10 /usr/local/share/pynq-venv/bin/python -u prepare-after-replug-005.py; printf "\nCONSOLE_DONE_640e76bb619f4ce2aeecea417a72c1f6:%s\n" "$?"
+[?2004l  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100  3515  100  3515    0     0   810k      0 --:--:-- --:--:-- --:--:-- 1144k
+new-card-attach-session-011.py: OK
+{"event": "before_reprogram_halted", "cr": "0x15010", "sr": "0x11001"}
+{"event": "receiver_hpd_ready_before_kms", "hpd": 1, "receiver_locked": 0, "vdma_cr": "0x10002", "vdma_sr": "0x10001", "capture_enabled": false, "allocated_capture_buffers": 0, "input_mode_verified": false}
+
+CONSOLE_DONE_640e76bb619f4ce2aeecea417a72c1f6:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-newcard-017-v10$ 

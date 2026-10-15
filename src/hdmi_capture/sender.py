@@ -125,6 +125,17 @@ class Sender:
             self._ready_event.set()
             raise
 
+    async def _watch_disconnect(self, reader, writer, client_task):
+        try:
+            # Clients send no requests. Bound ignored input while waiting for
+            # EOF, independently of the next source frame or socket write.
+            while await reader.read(1024):
+                pass
+        except (ConnectionError, OSError):
+            self.counters["network_errors"] += 1
+        self._abort_writer(writer)
+        client_task.cancel()
+
     async def _serve_client(self, reader, writer):
         if self._client is not None:
             writer.close()
@@ -133,6 +144,8 @@ class Sender:
         self._client = writer
         task = asyncio.current_task()
         self._client_tasks.add(task)
+        disconnect = (asyncio.create_task(self._watch_disconnect(reader, writer, task))
+                      if reader is not None else None)
         # Never present a preconnection ready frame as fresh acquisition.
         if self.ready is not None:
             self.counters["client_discarded"] += 1
@@ -156,6 +169,9 @@ class Sender:
             self.counters["network_errors"] += 1
             self._abort_writer(writer)
         finally:
+            if disconnect is not None:
+                disconnect.cancel()
+                await asyncio.gather(disconnect, return_exceptions=True)
             writer.close()
             try:
                 await asyncio.wait_for(writer.wait_closed(), self.send_timeout)

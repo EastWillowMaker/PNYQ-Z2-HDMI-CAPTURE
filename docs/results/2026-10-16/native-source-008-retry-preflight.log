@@ -1,0 +1,11 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-newcard-017-v10$ cat /proc/sys/kernel/random/boot_id; cat /proc/uptime; cat /tmp/hdmi-capture-newcard-017-v10/native-source-008.log; ps -eo pid,user,args | grep "[w]ait-native-source-008.py"; cat /sys/fs/ext4/mmcblk0p2/errors_count; printf "\nCONSOLE_DONE_3c0c670e1a574b7aa34bd262c99d5ce3:%s\n" "$?"
+[?2004l1dd70e40-85cc-4c9b-a2e2-03b9814e290f
+1217.60 2240.98
+{"event": "waiting_for_fixed_source", "monotonic": 702.840781484}
+ 1787 root     sudo -n env XILINX_XRT=/usr PYTHONPATH=/tmp/hdmi-capture-newcard-017-v10 nohup /usr/local/share/pynq-venv/bin/python -u [01;31m[Kwait-native-source-008.py[m[K
+ 1792 root     sudo -n env XILINX_XRT=/usr PYTHONPATH=/tmp/hdmi-capture-newcard-017-v10 nohup /usr/local/share/pynq-venv/bin/python -u [01;31m[Kwait-native-source-008.py[m[K
+ 1793 root     /usr/local/share/pynq-venv/bin/python -u [01;31m[Kwait-native-source-008.py[m[K
+0
+
+CONSOLE_DONE_3c0c670e1a574b7aa34bd262c99d5ce3:0

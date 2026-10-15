@@ -1,5 +1,64 @@
 # Progress and handoff
 
+2026-10-16T01:06:38+08:00:010 HARDWARE SHORT PASS.
+Same smoke→immediate reconnect, no sleep/retry:21/21exactdistinctframes in
+10.395406s/2.020123FPS, pixel/metadata/transporterrors0/accounting21validated.
+Senderexit0/networkerrors0/sourceerrors0/cleanuptrue; startupinvalid3unchanged/
+FIFOs0. Storagebeforeaftercount0/filehashcorrect. Source03stillfinishing150s;
+wait restore beforequeue04. Preparing011 now: boardprepareexec96493 (Halted
+before fresh017load,noHPDpulse), coordinator exec6531 waitsfreshsource04.
+011supervisor650s/strict600s>=600newframes>=1FPS/harddeadline660, source720s.
+No change to parser/pixel/health checks. Check prepare completion and worker
+remainingbudget beforequeuing04; useralreadyinformed12min. Source008rootworker
+582356 deadline274424.54(~01:24). KeepHub/windowopen; no newauth currentlyneeded.
+Codefix+tests+008/009/010evidence preparinglocalcommit. FullM1false pendinglong
+run and remainingphysicalmode/loss/bufferassociation/resource evidence.
+
+2026-10-16T01:04:49+08:00:009 smoke15exactframes PASS,
+next10squalifier EOF/0frames FAIL; senderlaterexit0/DMAcleanuptrue/storageafter
+pass. Confirmed sender ignored readerEOF until another frame/write. RealTCP
+regression with pausedsource fails oldcode atstaleclient assertion; new bounded
+EOFwatcher aborts onlyTCPwriter/cancels itshandler and releases slot. Liveextra
+clientstillrejected; acquisition/immutablecopy/DMAcleanup unchanged in source.
+Tests33pass, extendedpeerdata34pass; fullhost306pass/1skip(Migen/LiteX absent).
+v11 archiveSHA01e66269...12ea13 deployed/hashverified. Warm017reload+HPDpulse
+had startupunderflow1 (preservedfailureprepare); fresh017loadwithoutrepeatpulse
+completed, noDMA.010 coordinator exec30337+source008/run03=150s/id1200000 now
+runs originalstrictsmoke→10scheck; nonzeroFIFObaseline wouldrejectbeforebuffer.
+Read artifacts/operator/capture-010-coordinator.log/results prefix
+m1-017-newcard-attach-010. Rootworker582356 alive deadline274424.54(~01:24),
+source03returns~01:06. If010 pixel+cleanup+storagepass, freshload then prepare
+source04=720s/650s sender for600scriterion; no newuserauth needed ifcachevalid.
+Do not skip the original009 failure or weakenhealthchecks. Report:
+results/2026-10-16/reconnect-010-report.md. Productionfix uncommittedpending010.
+
+2026-10-16T00:56:38+08:00: retry008 INPUT PASS.
+PCauth completed; source01 XR24/VGA25200 exited0/VTrestored. Nativeconstructor
+success640x480 in~1.061s; VTCdetectoractive0x01e00280, edges37682→38464/~13.03s,
+invalid4unchanged/FIFOs0/selected0, allsampledDMA RS0/Halted1. No buffer/capture.
+Freshboard sudo-n-v PASSED (no additionalhumanneeded), sameboot/ext4count0/no
+oldsender. Staged009 attachedsender/supervisor45s/resourcehelper withhashchecks.
+Started capture009 coordinator exec84447 and queued source008/run02=150s,
+id1100000 after01normalrestore. It runs7ssmoke then10sstrictdiagnostic, native
+cleanup/storage checks. Outcomes pending; do notmarkM1complete fromshortpass.
+Results docs/results/2026-10-16/m1-017-newcard-attach-009-*; coordinator log
+artifacts/operator/capture-009-coordinator.log. Sourceworker582356 alive/30min
+budget, keepwindowopen and Hubconnected. No boardUART contention withcoord.
+Input evidence native-source-008-* and report are saved; pendingchangesuncommitted.
+
+2026-10-16T00:54:29+08:00: user requested retry.
+Fresh UART confirms sameboot1dd70e40, ext4count0, rootwaiter1793 still waiting
+(boardmonotonic1217.60 vs waiterstart702.84). EDID stillDGL/VGA/SHA3b01e13a.
+Session008 has only original request01: no ready/run/result/finished, no active
+PCsource/authwindow. Hostcoordinator558062 stillwaiting; PCsudo-n needsauth.
+Reopened exactly one PYNQ VGA retry - PC password only terminal using unchanged
+start-kms-source-session-008.sh. No new evidence names/reusedcapture and no
+boardreauth needed while currentwaiterbudget remains. Usermust enter PCsudo
+locally and keepwindowopen. Rawpreflight artifacts/operator/native-source-008-
+retry-preflight.log (copy in results/2026-10-16). Current rootwaiter expires near
+01:00; localcoordinator timeout shortlybefore. If delayed, inspect actual logs
+and state rather than claiming the probe ran. No overlay reload/DMA requested.
+
 2026-10-16T00:46:34+08:00: user boardauth completed,
 actual receiver006 load/HPD PASS RS0/Halted1/gateoff/nobuffers. Host initially
 stillnonDGL so006 correctlyqueuednothing. One softwareHPDpulse007 refreshed

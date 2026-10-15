@@ -1,0 +1,6 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-newcard-017-v10$ cd /tmp/hdmi-capture-newcard-017-v10 && sudo -n env XILINX_XRT=/usr PYTHONPATH=/tmp/hdmi-capture-newcard-017-v10 /usr/local/share/pynq-venv/bin/python -u prepare-after-replug-005.py; printf "\nCONSOLE_DONE_6c5c4872ede34b6ca929bfee531808bb:%s\n" "$?"
+[?2004l{"event": "receiver_hpd_ready_before_kms", "hpd": 1, "receiver_locked": 0, "vdma_cr": "0x10002", "vdma_sr": "0x10001", "capture_enabled": false, "allocated_capture_buffers": 0, "input_mode_verified": false}
+
+CONSOLE_DONE_6c5c4872ede34b6ca929bfee531808bb:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-newcard-017-v10$ 

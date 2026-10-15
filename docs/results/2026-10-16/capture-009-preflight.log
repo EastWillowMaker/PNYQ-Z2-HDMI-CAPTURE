@@ -1,0 +1,6 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-newcard-017-v10$ sudo -n -v; cat /proc/sys/kernel/random/boot_id; pgrep -af "[w]ait-native-source-008.py|[a]ttached-credit-sender|hdmi_capture.sender"; cat /sys/fs/ext4/mmcblk0p2/errors_count; printf "\nCONSOLE_DONE_2cb709bcdbdf4f9ca2b2a512786b41fc:%s\n" "$?"
+[?2004l1dd70e40-85cc-4c9b-a2e2-03b9814e290f
+0
+
+CONSOLE_DONE_2cb709bcdbdf4f9ca2b2a512786b41fc:0
