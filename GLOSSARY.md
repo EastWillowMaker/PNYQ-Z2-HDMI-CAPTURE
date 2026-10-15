@@ -33,3 +33,15 @@ Real HDMI capture used to establish initial functionality before LiteX integrati
 
 **Formal LiteX capture**:
 Real HDMI capture in which LiteX-generated logic participates in acquisition.
+
+**Prepared receiver**:
+A receiver ready for a source to establish its HDMI signal, with capture stopped.
+Preparation alone does not establish a valid input mode or a captured frame.
+
+**Preparation receipt**:
+A record identifying one receiver preparation within the current board boot.
+It records software-managed configuration history, not independent hardware identity.
+
+**Credit lease**:
+Exclusive ownership of one completed capture whose pixels and source identity
+remain stable until the consumer releases it.

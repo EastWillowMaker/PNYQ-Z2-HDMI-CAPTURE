@@ -9,6 +9,14 @@ involved. The PC receiver still compares every RGB888 byte strictly.
 
 ## Current validation and important limitation
 
+On2026-10-16, the new-SD run011 passed1,201 exact distinct frames over600.368s,
+with sender exit0, verified DMA halt, unchanged storage checks and VT return.
+The subsequent HDMI-only loss012 killed the sender during native VTC mode
+access. A separate fixed-clock recovery confirmed DMA halted; the runtime fix
+has local regression coverage and awaits physical retest. See the
+[011/012 report](results/2026-10-16/capture-011-loss-012-report.md).
+The earlier SD failure below remains a separate failed run.
+
 The direct-VT source smoke test **passed** on2026-10-15: actualVT3,
 640x480 progressive60Hz (25200kHz pixel clock), XR24,37 completed page flips
 in the10-second run, exit0, and verified return toVT2. The compiled source also

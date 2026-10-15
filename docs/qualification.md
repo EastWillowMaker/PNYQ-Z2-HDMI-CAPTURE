@@ -1,5 +1,13 @@
 # Sustained HDMI qualification
 
+Latest hardware evidence: build017/v11 on the new SD passed the normal
+600-second criterion and safe shutdown in
+[run011](results/2026-10-16/capture-011-loss-012-report.md).
+HDMI-only interruption012 failed with native SIGBUS. Its runtime fix requires
+physical retesting; full M1 remains incomplete. The
+[remaining audit](results/2026-10-16/m1-remaining-audit.md) tracks the separate
+startup, interruption, mode-change and ownership evidence still needed.
+
 Run only after the external optical pattern and authorized board sender are
 already running. This tool neither changes the source nor loads an overlay.
 Its `passed` and CLI exit status describe the sustained delivered-image

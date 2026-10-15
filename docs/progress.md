@@ -15,8 +15,10 @@ v12 source/archive staged and hashes matched; privileged013 preparation PENDING.
 Both board and PC sudo now require local auth.013 fusedwizard prepared at
 artifacts/operator/run-hdmi-loss-013.sh; fixed900s rootwaiter prevents boardauth
 expiry between prepare and KMS ready. Source120s; manualHDMI-only at45s/5s.
-Do not contend UART while userauthwindow active.316hostpass1skip,45RTLpass.
-Coordinator not started yet. No new overlay or DMA since raw012 safe stop.
+Do not contend UART while userauthwindow active.316hostpass1skip,45RTLpass. Fix/evidence commit6cfe75c.
+Coordinator PID847111/session70733 is live waiting actualKMSready;
+localwizard PID847290 opened for user boardauth then PCauth. UART reserved
+for human until miniterm exits. Root helper not yet authenticated/run. No new overlay or DMA since raw012 safe stop.
 Report results/2026-10-16/capture-011-loss-012-report.md; raw011/012 preserved.
 No forced kill/reload while DMA unsafe; current raw recovery did prove safe.
 
