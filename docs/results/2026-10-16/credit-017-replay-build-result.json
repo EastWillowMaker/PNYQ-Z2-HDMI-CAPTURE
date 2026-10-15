@@ -1,0 +1,26 @@
+{
+  "command": [
+    "/home/eastwillow/Documents/litex-hdmi-capture/artifacts/clean-replay-001/artifacts/gate-venv/bin/python",
+    "scripts/build_capture.py",
+    "--output",
+    "artifacts/m1-build-001",
+    "--gateware",
+    "artifacts/litex_capture.v",
+    "--vivado",
+    "/home/eastwillow/Xilinx/2025.2/Vivado/bin/vivado",
+    "--vitis-run",
+    "/home/eastwillow/Xilinx/2025.2/Vitis/bin/vitis-run",
+    "--stage",
+    "bitstream"
+  ],
+  "cwd": "/home/eastwillow/Documents/litex-hdmi-capture/artifacts/clean-replay-017-20261016-0308/checkout",
+  "start_utc": "2026-10-15T19:07:35.483279+00:00",
+  "reused_venv": "/home/eastwillow/Documents/litex-hdmi-capture/artifacts/clean-replay-001/artifacts/gate-venv/bin/python",
+  "tool_launcher_sha256": {
+    "/home/eastwillow/Xilinx/2025.2/Vivado/bin/vivado": "3b15c02533ef5b5bab4a09617086bd431b14aa296e6ea5a29811fe269cf8deb5",
+    "/home/eastwillow/Xilinx/2025.2/Vitis/bin/vitis-run": "4d1bf95564e127673e3fde65bdaa7f93dc35220d15af85c794d148517fd91fb3"
+  },
+  "exit_code": 0,
+  "elapsed_seconds": 606.7452147006989,
+  "finished_utc": "2026-10-15T19:17:42.228500+00:00"
+}

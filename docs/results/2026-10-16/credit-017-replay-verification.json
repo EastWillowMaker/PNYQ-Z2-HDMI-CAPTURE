@@ -1,0 +1,205 @@
+{
+  "build": {
+    "command": [
+      "/home/eastwillow/Documents/litex-hdmi-capture/artifacts/clean-replay-001/artifacts/gate-venv/bin/python",
+      "scripts/build_capture.py",
+      "--output",
+      "artifacts/m1-build-001",
+      "--gateware",
+      "artifacts/litex_capture.v",
+      "--vivado",
+      "/home/eastwillow/Xilinx/2025.2/Vivado/bin/vivado",
+      "--vitis-run",
+      "/home/eastwillow/Xilinx/2025.2/Vitis/bin/vitis-run",
+      "--stage",
+      "bitstream"
+    ],
+    "cwd": "/home/eastwillow/Documents/litex-hdmi-capture/artifacts/clean-replay-017-20261016-0308/checkout",
+    "start_utc": "2026-10-15T19:07:35.483279+00:00",
+    "reused_venv": "/home/eastwillow/Documents/litex-hdmi-capture/artifacts/clean-replay-001/artifacts/gate-venv/bin/python",
+    "tool_launcher_sha256": {
+      "/home/eastwillow/Xilinx/2025.2/Vivado/bin/vivado": "3b15c02533ef5b5bab4a09617086bd431b14aa296e6ea5a29811fe269cf8deb5",
+      "/home/eastwillow/Xilinx/2025.2/Vitis/bin/vitis-run": "4d1bf95564e127673e3fde65bdaa7f93dc35220d15af85c794d148517fd91fb3"
+    },
+    "exit_code": 0,
+    "elapsed_seconds": 606.7452147006989,
+    "finished_utc": "2026-10-15T19:17:42.228500+00:00"
+  },
+  "manifest_hash_checks": {
+    "receiver_reset_sync_sha256": {
+      "path": "receiver_reset_sync.v",
+      "recorded": "c2c7cd5254c6e9bda6a690f48418146bd9afdc78e574aaa400629454d768d604",
+      "actual": "c2c7cd5254c6e9bda6a690f48418146bd9afdc78e574aaa400629454d768d604"
+    },
+    "source_health_sha256": {
+      "path": "source_health.v",
+      "recorded": "8b4675a3e12b4f05b2421b0492d95cec42af3d9748cc3ce129940e13637cc6a8",
+      "actual": "8b4675a3e12b4f05b2421b0492d95cec42af3d9748cc3ce129940e13637cc6a8"
+    },
+    "capture_lock_sync_sha256": {
+      "path": "capture_lock_sync.v",
+      "recorded": "6625f95d25be92b14f5dbfade504a89bf4ec1b980a161de604fc4dcf14f32866",
+      "actual": "6625f95d25be92b14f5dbfade504a89bf4ec1b980a161de604fc4dcf14f32866"
+    },
+    "gateware_sha256": {
+      "path": "litex_capture.v",
+      "recorded": "e4515603bf95855dc1aa82ecce4104bf22dfd05f9cce8d6d8d421887675dfbec",
+      "actual": "e4515603bf95855dc1aa82ecce4104bf22dfd05f9cce8d6d8d421887675dfbec"
+    },
+    "bitstream_sha256": {
+      "path": "capture.bit",
+      "recorded": "ae3a65d77b1662fedef9ffbc62dd9484cdd8a155af136596da3e6b695fb6846e",
+      "actual": "ae3a65d77b1662fedef9ffbc62dd9484cdd8a155af136596da3e6b695fb6846e"
+    },
+    "hwh_sha256": {
+      "path": "capture.hwh",
+      "recorded": "3bfbbf124960ec932a4a53bb4fcb4a5969b89b9a96d6329143bdfc8442eef9a6",
+      "actual": "3bfbbf124960ec932a4a53bb4fcb4a5969b89b9a96d6329143bdfc8442eef9a6"
+    },
+    "edid_sha256": {
+      "path": "vga-edid.bin",
+      "recorded": "e716887ace476531df33bbec6ff03e4b6c1148a243a00d3d237f1b77bff1050d",
+      "actual": "e716887ace476531df33bbec6ff03e4b6c1148a243a00d3d237f1b77bff1050d"
+    },
+    "receiver_sync_base_sha256": {
+      "path": "rx_ip/dvi2rgb_v1_7/src/SyncBase.vhd",
+      "recorded": "91eac3692b4412c73e7af09a9e145dd1260e3ce856e1f25d5ecacb409b8a02c4",
+      "actual": "91eac3692b4412c73e7af09a9e145dd1260e3ce856e1f25d5ecacb409b8a02c4"
+    },
+    "receiver_component_sha256": {
+      "path": "rx_ip/dvi2rgb_v1_7/component.xml",
+      "recorded": "b564e0da03ff1327d6e7d7acb2691a6188137f50e0e01f837eda9969ece61993",
+      "actual": "b564e0da03ff1327d6e7d7acb2691a6188137f50e0e01f837eda9969ece61993"
+    }
+  },
+  "source_changes": [],
+  "vendor_status": "",
+  "drain_passes": [
+    "PASS 8x4 input_stall=0 output_stall=0",
+    "PASS 8x4 input_stall=1 output_stall=1",
+    "PASS 640x480 input_stall=0 output_stall=0",
+    "PASS 640x480 input_stall=1 output_stall=1"
+  ],
+  "log_diagnostics": {
+    "full-build-console.log": [],
+    "checkout/artifacts/m1-build-001/vivado.log": [],
+    "checkout/artifacts/m1-build-001/vivado/capture.runs/capture_axi_gpio_hdmiin_0_synth_1/runme.log": [],
+    "checkout/artifacts/m1-build-001/vivado/capture.runs/capture_axi_mem_intercon_imp_auto_pc_0_synth_1/runme.log": [],
+    "checkout/artifacts/m1-build-001/vivado/capture.runs/capture_axi_mem_intercon_imp_auto_us_0_synth_1/runme.log": [],
+    "checkout/artifacts/m1-build-001/vivado/capture.runs/capture_axi_vdma_0_synth_1/runme.log": [],
+    "checkout/artifacts/m1-build-001/vivado/capture.runs/capture_axis_register_slice_0_0_synth_1/runme.log": [],
+    "checkout/artifacts/m1-build-001/vivado/capture.runs/capture_capture_completion_0_synth_1/runme.log": [],
+    "checkout/artifacts/m1-build-001/vivado/capture.runs/capture_capture_control_0_synth_1/runme.log": [],
+    "checkout/artifacts/m1-build-001/vivado/capture.runs/capture_capture_counts_0_synth_1/runme.log": [],
+    "checkout/artifacts/m1-build-001/vivado/capture.runs/capture_capture_credit_0_synth_1/runme.log": [],
+    "checkout/artifacts/m1-build-001/vivado/capture.runs/capture_capture_errors_0_synth_1/runme.log": [],
+    "checkout/artifacts/m1-build-001/vivado/capture.runs/capture_capture_sequence_0_synth_1/runme.log": [],
+    "checkout/artifacts/m1-build-001/vivado/capture.runs/capture_color_convert_0_synth_1/runme.log": [],
+    "checkout/artifacts/m1-build-001/vivado/capture.runs/capture_color_swap_0_0_synth_1/runme.log": [],
+    "checkout/artifacts/m1-build-001/vivado/capture.runs/capture_dvi2rgb_0_0_synth_1/runme.log": [],
+    "checkout/artifacts/m1-build-001/vivado/capture.runs/capture_litex_capture_0_synth_1/runme.log": [],
+    "checkout/artifacts/m1-build-001/vivado/capture.runs/capture_pixel_pack_0_synth_1/runme.log": [],
+    "checkout/artifacts/m1-build-001/vivado/capture.runs/capture_ps7_0_0_synth_1/runme.log": [],
+    "checkout/artifacts/m1-build-001/vivado/capture.runs/capture_ps7_0_axi_periph_imp_auto_cc_0_synth_1/runme.log": [],
+    "checkout/artifacts/m1-build-001/vivado/capture.runs/capture_ps7_0_axi_periph_imp_auto_cc_1_synth_1/runme.log": [],
+    "checkout/artifacts/m1-build-001/vivado/capture.runs/capture_ps7_0_axi_periph_imp_auto_cc_2_synth_1/runme.log": [],
+    "checkout/artifacts/m1-build-001/vivado/capture.runs/capture_ps7_0_axi_periph_imp_auto_cc_3_synth_1/runme.log": [],
+    "checkout/artifacts/m1-build-001/vivado/capture.runs/capture_ps7_0_axi_periph_imp_auto_cc_4_synth_1/runme.log": [],
+    "checkout/artifacts/m1-build-001/vivado/capture.runs/capture_ps7_0_axi_periph_imp_auto_cc_5_synth_1/runme.log": [],
+    "checkout/artifacts/m1-build-001/vivado/capture.runs/capture_ps7_0_axi_periph_imp_auto_cc_6_synth_1/runme.log": [],
+    "checkout/artifacts/m1-build-001/vivado/capture.runs/capture_ps7_0_axi_periph_imp_auto_cc_7_synth_1/runme.log": [],
+    "checkout/artifacts/m1-build-001/vivado/capture.runs/capture_ps7_0_axi_periph_imp_auto_cc_8_synth_1/runme.log": [],
+    "checkout/artifacts/m1-build-001/vivado/capture.runs/capture_ps7_0_axi_periph_imp_auto_cc_9_synth_1/runme.log": [],
+    "checkout/artifacts/m1-build-001/vivado/capture.runs/capture_ps7_0_axi_periph_imp_auto_pc_0_synth_1/runme.log": [],
+    "checkout/artifacts/m1-build-001/vivado/capture.runs/capture_ps7_0_axi_periph_imp_xbar_0_synth_1/runme.log": [],
+    "checkout/artifacts/m1-build-001/vivado/capture.runs/capture_receiver_lock_sync_0_synth_1/runme.log": [],
+    "checkout/artifacts/m1-build-001/vivado/capture.runs/capture_receiver_reset_monitor_0_synth_1/runme.log": [],
+    "checkout/artifacts/m1-build-001/vivado/capture.runs/capture_rst100_0_synth_1/runme.log": [],
+    "checkout/artifacts/m1-build-001/vivado/capture.runs/capture_rst142_0_synth_1/runme.log": [],
+    "checkout/artifacts/m1-build-001/vivado/capture.runs/capture_rstpixel_0_synth_1/runme.log": [],
+    "checkout/artifacts/m1-build-001/vivado/capture.runs/capture_source_faults_0_synth_1/runme.log": [],
+    "checkout/artifacts/m1-build-001/vivado/capture.runs/capture_source_health_0_synth_1/runme.log": [],
+    "checkout/artifacts/m1-build-001/vivado/capture.runs/capture_source_monitor_0_synth_1/runme.log": [],
+    "checkout/artifacts/m1-build-001/vivado/capture.runs/capture_system_interrupts_0_synth_1/runme.log": [],
+    "checkout/artifacts/m1-build-001/vivado/capture.runs/capture_v_vid_in_axi4s_0_0_synth_1/runme.log": [],
+    "checkout/artifacts/m1-build-001/vivado/capture.runs/capture_vtc_in_0_synth_1/runme.log": [],
+    "checkout/artifacts/m1-build-001/vivado/capture.runs/impl_1/runme.log": [],
+    "checkout/artifacts/m1-build-001/vivado/capture.runs/synth_1/runme.log": []
+  },
+  "hls_rtl_comparison": {
+    "hls/color_convert/solution1/syn/verilog/color_convert.v": {
+      "replay_sha256": "7b44da5ae9b87efd8683bcbf3a8a4346bc01347f747993f576cd4a6a6c5b8869",
+      "original017_sha256": "7b44da5ae9b87efd8683bcbf3a8a4346bc01347f747993f576cd4a6a6c5b8869"
+    },
+    "hls/color_convert/solution1/syn/verilog/color_convert_control_s_axi.v": {
+      "replay_sha256": "f31a80392d4d5a776d8b9c595caa741f4a6990b86607f3e8e324e024145bf4d7",
+      "original017_sha256": "f31a80392d4d5a776d8b9c595caa741f4a6990b86607f3e8e324e024145bf4d7"
+    },
+    "hls/color_convert/solution1/syn/verilog/color_convert_mac_muladd_10s_8ns_18s_19_4_1.v": {
+      "replay_sha256": "7287f3112c59883e67c93d6e4a181fcd6d74db351fd98feab0d2a11dab238bb3",
+      "original017_sha256": "7287f3112c59883e67c93d6e4a181fcd6d74db351fd98feab0d2a11dab238bb3"
+    },
+    "hls/color_convert/solution1/syn/verilog/color_convert_mac_muladd_10s_8ns_19s_20_4_1.v": {
+      "replay_sha256": "474be311897958a7984236fa6565f2315a0514f458f20d2f5bb087c3f464bc8f",
+      "original017_sha256": "474be311897958a7984236fa6565f2315a0514f458f20d2f5bb087c3f464bc8f"
+    },
+    "hls/color_convert/solution1/syn/verilog/color_convert_mul_10s_8ns_18_1_1.v": {
+      "replay_sha256": "8decb7ad02404a043eb9e97bedc7ee79b2d453c793ae8f5048f692dfc80beb5f",
+      "original017_sha256": "8decb7ad02404a043eb9e97bedc7ee79b2d453c793ae8f5048f692dfc80beb5f"
+    },
+    "hls/color_convert/solution1/syn/verilog/color_convert_regslice_both.v": {
+      "replay_sha256": "1e088cf7edd6c096ffb05f77bc3b847b1ec296b08ce76b6dfe90f4cb6eea48e3",
+      "original017_sha256": "1e088cf7edd6c096ffb05f77bc3b847b1ec296b08ce76b6dfe90f4cb6eea48e3"
+    },
+    "hls/pixel_pack/solution1/syn/verilog/pixel_pack.v": {
+      "replay_sha256": "80b57ba2011c1a23d00bc5cb931a1cfdf295c4ab3c88223d8f07fd25001b1760",
+      "original017_sha256": "80b57ba2011c1a23d00bc5cb931a1cfdf295c4ab3c88223d8f07fd25001b1760"
+    },
+    "hls/pixel_pack/solution1/syn/verilog/pixel_pack_control_s_axi.v": {
+      "replay_sha256": "931d5250a51ca8fbc41cd1458f0840f3514d45ca6d04f83910b874c2b74f1a16",
+      "original017_sha256": "931d5250a51ca8fbc41cd1458f0840f3514d45ca6d04f83910b874c2b74f1a16"
+    },
+    "hls/pixel_pack/solution1/syn/verilog/pixel_pack_flow_control_loop_pipe_sequential_init.v": {
+      "replay_sha256": "4ad694a2e4460f8200b68e0f017567ca4e917ad0fdf9991e3abd124172b069f0",
+      "original017_sha256": "4ad694a2e4460f8200b68e0f017567ca4e917ad0fdf9991e3abd124172b069f0"
+    },
+    "hls/pixel_pack/solution1/syn/verilog/pixel_pack_pixel_pack_Pipeline_VITIS_LOOP_101_9.v": {
+      "replay_sha256": "fc98aa7d79ca59ee9b2180bf7e335a658d17a4490f49c6f65523ec66f5e1e632",
+      "original017_sha256": "fc98aa7d79ca59ee9b2180bf7e335a658d17a4490f49c6f65523ec66f5e1e632"
+    },
+    "hls/pixel_pack/solution1/syn/verilog/pixel_pack_pixel_pack_Pipeline_VITIS_LOOP_21_1.v": {
+      "replay_sha256": "e6453e62142f1b9ee2ae428668bef35f6c8532894323a8f8b24655189acf423c",
+      "original017_sha256": "e6453e62142f1b9ee2ae428668bef35f6c8532894323a8f8b24655189acf423c"
+    },
+    "hls/pixel_pack/solution1/syn/verilog/pixel_pack_pixel_pack_Pipeline_VITIS_LOOP_47_4.v": {
+      "replay_sha256": "a11015fb6212e984ff75ea04154ae2f2f089adbc535b5d8ccab00a222932693a",
+      "original017_sha256": "a11015fb6212e984ff75ea04154ae2f2f089adbc535b5d8ccab00a222932693a"
+    },
+    "hls/pixel_pack/solution1/syn/verilog/pixel_pack_pixel_pack_Pipeline_VITIS_LOOP_62_5.v": {
+      "replay_sha256": "abeb45bcb79d167f71e70d01078a1e6d7cc89fef0c3ab6c97977a29fdd47c214",
+      "original017_sha256": "abeb45bcb79d167f71e70d01078a1e6d7cc89fef0c3ab6c97977a29fdd47c214"
+    },
+    "hls/pixel_pack/solution1/syn/verilog/pixel_pack_pixel_pack_Pipeline_VITIS_LOOP_84_7.v": {
+      "replay_sha256": "6e3df7fcb81dcde703c14b0878d325b57b32024b11b794e34e201474c98fc35f",
+      "original017_sha256": "6e3df7fcb81dcde703c14b0878d325b57b32024b11b794e34e201474c98fc35f"
+    },
+    "hls/pixel_pack/solution1/syn/verilog/pixel_pack_regslice_both.v": {
+      "replay_sha256": "d7fe937b5ce5bda726854505b36a05f8889d721dbb9795c5a8c991f52c8fcc15",
+      "original017_sha256": "d7fe937b5ce5bda726854505b36a05f8889d721dbb9795c5a8c991f52c8fcc15"
+    }
+  },
+  "post_review": {
+    "command": [
+      "/home/eastwillow/Xilinx/2025.2/Vivado/bin/vivado",
+      "-mode",
+      "batch",
+      "-source",
+      "/home/eastwillow/Documents/litex-hdmi-capture/artifacts/clean-replay-017-20261016-0308/post-review.tcl",
+      "-log",
+      "/home/eastwillow/Documents/litex-hdmi-capture/artifacts/clean-replay-017-20261016-0308/post-review.log",
+      "-journal",
+      "/home/eastwillow/Documents/litex-hdmi-capture/artifacts/clean-replay-017-20261016-0308/post-review.jou"
+    ],
+    "exit_code": 0
+  }
+}
