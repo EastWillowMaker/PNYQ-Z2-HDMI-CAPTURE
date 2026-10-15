@@ -1,0 +1,84 @@
+{
+  "python_version": {
+    "command": [
+      "/home/eastwillow/Documents/litex-hdmi-capture/artifacts/clean-replay-001/artifacts/gate-venv/bin/python",
+      "--version"
+    ],
+    "exit_code": 0,
+    "output": "Python 3.12.13\n"
+  },
+  "pip_freeze": {
+    "command": [
+      "/home/eastwillow/Documents/litex-hdmi-capture/artifacts/clean-replay-001/artifacts/gate-venv/bin/python",
+      "-m",
+      "pip",
+      "freeze"
+    ],
+    "exit_code": 0,
+    "output": "certifi==2026.7.22\ncharset-normalizer==3.5.2\ncolorama==0.4.6\nidna==3.20\nlitex @ git+https://github.com/enjoy-digital/litex.git@b2759f69bcae8be0357fb2ee5eebe216365d1f00\nmigen @ git+https://github.com/m-labs/migen.git@e19524c963a8342952840983047557707fbe0b6a\npackaging==26.3\npyserial==3.5\nrequests==2.34.2\nurllib3==2.8.0\n"
+  },
+  "vivado_version": {
+    "command": [
+      "/home/eastwillow/Xilinx/2025.2/Vivado/bin/vivado",
+      "-version"
+    ],
+    "exit_code": 0,
+    "output": "vivado v2025.2 (64-bit)\nTool Version Limit: 2025.11\nSW Build 6299465 on Fri Nov 14 12:34:56 MST 2025\nIP Build 6300035 on Fri Nov 14 10:48:45 MST 2025\nSharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025\nCopyright 1986-2022 Xilinx, Inc. All Rights Reserved.\nCopyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.\n"
+  },
+  "vitis_version": {
+    "command": [
+      "/home/eastwillow/Xilinx/2025.2/Vitis/bin/vitis-run",
+      "--version"
+    ],
+    "exit_code": 0,
+    "output": "\n****** vitis-run v2025.2 (64-bit)\n  **** SW Build 6295257 on 2025-11-13-01:29:13\n  **** Start of session at: Fri Oct 16 03:07:54 2026\n    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.\n    ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.\n\n"
+  },
+  "iverilog_version": {
+    "command": [
+      "iverilog",
+      "-V"
+    ],
+    "exit_code": 0,
+    "output": "Icarus Verilog version 12.0 (stable) ()\n\nCopyright (c) 2000-2021 Stephen Williams (steve@icarus.com)\n\n  This program is free software; you can redistribute it and/or modify\n  it under the terms of the GNU General Public License as published by\n  the Free Software Foundation; either version 2 of the License, or\n  (at your option) any later version.\n\n  This program is distributed in the hope that it will be useful,\n  but WITHOUT ANY WARRANTY; without even the implied warranty of\n  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n  GNU General Public License for more details.\n\n  You should have received a copy of the GNU General Public License along\n  with this program; if not, write to the Free Software Foundation, Inc.,\n  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.\n\nIcarus Verilog Preprocessor version 12.0 (stable) ()\n\nCopyright (c) 1999-2021 Stephen Williams (steve@icarus.com)\n\n  This program is free software; you can redistribute it and/or modify\n  it under the terms of the GNU General Public License as published by\n  the Free Software Foundation; either version 2 of the License, or\n  (at your option) any later version.\n\n  This program is distributed in the hope that it will be useful,\n  but WITHOUT ANY WARRANTY; without even the implied warranty of\n  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n  GNU General Public License for more details.\n\n  You should have received a copy of the GNU General Public License along\n  with this program; if not, write to the Free Software Foundation, Inc.,\n  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.\n\nIcarus Verilog Parser/Elaborator version 12.0 (stable) ()\n\nCopyright (c) 1998-2021 Stephen Williams (steve@icarus.com)\n\n  This program is free software; you can redistribute it and/or modify\n  it under the terms of the GNU General Public License as published by\n  the Free Software Foundation; either version 2 of the License, or\n  (at your option) any later version.\n\n  This program is distributed in the hope that it will be useful,\n  but WITHOUT ANY WARRANTY; without even the implied warranty of\n  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n  GNU General Public License for more details.\n\n  You should have received a copy of the GNU General Public License along\n  with this program; if not, write to the Free Software Foundation, Inc.,\n  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.\n\n FLAGS DLL vvp.tgt\nvvp.tgt: Icarus Verilog VVP Code Generator 12.0 (stable) ()\n\nCopyright (c) 2001-2021 Stephen Williams (steve@icarus.com)\n\n  This program is free software; you can redistribute it and/or modify\n  it under the terms of the GNU General Public License as published by\n  the Free Software Foundation; either version 2 of the License, or\n  (at your option) any later version.\n\n  This program is distributed in the hope that it will be useful,\n  but WITHOUT ANY WARRANTY; without even the implied warranty of\n  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n  GNU General Public License for more details.\n\n  You should have received a copy of the GNU General Public License along\n  with this program; if not, write to the Free Software Foundation, Inc.,\n  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.\n\n"
+  },
+  "vendor_revision": {
+    "command": [
+      "git",
+      "-C",
+      "/home/eastwillow/Documents/litex-hdmi-capture/artifacts/clean-replay-017-20261016-0308/checkout/artifacts/vendor/PYNQ-v3.0.1",
+      "rev-parse",
+      "HEAD"
+    ],
+    "exit_code": 0,
+    "output": "93ddd21ab623883590a8c8b07f0b157b2855da4b\n"
+  },
+  "vendor_status": {
+    "command": [
+      "git",
+      "-C",
+      "/home/eastwillow/Documents/litex-hdmi-capture/artifacts/clean-replay-017-20261016-0308/checkout/artifacts/vendor/PYNQ-v3.0.1",
+      "status",
+      "--porcelain"
+    ],
+    "exit_code": 0,
+    "output": ""
+  },
+  "tool_files": {
+    "/home/eastwillow/Xilinx/2025.2/Vivado/bin/unwrapped/lnx64.o/vivado": {
+      "realpath": "/home/eastwillow/Xilinx/2025.2/Vivado/bin/unwrapped/lnx64.o/vivado",
+      "sha256": "f980a3b48ea9935ef54970fb9a2763915430abd0f202b4fc150028283f745749"
+    },
+    "/home/eastwillow/Xilinx/2025.2/Vitis/bin/unwrapped/lnx64.o/vitis-run": {
+      "realpath": "/home/eastwillow/Xilinx/2025.2/Vitis/bin/unwrapped/lnx64.o/vitis-run",
+      "sha256": "ae28843c38167a432ea94754e6610dc5f5633815e0dfd3532e732276321159f6"
+    },
+    "/home/eastwillow/Xilinx/2025.2/Vivado/bin/vivado": {
+      "realpath": "/home/eastwillow/Xilinx/2025.2/Vivado/bin/vivado",
+      "sha256": "3b15c02533ef5b5bab4a09617086bd431b14aa296e6ea5a29811fe269cf8deb5"
+    },
+    "/home/eastwillow/Xilinx/2025.2/Vitis/bin/vitis-run": {
+      "realpath": "/home/eastwillow/Xilinx/2025.2/Vitis/bin/vitis-run",
+      "sha256": "4d1bf95564e127673e3fde65bdaa7f93dc35220d15af85c794d148517fd91fb3"
+    }
+  }
+}
