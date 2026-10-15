@@ -179,9 +179,16 @@ reprogramming. A failed download invalidates the previous receipt; a new receipt
 is published only after download, empty endpoint checks and HPD assertion pass.
 
 Attach requires an empty reset command, no pending credit or source/command
-fault, zero selected/completed counts and a stopped, error-free DMA before any
-video-driver writes. An already-used image must be prepared again even when
-its last DMA has halted. Missing or stale receipts fail closed.
+fault, zero selected-frame and selected-credit completion counts, and a stopped,
+error-free DMA before any video-driver writes. An already-used image must be
+prepared again even when its last DMA has halted. Missing or stale receipts fail
+closed.
+
+The global observer's `completed_frames` counts all complete input frames,
+including disabled, unselected input. It may advance with observed/dropped
+frames and native edges while waiting for KMS readiness. This does not consume
+a capture credit. The separate `capture_completion` selected-credit counter
+must remain zero; FIFO, credit-fault and selected-frame guards still apply.
 
 Failed preparation or attach discards unowned metadata and control references,
 so caller cleanup cannot write an earlier image's register map after a reload.

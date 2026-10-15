@@ -135,7 +135,7 @@ def _hardware(source, *, empty):
         sequence = registers("capture_sequence", "xilinx.com:ip:axi_gpio:2.0")
         if (credit.read(0) & ~64 or credit.read(8) or completion.read(0) or completion.read(8) or
                 sequence.read(0) or sequence.read(8) or
-                snapshot["selected_frames"] or snapshot["completed_frames"] or
+                snapshot["selected_frames"] or
                 snapshot.get("frontend_overflow_episodes") != 0 or
                 snapshot.get("frontend_underflow_episodes") != 0):
             raise SourceError("Prepared capture requires empty credit and clean source faults")

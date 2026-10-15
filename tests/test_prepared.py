@@ -132,6 +132,32 @@ def test_attach_checks_hardware_before_video_without_download(receiver):
     assert not any(event[0] in ("download", "write") for event in receiver.events)
 
 
+def test_prepared_attach_allows_completed_unselected_input_frames(receiver):
+    initial_prepare(receiver)
+    source = receiver.source
+    source.prepared_receipt = receiver.receipt
+    source.control.snapshot = lambda point: dict(selected_frames=0, completed_frames=37,
+        observed_frames=38, dropped_frames=38, native_vsync_edges=39, invalid_frames=0,
+        frontend_overflow_episodes=0, frontend_underflow_episodes=0)
+    source.load_overlay()
+    assert receiver.events[-1] == ("video",)
+    assert any(event[0] == "read" for event in receiver.events[:-1])
+    assert not any(event[0] in ("download", "write") for event in receiver.events)
+
+
+def test_prepared_attach_still_rejects_selected_credit_completion(receiver):
+    initial_prepare(receiver)
+    source = receiver.source
+    source.prepared_receipt = receiver.receipt
+    source.control.snapshot = lambda point: dict(selected_frames=0, completed_frames=37,
+        observed_frames=38, dropped_frames=38, native_vsync_edges=39, invalid_frames=0,
+        frontend_overflow_episodes=0, frontend_underflow_episodes=0)
+    receiver.banks["capture_completion"].values[0] = 1
+    with pytest.raises(SourceError, match="empty credit"):
+        source.load_overlay()
+    assert not any(event[0] in ("download", "write", "video") for event in receiver.events)
+
+
 @pytest.mark.parametrize("bank,offset,value", [("axi_vdma", 0x30, 1), ("capture_control", 0, 1)])
 def test_sender_cleanup_after_attach_rejection_never_touches_unowned_image(receiver, bank, offset, value):
     from hdmi_capture.sender import Sender
@@ -339,7 +365,7 @@ def test_state_race_during_hardware_reads_rejects_before_driver(receiver, monkey
     assert ("video",) not in receiver.events
 
 
-@pytest.mark.parametrize("counter", ["selected_frames", "completed_frames",
+@pytest.mark.parametrize("counter", ["selected_frames",
     "frontend_overflow_episodes", "frontend_underflow_episodes"])
 def test_unclean_endpoint_counters_reject_before_driver(receiver, counter):
     initial_prepare(receiver)
