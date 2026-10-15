@@ -1,5 +1,73 @@
 # M1 completion audit
 
+Current-state addendum — 2026-10-16, HEAD `a4613f0`.
+The historical audit below describes the pre-v12 state and is preserved.
+Its software-promotion and clean-build gaps have since advanced; its hardware
+requirements remain open. Full M1 is still unqualified.
+
+Tracked receiver preparation, preparation receipts, guarded attach, the
+source-ready wait/trigger and the bounded credit-lease checker now exist.
+Quickstart uses the tracked direct-KMS workflow. The latest saved host result
+is **466 passed, one optional skip**, including the `3343dac` regression that
+allows global unselected-frame completions while still rejecting nonempty
+selected-credit state. This is software evidence, not successful board startup.
+See [prepared/lease integration](prepared-lease-integration.md),
+[trigger integration](prepared-trigger-integration.md) and
+[the counter correction](prepared-counter-guard.md).
+
+The [fresh017 replay](credit-017-clean-replay.md) closes the clean-source
+HLS/CAD recipe gap: archived `3fdf273`, fresh vendor clone, both fresh HLS
+exports, generated-RTL drain checks, full implementation and routed review
+passed. Setup/hold slack is 0.401/0.014 ns, all 56 skew constraints met, with zero
+critical CDC/DRC findings. It reused a verified isolated Python environment;
+retained VTC CDC warning and external timing gaps remain. The newly produced
+bit/HWH pair has different hashes from the pair physically tested in run011 and
+has **not** been board-qualified.
+
+[Immutable v14](prepared-v14-package.json), source revision
+`3343dac618ada6099453415b5554c4185a544801`, contains that new pair and the
+corrected runtime. Archive SHA256 is
+`306f8d3234721bfa174cd2e2df66c5f7ef17ab55de2b3802eb2f3c5bced0080f`.
+HEAD `a4613f0` only adds staging records after that source revision.
+[014 preparation](prepared-014-auth-ready.md) and
+[its preflight](prepared-014-preflight.json) say authentication and actual
+privileged preparation/capture remain pending. They do not establish a current
+live process or credential state. Run013 expired before source/preparation/DMA;
+its NOT_RUN result is not a failed HDMI experiment. V13's incorrect guard was
+found before execution; that archive remains historical and must not be used.
+
+| Remaining gate, in execution order | Required evidence |
+| --- | --- |
+| **1. Current tracked first-frame path and new pair** | After local authentication, recheck actual known-idle state, then run014's tracked prepare/receipt/readiness/attach route with v14 and stable KMS. Require the planned 20-second exact-frame smoke, actual listening/startup, error-free raw DMA halt, storage/kernel checks and source/VT restoration. Retain exact package/pair hashes. This closes the first physical integration gate; a session-specific ignored idle-bootstrap helper alone does not demonstrate the clean-checkout user procedure. Record a replay using the documented tracked commands from a clean checkout/staging tree. |
+| **2. Physical loss, safe cleanup and restart** | On the fixed current runtime, repeat a correctly armed HDMI-cable-only interruption with Hub/Micro-B intact and board continuity recorded. Require explicit source failure, no SIGBUS/new external abort, bounded halt before free and truthful child exit. After supported input stabilizes, explicitly reprepare/restart and receive new exact frames/session with safe cleanup. Recovery by an external emergency helper cannot substitute for successful sender cleanup. |
+| **3. Held-buffer/source association and client pressure** | Run the tracked credit-lease checker on the new pair: refreshed complete-buffer hashes and held IDs remain stable while native edges advance, raw parked DMA remains safely halted, ACK precedes a second newer exact optical pattern, and final cleanup is safe. Include current-path client pause/reconnect/whole-ready-frame-drop evidence; cite runs010/011 as prior evidence and repeat affected paths through the final prepared runtime. The checker is currently host-tested only. |
+| **4. Input-mode transition and supported restart** | Exercise the current credit runtime through a controlled timing/relock change and a safely available unsupported-geometry case; record acceptance/rejection, complete-frame handling, fail-stop where applicable, cleanup and explicit supported-mode restart. Runtime geometry/FIFO/sequence checks do not independently measure same-dimension timing-only changes. Do not claim arbitrary forbidden HDMI formats are classified, or force unsafe clocks to manufacture coverage. Mark unavailable stimuli unverified. |
+| **5. Final unchanged long criterion and completion report** | After earlier gates pass, use the final tracked runtime and exact new pair for ≥600 seconds, ≥600 distinct exact frames and ≥1 FPS, with zero received corruption/mixing/repeats/metadata/transport failures, retained startup and runtime health/accounting, KMS optical correlation, CPU/memory samples, safe cleanup, storage and VT-return evidence. Cite build/source hashes and all failed attempts; update current requirement/status summaries without erasing history. A short smoke and CAD success do not replace this run. |
+
+Normal011 remains a valid v11/original017 pass: 1,201 exact distinct frames in
+600.368226 seconds with safe cleanup and storage checks. Loss012 remains a
+confirmed HDMI-only SIGBUS failure after 88 exact frames, followed by a separate
+successful emergency halt. Neither has been reclassified by software tests or
+the fresh build. The [011/012 report](capture-011-loss-012-report.md) preserves
+both results and the startup native-clock risk, which the runtime fix does not
+remove. Start only after stable supported input; automatic recovery is absent.
+
+No accepted M1 requirement is shown technically impossible. Existing logs cannot
+recover exact startup native skips or independently map an optical pattern ID
+to an absolute native VSYNC counter value. The held-credit test can strengthen
+buffer/identity association evidence but cannot supply that independent physical
+mapping. Keep startup skips unknown, global snapshots non-atomic and
+`physical_source_sequence_verified=false` unless new independent evidence
+justifies changing it. Receipt checks likewise identify software-managed
+configuration history, not a hardware build-ID register. Do not convert these
+limits into fabricated zeros or require M2–M4 to close M1.
+
+This addendum uses the linked saved reports, package/preflight records, current
+prompt/requirements and quickstart. No new tests, board/UART/display operations
+or source review were performed for this documentation update.
+
+---
+
 2026-10-16, after normal011 and failed loss012, before v12 physical retest.
 Scope is the accepted PC Python / Ethernet / real HDMI RGB888 M1. Browser,
 active bypass and LCD are later M2–M4 work and do not block this delivery.

@@ -1,5 +1,23 @@
 # Progress and handoff
 
+2026-10-16T03:41:37+08:00:014 CANDIDATE UPDATED TO V14; STILL BEFORE AUTH.
+Commit3343dac corrects prepared attach: global unselected completed_frames may
+advance while waiting for input; selected-frame/selected-credit completion
+must remainzero. Root reproduced failure against isolated e180171 source;
+current fullhost466pass/1optional skip. No RTL/source-comment changes.
+Immutable v14 source3343dac archive SHA256:
+306f8d3234721bfa174cd2e2df66c5f7ef17ab55de2b3802eb2f3c5bced0080f.
+All archive members, artifact pair, checksum pipeline and helper syntax pass.
+Fresh replay017 pair unchanged and still not hardware-qualified. V13 preserved,
+not run; stage-prepared-014.py now targets v14. Package/preflight report a4613f0.
+Current process1103733 remains alive at initial local prompt, with no miniterm
+child or prepared-014 output directory. No boardstage, source or DMA started.
+The existing pending authentication question/window remains the next action;
+do not open another auth flow or claim a source-ready hardware result.
+Short normal014 must pass with cables connected before lease/loss/mode/final
+600second tests. Full M1 remains incomplete. See prepared-counter-guard.md and
+prepared-v14-package.json under results/2026-10-16.
+
 2026-10-16T03:34:50+08:00:014 NEW AUTH WINDOW READY; NO PRE-AUTH TEST TIMER.
 013terminalNOT_RUN preserved. Unused013wizardonly wasclosedafterexactPID/empty
 childcheck; noUARTclient/nativeprocess killed. Newwizard PID1103733:
