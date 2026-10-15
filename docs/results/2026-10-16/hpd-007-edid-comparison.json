@@ -1,0 +1,41 @@
+{
+  "bytes": 256,
+  "sha256": "3b01e13acc1664b49df3d35d945f1a96dfcc5a86544a1e05b260525a79de31f6",
+  "block_checksums": [
+    0,
+    0
+  ],
+  "base_block_differences": [
+    {
+      "offset": 66,
+      "expected": 0,
+      "observed": 114
+    },
+    {
+      "offset": 67,
+      "expected": 0,
+      "observed": 16
+    },
+    {
+      "offset": 68,
+      "expected": 0,
+      "observed": 83
+    },
+    {
+      "offset": 126,
+      "expected": 0,
+      "observed": 1
+    },
+    {
+      "offset": 127,
+      "expected": 183,
+      "observed": 225
+    }
+  ],
+  "modes": [
+    "640x480",
+    "640x480",
+    "640x480",
+    "640x480"
+  ]
+}

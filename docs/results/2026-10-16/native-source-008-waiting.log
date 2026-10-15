@@ -1,0 +1,10 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-newcard-017-v10$ cd /tmp/hdmi-capture-newcard-017-v10 && cat native-source-008-launch.log; cat native-source-008.log; sha256sum wait-native-source-008.py probe-native-initialization-006.py; ps -eo pid,user,args | grep "[w]ait-native-source-008.py"; printf "\nCONSOLE_DONE_4d36f153b32145e1842851f6c0104b39:%s\n" "$?"
+[?2004l{"event": "waiting_for_fixed_source", "monotonic": 702.840781484}
+33b78ec46af0c379811c63c2b69bde2732af58c8681cecc23d6df3ef1f675b28  wait-native-source-008.py
+61afc48fc979546ae2787ccc783a226cb5cbbd0899d7c020d74f1d6e80b22fc6  probe-native-initialization-006.py
+ 1787 root     sudo -n env XILINX_XRT=/usr PYTHONPATH=/tmp/hdmi-capture-newcard-017-v10 nohup /usr/local/share/pynq-venv/bin/python -u [01;31m[Kwait-native-source-008.py[m[K
+ 1792 root     sudo -n env XILINX_XRT=/usr PYTHONPATH=/tmp/hdmi-capture-newcard-017-v10 nohup /usr/local/share/pynq-venv/bin/python -u [01;31m[Kwait-native-source-008.py[m[K
+ 1793 root     /usr/local/share/pynq-venv/bin/python -u [01;31m[Kwait-native-source-008.py[m[K
+
+CONSOLE_DONE_4d36f153b32145e1842851f6c0104b39:0

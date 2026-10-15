@@ -1,0 +1,6 @@
+{
+  "capture_started": false,
+  "dma_buffers_allocated": 0,
+  "error": "ProcessLookupError: [Errno 3] No such process",
+  "edid_sha256": "3b01e13acc1664b49df3d35d945f1a96dfcc5a86544a1e05b260525a79de31f6"
+}

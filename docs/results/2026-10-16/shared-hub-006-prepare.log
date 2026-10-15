@@ -1,0 +1,7 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-newcard-017-v10$ cd /tmp/hdmi-capture-newcard-017-v10 && test "$(cat /proc/sys/kernel/random/boot_id)" = 1dd70e40-85cc-4c9b-a2e2-03b9814e290f && if pgrep -f "^/usr/local/share/pynq-venv/bin/python.*(hdmi_capture.sender|attached-credit-sender)" >/dev/null; then false; else printf "%s\n" "c1563a633d024f72fa72ccb24f5cd96ade0ae81227e1e081d3e28b200d27b9a2  prepare-after-replug-005.py" | sha256sum -c - && sudo -n env XILINX_XRT=/usr PYTHONPATH=/tmp/hdmi-capture-newcard-017-v10 /usr/local/share/pynq-venv/bin/python -u prepare-after-replug-005.py; fi; printf "\nCONSOLE_DONE_4b717c0291c64d43af1a9b7053757361:%s\n" "$?"
+[?2004lprepare-after-replug-005.py: OK
+{"event": "receiver_hpd_ready_before_kms", "hpd": 1, "receiver_locked": 0, "vdma_cr": "0x10002", "vdma_sr": "0x10001", "capture_enabled": false, "allocated_capture_buffers": 0, "input_mode_verified": false}
+
+CONSOLE_DONE_4b717c0291c64d43af1a9b7053757361:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-newcard-017-v10$ 

@@ -141,3 +141,66 @@ If auth is delayed beyond the worker deadline, it stops without queuing a run.
 The board power jumper and supply voltage were not measured. The confirmed
 fact is the shared Hub wiring and coincident reboot, not an electrical fault
 diagnosis or evidence that all earlier input failures had the same cause.
+
+
+## Preparation006 passed; HPD007 refreshed the host EDID
+
+The user completed board authentication. Fixed-boot017 loading and HPD
+preparation executed successfully: HPD1, lock0, S2MM CR0x10002/SR0x10001,
+gate disabled and zero allocated capture buffers. Host still showed the
+zero-manufacturer EDID after15seconds, so coordinator006 correctly stopped
+without queuing source03. This is a preparation pass, not an input/capture pass.
+
+A guarded one-second HPD-low/high pulse then produced real host connector
+transitions without removing the Hub or rebooting the board. The30-second
+host watcher captured the non-DGL EDID, disconnect/reconnect and two DGL/VGA
+EDID revisions. The final EDID SHA256 is
+3b01e13acc1664b49df3d35d945f1a96dfcc5a86544a1e05b260525a79de31f6,
+256bytes, checksums0 for both blocks, with only640x480 modes exposed. Its base
+block differs from the built128-byte VGA EDID at offsets66/67/68 (DTD physical
+image dimensions),126 (extension flag) and127 (checksum). The preferred VGA
+pixel timing matches; this is still not byte-identical wire EDID proof.
+The prior transformed4K and zero-manufacturer EDIDs remain preserved.
+
+After this pulse lock rose0→1, but native_vsync_edges stayed0 in all8 samples;
+selected/completed/invalid counters stayed0 and raw S2MM SR remained0x10001.
+This supports stale host detection as one preparation problem, not a complete
+fix for missing input or proof of why earlier fresh-card starts failed.
+
+Coordinator007 observed the correct DGL sink but found the old source worker
+PID494498 already absent. Its finished_monotonic271988.0717 was before the
+recorded272337.5427 deadline; no stop file exists and the reason for the early
+exit was not captured. Do not describe this as a normal deadline expiry or
+attribute it to an operator action without evidence. No source03 was queued,
+no VT switch occurred and no native probe ran in007. Local sudo-n also required
+interactive authentication, so another real PC authentication was necessary.
+
+## Source008 setup avoids another board-authentication delay
+
+Used the still-valid board authentication to start one fixed root waiter,
+PID1793, before asking for PC authentication. Its actual waiting log and
+matching helper hashes were read back. It waits at most900seconds for one
+fixed HTTP readiness marker with exact session/source/XR24/VGA/25200 values.
+It accepts no command/path in that marker and launches only the fixed native
+frontend probe. The probe checks current RS0/Halted1 and command0 before its
+5-second native constructor, samples independent MMIO, and allocates no capture
+buffers. Root source-wait timeout starts no probe; the process does not remain
+privileged indefinitely. Existing controller/mode/ownership code is unchanged.
+
+The local coordinator waits for actual KMS-ready XR24/VGA/25200 before
+publishing that marker, collects the native exit/log and source restoration,
+and removes the marker. The subprocess route is local coordinator→UART file
+collection; fixed board waiter entry→bounded marker read→fixed Python probe
+entry→original verified attachment/MMIO checks→native frontend constructor.
+External SDK/FPGA internals and signal/network-failure paths are not fully
+verified. Syntax/compilation passed and root waiting is verified; the source,
+native call and cleanup outcomes for008 remain pending, not passed.
+
+Prepared a new bounded PC source session008 with a fresh90-second request01,
+frame ID1000000, original fixed VT3/source runner and original DGL guard. Opened
+PYNQ VGA probe - PC sudo only; user must authenticate locally and keep the
+source terminal open. Board sudo need not be repeated for this fixed pending
+probe. Output: artifacts/operator/native-source-008/summary.json and
+artifacts/operator/kms-source-session-008. Coordinator exec session1074.
+The board waiter has a15-minute limit; a much later retry needs fresh state
+inspection rather than reusing these one-run evidence paths.

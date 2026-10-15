@@ -1,0 +1,5 @@
+{
+  "capture_started": false,
+  "dma_buffers_allocated": 0,
+  "error": "RuntimeError: No connected DGL EDID after preparation; no source requested"
+}

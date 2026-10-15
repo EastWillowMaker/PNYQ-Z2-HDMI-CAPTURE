@@ -1,0 +1,9 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-newcard-017-v10$ cd /tmp/hdmi-capture-newcard-017-v10 && curl -g --noproxy "*" --fail --max-time 15 "http://[fe80::560f:ee4c:ed84:e6ce%eth0]:8766/wait-native-source-008.py" -o wait-native-source-008.py && curl -g --noproxy "*" --fail --max-time 15 "http://[fe80::560f:ee4c:ed84:e6ce%eth0]:8766/probe-native-initialization-006.py" -o probe-native-initialization-006.py && sudo -n env XILINX_XRT=/usr PYTHONPATH=/tmp/hdmi-capture-newcard-017-v10 nohup /usr/local/share/pynq-venv/bin/python -u wait-native-source-008.py > native-source-008-launch.log 2>&1 </dev/null &  printf "\nCONSOLE_DONE_8878459c93c142f6ac38e20d9c36eab7:%s\n" "$?"
+[?2004l[1] 1784
+
+CONSOLE_DONE_8878459c93c142f6ac38e20d9c36eab7:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-newcard-017-v10$   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100  1524  100  1524    0     0   317k      0 --:--:-- --:--:-- --:--:--  372k
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current

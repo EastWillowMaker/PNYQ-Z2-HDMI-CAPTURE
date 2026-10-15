@@ -1,5 +1,21 @@
 # Progress and handoff
 
+2026-10-16T00:46:34+08:00: user boardauth completed,
+actual receiver006 load/HPD PASS RS0/Halted1/gateoff/nobuffers. Host initially
+stillnonDGL so006 correctlyqueuednothing. One softwareHPDpulse007 refreshed
+PC EDID toDGL/LiteXVGA, only640x480 modes, SHA3b01e13a...de31f6. Lock0→1 but
+nativeVSYNC0 across8samples; no capturepass. Originalrootworker494498 ended
+beforedeadline for unrecordedreason;007 stoppedbeforequeuing03. Hostsudo-n
+requiresauth. Started VERIFIED boardrootwaiter PID1793 using existingauth:
+fixed nativeprobe only after session008 ready marker, max900s/noDMA. Opened
+PYNQ VGA probe - PC sudo only with NEW boundedsource008/request01=90s,id1000000.
+User PCsudo pending; keepwindowopen. NO boardreauth needed for this waiter.
+Coordinator exec1074 waits actualKMSready thenmarker/nativecollection/VTreturn.
+Result artifacts/operator/native-source-008/summary.json; source in
+kms-source-session-008. New prototype compile/syntaxpassed, rootwaitingreadback
+passed, source/native outcomespending. Do not reuse006/007 failureevidence.
+Full report results/2026-10-16/fresh-card-input-diagnosis.md preserves all.
+
 2026-10-16 00:41 Asia/Taipei: user CONFIRMED PYNQ Micro-B shares the USB-C HDMI
 Hub. Hub removal explains the board reboot; replug005 is not HDMI-only evidence.
 Keep Hub connected; future loss stimulus at HDMI cable with power/UART intact.
