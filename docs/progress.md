@@ -29,7 +29,9 @@ See [016checkpoint](results/2026-10-15/credit-016-build.md) and
 [timing investigation](results/2026-10-15/credit-015-timing.md).
 The paired016 artifacts and v9 package are transferred, with matching hashes.
 V10 is the current source package, including truthful failure/cleanup counts;
-transfer it before the next run. [Diagnostic evidence](results/2026-10-15/credit-fault-reporting.md)
+it is transferred with matching SHA256 to `/tmp/hdmi-capture-credit-016-v10`.
+Use that PYTHONPATH with the paired bit/HWH in
+`/tmp/hdmi-capture-credit-016/overlay-016` for the next run. [Diagnostic evidence](results/2026-10-15/credit-fault-reporting.md)
 records308 passing tests and1optional skip.
 Next: verify source output active after operator reply, restart animated fixture,
 run bounded smoke requiring autoHALT/IRQ plus held frame identity and exactRGB,

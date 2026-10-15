@@ -34,6 +34,7 @@ No new physical capture or hosted CI result is claimed.
 
 The new source archive is sender-m1-v10.tar.gz, SHA256
 8c716223f7928571a3704eb049e3827045c85168081f99b186b1009b24c298ae.
-It supersedes v9 for the next run and has not yet been board-tested. The FPGA
+It supersedes v9 for the next run; archive transfer SHA256 matched on the board,
+and it has not yet been executed against hardware. The FPGA
 pair remains build016; software diagnostics do not change the hardware image.
 The operator's PC wake/unlock action remains pending; no capture process is active.
