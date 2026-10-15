@@ -1,5 +1,12 @@
 # Progress and handoff
 
+2026-10-15 21:29 Asia/Taipei — direct KMS source probe002 passed: VT3,
+XR24/640x480p60 (25200kHz),37 completed page flips, exit0, returnVT2 verified.
+Omitted --vt is correct because default is3. This is source-only proof, not
+board RGB qualification. Board has no sender and sudo authentication expired
+(actual sudo -n requires password). Preparing source/overlay/receiver coordination
+for real KMS-input capture. Evidence:[probe002](results/2026-10-15/kms-vt-probe-002.json).
+
 2026-10-15 21:16 Asia/Taipei — first operator direct-VT probe returned toVT2
 but source failed DRM-master acquisition. openvt pickedVT1, starting a GDM
 greeter compositor (sessionc2/tty1). Runner now explicitly targets unusedVT3,

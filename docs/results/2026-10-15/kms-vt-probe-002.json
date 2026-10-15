@@ -1,0 +1,45 @@
+{
+  "original.json": {
+    "vt": 2,
+    "card": "/dev/dri/card2",
+    "connector": "DP-2",
+    "duration": 10,
+    "vendor": "DGL"
+  },
+  "active-vt.json": {
+    "actual_vt": "3",
+    "requested_vt": 3,
+    "sessions": "140  1000 eastwillow  seat0 193326 user          tty2 no  -\n141 60579 gdm-greeter -     218982 manager-early -    no  -\n  2  1000 eastwillow  -     3641   manager       -    no  -\n c2 60579 gdm-greeter seat0 218810 greeter       tty1 yes 9min ago\n"
+  },
+  "child-result.json": {
+    "exit_code": 0
+  },
+  "restore.json": {
+    "original_vt_restored": true
+  },
+  "ready": {
+    "event": "kms_ready",
+    "connector_id": 446,
+    "crtc": 421,
+    "format": "XR24",
+    "clock_khz": 25200,
+    "width": 640,
+    "height": 480
+  },
+  "page_flips": 37,
+  "first_presented": {
+    "event": "kms_presented",
+    "frame_id": 400001,
+    "generated_monotonic": 260275.717350681,
+    "presented_monotonic": 260275.731997045
+  },
+  "last_presented": {
+    "event": "kms_presented",
+    "frame_id": 400037,
+    "generated_monotonic": 260285.317780942,
+    "presented_monotonic": 260285.331898099
+  },
+  "source_sha256": "df4c8430353c567cfcc4742d5bca034b2cbe5d1995f0140b15dc7ee7aa89fac3",
+  "binary_sha256": "1e0af0dedc2f03238b695f16aaa647fa7b8bca7a28422fe57b0914176e7683c5",
+  "board_rgb_verified": false
+}

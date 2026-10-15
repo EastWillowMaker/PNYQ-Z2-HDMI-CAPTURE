@@ -9,15 +9,18 @@ involved. The PC receiver still compares every RGB888 byte strictly.
 
 ## Current validation and important limitation
 
-The direct-VT path is **not hardware-qualified**. Its first run returned safely
-but failed to acquire DRM master; openvt chose VT1 and GDM started a greeter
-compositor there. The runner now explicitly selects VT3 (or another unused
-VT3–12) and rejects VTs already owned by a login session. The revised hardware
-run is pending. The compiled C
-source matches all921600 reference bytes for five IDs, including0 and UINT32_MAX;
-four invalid-ID cases fail before display access. Nine tests pass locally.
-The program also refuses DRM master acquisition while the desktop owns it.
-These checks do not prove live scanout, recovery, or real HDMI pixels.
+The direct-VT source smoke test **passed** on2026-10-15: actualVT3,
+640x480 progressive60Hz (25200kHz pixel clock), XR24,37 completed page flips
+in the10-second run, exit0, and verified return toVT2. The compiled source also
+matches all921600 reference bytes for five IDs; four invalid-ID cases fail
+before display access. These9 tests pass locally. This proves a real KMS source
+and normal return on this machine, **not PYNQ RGB capture or sustained M1**.
+Evidence: [probe002](results/2026-10-15/kms-vt-probe-002.json).
+
+The first VT attempt failed DRM-master acquisition because openvt choseVT1 and
+GDM started a greeter compositor there. The corrected runner explicitly targets
+VT3 (or another unusedVT3–12), rejects login-session VTs, and verifies the active
+VT before starting KMS. It never forces DRM master away from the desktop.
 
 A separate DRM-lease prototype did modeset DP-2 and complete18 page flips, but
 GNOME50.1 crashed with signal11 during lease revocation. The preceding message
@@ -44,7 +47,7 @@ installation or permanent display configuration is performed.
 bash scripts/build_kms_fixture.sh
 .venv/bin/python -m pytest -q tests/test_kms_pattern.py
 sudo /usr/bin/python3 tools/run_kms_vt.py --duration 10 \
-  --output artifacts/operator/kms-vt-probe-001
+  --output artifacts/operator/kms-vt-probe-NEW
 ```
 
 Run the sudo command locally; never paste its password in chat. The evidence
@@ -72,8 +75,8 @@ returns nonzero. It selects the explicitly requested connector and supported VGA
 mode. Invalid IDs/durations, absent connector/mode, failed allocation, failed
 flip, and timeout fail rather than silently substituting output or format.
 The wrapper restricts the local card/connector and refuses a non-DGL sink.
-The real-VT subprocess/return path is still unexecuted; compilation and pattern
-checks cannot establish that it works on this GPU or survives all signals.
+The real-VT normal subprocess/return path passed once on this GPU. It does not
+establish recovery under all signals, faults or other GPU configurations.
 Physical unplug, GPU errors, forced process termination and session recovery
 remain unverified. Root is needed for VT switching, not for modifying the board.
 No capture decoder, DMA policy, pixel tolerance or network protocol changed.
@@ -81,6 +84,6 @@ No capture decoder, DMA policy, pixel tolerance or network protocol changed.
 Local verification at21:11: the complete Python suite reported298passed and
 1skipped (compiled gateware case requiresiverilog/vvp); the final CRTC-selection
 change was followed by the focused9-case compiled-source suite, all passing.
-No hosted CI or direct-VT hardware test was run. The CRTC selector prefers the
+No hosted CI was run. The subsequent direct-VT smoke test is recorded above. The CRTC selector prefers the
 requested connector's existing CRTC, otherwise an unused compatible CRTC, and
 fails when none exists rather than stealing another active output's CRTC.
