@@ -13,11 +13,12 @@ adjacent HWH and build manifest from the verified build. These commands need no
 operator helper archive or fixed board boot ID. Replace the example paths with
 your board paths and use the same files for both commands.
 
-For first preparation, first confirm that the board or PL was reset and no DMA
-is active. Then run:
+Authenticate sudo in the board terminal. For first preparation, confirm that
+the board or PL was reset and no DMA is active. Then run:
 
 ```bash
-PYTHONPATH=src python -m hdmi_capture.sender prepare \
+sudo -n env XILINX_XRT=/usr PYTHONPATH=src \
+  /usr/local/share/pynq-venv/bin/python -m hdmi_capture.sender prepare \
   --bitfile /path/to/capture.bit --manifest /path/to/build-manifest.json \
   --receipt /path/to/prepared.json --after-reset
 ```
@@ -39,17 +40,130 @@ verified recovery; this command does not clear PYNQ's configuration ledger.
 After `receiver_prepared` reports HPD1, start the HDMI source. Then run:
 
 ```bash
-PYTHONPATH=src python -m hdmi_capture.sender \
+sudo -n env XILINX_XRT=/usr PYTHONPATH=src \
+  /usr/local/share/pynq-venv/bin/python -m hdmi_capture.sender \
   --source litex-credit --prepared-receipt /path/to/prepared.json \
   --bitfile /path/to/capture.bit --manifest /path/to/build-manifest.json \
   --host :: --port 9020 --fps 2 --startup-diagnostics
 ```
 
-A direct KMS source can switch virtual terminals and hide the PC desktop.
-Arrange board startup and evidence collection through another console or remote
-automation before that switch. These tracked commands cover receiver preparation
-and capture; portable PC/board orchestration and its hardware qualification remain
-separate work.
+A direct KMS source switches virtual terminals and hides the PC desktop. The
+following bounded sequence starts the board waiter first, then a PC trigger and
+client pipeline before switching VT. It uses tracked tools, but this complete
+sequence has host-test evidence only; a first-frame hardware run and the final
+600-second qualification through it remain pending.
+
+There are two separate local authentication contexts. Enter the board password
+only in its UART terminal, and the PC password only in the PC terminal. The
+trigger sends no password or sudo command. Use fresh marker, sender-log, trigger
+log, source-output and client-output names for every attempt; these commands do
+not remove stale paths.
+
+On the board, authenticate, prepare and launch the sender from the checkout.
+Replace the paths first. For this privileged board
+command, use its existing PYNQ Python and XRT environment:
+
+```bash
+sudo -v
+capture_repo=/home/xilinx/litex-hdmi-capture
+capture_bit=/path/to/capture.bit
+capture_manifest=/path/to/build-manifest.json
+capture_receipt=/tmp/prepared-001.json
+capture_marker=/tmp/prepared-001.ready
+capture_sender_log=/tmp/prepared-001.sender.log
+cd "$capture_repo"
+sudo -n env XILINX_XRT=/usr PYTHONPATH="$capture_repo/src" /usr/local/share/pynq-venv/bin/python \
+  -m hdmi_capture.sender prepare --bitfile "$capture_bit" \
+  --manifest "$capture_manifest" --receipt "$capture_receipt" --after-reset
+test ! -e "$capture_marker" && test ! -L "$capture_marker" && \
+test ! -e "$capture_sender_log" && test ! -L "$capture_sender_log" && \
+sudo -n env XILINX_XRT=/usr PYTHONPATH="$capture_repo/src" nohup /usr/local/share/pynq-venv/bin/python \
+  -m hdmi_capture.sender --source litex-credit --bitfile "$capture_bit" \
+  --manifest "$capture_manifest" --prepared-receipt "$capture_receipt" \
+  --wait-ready-file "$capture_marker" --ready-timeout 300 \
+  --host :: --port 9020 --fps 2 --duration 90 --startup-diagnostics \
+  >"$capture_sender_log" 2>&1 </dev/null &
+```
+
+The Python path above is the tested PYNQ3.0.1 virtual environment, not the board
+system Python. Before leaving UART, inspect the fresh sender log:
+
+```bash
+tail -n 5 "$capture_sender_log"
+```
+
+The first use of `--after-reset` still requires the reset/no-active-DMA condition
+described above; omit it for a normal subsequent preparation with a valid
+receipt. Confirm the sender log contains `waiting_for_source`, then exit the
+interactive UART program so the trigger can claim the serial port. While
+waiting, the sender performs filesystem checks only. The marker must be absent
+at startup and arrive as a regular file; files, directories and dangling
+symlinks already at that path are rejected. The timeout is finite, defaults to
+120 seconds, and cannot exceed 900 seconds. Receipt, boot and loaded-state
+checks run after arrival. No marker is removed automatically.
+
+On the PC, build the existing fixture, authenticate locally, and paste the whole
+block so the client pipeline is queued before VT changes. Set the board address
+and the Python environment containing `pyserial`. The existing
+`tools/board_console.py` selects this machine's fixed UART by-id path and expects
+an existing normal `xilinx` shell; it is not portable to arbitrary boards or
+serial adapters.
+
+```bash
+bash scripts/build_kms_fixture.sh
+sudo -v
+capture_board='fe80::BOARD%INTERFACE'
+capture_uart_python=/path/to/serial-venv/bin/python
+(
+  .venv/bin/python tools/trigger_prepared_capture.py \
+    --source-output artifacts/kms-prepared-001 \
+    --board-marker /tmp/prepared-001.ready \
+    --board-sender-log /tmp/prepared-001.sender.log \
+    --uart-python "$capture_uart_python" --timeout 120 \
+    --log artifacts/prepared-001-trigger.jsonl && \
+  PYTHONPATH=src:. .venv/bin/python tools/qualify_capture.py "$capture_board" \
+    --duration 20 --min-frames 20 --min-fps 1 --hard-deadline 30 \
+    --log artifacts/prepared-001-frames.jsonl \
+    --summary artifacts/prepared-001-summary.json \
+    --save-endpoints artifacts/captures/prepared-001
+) >artifacts/prepared-001-pipeline.log 2>&1 &
+capture_pipeline_pid=$!
+for capture_attempt in $(seq 1 50); do
+  grep -q '^{"event": "waiting_for_kms",' artifacts/prepared-001-trigger.jsonl 2>/dev/null && break
+  sleep 0.1
+done
+if grep -q '^{"event": "waiting_for_kms",' artifacts/prepared-001-trigger.jsonl; then
+  sudo -n /usr/bin/python3 tools/run_kms_vt.py --duration 180 --frame-id 1500000 \
+    --output artifacts/kms-prepared-001
+else
+  echo 'Trigger did not enter its fresh-output wait; inspect the pipeline log'
+fi
+wait "$capture_pipeline_pid"
+```
+
+The source directory must not exist when the trigger begins. Its
+`waiting_for_kms` event confirms that fresh-path check completed before the KMS
+command creates the directory. The trigger reads metadata only and requires
+XR24, 640x480, 25200 kHz, two increasing completed presentations from this wait,
+both no more than two seconds old, and no source failure/restore result.
+The fixture's monotonic timestamps and the trigger must come from the same PC.
+The helper trusts metadata from this checkout's source wrapper and fixture; it
+does not attest process identity or inspect framebuffer pixels.
+
+It then makes one normal-user UART call: create the fresh board marker and poll
+the fresh sender log for at most 30 seconds. A prior `listening` line, startup
+error or missing waiting event rejects that log. Only a new actual `listening`
+JSON line makes the helper succeed and starts the client after `&&`; there are
+no TCP probes or failed-qualification retries. The UART log preserves that
+session line beside the trigger log as `prepared-001-trigger.jsonl.uart.log`.
+Marker and sender-log paths must be absolute and contain no ASCII control
+characters; printable shell metacharacters are quoted literally.
+
+If any stage fails, preserve its logs and inspect the board before another
+attempt. A helper timeout does not terminate a native startup or a DMA process.
+The source wrapper remains responsible for VT restoration, and the sender's
+existing cleanup/unsafe-DMA retention policy still applies. A short client pass
+here does not establish the 600-second M1 criterion.
 
 The receipt option attaches without reprogramming. Input clock must be present
 when native frontend configuration begins. Startup still uses VTC; runtime

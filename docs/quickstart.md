@@ -8,12 +8,14 @@ force another resolution. Loading this overlay changes the active FPGA design.
 Keep any existing board bitstream/HWH and stop other capture/DMA applications.
 
 Build from a clean checkout using [the pinned bootstrap/build recipe](build.md#reproduce)
-and use its successful single-credit bit/HWH/manifest pair. The new source
-requires the `single_credit_parked_v1` ABI and deferred next-SOF closure proof;
-its hardware qualification is pending. Legacy `013` results are retained
-historical evidence and require the separate `--source litex` adapter. They do
-not supply exact DMA-associated source identities. A first frame is a smoke
-test, not the [ten-minute qualification](qualification.md).
+and use its successful single-credit bit/HWH/manifest pair. The normal017/v11
+run passed1,201 exact frames over600.368seconds with safe shutdown; the separate
+HDMI-loss run failed. [Current evidence](results/2026-10-16/capture-011-loss-012-report.md)
+and the [remaining audit](results/2026-10-16/m1-remaining-audit.md) distinguish
+that pass from unfinished full M1 qualification. The new tracked preparation,
+receipt and source-trigger workflow has host tests; its hardware run is pending.
+Legacy013 uses the separate `--source litex` adapter and has no exact
+DMA-associated source identities.
 
 ## Host setup and read-only doctor
 
@@ -59,23 +61,21 @@ already authenticated UART shell plus bounded Ethernet file transfer because
 SSH was unavailable. `tools/board_console.py` is tied to that specific UART
 identity and is evidence tooling, not a portable SSH substitute.
 
-## Configure the HDMI source before programming
+## Prepare the receiver and direct KMS source
 
-Select progressive 640×480 at 59.94/60 Hz, scale 1, normal orientation, RGB
-full range, with no desktop mirroring. On the tested GNOME/Wayland host, the
-helper accepts only the identified Digilent output and preserves other outputs.
-Use its actual connector, not the example `DP-2`. Inspect first; `--apply`
-explicitly changes that output temporarily and records its previous state.
+Use the [prepared capture workflow](prepared-capture.md), which supplies the
+board and PC command blocks. Preparation asserts HPD without native frontend
+configuration, VTC reads, capture allocation or DMA start. A later receipt-checked
+sender waits for a fresh source-ready file. The PC trigger observes completed
+direct DRM/KMS presentations before signaling that file, then waits for the
+sender's actual TCP listening event before starting the client.
 
-```bash
-/usr/bin/python3 tools/configure_hdmi_source.py --connector DP-2
-# Only if the reported mode needs changing:
-/usr/bin/python3 tools/configure_hdmi_source.py --connector DP-2 \
-  --mode 640x480@60.000 --apply --snapshot artifacts/source-before.json
-```
-
-Configure this mode **before loading the overlay**, and keep it active through
-startup. EDID alone does not prevent a source from forcing an unsupported clock.
+This source runs outside GNOME composition and needs a temporary VT switch;
+see [the bounded KMS runner](kms-source.md). Keep this PC's shared USB-C Hub and
+PYNQ Micro-B connected. The queued pipeline avoids typing a board command after
+the desktop is hidden. Do not use the earlier GLES desktop fixture as an exact
+pixel reference. No source, root authentication or device identity is inferred
+from an existing file; use fresh paths and the paired artifact checks.
 
 ## Deploy the pair and start the sender
 
@@ -91,67 +91,38 @@ scp "$BUILD_DIR/capture.bit" "$BUILD_DIR/capture.hwh" \
 ssh -t "$BOARD_SSH"
 ```
 
-In that board terminal, authenticate sudo locally, then run the bounded sender:
+In that board terminal, follow the preparation and background-waiting sender
+commands in [prepared capture](prepared-capture.md). Authenticate board sudo
+locally. `--after-reset` is only an explicit assertion of a confirmed board/PL
+reset with no active DMA; the command does not reset an unknown design.
+The same guide then queues the PC trigger/client pipeline before the PC sudo
+VT command. It uses only tracked files and does not depend on local operator
+archives. `XILINX_XRT=/usr` is required by the tested image.
 
-```bash
-cd ~/hdmi-capture
-sudo -v
-sudo -n env XILINX_XRT=/usr PYTHONPATH="$PWD/src" \
-  /usr/local/share/pynq-venv/bin/python -u -X faulthandler \
-  -m hdmi_capture.sender --source litex-credit \
-  --bitfile "$PWD/overlay/capture.bit" \
-  --manifest "$PWD/overlay/build-manifest.json" \
-  --host :: --port 9020 --fps 2 --duration 120 --startup-diagnostics
-```
-
-`XILINX_XRT=/usr` is required by this tested image; another image is unverified.
-Expect startup verification/configuration, disabled-gate/native-pairing checks, single-frame DMA arm, and
-then listening/capture. The timer allows cleanup; do not wrap hardware capture
-in a kill timeout or send SIGKILL. Stop with one Ctrl-C and wait for the native
-DMA cleanup report. If the sender reports a source/cleanup fault, resolve it
-before another load; preserve the diagnostics. The latest sender drains frames
-without a client and keeps a bounded ready slot.
+Do not wrap hardware capture in a forced-kill timeout. On a source or cleanup
+fault, preserve the logs and establish DMA safety before another load. The
+sender's duration permits cooperative cleanup; an unsafe halt retains its
+native references and requires external hardware recovery.
 
 ## Take the first frame
 
-Once the sender reports readiness, start the source fixture in a PC terminal:
+The queued short qualifier in the preparation guide saves the first and last
+received RGB arrays under a fresh ignored directory. After KMS restores the
+desktop, verify the saved first frame:
 
 ```bash
-/usr/bin/python3 tools/hdmi_pattern_gl.py --list-monitors
-# Replace 1 with the identified HDMI output's current SDL monitor index.
-/usr/bin/python3 tools/hdmi_pattern_gl.py --monitor-index 1 \
-  --frame-id 1 --self-check --duration 90
+.venv/bin/python tools/hdmi_pattern.py verify \
+  artifacts/captures/prepared-001/first.npy
 ```
 
-The GLES fixture requires the system SDL2/GLES libraries and a native Wayland
-session. It checks its framebuffer and target geometry; see
-[source fixture requirements and limitations](hdmi-fixture.md). A different
-source may show its own image, but its scanout mode must meet the same contract.
-After the fixture is ready and the board sender is running, use another PC
-terminal at the repository root:
+It must be a `(480,640,3)` uint8 RGB array with exact analytic pixels and coherent
+row markers. Saving a frame alone does not prove those properties. The pipeline
+logs preserve the original metadata and the strict verification result.
 
-```bash
-mkdir -p captures
-.venv/bin/hdmi-capture snapshot "$BOARD_ADDRESS" --port 9020 \
-  --output captures/first.npy --png
-.venv/bin/python tools/hdmi_pattern.py verify captures/first.npy
-```
-
-Successful output is a `(480, 640, 3)` uint8 RGB array, lossless PNG, and JSON
-metadata. The optical verifier checks every RGB byte and row marker; a saved
-frame alone does not prove integrity. Output paths must be new. Close the source
-window with Escape; if its mode was changed, restore the saved source state:
-
-```bash
-/usr/bin/python3 tools/configure_hdmi_source.py --connector DP-2 \
-  --restore artifacts/source-before.json
-```
-
-For sustained evidence, use [qualification.md](qualification.md), including
-required non-null native health counters, fault checks, unique coherent optical
-IDs, and the source/scanout logs. The new source waits for held hardware identity plus verified one-frame DMA
-auto-halt; global counter snapshots remain non-atomic. See
-[source accounting](source-accounting.md) for the required proof and pending
-hardware validation. Clock loss/reconnect and unsupported sources
-remain separate unverified scenarios; retained CDC and external timing limits
-are recorded in [build.md](build.md).
+For a later sustained run, use [qualification.md](qualification.md): at least
+600seconds and600 distinct exact frames at1FPS or more, clean accounting,
+source/resource evidence and safe shutdown. A20-second smoke is not that
+criterion. [Source accounting](source-accounting.md) explains the held identity
+and parked-buffer contract. Physical interruption, mode/restart and the final
+tracked-flow qualification remain separate obligations; build timing and CDC
+limits remain in [build.md](build.md).

@@ -317,6 +317,9 @@ def main(argv=None, *, unsafe_hold=None):
     parser.add_argument("--bitfile", default="base.bit")
     parser.add_argument("--manifest", help="Required build-manifest.json for the LiteX source")
     parser.add_argument("--prepared-receipt", help="Attach a prepared litex-credit receiver without reloading")
+    parser.add_argument("--wait-ready-file", help="Wait for a new source-ready marker before prepared attach")
+    parser.add_argument("--ready-timeout", type=float,
+                        help="Bound source-ready wait to (0, 900] seconds (default: 120)")
     parser.add_argument("--read-timeout", type=float, default=3)
     parser.add_argument("--send-timeout", type=float, default=5)
     parser.add_argument("--duration", type=float)
@@ -325,6 +328,13 @@ def main(argv=None, *, unsafe_hold=None):
     args = parser.parse_args(argv)
     if args.prepared_receipt is not None and args.source != "litex-credit":
         parser.error("--prepared-receipt requires --source litex-credit")
+    if args.wait_ready_file is not None and (args.source != "litex-credit" or args.prepared_receipt is None):
+        parser.error("--wait-ready-file requires litex-credit and --prepared-receipt")
+    if args.ready_timeout is not None and args.wait_ready_file is None:
+        parser.error("--ready-timeout requires --wait-ready-file")
+    if args.ready_timeout is not None and (not math.isfinite(args.ready_timeout) or
+                                           not 0 < args.ready_timeout <= 900):
+        parser.error("ready timeout must be finite and in (0, 900]")
     if args.duration is not None and (not math.isfinite(args.duration) or args.duration <= 0):
         parser.error("duration must be finite and positive")
     if args.source in ("pynq", "litex", "litex-credit"):
@@ -344,6 +354,12 @@ def main(argv=None, *, unsafe_hold=None):
                 options.update(capture_fps=args.fps, timeout=args.read_timeout)
                 if args.prepared_receipt is not None:
                     options["prepared_receipt"] = args.prepared_receipt
+            if args.wait_ready_file is not None:
+                from .prepared import wait_ready_file
+                timeout = 120 if args.ready_timeout is None else args.ready_timeout
+                print(json.dumps(dict(event="waiting_for_source", ready_file=args.wait_ready_file,
+                                      timeout_seconds=timeout)), file=sys.stderr, flush=True)
+                wait_ready_file(args.wait_ready_file, timeout)
             source_class = LiteXCreditSource if args.source == "litex-credit" else LiteXSource
             source = source_class(args.bitfile, args.manifest, **options)
         else:

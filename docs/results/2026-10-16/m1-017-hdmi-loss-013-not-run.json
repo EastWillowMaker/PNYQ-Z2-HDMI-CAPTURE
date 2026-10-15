@@ -1,0 +1,12 @@
+{
+  "scope": "preauth_readiness_wait_not_capture",
+  "outcome": "NOT_RUN",
+  "observed": "2026-10-16T03:19:24.560916+08:00",
+  "coordinator_pid": 847111,
+  "coordinator_alive": false,
+  "source_session_ready": false,
+  "source_run_created": false,
+  "board_auth_launch_log_created": false,
+  "board_capture_started": false,
+  "explanation": "Coordinator readiness wait expired without KMS source. This is not an executed HDMI loss test. Auth launcher checks coordinator lifetime before starting any privileged board preparation."
+}

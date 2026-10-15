@@ -1,5 +1,25 @@
 # Progress and handoff
 
+2026-10-16T03:20+08:00: TRACKED READY PIPELINE HOST PASS;013 NOT_RUN.
+Sender --wait-ready-file/--ready-timeout blocks before sourceconstruction; host
+trigger_prepared_capture.py validatesfreshKMS and waits actualboardTCPbindbefore
+client. DefaultknownPYNQvenv paths+fullqueuedcommands in prepared-capture.md;
+quickstart usesdirectKMS, privateendpoints. Finalhost465pass1skip/4.03s;131focused,
+5docshellblocks syntaxpass; no hardwareproof yet. Report prepared-trigger-integration.
+013coordinatorPID847111/session70733 TERMINAL exit1 after30minreadinesswait.
+No source.ready/run01/authlaunchlog existed; not-runJSONpreserves evidence. Old
+wizardPID847290 maystillwaitEnter; helperhaltsifcoordinatorterminal, noDMA/source.
+Do NOTaskduplicateauth untiluserresponds; usefreshnamedtestthen. Lastknownboard
+rawsafehalt/gateoff after012, boot1dd70e40; recheck actualstatebeforeloading.
+Fresh017cleanreplay finished606.745s/exited0+routedpostreviewpass: setup/hold
+0.401/0.014ns,56skewMET,0criticalCDC/DRC,retainedwarningsdocumented. BothHLS15RTL
+exactmatchold017;9manifesthashes/source/vendorintegrityverified. NEWPAIRNOTLOADED:
+bit ae3a65d77b1662fedef9ffbc62dd9484cdd8a155af136596da3e6b695fb6846e,
+hwh 3bfbbf124960ec932a4a53bb4fcb4a5969b89b9a96d6329143bdfc8442eef9a6.
+Output artifacts/clean-replay-017-20261016-0308/checkout/artifacts/m1-build-001.
+Nextrealwork: freshauth->trackedprepare/shortfirstframe->physical loss/restart,
+heldcreditproof/mode tests->final600s unchangedcriterion; fullM1false.
+
 2026-10-16: TRACKED PREPARE/ATTACH + LEASE CHECK HOST PASS.
 New sender prepare --receipt [--after-reset] and --prepared-receipt validate
 boot/artifact/rawPYNQ ledger identity and stopped/emptyhardware beforevideo.

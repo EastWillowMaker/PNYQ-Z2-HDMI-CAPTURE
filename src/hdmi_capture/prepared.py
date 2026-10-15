@@ -3,11 +3,38 @@
 import hashlib
 from contextlib import contextmanager
 import json
+import math
 import os
 from pathlib import Path
+import stat
 import tempfile
+import time
 
 from .sources import CREDIT_ABI, DMA_ERRORS, LiteXSource, SourceError, verify_litex_artifacts
+
+
+def wait_ready_file(path, timeout=120, *, clock=time.monotonic, sleep=time.sleep):
+    """Wait for a new regular marker without accessing receiver hardware."""
+    if not math.isfinite(timeout) or not 0 < timeout <= 900:
+        raise ValueError("Ready timeout must be finite and in (0, 900]")
+    path = Path(path)
+    try:
+        path.lstat()
+    except FileNotFoundError:
+        pass
+    else:
+        raise SourceError("Ready marker must be absent before waiting")
+    deadline = clock() + timeout
+    while clock() < deadline:
+        try:
+            mode = path.lstat().st_mode
+        except FileNotFoundError:
+            sleep(min(0.1, max(0, deadline - clock())))
+            continue
+        if not stat.S_ISREG(mode):
+            raise SourceError("Ready marker must arrive as a regular file")
+        return
+    raise SourceError("Timed out waiting for source readiness marker")
 
 
 def _boot_id():

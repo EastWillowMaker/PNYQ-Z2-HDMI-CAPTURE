@@ -474,3 +474,95 @@ def test_capture_cli_rejects_receipt_for_other_sources():
     from hdmi_capture import sender
     with pytest.raises(SystemExit):
         sender.main(["--source", "synthetic", "--prepared-receipt", "prepared.json"])
+
+
+class ReadyClock:
+    def __init__(self, arrive=None):
+        self.now, self.arrive = 0, arrive
+
+    def __call__(self):
+        return self.now
+
+    def sleep(self, seconds):
+        self.now += seconds
+        if self.arrive is not None:
+            arrive, self.arrive = self.arrive, None
+            arrive()
+
+
+@pytest.mark.parametrize("kind", ["file", "directory", "symlink"])
+def test_ready_wait_refuses_stale_marker_paths(tmp_path, kind):
+    marker = tmp_path / "ready"
+    if kind == "file":
+        marker.touch()
+    elif kind == "directory":
+        marker.mkdir()
+    else:
+        marker.symlink_to(tmp_path / "missing")
+    with pytest.raises(SourceError, match="absent"):
+        prepared.wait_ready_file(marker, 1)
+    assert marker.exists() or marker.is_symlink()
+
+
+@pytest.mark.parametrize("kind", ["directory", "symlink"])
+def test_ready_wait_rejects_nonregular_arrival(tmp_path, kind):
+    marker = tmp_path / "ready"
+    arrive = marker.mkdir if kind == "directory" else lambda: marker.symlink_to(tmp_path / "missing")
+    clock = ReadyClock(arrive)
+    with pytest.raises(SourceError, match="regular"):
+        prepared.wait_ready_file(marker, 1, clock=clock, sleep=clock.sleep)
+
+
+def test_ready_wait_accepts_new_file_and_preserves_it(tmp_path):
+    marker = tmp_path / "ready"
+    clock = ReadyClock(marker.touch)
+    prepared.wait_ready_file(marker, 1, clock=clock, sleep=clock.sleep)
+    assert marker.is_file()
+
+
+def test_ready_timeout_never_constructs_a_source(tmp_path, monkeypatch):
+    from hdmi_capture import sender
+    marker = tmp_path / "ready"
+    clock = ReadyClock()
+    wait = prepared.wait_ready_file
+    monkeypatch.setattr(prepared, "wait_ready_file", lambda path, timeout:
+        wait(path, timeout, clock=clock, sleep=clock.sleep))
+    monkeypatch.setattr(sender, "LiteXCreditSource", lambda *args, **kwargs: pytest.fail("source constructed"))
+    with pytest.raises(SourceError, match="Timed out"):
+        sender.main(["--source", "litex-credit", "--bitfile", "capture.bit", "--manifest", "manifest.json",
+                     "--prepared-receipt", "receipt.json", "--wait-ready-file", str(marker),
+                     "--ready-timeout", "0.2"])
+    assert not marker.exists()
+
+
+def test_marker_arrival_still_revalidates_receipt_boot(receiver, monkeypatch):
+    from hdmi_capture import sender
+    initial_prepare(receiver)
+    marker = receiver.receipt.with_name("ready")
+    def arrive():
+        receiver.environment["boot"] = "different-boot"
+        marker.touch()
+    clock = ReadyClock(arrive)
+    wait = prepared.wait_ready_file
+    monkeypatch.setattr(prepared, "wait_ready_file", lambda path, timeout:
+        wait(path, timeout, clock=clock, sleep=clock.sleep))
+    async def run(self, *args):
+        self.source.load_overlay()
+    monkeypatch.setattr(sender.Sender, "run", run)
+    with pytest.raises(SourceError, match="stale"):
+        sender.main(["--source", "litex-credit", "--bitfile", str(receiver.source.bitfile),
+                     "--manifest", str(receiver.source.manifest_path), "--prepared-receipt", str(receiver.receipt),
+                     "--wait-ready-file", str(marker)])
+    assert receiver.events == [] and marker.exists()
+
+
+@pytest.mark.parametrize("options", [
+    ["--source", "synthetic", "--wait-ready-file", "/tmp/ready"],
+    ["--source", "litex-credit", "--wait-ready-file", "/tmp/ready"],
+    ["--source", "synthetic", "--ready-timeout", "1"],
+    *[["--source", "litex-credit", "--prepared-receipt", "receipt.json", "--wait-ready-file", "/tmp/ready",
+       "--ready-timeout", value] for value in ("0", "-1", "nan", "inf", "901")]])
+def test_ready_cli_rejects_invalid_source_or_timeout(options):
+    from hdmi_capture import sender
+    with pytest.raises(SystemExit):
+        sender.main(options)

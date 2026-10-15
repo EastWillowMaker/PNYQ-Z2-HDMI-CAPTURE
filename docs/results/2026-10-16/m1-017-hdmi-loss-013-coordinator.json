@@ -1,0 +1,9 @@
+{
+  "scope": "intentional_hdmi_loss_fail_stop_only",
+  "smoke_passed": false,
+  "qualification_passed": false,
+  "shutdown_safe": null,
+  "storage_after_passed": false,
+  "error": "RuntimeError: Expected XR24 VGA60 source did not become ready.",
+  "full_m1_qualification": false
+}
