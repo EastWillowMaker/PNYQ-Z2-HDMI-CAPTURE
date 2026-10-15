@@ -11,6 +11,7 @@ foreach vlnv {digilentinc.com:ip:dvi2rgb:1.7 xilinx.com:ip:v_vid_in_axi4s:5.0 xi
 add_files $gateware
 add_files [file join $output capture_lock_sync.v]
 add_files [file join $output source_health.v]
+add_files [file join $output receiver_reset_sync.v]
 add_files -fileset constrs_1 [file join $output hdmi_rx.xdc]
 create_bd_design capture
 # Defines only the two upstream receiver procedures, then applies its exact
@@ -20,7 +21,9 @@ set_property -dict [list CONFIG.PCW_USE_S_AXI_HP0 {1} CONFIG.PCW_USE_S_AXI_HP2 {
 make_bd_intf_pins_external [get_bd_intf_pins ps7_0/DDR]
 make_bd_intf_pins_external [get_bd_intf_pins ps7_0/FIXED_IO]
 create_bd_cell -type ip -vlnv xilinx.com:ip:axi_intc:4.1 system_interrupts
-# Match the PYNQ base controller's edge-input policy and synchronize inputs.
+# Select and synchronize edge inputs explicitly. The upstream base source
+# establishes IRQ topology but not this mask; inferred level IRQ metadata still
+# requires driver/runtime qualification with the retained edge-input policy.
 set_property -dict [list CONFIG.C_KIND_OF_INTR {0xFFFFFFFF} CONFIG.C_ASYNC_INTR {0xFFFFFFFF} CONFIG.C_NUM_SYNC_FF {2}] [get_bd_cells system_interrupts]
 create_bd_cell -type hier video
 create_hier_cell_hdmi_in /video hdmi_in
@@ -46,7 +49,7 @@ set_property -dict [list CONFIG.C_IS_DUAL {1} CONFIG.C_ALL_INPUTS {1} CONFIG.C_G
 create_bd_cell -type ip -vlnv xilinx.com:ip:axi_gpio:2.0 video/source_faults
 set_property -dict [list CONFIG.C_ALL_INPUTS {1} CONFIG.C_GPIO_WIDTH {32}] [get_bd_cells video/source_faults]
 connect_bd_net [get_bd_pins video/source_monitor/overflow_episodes] [get_bd_pins video/source_health/gpio_io_i]
-connect_bd_net [get_bd_pins video/source_monitor/native_vsync_edges] [get_bd_pins video/source_health/gpio2_io_i]
+connect_bd_net [get_bd_pins video/source_monitor/native_vsync_edges] [get_bd_pins video/source_health/gpio2_io_i] [get_bd_pins video/litex_capture/native_vsync_edges]
 connect_bd_net [get_bd_pins video/source_monitor/underflow_episodes] [get_bd_pins video/source_faults/gpio_io_i]
 # Insert into the unpacked 24-bit AXIS pixel stream, preserving SOF and EOL.
 set oldnet [get_bd_intf_nets -of_objects [get_bd_intf_pins video/hdmi_in/frontend/video_out]]
@@ -56,10 +59,15 @@ connect_bd_intf_net [get_bd_intf_pins video/hdmi_in/frontend/video_out] [get_bd_
 connect_bd_intf_net [get_bd_intf_pins video/litex_capture/m_axis] [get_bd_intf_pins video/hdmi_in/color_convert/stream_in_24]
 connect_bd_intf_net [get_bd_intf_pins video/hdmi_in/out_stream] [get_bd_intf_pins video/axi_vdma/S_AXIS_S2MM]
 create_bd_cell -type ip -vlnv xilinx.com:ip:axi_gpio:2.0 video/capture_control
-set_property -dict [list CONFIG.C_IS_DUAL {1} CONFIG.C_ALL_OUTPUTS {1} CONFIG.C_GPIO_WIDTH {1} CONFIG.C_DOUT_DEFAULT {0x00000000} CONFIG.C_ALL_INPUTS_2 {1} CONFIG.C_GPIO2_WIDTH {32}] [get_bd_cells video/capture_control]
-connect_bd_net [get_bd_pins video/capture_control/gpio_io_o] [get_bd_pins video/litex_capture/enable]
+set_property -dict [list CONFIG.C_IS_DUAL {1} CONFIG.C_ALL_OUTPUTS {1} CONFIG.C_GPIO_WIDTH {32} CONFIG.C_DOUT_DEFAULT {0x00000000} CONFIG.C_ALL_INPUTS_2 {1} CONFIG.C_GPIO2_WIDTH {32}] [get_bd_cells video/capture_control]
+foreach {field bit} {enable 0 request_toggle 1 ack_toggle 2} {
+ create_bd_cell -type ip -vlnv xilinx.com:ip:xlslice:1.0 video/control_$field
+ set_property -dict [list CONFIG.DIN_WIDTH {32} CONFIG.DIN_FROM $bit CONFIG.DIN_TO $bit CONFIG.DOUT_WIDTH {1}] [get_bd_cells video/control_$field]
+ connect_bd_net [get_bd_pins video/capture_control/gpio_io_o] [get_bd_pins video/control_$field/Din]
+ connect_bd_net [get_bd_pins video/control_$field/Dout] [get_bd_pins video/litex_capture/$field]
+}
 connect_bd_net [get_bd_pins video/litex_capture/completed_frames] [get_bd_pins video/capture_control/gpio2_io_i]
-foreach {name counter0 counter1} {capture_counts observed_frames selected_frames capture_errors dropped_frames invalid_frames} {
+foreach {name counter0 counter1} {capture_counts observed_frames selected_frames capture_errors dropped_frames invalid_frames capture_credit credit_status selected_source_id capture_completion selected_completed command_errors capture_sequence selected_native_vsync_id source_sequence_faults} {
  create_bd_cell -type ip -vlnv xilinx.com:ip:axi_gpio:2.0 video/$name
  set_property -dict [list CONFIG.C_IS_DUAL {1} CONFIG.C_ALL_INPUTS {1} CONFIG.C_GPIO_WIDTH {32} CONFIG.C_ALL_INPUTS_2 {1} CONFIG.C_GPIO2_WIDTH {32}] [get_bd_cells video/$name]
  connect_bd_net [get_bd_pins video/litex_capture/$counter0] [get_bd_pins video/$name/gpio_io_i]
@@ -76,6 +84,10 @@ create_bd_cell -type module -reference capture_lock_sync receiver_lock_sync
 connect_bd_net [get_bd_pins video/hdmi_in/PixelClk] [get_bd_pins receiver_lock_sync/pixel_clk]
 connect_bd_net [get_bd_pins video/hdmi_in/aPixelClkLckd] [get_bd_pins receiver_lock_sync/locked_async]
 connect_bd_net [get_bd_pins receiver_lock_sync/locked_pixel] [get_bd_pins rstpixel/dcm_locked]
+create_bd_cell -type module -reference receiver_reset_sync video/receiver_reset_monitor
+connect_bd_net [get_bd_pins ps7_0/FCLK_CLK1] [get_bd_pins video/receiver_reset_monitor/sys_clk]
+connect_bd_net [get_bd_pins rstpixel/peripheral_reset] [get_bd_pins video/receiver_reset_monitor/receiver_reset_async]
+connect_bd_net [get_bd_pins video/receiver_reset_monitor/receiver_reset] [get_bd_pins video/litex_capture/receiver_reset]
 create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 locked
 set_property CONFIG.CONST_VAL {1} [get_bd_cells locked]
 connect_bd_net [get_bd_pins locked/dout] [get_bd_pins rst100/dcm_locked] [get_bd_pins rst142/dcm_locked]
@@ -83,12 +95,12 @@ connect_bd_net [get_bd_pins ps7_0/FCLK_CLK0] [get_bd_pins video/hdmi_in/clk_100M
 connect_bd_net [get_bd_pins ps7_0/FCLK_CLK1] [get_bd_pins video/hdmi_in/clk_142M] [get_bd_pins video/axi_vdma/m_axi_s2mm_aclk] [get_bd_pins video/axi_vdma/s_axis_s2mm_aclk] [get_bd_pins ps7_0/S_AXI_HP0_ACLK] [get_bd_pins video/litex_capture/sys_clk] [get_bd_pins video/capture_control/s_axi_aclk] [get_bd_pins video/source_monitor/sys_clk] [get_bd_pins video/source_health/s_axi_aclk] [get_bd_pins video/source_faults/s_axi_aclk]
 connect_bd_net [get_bd_pins ps7_0/FCLK_CLK2] [get_bd_pins video/hdmi_in/clk_200M]
 connect_bd_net [get_bd_pins rst100/peripheral_aresetn] [get_bd_pins video/hdmi_in/periph_resetn_clk100M] [get_bd_pins video/axi_vdma/axi_resetn] [get_bd_pins system_interrupts/s_axi_aresetn]
-connect_bd_net [get_bd_pins rst142/peripheral_aresetn] [get_bd_pins video/hdmi_in/periph_resetn_clk142M] [get_bd_pins video/capture_control/s_axi_aresetn] [get_bd_pins video/capture_counts/s_axi_aresetn] [get_bd_pins video/capture_errors/s_axi_aresetn] [get_bd_pins video/source_health/s_axi_aresetn] [get_bd_pins video/source_faults/s_axi_aresetn]
+connect_bd_net [get_bd_pins rst142/peripheral_aresetn] [get_bd_pins video/hdmi_in/periph_resetn_clk142M] [get_bd_pins video/capture_control/s_axi_aresetn] [get_bd_pins video/capture_counts/s_axi_aresetn] [get_bd_pins video/capture_errors/s_axi_aresetn] [get_bd_pins video/capture_credit/s_axi_aresetn] [get_bd_pins video/capture_completion/s_axi_aresetn] [get_bd_pins video/capture_sequence/s_axi_aresetn] [get_bd_pins video/source_health/s_axi_aresetn] [get_bd_pins video/source_faults/s_axi_aresetn]
 connect_bd_net [get_bd_pins rst142/peripheral_reset] [get_bd_pins video/litex_capture/sys_rst] [get_bd_pins video/source_monitor/sys_reset]
 connect_bd_net [get_bd_pins rstpixel/peripheral_aresetn] [get_bd_pins video/hdmi_in/resetn]
 connect_bd_net [get_bd_pins rstpixel/peripheral_reset] [get_bd_pins video/hdmi_in/vid_io_in_reset] [get_bd_pins video/source_monitor/pixel_reset]
 # Automation creates AXI protocol/clock conversion with explicit endpoint clocks.
-foreach slave {system_interrupts/s_axi video/axi_vdma/S_AXI_LITE video/hdmi_in/S00_AXILite video/hdmi_in/S01_AXILite video/hdmi_in/S02_AXILite video/hdmi_in/S03_AXILite video/capture_control/S_AXI video/capture_counts/S_AXI video/capture_errors/S_AXI video/source_health/S_AXI video/source_faults/S_AXI} {
+foreach slave {system_interrupts/s_axi video/axi_vdma/S_AXI_LITE video/hdmi_in/S00_AXILite video/hdmi_in/S01_AXILite video/hdmi_in/S02_AXILite video/hdmi_in/S03_AXILite video/capture_control/S_AXI video/capture_counts/S_AXI video/capture_errors/S_AXI video/capture_credit/S_AXI video/capture_completion/S_AXI video/capture_sequence/S_AXI video/source_health/S_AXI video/source_faults/S_AXI} {
  apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config {Master "/ps7_0/M_AXI_GP0" Clk_master "/ps7_0/FCLK_CLK0" Clk_slave "Auto" Clk_xbar "/ps7_0/FCLK_CLK0"} [get_bd_intf_pins $slave]
 }
 apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config {Master "/video/axi_vdma/M_AXI_S2MM" Slave "/ps7_0/S_AXI_HP0" Clk_master "/ps7_0/FCLK_CLK1" Clk_slave "/ps7_0/FCLK_CLK1" Clk_xbar "/ps7_0/FCLK_CLK1"} [get_bd_intf_pins ps7_0/S_AXI_HP0]

@@ -1,5 +1,23 @@
 # Progress and handoff
 
+2026-10-15 — Build014 single-credit implementation and local checks completed;
+physical validation remains pending. Do not mark M1 complete. See
+[the new checkpoint](results/2026-10-15/credit-014-build.md) for artifacts,
+behavioral impact, 291 software tests and 62 gate/manifest tests. The new producer
+is `--source litex-credit`; legacy013 requires `--source litex` and the qualifier's
+explicit `--legacy-delivered-image-criterion`. Source accounting cannot be inferred
+from old continuous-ring counts.
+
+Build014 bit/HWH/manifest and v6 deployment packages are ready. Latest UART
+preflight is `artifacts/operator/credit-ready-preflight.log`; sudo authentication
+must be rechecked/renewed locally before board load. No sender or optical fixture
+is currently armed. User physical-unplug availability remains pending; never ask
+them to unplug until a new capture is running. Subagents hit usage limits;
+parent resumed direct checks and finished the local checkpoint.
+
+## Preserved previous checkpoint
+
+
 2026-10-15 Asia/Taipei — real LiteX HDMI capture sustained criterion passed;
 source accounting and physical cable-removal qualification remain incomplete. User explicitly requests incremental
 local commits as progress is verified; no push is authorized.

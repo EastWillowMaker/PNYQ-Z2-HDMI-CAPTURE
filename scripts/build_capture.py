@@ -22,7 +22,7 @@ def prepare(vendor, output):
     run(['git', '-C', str(vendor), 'diff', '--exit-code', PIN, '--',
          'boards/Pynq-Z2/base/base.tcl', 'boards/Pynq-Z2/base/vivado/constraints/base.xdc',
          'boards/ip'])
-    for rtl_name in ('capture_lock_sync.v', 'source_health.v'):
+    for rtl_name in ('capture_lock_sync.v', 'source_health.v', 'receiver_reset_sync.v'):
         shutil.copyfile(ROOT / 'hardware' / rtl_name, output / rtl_name)
     # The RTL generic already supports range 5, but v1.7 packaging exposes
     # only 1/2. Extend only the copied package's enumerated choices for VGA.
@@ -157,6 +157,7 @@ def main():
         'stage': args.stage, 'vivado': args.vivado, 'vitis_run': args.vitis_run,
         'source_health_sha256': hashlib.sha256((output / 'source_health.v').read_bytes()).hexdigest(),
         'capture_lock_sync_sha256': hashlib.sha256((output / 'capture_lock_sync.v').read_bytes()).hexdigest(),
+        'receiver_reset_sync_sha256': hashlib.sha256((output / 'receiver_reset_sync.v').read_bytes()).hexdigest(),
     }, indent=2) + '\n')
     run([args.vivado, '-mode', 'batch', '-source', str(ROOT / 'hardware/capture.tcl'),
          '-log', str(output / 'vivado.log'), '-journal', str(output / 'vivado.jou'),

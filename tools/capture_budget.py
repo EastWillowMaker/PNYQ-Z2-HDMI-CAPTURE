@@ -30,6 +30,8 @@ def main(argv=None):
     parser.add_argument("--width", type=int, default=640)
     parser.add_argument("--height", type=int, default=480)
     parser.add_argument("--input-fps", type=finite_positive, default=60)
+    parser.add_argument("--dma-fps", type=finite_positive,
+                        help="Complete frames written by DMA; defaults to input FPS for continuous capture")
     parser.add_argument("--delivered-fps", type=finite_positive, default=2)
     parser.add_argument("--sampled-fps", type=finite_positive,
                         help="RGB copy rate; defaults to delivered FPS, may be higher under drops")
@@ -52,8 +54,9 @@ def main(argv=None):
     if not 1 <= args.width <= 1920 or not 1 <= args.height <= 1080:
         parser.error("Dimensions must fit the protocol's1920x1080 bounds")
     sampled_fps = args.delivered_fps if args.sampled_fps is None else args.sampled_fps
-    if not args.delivered_fps <= sampled_fps <= args.input_fps:
-        parser.error("Nominal rates must satisfy delivered <= sampled <= input")
+    dma_fps = args.input_fps if args.dma_fps is None else args.dma_fps
+    if not args.delivered_fps <= sampled_fps <= dma_fps <= args.input_fps:
+        parser.error("Nominal rates must satisfy delivered <= sampled <= DMA <= input")
     if args.alignment <= 0:
         parser.error("alignment must be positive")
     if not 0 <= args.tcp_options_bytes <= 40 or args.tcp_options_bytes % 4:
@@ -104,7 +107,7 @@ def main(argv=None):
     ]
     board_copy_traffic = 2 * selected_bytes_per_second + 4 * transmitted_bytes_per_second
     # VDMA HSIZE writes active pixels; STRIDE advances rows without writing padding.
-    dma_write_traffic = frame_bytes * args.input_fps
+    dma_write_traffic = frame_bytes * dma_fps
     crc_read_traffic = transmitted_bytes_per_second
     sources = {}
     for name in ("src/hdmi_capture/sources.py", "src/hdmi_capture/sender.py",
@@ -113,6 +116,7 @@ def main(argv=None):
     report = dict(
         evidence_type="calculated_budget_not_measured_bandwidth",
         nominal_inputs=dict(width=args.width, height=args.height, input_fps=args.input_fps,
+                            dma_fps=dma_fps,
                             sampled_fps=sampled_fps, delivered_fps=args.delivered_fps,
                             duration_seconds=args.duration),
         frame=dict(bytes_per_pixel=3, bytes_per_frame=frame_bytes,
@@ -126,6 +130,8 @@ def main(argv=None):
                    stride_aligned_to_current_AXI_beat=(dma_stride % 4 == 0)),
         payload=rates(transmitted_bytes_per_second),
         input_RGB_data_rate=rates(frame_bytes * args.input_fps),
+        dma_RGB_write_data_rate=rates(dma_write_traffic),
+        sampled_RGB_copy_data_rate=rates(selected_bytes_per_second),
         tcp_data_direction_estimate=dict(
             ip_version=args.ip_version, mtu=args.mtu, tcp_options_bytes=args.tcp_options_bytes,
             assumed_mss_bytes=mss, protocol_prefix_bytes=20, metadata_bytes=header_bytes,
@@ -140,7 +146,10 @@ def main(argv=None):
                       "PHY coding overhead", "control traffic"],
             segmentation_assumption="each application frame segmented separately; offloads/coalescing unmeasured"),
         board_memory_logical_budget=dict(
-            dma_write_passes_per_input_frame=1, dma_write_payload_bytes_per_input_frame=frame_bytes,
+            dma_write_passes_per_input_frame=dma_fps / args.input_fps,
+            dma_write_payload_bytes_per_input_frame=frame_bytes * dma_fps / args.input_fps,
+            input_frame_dma_write_accounting="Nominal average over native input frames; a selected DMA frame is written whole, not fractionally.",
+            dma_write_passes_per_dma_frame=1, dma_write_payload_bytes_per_dma_frame=frame_bytes,
             native_dma_writes=rates(dma_write_traffic),
             explicit_copy_passes=copies,
             explicit_copy_read_write_total=rates(board_copy_traffic),
@@ -163,14 +172,21 @@ def main(argv=None):
         known_storage=dict(native_pool_buffers=5, native_pool_bytes=5 * dma_frame_bytes,
                            logical_ready_plus_sending_RGB_slots=2, RGB_slot_bytes=2 * frame_bytes,
                            one_encoded_wire_bytes=application_frame_bytes,
+                           assumption="Legacy continuous PYNQ five-buffer pool retained for rate comparison. The proposed single-credit adapter owns one native buffer; DMA FPS alone does not select an adapter or memory-pool model.",
                            warning="Not process RSS; temporary serialization, asyncio/kernel buffers and runtime allocations add memory."),
+        copy_model_assumptions=dict(
+            full_payload_copies="One owned BGR-to-RGB copy per sampled frame plus two serialization copies per delivered frame.",
+            encoded_fps_equals_delivered_fps=True,
+            lifecycle="Current Sample.copy_rgb copies into an owned immutable array before sample.close releases/ACKs the native lease. encode_frame then copies to bytes, scans CRC, and copies into the envelope.",
+            status="Nominal inspected-source model; sender/source changes and failed or partial sends can alter actual copy rates. Recheck source hashes before applying to a later implementation."),
         measurements=dict(board_CPU_percent=None, host_CPU_percent=None, board_RSS_bytes=None,
                           host_RSS_bytes=None, actual_DDR_bandwidth_bytes_per_second=None,
                           actual_packet_segmentation=None),
         source_sha256=sources,
         limitations=["Current hardware adapters enforce640x480; other dimensions are budget exploration only.",
                      "Nonpacked DMA stride is hypothetical: pinned PYNQ allocation uses VideoMode.shape without automatically reserving row padding.",
-                     "DMA input-rate writes assume capture selection remains enabled and all input frames reach VDMA.",
+                     "Default DMA FPS equals native input FPS, preserving continuous-capture accounting. A lower explicit DMA FPS assumes complete-frame selection before DMA; the calculator does not configure or prove that hardware behavior.",
+                     "Proposed single-credit rates are not board qualification or measured DDR bandwidth; native HDMI can remain60Hz while nominal DMA and delivery are2Hz.",
                      "Sampled rate may exceed delivered rate under whole-frame drops.",
                      "Skipped PYNQ acquisitions still invalidate caches; maintenance cost is not measured.",
                      "CRC and copy touches can hit CPU caches; do not call the aggregate measured DDR throughput.",

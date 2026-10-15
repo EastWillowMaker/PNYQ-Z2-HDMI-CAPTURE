@@ -7,16 +7,13 @@ HDMI **input**. The custom receiver supports only progressive 640×480 at
 force another resolution. Loading this overlay changes the active FPGA design.
 Keep any existing board bitstream/HWH and stop other capture/DMA applications.
 
-Build from a clean checkout using [the pinned bootstrap/build recipe](build.md#reproduce),
-or use the CAD-reviewed, matching `013` outputs from this session. This session's
-`013` implementation reused previously built HLS packages. A separate
-[clean-checkout replay](results/2026-10-15/clean-build-report.md) successfully
-ran fresh dependencies, both HLS builds, and full implementation after fixing
-the inherited package-index issue. Its new bit/HWH pair was not board-loaded;
-normal-user SSH deployment from that checkout remains unexecuted. The board's
-active metadata
-parser needs the real AXI INTC in `013`; the CAD-passing `012` failed before DMA
-start. A first frame is a smoke test, not the [ten-minute qualification](qualification.md).
+Build from a clean checkout using [the pinned bootstrap/build recipe](build.md#reproduce)
+and use its successful single-credit bit/HWH/manifest pair. The new source
+requires the `single_credit_parked_v1` ABI and deferred next-SOF closure proof;
+its hardware qualification is pending. Legacy `013` results are retained
+historical evidence and require the separate `--source litex` adapter. They do
+not supply exact DMA-associated source identities. A first frame is a smoke
+test, not the [ten-minute qualification](qualification.md).
 
 ## Host setup and read-only doctor
 
@@ -41,7 +38,7 @@ mkdir -p artifacts
 # Set your normal SSH account/address and board TCP address separately.
 export BOARD_SSH=xilinx@pynq
 export BOARD_ADDRESS=pynq
-export BUILD_DIR=artifacts/m1-project-013
+export BUILD_DIR=/path/to/successful-single-credit-build
 # For a new build, use its actual successful output directory instead.
 python3 - "$BUILD_DIR" <<'PY'
 import hashlib, json, pathlib, sys
@@ -101,14 +98,14 @@ cd ~/hdmi-capture
 sudo -v
 sudo -n env XILINX_XRT=/usr PYTHONPATH="$PWD/src" \
   /usr/local/share/pynq-venv/bin/python -u -X faulthandler \
-  -m hdmi_capture.sender --source litex \
+  -m hdmi_capture.sender --source litex-credit \
   --bitfile "$PWD/overlay/capture.bit" \
   --manifest "$PWD/overlay/build-manifest.json" \
-  --host :: --port 9020 --fps 1 --duration 120 --startup-diagnostics
+  --host :: --port 9020 --fps 2 --duration 120 --startup-diagnostics
 ```
 
 `XILINX_XRT=/usr` is required by this tested image; another image is unverified.
-Expect startup verification/configuration, DMA start, disabled-gate checks, and
+Expect startup verification/configuration, disabled-gate/native-pairing checks, single-frame DMA arm, and
 then listening/capture. The timer allows cleanup; do not wrap hardware capture
 in a kill timeout or send SIGKILL. Stop with one Ctrl-C and wait for the native
 DMA cleanup report. If the sender reports a source/cleanup fault, resolve it
@@ -152,7 +149,9 @@ window with Escape; if its mode was changed, restore the saved source state:
 
 For sustained evidence, use [qualification.md](qualification.md), including
 required non-null native health counters, fault checks, unique coherent optical
-IDs, and the source/scanout logs. Register snapshots cannot associate a counter
-with a particular captured frame. Clock loss/reconnect and unsupported sources
+IDs, and the source/scanout logs. The new source waits for held hardware identity plus verified one-frame DMA
+auto-halt; global counter snapshots remain non-atomic. See
+[source accounting](source-accounting.md) for the required proof and pending
+hardware validation. Clock loss/reconnect and unsupported sources
 remain separate unverified scenarios; retained CDC and external timing limits
 are recorded in [build.md](build.md).

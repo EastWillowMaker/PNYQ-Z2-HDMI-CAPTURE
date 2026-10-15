@@ -300,3 +300,30 @@ def test_integrity_failure_never_becomes_ready_and_reports_baseline(capsys):
     assert report["source_integrity"]["startup"]["invalid_frames"] == 0
     assert report["source_integrity"]["failure"]["snapshot"]["invalid_frames"] == 1
     assert report["dma_shutdown_safe"]
+
+
+def test_paced_credit_source_keeps_first_and_all_acquisitions():
+    import numpy as np
+    from hdmi_capture.sources import Sample
+    class Source(SyntheticSource):
+        origin = 'hdmi'
+        paces_capture = True
+        async def read(self):
+            await asyncio.sleep(.002)
+            self.sequence += 1
+            return Sample(np.zeros((10, 20, 3), np.uint8), self.sequence,
+                          self.sequence, extra_metadata=dict(source_accounting=dict(
+                              source_intentional_sampling_total=29 * (self.sequence - 1))))
+    async def run():
+        source = Source(20, 10, 100)
+        sender = Sender(source, fps=1)
+        await sender.start('127.0.0.1', 0)
+        await asyncio.sleep(.025)
+        assert sender.counters['acquired'] >= 3
+        assert sender.counters['startup_discarded'] == 0
+        assert sender.counters['intentional_sampling_drops'] == 0
+        assert sender.ready.metadata['counters']['source_skips'] == 29 * (sender.ready.metadata['acquisition_id'] - 1)
+        assert sender.ready.metadata['counters']['source_overruns'] == 0
+        assert sender.ready.metadata['counters']['source_invalid_frames'] == 0
+        await sender.close()
+    asyncio.run(run())

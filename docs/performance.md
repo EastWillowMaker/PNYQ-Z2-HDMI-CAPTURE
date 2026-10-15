@@ -147,3 +147,15 @@ bandwidth and packet-level Ethernet occupancy were not instrumented.
 See [resource summary](results/2026-10-15/m1-013-v5-resource-summary.json) and
 [qualification](results/2026-10-15/m1-qualification.md). The model's null measured
 fields remain deliberately unchanged: its estimates are not measured bus data.
+
+## Single-credit budget (not yet measured)
+
+`tools/capture_budget.py --dma-fps 2 --sampled-fps 2 --delivered-fps 2`
+models selection before DMA while native input remains 60 Hz. The explicit DMA
+rate defaults to input rate, preserving the legacy build013 calculation. Rates
+must satisfy delivered <= sampled <= DMA <= native input. At the proposed rate,
+DMA payload writes are 1.8432 MB/s and logical writes/copies/CRC total 14.7456 MB/s;
+neither value is measured DDR traffic. A selected frame is always written whole.
+The retained five-buffer storage model is labelled legacy; the new credit reader
+owns one native buffer. CPU, RSS, exact metadata size and effective rates require
+new physical measurements. Existing build013 measurements do not qualify it.

@@ -65,6 +65,8 @@ def main():
                                name="litex_capture"))
     args.output.write_text(text)
     metadata = {"width": args.width, "height": args.height, "clock_hz": args.clock_hz,
+                "capture_interface": "single_credit_parked_v1",
+                "gate_completion_policy": "next_sof_after_selected_output_drain_v1",
                 "rtl_sha256": hashlib.sha256(text.encode()).hexdigest(),
                 "source_sha256": hashlib.sha256(Path(__file__).with_name("capture.py").read_bytes()).hexdigest(),
                 "dependencies": dependencies}

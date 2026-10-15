@@ -556,3 +556,337 @@ def test_manifest_and_paired_hwh_must_both_prove_disabled_reset(tmp_path):
     manifest.write_text(json.dumps(record))
     with pytest.raises(SourceError, match="declare capture enable reset0"):
         verify_litex_artifacts(bitfile, manifest)
+
+
+class CreditDMARegisters:
+    def __init__(self):
+        self.values = {0x34: 1, 0x28: 0}
+        self.writes = []
+    def read(self, offset):
+        return self.values.get(offset, 0)
+    def write(self, offset, value):
+        self.writes.append((offset, value))
+        if offset == 0x34:
+            self.values[offset] &= ~value
+        else:
+            self.values[offset] = value
+        if offset == 0xA0:
+            self.values[0x34] = 0
+    def complete(self):
+        self.values[0x34] = 0x1001
+        self.values[0x30] &= ~1
+
+
+def test_oneframe_dma_start_irq_is_not_completion_and_stale_halt_rejected():
+    from hdmi_capture.sources import OneFrameDMA
+    registers = CreditDMARegisters()
+    dma = OneFrameDMA(registers, SimpleNamespace(physical_address=0x100000))
+    dma.arm()
+    registers.values[0x34] = 0x1000  # Frame-start IRQ, still running.
+    assert dma.running_observed()
+    assert dma.completed() is None
+    registers.complete()
+    assert dma.completed() == 0x1001
+    dma.arm()
+    registers.complete()  # Never observed running for this request.
+    assert dma.completed() is None
+    assert all(registers.read(0xAC + 4 * i) == 0x100000 for i in range(4))
+
+
+@pytest.mark.parametrize('error', [0x10, 0x20, 0x40, 0x80, 0x100, 0x800, 0x4000, 0x8000])
+def test_oneframe_dma_errors_are_never_cleared_before_inspection(error):
+    from hdmi_capture.sources import OneFrameDMA
+    registers = CreditDMARegisters()
+    registers.values[0x34] |= error
+    dma = OneFrameDMA(registers, SimpleNamespace(physical_address=0x100000))
+    with pytest.raises(SourceError, match='Raw VDMA error'):
+        dma.arm()
+    assert registers.writes == []
+
+
+def credit_reader_fixture():
+    from hdmi_capture.sources import LiteXCreditSource, OneFrameDMA
+    source = LiteXCreditSource('unused.bit', 'unused.json', capture_fps=60, timeout=.03)
+    registers = CreditDMARegisters()
+    buffer = np.zeros((480, 640, 3), np.uint8).view(FakeCreditBuffer)
+    buffer.invalidations = 0
+    source.native = OneFrameDMA(registers, buffer)
+    source.hdmi = FakeHDMI()
+    source.manifest = dict(bitstream_sha256='f' * 64)
+    baseline = dict(enabled=False, selected_frames=0, invalid_frames=1,
+                    frontend_overflow_episodes=0, frontend_underflow_episodes=0,
+                    native_vsync_edges=100)
+    source.integrity_baseline = source.integrity_previous = baseline
+    class Control:
+        command = 1
+        next_native = 102
+        next_sof = 22
+        state = dict(credit_busy=False, credit_done=False, credit_failed=False,
+                     request_seen=0, ack_seen=0, source_sequence_fault=False,
+                     native_armed=True, selected_sof_id=0, selected_native_vsync_id=0,
+                     selected_completed=0, command_errors=0, source_sequence_faults=0,
+                     identity_snapshot_coherent=True)
+        def identity(self):
+            return dict(self.state)
+        def snapshot(self):
+            return dict(baseline)
+        def request(self):
+            assert source.native.seen_running
+            self.command ^= 2
+            self.state.update(credit_busy=True, credit_done=True,
+                              request_seen=(self.command >> 1) & 1,
+                              selected_sof_id=self.next_sof,
+                              selected_native_vsync_id=self.next_native,
+                              selected_completed=self.state['selected_completed'] + 1)
+            registers.complete()
+        def acknowledge(self):
+            self.command ^= 4
+            self.state.update(credit_busy=False, credit_done=False,
+                              ack_seen=(self.command >> 2) & 1)
+    source.control = Control()
+    return source, registers
+
+
+class FakeCreditBuffer(np.ndarray):
+    physical_address = 0x100000
+    def invalidate(self):
+        self.invalidations += 1
+
+
+def test_credit_identity_lease_and_exact_sampling_gaps():
+    source, registers = credit_reader_fixture()
+    async def run():
+        first = await source.read()
+        assert first.sequence == 102
+        assert first.extra_metadata['frame_source_id'] == 22
+        assert first.extra_metadata['source_accounting']['intentional_skips_since_previous'] is None
+        with pytest.raises(SourceError, match='lease'):
+            await source.read()
+        rgb = first.copy_rgb()
+        first.close()
+        assert not source.control.state['credit_busy'] and not rgb.flags.writeable
+        source.control.next_native, source.control.next_sof = 132, 52
+        second = await source.read()
+        accounting = second.extra_metadata['source_accounting']
+        assert accounting['intentional_skips_since_previous'] == 29
+        assert accounting['source_intentional_sampling_total'] == 29
+        assert accounting['first_acquired_source_id'] == 102
+        assert accounting['startup_intentional_accepted_sof_skips'] == 22
+        assert accounting['acquired_frames_total'] == 2
+        assert second.pixels.invalidations == 2
+        second.close()
+    asyncio.run(run())
+
+
+@pytest.mark.parametrize('field,value', [('credit_failed', True), ('source_sequence_fault', True),
+                                        ('command_errors', 1), ('source_sequence_faults', 1),
+                                        ('native_armed', False)])
+def test_credit_faults_prevent_request_or_delivery(field, value):
+    source, registers = credit_reader_fixture()
+    source.control.state[field] = value
+    with pytest.raises(SourceError):
+        asyncio.run(source.read())
+    assert registers.writes == []
+    assert not source.leased
+
+
+def test_credit_identity_changed_during_copy_prevents_ack():
+    source, _ = credit_reader_fixture()
+    async def run():
+        sample = await source.read()
+        sample.copy_rgb()
+        source.control.state['selected_sof_id'] += 1
+        command = source.control.command
+        with pytest.raises(SourceError, match='Identity changed'):
+            sample.close()
+        assert source.control.command == command and source.leased
+    asyncio.run(run())
+
+
+def test_credit_stale_halt_times_out_before_grant():
+    source, registers = credit_reader_fixture()
+    original = registers.write
+    def write(offset, value):
+        original(offset, value)
+        if offset == 0xA0:
+            registers.values[0x34] = 0x1001
+    registers.write = write
+    with pytest.raises(SourceError, match='timed out'):
+        asyncio.run(source.read())
+    assert source.control.command == 1
+    assert source.dma_shutdown_safe is False
+
+
+@pytest.mark.parametrize('native,sof', [(102, 22), (1, 1), (130, 51)])
+def test_credit_repeated_reset_or_mismatched_ids_stop_session(native, sof):
+    source, _ = credit_reader_fixture()
+    async def run():
+        sample = await source.read()
+        sample.close()
+        source.control.next_native, source.control.next_sof = native, sof
+        with pytest.raises(SourceError, match='identity|identities'):
+            await source.read()
+        assert not source.leased
+    asyncio.run(run())
+
+
+def test_credit_halted_dma_waits_for_later_gate_closure():
+    source, registers = credit_reader_fixture()
+    original = source.control.request
+    calls = 0
+    identity = source.control.identity
+    def request():
+        original()
+        source.control.state['credit_done'] = False
+    def later():
+        nonlocal calls
+        calls += 1
+        if calls >= 6:
+            source.control.state['credit_done'] = True
+        return identity()
+    source.control.request, source.control.identity = request, later
+    async def run():
+        sample = await source.read()
+        assert calls >= 6 and registers.read(0x34) == 0x1001
+        sample.close()
+    asyncio.run(run())
+
+
+def test_credit_dma_error_after_grant_fails_before_buffer_invalidate():
+    source, registers = credit_reader_fixture()
+    original = source.control.request
+    def request():
+        original()
+        registers.values[0x34] |= 0x10
+    source.control.request = request
+    with pytest.raises(SourceError, match='Raw VDMA error'):
+        asyncio.run(source.read())
+    assert source.native.buffer.invalidations == 0 and not source.leased
+
+
+def test_credit_stop_mmio_failure_retains_owned_allocation():
+    source, registers = credit_reader_fixture()
+    source.control.command = 0
+    source.control.enable = lambda enabled: None
+    source.dma_shutdown_safe = False
+    buffer = source.native.buffer
+    def read(offset):
+        raise OSError('MMIO inaccessible')
+    registers.read = read
+    with pytest.raises(OSError, match='inaccessible'):
+        source.close()
+    assert source.native.buffer is buffer and not source.dma_shutdown_safe
+
+
+def test_legacy_litex_adapter_rejects_credit_manifest_before_overlay_import(monkeypatch, tmp_path):
+    import hdmi_capture.sources as module
+    bitfile, manifest = make_litex_artifacts(tmp_path)
+    original = module.verify_litex_artifacts
+    def credit_record(*args):
+        return dict(original(*args), capture_interface='single_credit_parked_v1')
+    monkeypatch.setattr(module, 'verify_litex_artifacts', credit_record)
+    source = module.LiteXSource(bitfile, manifest)
+    with pytest.raises(SourceError, match='ABI does not match'):
+        source.load_overlay()
+
+
+def test_credit_startup_baseline_precedes_enable_without_stock_dma_start(monkeypatch, tmp_path):
+    import sys
+    import hdmi_capture.sources as module
+    bitfile = tmp_path / 'capture.bit'
+    bitfile.with_suffix('.hwh').write_text('''<ROOT><MODULE FULLNAME="/video/capture_control"><PARAMETERS>
+        <PARAMETER NAME="C_GPIO_WIDTH" VALUE="32"/></PARAMETERS></MODULE>
+        <MODULE FULLNAME="/video/axi_vdma"><PARAMETERS><PARAMETER NAME="C_ENABLE_DEBUG_INFO_15" VALUE="1"/>
+        </PARAMETERS></MODULE></ROOT>''')
+    record = dict(capture_interface=module.CREDIT_ABI, vdma_completion_mode='parked_frame_count_halt_v1',
+                  vdma_frame_counter_enabled=True, gate_completion_policy='next_sof_after_selected_output_drain_v1',
+                  source_health_sha256='a'*64, capture_control_width=32, capture_control_reset=0,
+                  source_identity_bits=32, source_identity_policy='native_delta_one_per_accepted_sof_with_watchdog',
+                  receiver_reset_sync_sha256='a'*64, capture_lock_sync_sha256='b'*64, gateware_sha256='c'*64)
+    monkeypatch.setattr(module, 'verify_litex_artifacts', lambda *args: record)
+    trace = []
+    template, registers = credit_reader_fixture()
+    control = template.control
+    def enable(enabled):
+        trace.append(('enable', enabled))
+        control.command = int(enabled)
+    def snapshot(point=None):
+        trace.append(('baseline', point))
+        return dict(enabled=False, selected_frames=0, invalid_frames=1,
+                    frontend_overflow_episodes=0, frontend_underflow_episodes=0, native_vsync_edges=100)
+    control.enable, control.snapshot = enable, snapshot
+    monkeypatch.setattr(module, 'CreditControl', lambda *args: control)
+    hdmi = FakeHDMI()
+    hdmi.start = lambda: pytest.fail('Stock DMA start must not be called')
+    hdmi._vdma = SimpleNamespace(readchannel=SimpleNamespace(running=False, memory=object(), _mmio=registers), framecount=4)
+    def allocate(**kwargs):
+        assert kwargs['shape'] == (480, 640, 3) and kwargs['cacheable'] is True
+        trace.append('allocate')
+        return template.native.buffer
+    monkeypatch.setitem(sys.modules, 'pynq', SimpleNamespace(allocate=allocate, MMIO=object()))
+    class Source(module.LiteXCreditSource):
+        def load_overlay(self, download=True):
+            self.hdmi, self.pixel_format, self.manifest = hdmi, 'BGR', record
+            self.overlay = SimpleNamespace(ip_dict={'video/axi_vdma': {'parameters': {'C_ENABLE_DEBUG_INFO_15': '1'}}})
+    source = Source(bitfile, 'unused.json')
+    source.start()
+    assert trace == [('enable', False), ('baseline', 'before_first_credit_while_gate_disabled_dma_halted'),
+                     'allocate', ('enable', True)]
+    assert registers.writes == [] and source.integrity_baseline['invalid_frames'] == 1
+
+
+def test_credit_dma_halt_timeout_never_calls_vendor_close_or_frees_buffer():
+    source, registers = credit_reader_fixture()
+    source.control.command = 0
+    source.control.enable = lambda enabled: None
+    source._started = True
+    registers.values[0x34] = 0
+    buffer = source.native.buffer
+    with pytest.raises(SourceError, match='halt timed out'):
+        source.close()
+    assert source.native.buffer is buffer
+    assert source._started and not source.dma_shutdown_safe
+    assert not source.hdmi.closed
+
+
+def test_oneframe_dma_stop_waits_until_halted():
+    from hdmi_capture.sources import OneFrameDMA
+    registers = CreditDMARegisters()
+    registers.values[0x34] = 0
+    original = registers.read
+    reads = 0
+    def read(offset):
+        nonlocal reads
+        if offset == 0x34:
+            reads += 1
+            if reads >= 3:
+                registers.values[offset] |= 1
+        return original(offset)
+    registers.read = read
+    dma = OneFrameDMA(registers, SimpleNamespace(physical_address=0x100000))
+    dma.stop(.03)
+    assert reads >= 3 and registers.read(0x34) & 1
+
+
+def test_credit_close_checks_final_source_proof_then_halts_before_release_once():
+    source, registers = credit_reader_fixture()
+    source._started = True
+    trace = []
+    source.hdmi.frontend.stop = lambda: trace.append('frontend_stop')
+    source.native.buffer.freebuffer = lambda: trace.append('free')
+    source.control.enable = lambda enabled: trace.append(('enable', enabled))
+    source._stage = lambda name, details=None: trace.append(name)
+    count = 100
+    baseline = source.control.snapshot()
+    def snapshot():
+        nonlocal count
+        count += 1
+        return dict(baseline, native_vsync_edges=count)
+    source.control.snapshot = snapshot
+    source.close()
+    assert source.final_accounting['passed']
+    assert source.final_accounting['native_edges_end'] - source.final_accounting['native_edges_begin'] >= 2
+    assert trace.index('dma_stop_status_after') < trace.index('frontend_stop') < trace.index('free')
+    assert source.native is None and source.dma_shutdown_safe
+    source.close()
+    assert trace.count('free') == 1

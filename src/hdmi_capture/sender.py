@@ -11,7 +11,7 @@ import time
 import uuid
 
 from .protocol import Frame, encode_frame
-from .sources import LiteXSource, PynqSource, SyntheticSource
+from .sources import LiteXCreditSource, LiteXSource, PynqSource, SyntheticSource
 
 
 class Sender:
@@ -40,6 +40,10 @@ class Sender:
         self._closed = False
 
     def _metadata(self, sample, acquisition_id):
+        accounting = (sample.extra_metadata or {}).get("source_accounting")
+        if accounting is not None:
+            self.counters.update(source_skips=accounting["source_intentional_sampling_total"],
+                                 source_overruns=0, source_invalid_frames=0)
         metadata = dict(width=self.source.width, height=self.source.height,
                     pixel_format="RGB888", stride=self.source.width * 3,
                     frame_id=acquisition_id, acquisition_id=acquisition_id,
@@ -64,7 +68,8 @@ class Sender:
 
     async def _capture(self):
         next_sample = 0
-        prime = self.source.origin == "hdmi"
+        paced = getattr(self.source, "paces_capture", False)
+        prime = self.source.origin == "hdmi" and not paced
         try:
             while True:
                 sample = await asyncio.wait_for(self.source.read(), self.read_timeout)
@@ -76,7 +81,7 @@ class Sender:
                         self.counters["startup_discarded"] += 1
                         continue
                     now = time.monotonic()
-                    if now < next_sample:
+                    if not paced and now < next_sample:
                         self.counters["intentional_sampling_drops"] += 1
                         continue
                     period = 1 / self.fps
@@ -184,6 +189,8 @@ class Sender:
                         startup=self.source.integrity_baseline,
                         last=self.source.integrity_previous,
                         failure=self.source.integrity_failure)
+                if getattr(self.source, "final_accounting", None) is not None:
+                    status["final_source_accounting"] = self.source.final_accounting
                 print(json.dumps(status), flush=True)
 
     async def close(self):
@@ -253,7 +260,7 @@ def main(argv=None, *, unsafe_hold=None):
     if argv and argv[0] == "control":
         return control_main(argv[1:])
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--source", required=True, choices=("pynq", "synthetic", "litex"))
+    parser.add_argument("--source", required=True, choices=("pynq", "synthetic", "litex", "litex-credit"))
     parser.add_argument("--host", default="0.0.0.0")
     parser.add_argument("--port", type=int, default=9020)
     parser.add_argument("--fps", type=float, default=1)
@@ -270,7 +277,7 @@ def main(argv=None, *, unsafe_hold=None):
     args = parser.parse_args(argv)
     if args.duration is not None and (not math.isfinite(args.duration) or args.duration <= 0):
         parser.error("duration must be finite and positive")
-    if args.source in ("pynq", "litex"):
+    if args.source in ("pynq", "litex", "litex-credit"):
         if (args.width, args.height, args.input_fps) != (640, 480, 60):
             parser.error("Hardware sources require the configured 640x480p60 contract")
         def progress(stage):
@@ -279,11 +286,14 @@ def main(argv=None, *, unsafe_hold=None):
             print(json.dumps(dict(event="source_cleanup" if cleanup else "source_startup",
                                   timestamp_ns=time.monotonic_ns(), **details)),
                   file=sys.stderr, flush=True)
-        if args.source == "litex":
+        if args.source in ("litex", "litex-credit"):
             if args.manifest is None or args.bitfile == "base.bit":
                 parser.error("LiteX source requires explicit --bitfile and --manifest")
-            source = LiteXSource(args.bitfile, args.manifest,
-                                 progress=progress if args.startup_diagnostics else None)
+            options = dict(progress=progress if args.startup_diagnostics else None)
+            if args.source == "litex-credit":
+                options.update(capture_fps=args.fps, timeout=args.read_timeout)
+            source_class = LiteXCreditSource if args.source == "litex-credit" else LiteXSource
+            source = source_class(args.bitfile, args.manifest, **options)
         else:
             source = PynqSource(args.bitfile,
                                 progress=progress if args.startup_diagnostics else None)
@@ -292,7 +302,7 @@ def main(argv=None, *, unsafe_hold=None):
     sender = Sender(source, fps=args.fps, read_timeout=args.read_timeout,
                     send_timeout=args.send_timeout)
     previous_handlers = {}
-    if args.source in ("pynq", "litex"):
+    if args.source in ("pynq", "litex", "litex-credit"):
         def request_cleanup(signum, frame):
             raise KeyboardInterrupt()
         for signum in (signal.SIGTERM, signal.SIGHUP, signal.SIGQUIT):

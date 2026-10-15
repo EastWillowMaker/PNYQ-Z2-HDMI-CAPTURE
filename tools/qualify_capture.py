@@ -38,6 +38,8 @@ def parser():
     result.add_argument("--hard-deadline", type=positive, default=660,
                         help="Maximum run duration in seconds")
     result.add_argument("--require-litex", action=argparse.BooleanOptionalAction, default=True)
+    result.add_argument("--legacy-delivered-image-criterion", action="store_true",
+                        help="Reproduce legacy image/health checks without source accounting")
     result.add_argument("--log", type=Path, required=True, help="New per-frame JSONL file")
     result.add_argument("--summary", type=Path, help="New summary JSON; defaults beside log")
     result.add_argument("--save-endpoints", type=Path, help="New directory for first/last NPY+JSON")
@@ -52,7 +54,7 @@ def _save_endpoint(directory, name, frame):
         handle.write("\n")
 
 
-def _health_errors(metadata):
+def _health_errors(metadata, *, allow_legacy=False):
     """Require source-health observations without attributing them to a buffer."""
     current = metadata.get("litex_counters")
     startup = metadata.get("litex_startup_counters")
@@ -84,7 +86,10 @@ def _health_errors(metadata):
     for name in ("invalid_frames", "frontend_overflow_episodes", "frontend_underflow_episodes"):
         if current.get(name) != startup.get(name):
             errors.append(f"{name} changed since startup; frame association unknown")
-    if metadata.get("integrity_policy") != "disabled_zero_selected_baseline_then_stop_on_integrity_change":
+    policies = {"single_credit_parked_auto_halt_fail_closed_v1"}
+    if allow_legacy:
+        policies.add("disabled_zero_selected_baseline_then_stop_on_integrity_change")
+    if metadata.get("integrity_policy") not in policies:
         errors.append("required fail-stop source integrity policy absent")
     provenance = metadata.get("source_health_provenance")
     if not isinstance(provenance, dict):
@@ -104,17 +109,135 @@ def _health_errors(metadata):
     return errors
 
 
+def _accounting_errors(metadata, previous=None):
+    """Validate the producer's frozen identity and reconciled cumulative counts.
+
+    This checks metadata invariants. The producer's single-credit RTL, parked
+    DMA and release/ACK implementation establish the claimed buffer association.
+    Native startup accounting remains unknown; it is never synthesized here.
+    """
+    record = metadata.get("source_accounting")
+    if not isinstance(record, dict):
+        return ["required single-credit source accounting absent"]
+    errors = []
+
+    def integer(container, name, minimum=0, maximum=2**32-1):
+        value = container.get(name)
+        if type(value) is not int or not minimum <= value <= maximum:
+            errors.append(f"{name} must be an observed integer in [{minimum}, {maximum}]")
+            return None
+        return value
+
+    for key, expected in (("abi", "single_credit_parked_v1"),
+                          ("dma_completion_mode", "parked_frame_count_halt_v1")):
+        if record.get(key) != expected:
+            errors.append(f"unsupported or missing {key}")
+    for key in ("dma_auto_halted", "buffer_stable_until_release", "credit_busy",
+                "credit_done", "native_armed", "identity_snapshot_coherent"):
+        if record.get(key) is not True:
+            errors.append(f"{key} must be true")
+    for key in ("credit_failed", "source_sequence_fault"):
+        if record.get(key) is not False:
+            errors.append(f"{key} must be false")
+    for key in ("buffer_slot", "command_errors", "source_sequence_faults"):
+        if integer(record, key) != 0:
+            errors.append(f"{key} must be zero")
+    integer(record, "request_seen", maximum=1)
+    integer(record, "ack_seen", maximum=1)
+    status = integer(record, "raw_dma_status")
+    if status is not None and (status & 0xC9F0 or not status & 1 or not status & 0x1000):
+        errors.append("DMA status must be HALTED with frame IRQ and no 0xC9F0 errors")
+    sequence = integer(metadata, "source_sequence")
+    sof = integer(metadata, "frame_source_id")
+    native = integer(record, "selected_native_vsync_id")
+    selected_sof = integer(record, "selected_sof_id")
+    if sequence != native or sof != selected_sof:
+        errors.append("top-level source identities do not match frozen credit identities")
+    if metadata.get("source_sequence_domain") != "native_vsync_edge_counter":
+        errors.append("source sequence domain must be native_vsync_edge_counter")
+    if type(metadata.get("source_sequence_bits")) is not int or metadata["source_sequence_bits"] != 32:
+        errors.append("source sequence width must be 32 bits")
+    if metadata.get("source_sequence_policy") != "reject_wrap_or_reset":
+        errors.append("source sequence wrap/reset must fail closed")
+    session = metadata.get("session_id")
+    if type(session) is not str or not session:
+        errors.append("source accounting requires a nonempty session ID")
+    acquired = integer(record, "acquired_frames_total", minimum=1)
+    completed = integer(record, "selected_completed", minimum=1)
+    acquisition_id = integer(metadata, "acquisition_id", minimum=1)
+    if acquired != completed or acquired != acquisition_id:
+        errors.append("acquired total, completed credit count and acquisition ID must agree")
+    total = integer(record, "source_intentional_sampling_total", maximum=2**64-1)
+    public = metadata.get("counters")
+    if not isinstance(public, dict):
+        errors.append("public source counters absent")
+    else:
+        public_skips = integer(public, "source_skips", maximum=2**64-1)
+        if public_skips != total:
+            errors.append("public source_skips must equal cumulative native intentional sampling")
+        for key in ("source_overruns", "source_invalid_frames"):
+            if integer(public, key) != 0:
+                errors.append(f"public {key} must be observed zero for the fail-closed owned buffer")
+    first_id = integer(record, "first_acquired_source_id")
+    first_sof = integer(record, "startup_intentional_accepted_sof_skips")
+    if "startup_native_skips" not in record or record["startup_native_skips"] is not None:
+        errors.append("native startup skips must remain explicitly unknown")
+    if all(value is not None for value in (sequence, first_id, acquired, total)):
+        if sequence < first_id or sequence-first_id != acquired-1+total:
+            errors.append("native source sequence does not reconcile with acquired and intentional totals")
+    if sof is not None and first_sof is not None and sof < first_sof:
+        errors.append("accepted SOF identity precedes the first selected SOF")
+    if all(value is not None for value in (sequence, first_id, sof, first_sof)):
+        if sequence-first_id != sof-first_sof:
+            errors.append("native and accepted-SOF identity deltas must retain a constant offset")
+    skip = record.get("intentional_skips_since_previous")
+    if acquired == 1:
+        if skip is not None or "intentional_skips_since_previous" not in record:
+            errors.append("first acquisition must have unknown previous-acquisition skips")
+        if total != 0 or sequence != first_id or sof != first_sof:
+            errors.append("first acquisition must establish zero cumulative skips and matching first identities")
+    else:
+        skip = integer(record, "intentional_skips_since_previous", maximum=2**32-1)
+        if skip is not None and total is not None and skip > total:
+            errors.append("previous-acquisition skips exceed cumulative intentional skips")
+    if previous is not None:
+        old = previous["source_accounting"]
+        if session != previous.get("session_id"):
+            errors.append("source-accounting session changed during qualification")
+        for key in ("first_acquired_source_id", "startup_intentional_accepted_sof_skips"):
+            if record.get(key) != old.get(key):
+                errors.append(f"{key} changed within the source-accounting session")
+        if all(value is not None for value in (sequence, sof, acquired, total)):
+            native_delta = sequence-previous["source_sequence"]
+            acquired_delta = acquired-old["acquired_frames_total"]
+            intentional_delta = total-old["source_intentional_sampling_total"]
+            if native_delta <= 0 or sof <= previous["frame_source_id"] or acquired_delta <= 0 or intentional_delta < 0:
+                errors.append("source identities/acquired totals must increase without wrap or reset")
+            if native_delta != acquired_delta+intentional_delta:
+                errors.append("delivered native delta does not reconcile with acquired and intentional deltas")
+            if native_delta != sof-previous["frame_source_id"]:
+                errors.append("delivered native and accepted-SOF identity deltas disagree")
+            # The per-acquisition field is comparable only for adjacent acquisitions.
+            if acquired_delta == 1 and skip != native_delta-1:
+                errors.append("adjacent acquisition skips do not match native sequence delta")
+    return errors
+
+
 def run(args, *, client_factory=CaptureClient, clock=time.monotonic):
     """Preserve every received result, including failures, until bounded completion."""
     if args.min_frames < 1 or args.hard_deadline < args.duration:
         raise ValueError("min-frames must be positive; hard-deadline must cover duration")
+    if args.legacy_delivered_image_criterion and not args.require_litex:
+        raise ValueError("legacy image criterion requires --require-litex")
+    accounting_required = args.require_litex and not args.legacy_delivered_image_criterion
     summary_path = args.summary or args.log.with_suffix(".summary.json")
     if summary_path == args.log:
         raise ValueError("log and summary must be separate files")
     summary = dict(configuration=dict(host=args.host, port=args.port, timeout=args.timeout,
                    minimum_duration_seconds=args.duration, minimum_distinct_frames=args.min_frames,
                    minimum_fps=args.min_fps, hard_deadline_seconds=args.hard_deadline,
-                   require_litex=args.require_litex),
+                   require_litex=args.require_litex,
+                   legacy_delivered_image_criterion=args.legacy_delivered_image_criterion),
                    delivered_frames=0, exact_frames=0, pixel_failures=0, mixed_frames=0,
                    repeated_optical_frames=0, distinct_exact_optical_frames=0,
                    metadata_failures=0, transport_errors=0, storage_errors=0, payload_bytes=0,
@@ -126,10 +249,15 @@ def run(args, *, client_factory=CaptureClient, clock=time.monotonic):
                        "Exact source-frame sampling/drop accounting is unverified",
                        "Complete M1 requires separate interruption, mode and resource evidence"],
                    source_health_required=args.require_litex,
+                   source_accounting_required=accounting_required,
+                   source_accounting_metadata_validated=False,
+                   source_accounting_validated_frames=0,
+                   legacy_delivered_image_criterion=args.legacy_delivered_image_criterion,
                    litex_snapshot_association="Sequential non-atomic snapshots; no per-frame association")
     seen = set()
     previous_id = None
     previous_vsync = None
+    previous_accounting = None
     first = last = None
     started = clock()
     summary.update(host_start_monotonic_seconds=started, host_clock="host_monotonic")
@@ -173,7 +301,13 @@ def run(args, *, client_factory=CaptureClient, clock=time.monotonic):
                             "litex_capture" not in meta.get("flags", [])):
                         reasons.append("required LiteX capture metadata missing or baseline-only")
                     if args.require_litex:
-                        reasons.extend(_health_errors(meta))
+                        reasons.extend(_health_errors(meta, allow_legacy=args.legacy_delivered_image_criterion))
+                        if accounting_required:
+                            accounting_errors = _accounting_errors(meta, previous_accounting)
+                            reasons.extend(accounting_errors)
+                            if not accounting_errors:
+                                summary["source_accounting_validated_frames"] += 1
+                                previous_accounting = meta
                         snapshot = meta.get("litex_counters")
                         vsync = snapshot.get("native_vsync_edges") if isinstance(snapshot, dict) else None
                         if type(vsync) is int:
@@ -255,8 +389,29 @@ def run(args, *, client_factory=CaptureClient, clock=time.monotonic):
         # Keep passed and the CLI exit status as the existing image criterion.
         # This runner does not validate physical-source sequencing or complete M1.
         summary["criterion_passed"] = summary["passed"]
+        summary["source_accounting_metadata_validated"] = (
+            accounting_required and summary["delivered_frames"] > 0 and
+            summary["source_accounting_validated_frames"] == summary["delivered_frames"])
+        if summary["source_accounting_metadata_validated"]:
+            initial = first.metadata["source_accounting"]
+            final = last.metadata["source_accounting"]
+            acquired_delta = final["acquired_frames_total"]-initial["acquired_frames_total"]
+            summary["source_accounting_received_window"] = dict(
+                first_native_source_id=first.metadata["source_sequence"],
+                last_native_source_id=last.metadata["source_sequence"],
+                native_frame_intervals=last.metadata["source_sequence"]-first.metadata["source_sequence"],
+                acquired_frame_intervals=acquired_delta,
+                intentional_skips=final["source_intentional_sampling_total"]-initial["source_intentional_sampling_total"],
+                acquired_frames_not_delivered=acquired_delta-(summary["delivered_frames"]-1),
+                native_startup_skips=None)
+            summary["unmet_m1_requirements"] = [
+                "Single-credit metadata checks require separate hardware buffer-association evidence",
+                "Native startup skips remain unknown at the phase boundary",
+                "Complete M1 requires separate interruption, mode and resource evidence"]
         summary["qualification_scope"] = (
-            "Sustained delivered-image criterion with LiteX health checks" if args.require_litex
+            "Sustained delivered-image and single-credit accounting criteria with LiteX health checks"
+            if accounting_required else
+            "Legacy sustained delivered-image criterion with LiteX health checks" if args.require_litex
             else "Sustained delivered-image criterion for the M0 baseline")
         json.dump(summary, output, indent=2)
         output.write("\n")

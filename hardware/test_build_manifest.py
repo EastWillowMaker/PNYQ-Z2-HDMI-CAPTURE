@@ -6,7 +6,7 @@ import xml.etree.ElementTree as ET
 import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
-from build_manifest import require_vga_receiver
+from build_manifest import require_credit_configuration, require_vga_receiver
 
 
 def hwh(parameters):
@@ -41,3 +41,58 @@ def test_duplicate_receiver_rejected():
     root.append(ET.fromstring(ET.tostring(root.find('MODULE'))))
     with pytest.raises(RuntimeError):
         require_vga_receiver(root)
+
+
+def credit_hwh():
+    root = ET.Element('ROOT')
+    modules = {
+        'capture_control': dict(C_GPIO_WIDTH='32', C_IS_DUAL='1', C_ALL_OUTPUTS='1',
+            C_ALL_INPUTS_2='1', C_GPIO2_WIDTH='32', C_DOUT_DEFAULT='0x00000000'),
+        'axi_vdma': dict(C_INCLUDE_S2MM='1', C_INCLUDE_MM2S='0', C_NUM_FSTORES='4',
+                        C_ENABLE_DEBUG_INFO_15='1'),
+    }
+    for name in ('capture_credit', 'capture_completion', 'capture_sequence'):
+        modules[name] = dict(C_GPIO_WIDTH='32', C_GPIO2_WIDTH='32', C_IS_DUAL='1',
+                            C_ALL_INPUTS='1', C_ALL_INPUTS_2='1')
+    for name, parameters in modules.items():
+        module = ET.SubElement(root, 'MODULE', FULLNAME='/video/' + name)
+        rows = ET.SubElement(module, 'PARAMETERS')
+        for key, value in parameters.items():
+            ET.SubElement(rows, 'PARAMETER', NAME=key, VALUE=value)
+    return root
+
+
+def test_credit_hwh_has_exact_default_disabled_32_bit_controls_and_frame_counter():
+    require_credit_configuration(credit_hwh())
+
+
+@pytest.mark.parametrize('module,parameter,value', [
+    ('capture_control', 'C_GPIO_WIDTH', '1'),
+    ('capture_control', 'C_DOUT_DEFAULT', '0x00000001'),
+    ('capture_control', 'C_DOUT_DEFAULT', '0x00000002'),
+    ('capture_control', 'C_DOUT_DEFAULT', None),
+    ('axi_vdma', 'C_ENABLE_DEBUG_INFO_15', '0'),
+    ('axi_vdma', 'C_ENABLE_DEBUG_INFO_15', None),
+    ('capture_sequence', 'C_ALL_INPUTS_2', '0'),
+])
+def test_credit_hwh_rejects_legacy_enabled_and_unsupported_configurations(module, parameter, value):
+    root = credit_hwh()
+    row = root.find(f".//MODULE[@FULLNAME='/video/{module}']/PARAMETERS/PARAMETER[@NAME='{parameter}']")
+    if value is None:
+        row.attrib.pop('VALUE')
+    else:
+        row.set('VALUE', value)
+    with pytest.raises(RuntimeError):
+        require_credit_configuration(root)
+
+
+def test_credit_hwh_rejects_missing_or_ambiguous_identity_gpio():
+    root = credit_hwh()
+    module = root.find("MODULE[@FULLNAME='/video/capture_credit']")
+    root.remove(module)
+    with pytest.raises(RuntimeError):
+        require_credit_configuration(root)
+    root.append(module)
+    root.append(ET.fromstring(ET.tostring(module)))
+    with pytest.raises(RuntimeError):
+        require_credit_configuration(root)

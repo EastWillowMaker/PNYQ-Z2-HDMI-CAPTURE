@@ -3,6 +3,7 @@
 import asyncio
 import hashlib
 import json
+import math
 from pathlib import Path
 import xml.etree.ElementTree as ET
 import time
@@ -368,6 +369,8 @@ class LiteXSource(PynqSource):
     def load_overlay(self, download=True):
         self._stage("litex_artifact_verification")
         self.manifest = verify_litex_artifacts(self.bitfile, self.manifest_path)
+        if self.manifest.get("capture_interface") != getattr(self, "capture_interface", None):
+            raise SourceError("Capture artifact ABI does not match the explicit source adapter")
         self._stage("pynq_import")
         import pynq
         if pynq.__version__ != "3.0.1":
@@ -452,3 +455,374 @@ class LiteXSource(PynqSource):
             sample.close()
             raise
         return sample
+
+
+CREDIT_ABI = "single_credit_parked_v1"
+DMA_ERRORS = 0xC9F0
+
+
+class OneFrameDMA:
+    """One owned allocation, parked store0, automatic halt after one frame."""
+
+    CONTROL = 0x15011
+
+    def __init__(self, mmio, buffer, frame_stores=4):
+        if (type(frame_stores) is not int or frame_stores != 4 or
+                not 0 <= buffer.physical_address <= 0xFFFFFFFF - 921599 or
+                buffer.physical_address % 64):
+            raise SourceError("DMA requires four stores and an aligned 32-bit buffer address")
+        self.mmio, self.buffer, self.frame_stores = mmio, buffer, frame_stores
+        self.seen_running = False
+
+    def status(self):
+        value = self.mmio.read(0x34)
+        if value & DMA_ERRORS:
+            raise SourceError(f"Raw VDMA error before clear: 0x{value:08x}")
+        return value
+
+    def arm(self):
+        if not self.status() & 1:
+            raise SourceError("Cannot arm a DMA that has not halted")
+        self.seen_running = False
+        self.mmio.write(0x34, 0x1000)  # Only a previously inspected frame IRQ.
+        # Change threshold2->1 to reload it explicitly, while initially halted.
+        self.mmio.write(0x30, 0x25010)
+        self.mmio.write(0x28, self.mmio.read(0x28) & ~(0x1F << 8))
+        self.mmio.write(0x30, self.CONTROL)
+        for slot in range(self.frame_stores):
+            self.mmio.write(0xAC + 4 * slot, self.buffer.physical_address)
+        self.mmio.write(0xA8, 1920)
+        self.mmio.write(0xA4, 1920)
+        self.mmio.write(0xA0, 480)
+        if (self.mmio.read(0x30) & 0xFFFFFF7F) != self.CONTROL:
+            raise SourceError("VDMA single-frame control readback mismatch")
+        if self.mmio.read(0x28) & (0x1F << 8):
+            raise SourceError("VDMA parked reference is not store0")
+        for offset, expected in ((0xAC, self.buffer.physical_address), (0xA8, 1920),
+                                 (0xA4, 1920), (0xA0, 480)):
+            if self.mmio.read(offset) != expected:
+                raise SourceError("VDMA address/geometry readback mismatch")
+        if any(self.mmio.read(0xAC + 4 * slot) != self.buffer.physical_address
+               for slot in range(self.frame_stores)):
+            raise SourceError("VDMA store addresses do not all match the owned buffer")
+
+    def running_observed(self):
+        status = self.status()
+        if not status & 1:
+            self.seen_running = True
+        return self.seen_running
+
+    def completed(self):
+        status = self.status()
+        if not self.seen_running or status & 0x1001 != 0x1001:
+            return None
+        control = self.mmio.read(0x30)
+        if control & 1 or not control & 0x10:
+            raise SourceError("Halted DMA is not a confirmed one-frame auto-halt")
+        if (self.mmio.read(0x28) >> 24) & 0x1F:
+            raise SourceError("DMA completed in an unexpected frame store")
+        return status
+
+    def stop(self, timeout):
+        self.stop_mmio(self.mmio, timeout)
+
+    @staticmethod
+    def stop_mmio(mmio, timeout):
+        # Abort/reject any incomplete credit. No buffer is released here.
+        mmio.write(0x30, mmio.read(0x30) & ~1)
+        deadline = time.monotonic() + timeout
+        while time.monotonic() < deadline:
+            if mmio.read(0x34) & 1:
+                return
+            time.sleep(0.001)
+        raise SourceError("DMA halt timed out; process and native buffer must remain alive")
+
+
+class CreditControl(LiteXControl):
+    """Single-credit GPIO ABI; identity is immutable through DONE and ACK."""
+
+    def __init__(self, overlay, mmio_factory):
+        super().__init__(overlay, mmio_factory)
+        for name in ("capture_credit", "capture_completion", "capture_sequence"):
+            description = overlay.ip_dict.get("video/" + name)
+            if description is None or description.get("type") != "xilinx.com:ip:axi_gpio:2.0":
+                raise SourceError(f"Missing credit ABI GPIO: {name}")
+            self.registers[name] = mmio_factory(description["phys_addr"], description["addr_range"])
+        self.command = self.registers["capture_control"].read(0)
+        if self.command != 0:
+            raise SourceError("Credit command register must start at reset0")
+
+    def enable(self, enabled):
+        if type(enabled) is not bool:
+            raise ValueError("Capture enable must be boolean")
+        self.command = (self.command & ~1) | int(enabled)
+        self.registers["capture_control"].write(0, self.command)
+
+    def request(self):
+        self.command ^= 2
+        self.registers["capture_control"].write(0, self.command)
+
+    def acknowledge(self):
+        self.command ^= 4
+        self.registers["capture_control"].write(0, self.command)
+
+    def identity(self):
+        credit = self.registers["capture_credit"]
+        completion = self.registers["capture_completion"]
+        sequence = self.registers["capture_sequence"]
+        before = credit.read(0)
+        result = dict(credit_busy=bool(before & 1), credit_done=bool(before & 2),
+                      credit_failed=bool(before & 4), request_seen=(before >> 3) & 1,
+                      ack_seen=(before >> 4) & 1, source_sequence_fault=bool(before & 32),
+                      native_armed=bool(before & 64), selected_sof_id=credit.read(8),
+                      selected_native_vsync_id=sequence.read(0),
+                      selected_completed=completion.read(0), command_errors=completion.read(8),
+                      source_sequence_faults=sequence.read(8))
+        if before != credit.read(0):
+            return None
+        result["identity_snapshot_coherent"] = bool(result["credit_busy"] and result["credit_done"])
+        return result
+
+
+class LiteXCreditSource(LiteXSource):
+    """Paced one-credit capture with exact latched source/DMA association."""
+
+    paces_capture = True
+    capture_interface = CREDIT_ABI
+
+    def __init__(self, bitfile, manifest, *, capture_fps=2, progress=None, timeout=3):
+        super().__init__(bitfile, manifest, progress=progress)
+        if not math.isfinite(capture_fps) or not 0 < capture_fps <= 60:
+            raise ValueError("Credit capture FPS must be in(0,60]")
+        if not math.isfinite(timeout) or timeout <= 0:
+            raise ValueError("Credit timeout must be finite and positive")
+        self.capture_fps, self.timeout = capture_fps, timeout
+        self.native = None
+        self.leased = False
+        self.acquired = 0
+        self.first_native = self.first_sof = self.last_native = self.last_sof = None
+        self.intentional_total = 0
+        self.next_request = 0
+        self.ack_pending = False
+        self.final_accounting = None
+
+    def start(self):
+        record = verify_litex_artifacts(self.bitfile, self.manifest_path)
+        if (record.get("capture_interface") != CREDIT_ABI or
+                record.get("vdma_completion_mode") != "parked_frame_count_halt_v1" or
+                record.get("vdma_frame_counter_enabled") is not True or
+                record.get("gate_completion_policy") != "next_sof_after_selected_output_drain_v1"):
+            raise SourceError("Artifact does not declare the single-credit DMA ABI")
+        if "source_health_sha256" not in record:
+            raise SourceError("Credit ABI requires source-health provenance")
+        if (type(record.get("capture_control_width")) is not int or record["capture_control_width"] != 32 or
+                type(record.get("capture_control_reset")) is not int or record["capture_control_reset"] != 0 or
+                record.get("source_identity_bits") != 32 or
+                record.get("source_identity_policy") != "native_delta_one_per_accepted_sof_with_watchdog"):
+            raise SourceError("Unsupported credit control or native identity provenance")
+        for name in ("receiver_reset_sync_sha256", "capture_lock_sync_sha256", "gateware_sha256"):
+            value = record.get(name)
+            if not isinstance(value, str) or len(value) != 64 or any(c not in "0123456789abcdef" for c in value):
+                raise SourceError(f"Missing credit artifact provenance: {name}")
+        modules = {m.attrib.get("FULLNAME"): {p.attrib.get("NAME"): p.attrib.get("VALUE")
+                   for p in m.findall("./PARAMETERS/PARAMETER")}
+                   for m in ET.parse(Path(self.bitfile).with_suffix(".hwh")).getroot().findall(".//MODULE")}
+        if (modules.get("/video/capture_control", {}).get("C_GPIO_WIDTH") != "32" or
+                modules.get("/video/axi_vdma", {}).get("C_ENABLE_DEBUG_INFO_15") != "1"):
+            raise SourceError("Credit HWH requires 32-bit control and S2MM frame counter")
+        self.load_overlay()
+        import pynq
+        self.control = CreditControl(self.overlay, pynq.MMIO)
+        self.control.enable(False)
+        try:
+            self._started = True  # Configure may start native frontend resources.
+            channel = self.hdmi._vdma.readchannel
+            if channel.running:
+                self.dma_shutdown_safe = False
+                raise SourceError("DMA was unexpectedly active before frontend configuration")
+            self.hdmi.configure(self.pixel_format)
+            self._check_mode(self.hdmi.mode)
+            self._check_mode(self.hdmi.frontend.mode)
+            channel = self.hdmi._vdma.readchannel
+            parameters = self.overlay.ip_dict["video/axi_vdma"]["parameters"]
+            if parameters.get("C_ENABLE_DEBUG_INFO_15") != "1":
+                raise SourceError("S2MM frame-counter feature is not enabled")
+            if channel.running:
+                raise SourceError("DMA must be halted during disabled startup baseline")
+            deadline = time.monotonic() + self.timeout
+            identity = None
+            while time.monotonic() < deadline:
+                identity = self.control.identity()
+                if identity is not None:
+                    self._check_identity(identity)
+                    if identity["native_armed"]:
+                        break
+                time.sleep(0.001)
+            baseline = self.control.snapshot("before_first_credit_while_gate_disabled_dma_halted")
+            if (baseline["enabled"] or baseline["selected_frames"] != 0 or identity is None or
+                    identity["credit_busy"] or identity["credit_done"] or identity["selected_completed"] != 0):
+                raise SourceError("Credit startup baseline is not disabled/empty")
+            self._check_identity(identity)
+            if not identity["native_armed"]:
+                raise SourceError("Native/SOF pairing is not armed")
+            if baseline["frontend_overflow_episodes"] != 0 or baseline["frontend_underflow_episodes"] != 0:
+                raise SourceError("Startup frontend loss is not clean")
+            self.integrity_baseline = self.integrity_previous = baseline
+            buffer = pynq.allocate(shape=(480, 640, 3), dtype=np.uint8,
+                                   target=channel.memory, cacheable=True)
+            self.native = OneFrameDMA(channel._mmio, buffer, self.hdmi._vdma.framecount)
+            self.native.status()
+            self.control.enable(True)
+            self._stage("credit_source_ready", dict(counters=baseline))
+        except BaseException:
+            self.close()
+            raise
+
+    @staticmethod
+    def _check_identity(identity):
+        if (identity["credit_failed"] or identity["source_sequence_fault"] or
+                identity["command_errors"] or identity["source_sequence_faults"]):
+            raise SourceError("Single-credit command/source-sequence fault")
+
+    def _healthy(self):
+        self._check_mode(self.hdmi.frontend.mode)
+        identity = self.control.identity()
+        if identity is None:
+            return None
+        self._check_identity(identity)
+        if not identity["native_armed"]:
+            raise SourceError("Native source pairing lost")
+        current = self.control.snapshot()
+        for name in ("invalid_frames", "frontend_overflow_episodes", "frontend_underflow_episodes"):
+            if current[name] != self.integrity_baseline[name]:
+                self.integrity_failure = dict(counter=name, snapshot=current)
+                raise SourceError(f"Credit integrity counter changed: {name}")
+        self.integrity_previous = current
+        return identity
+
+    async def _wait(self, predicate):
+        deadline = time.monotonic() + self.timeout
+        while time.monotonic() < deadline:
+            value = predicate()
+            if value:
+                return value
+            await asyncio.sleep(0.001)
+        raise SourceError("Single-credit acquisition/ACK timed out")
+
+    async def read(self):
+        if self.leased:
+            raise SourceError("Previous DMA lease must be released before requesting another frame")
+        await asyncio.sleep(max(0, self.next_request - time.monotonic()))
+        period = 1 / self.capture_fps
+        now = time.monotonic()
+        self.next_request = now + period if not self.next_request else max(self.next_request + period, now)
+        def idle():
+            identity = self._healthy()
+            return identity and not identity["credit_busy"] and not identity["credit_done"] and (
+                identity["ack_seen"] == ((self.control.command >> 2) & 1))
+        await self._wait(idle)
+        self.dma_shutdown_safe = False
+        self.native.arm()
+        def armed():
+            identity = self._healthy()
+            return identity is not None and self.native.running_observed()
+        await self._wait(armed)
+        self.control.request()
+        def complete():
+            identity = self._healthy()
+            status = self.native.completed()
+            if identity is None or not status or not identity["credit_done"]:
+                return None
+            if (not identity["credit_busy"] or identity["request_seen"] != ((self.control.command >> 1) & 1) or
+                    identity["selected_completed"] != self.acquired + 1):
+                raise SourceError("Completed credit does not match this request")
+            return identity, status
+        identity, status = await self._wait(complete)
+        native_id, sof_id = identity["selected_native_vsync_id"], identity["selected_sof_id"]
+        skipped = None
+        if self.last_native is not None:
+            if native_id <= self.last_native or sof_id <= self.last_sof:
+                raise SourceError("Source identity wrapped/reset/repeated; end session")
+            if native_id - self.last_native != sof_id - self.last_sof:
+                raise SourceError("Native and accepted-SOF identity deltas differ")
+            skipped = native_id - self.last_native - 1
+            self.intentional_total += skipped
+        else:
+            self.first_native, self.first_sof = native_id, sof_id
+        self.native.buffer.invalidate()
+        self.last_native, self.last_sof = native_id, sof_id
+        self.acquired += 1
+        self.leased = True
+        accounting = dict(identity, abi=CREDIT_ABI, dma_completion_mode="parked_frame_count_halt_v1",
+                          gate_completion_policy="next_sof_after_selected_output_drain_v1",
+                          buffer_slot=0, raw_dma_status=status, dma_auto_halted=True,
+                          buffer_stable_until_release=True, acquired_frames_total=self.acquired,
+                          first_acquired_source_id=self.first_native,
+                          startup_intentional_accepted_sof_skips=self.first_sof, startup_native_skips=None,
+                          intentional_skips_since_previous=skipped,
+                          source_intentional_sampling_total=self.intentional_total)
+        metadata = dict(frame_source_id=sof_id, source_sequence_domain="native_vsync_edge_counter",
+                        source_sequence_bits=32, source_sequence_policy="reject_wrap_or_reset",
+                        source_accounting=accounting, capture_implementation="litex_single_credit_gate",
+                        capture_artifact_sha256=self.manifest["bitstream_sha256"], capture_enable_reset=0,
+                        litex_counters=self.integrity_previous, litex_startup_counters=self.integrity_baseline,
+                        source_health_provenance={name: self.manifest.get(name) for name in
+                            ("source_health_sha256", "source_health_counters_lifetime",
+                             "source_health_overruns_unit", "receiver_source_reset_policy")},
+                        integrity_policy="single_credit_parked_auto_halt_fail_closed_v1",
+                        timestamp_sample_point="after_one_frame_auto_halt_and_cache_invalidate",
+                        hardware_qualification="unverified")
+        return Sample(self.native.buffer, time.monotonic_ns(), native_id, bgr=True,
+                      release=self._release_credit, extra_metadata=metadata)
+
+    def _release_credit(self):
+        identity = self._healthy()
+        if identity is None or not identity["credit_done"] or not identity["credit_busy"]:
+            raise SourceError("Completed identity changed before lease release")
+        if (identity["selected_native_vsync_id"], identity["selected_sof_id"]) != (self.last_native, self.last_sof):
+            raise SourceError("Identity changed while DMA buffer was leased")
+        self.control.acknowledge()
+        self.leased = False
+
+    def close(self):
+        failure = None
+        if self.native is not None and self.control.command & 1:
+            try:
+                # Keep the source proof enabled for more than two 60 Hz periods;
+                # expose a missing final AXI SOF before disabling its watchdog.
+                initial = self.control.snapshot()["native_vsync_edges"]
+                deadline = time.monotonic() + 0.05
+                while time.monotonic() < deadline:
+                    self._healthy()
+                    time.sleep(0.001)
+                self._healthy()
+                if self.integrity_previous["native_vsync_edges"] - initial < 2:
+                    raise SourceError("Native source stopped during final accounting interval")
+                self.final_accounting = dict(identity=self._healthy(),
+                    native_edges_begin=initial,
+                    native_edges_end=self.integrity_previous["native_vsync_edges"],
+                    interval_seconds=0.05, passed=True)
+            except Exception as error:
+                failure = error
+                self.integrity_failure = dict(final_accounting_error=str(error))
+        if self.control is not None:
+            self.control.enable(False)
+        if self.native is not None or not self.dma_shutdown_safe:
+            self.dma_shutdown_safe = False
+            mmio = self.native.mmio if self.native is not None else self.hdmi._vdma.readchannel._mmio
+            self._stage("dma_stop_status_before", dict(
+                control=mmio.read(0x30), status=mmio.read(0x34)))
+            OneFrameDMA.stop_mmio(mmio, self.timeout)
+            self._stage("dma_stop_status_after", dict(
+                control=mmio.read(0x30), status=mmio.read(0x34)))
+        if self._started:
+            # The credit path never invokes the driver's circular-frame cache or
+            # its unbounded S2MM.stop loop. Frontend teardown follows raw halt.
+            self.hdmi.frontend.stop()
+            self._started = False
+        if self.native is not None:
+            self.native.buffer.freebuffer()
+            self.native = None
+        self.dma_shutdown_safe = True
+        if failure is not None:
+            raise failure

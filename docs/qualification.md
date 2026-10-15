@@ -2,6 +2,13 @@
 
 Run only after the external optical pattern and authorized board sender are
 already running. This tool neither changes the source nor loads an overlay.
+Its `passed` and CLI exit status describe the sustained delivered-image
+criterion, with source-accounting checks required in the default LiteX mode.
+`criterion_passed` is an explicit alias;
+`full_m1_qualification=false` and `unmet_m1_requirements` retain the separate
+source-accounting and other qualification obligations. A successful pixel run
+alone must not be reported as full M1 completion.
+
 It compares every received pixel against `tools/hdmi_pattern.py` using the
 independently encoded optical ID on every row. It never learns a golden image.
 
@@ -18,6 +25,46 @@ the optional endpoint directory must also be new. Endpoint saving is opt-in.
 Use `--no-require-litex` solely for a labelled M0 baseline qualification.
 Synthetic-origin metadata is rejected for both scopes.
 
+Default `--require-litex` runs require the `single_credit_parked_v1` accounting
+ABI; legacy 013 metadata with unknown source sequence is rejected even when
+every pixel matches. To reproduce the historical delivered-image criterion,
+add `--legacy-delivered-image-criterion`. That explicit mode omits accounting
+validation, labels the scope as legacy, and leaves accounting and full M1
+unverified. It does not reclassify old evidence as a formal accounting run.
+
+For the new ABI, each frame must report a held, coherent completed-credit
+identity matching both top-level `source_sequence` (native VSYNC counter) and
+`frame_source_id` (accepted AXIS SOF counter). The parked DMA must have
+auto-halted on slot zero, with raw status HALTED and frame IRQ set and all
+`0xC9F0` error bits clear; frame IRQ by itself is insufficient. The buffer must
+stay stable until release, credit busy/done must remain true, and failed,
+command-error and source-sequence-fault indicators must remain clear. Native
+pairing must be armed, with explicit 32-bit identities and a reject-wrap/reset
+policy. Producer ownership, release/ACK and frozen-status bracketing establish
+the association claim; the host validates the resulting metadata invariants.
+
+The acquired total, completed-credit count and acquisition ID must agree.
+From the first acquisition onward, native sequence advancement must equal
+acquired frames plus cumulative intentional source sampling skips. Between
+received endpoints the same equation holds, even when complete acquired
+frames were omitted by the sender. The per-acquisition skip field is compared
+directly only for adjacent acquisitions; it is not misread as a host delivery
+gap. Native and accepted-SOF identities must retain a constant offset, as
+required by the armed source-pairing fault check. First-acquisition native and
+SOF identities stay constant throughout a session. Native startup skips remain
+explicitly unknown at the phase boundary, without substituting accepted-SOF
+counts. No wrap, reset, session change or inconsistent total is accepted.
+
+Public `counters.source_skips` must equal the cumulative native intentional
+sampling total after the first acquisition. It is distinct from the legacy
+software `intentional_sampling_drops` counter. Public `source_invalid_frames`
+must be zero relative to the disabled startup baseline; startup invalid input
+is disclosed separately. Public `source_overruns` must be observed zero under
+the single parked-buffer/no-next-credit-before-release contract and clean
+frontend monitors. Null or conflicting public counters fail default formal
+validation. These conditional zeros are not retroactively applied to legacy
+013 metadata.
+
 M1 additionally requires `litex_counters` and `litex_startup_counters` snapshots:
 observed uint32 `frontend_overflow_episodes`, `frontend_underflow_episodes`,
 `native_vsync_edges` and `invalid_frames`, explicit overflow episode units,
@@ -29,7 +76,9 @@ capture-enable reset defaults are zero, report `capture_enable_reset=0`, and
 hold capture disabled throughout the complete startup snapshot. That snapshot
 must report `enabled=false`, `selected_frames=0`, and sample point
 `sequential_gpio_reads_after_dma_start_before_capture_enable`, with integrity
-policy `disabled_zero_selected_baseline_then_stop_on_integrity_change`.
+policy `single_credit_parked_auto_halt_fail_closed_v1`. The explicit legacy
+criterion instead accepts
+`disabled_zero_selected_baseline_then_stop_on_integrity_change`.
 
 A nonzero startup invalid-frame count is accepted only with every one of those
 proof conditions. It remains in metadata and the summary as
@@ -67,9 +116,14 @@ invalid arguments/output setup exits 2.
 The summary distinguishes transport IDs, gaps, unique exact optical IDs,
 repeats, mixed frames, bad pixels, payload goodput, delivered FPS and distinct
 exact FPS. Original first/last metadata retains session IDs and all cumulative
-source counters. Unknown physical DMA sequences stay unknown. LiteX counters
-are sequential, non-atomic status snapshots without per-frame association;
-the runner does not infer exact hardware frame ownership from them. Pattern
+source counters. `source_accounting_metadata_validated` and
+`source_accounting_received_window` report the checked single-credit metadata
+and the reconciled received window. `physical_source_sequence_verified` and
+`full_m1_qualification` remain false: arithmetic metadata checks are not
+independent hardware proof. Native startup skips stay unknown. Global LiteX
+counters remain sequential, non-atomic snapshots; the held credit identity
+tuple uses its separate coherence/ownership contract. The runner does not
+infer frame ownership from those global counters. Pattern
 exactness and metadata alone do not replace bitstream provenance, board timing,
 source-mode verification, CPU/memory measurement or interruption tests.
 

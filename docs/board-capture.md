@@ -464,3 +464,19 @@ assert entry into the hold callback while BO references remain owned. Separate
 tests cover partial native-start failure and safe failures that should propagate
 normally. This is a tested control-flow safeguard, not proof that the unresolved
 kernel panic is fixed or that actual hardware shutdown now succeeds.
+
+## Single-credit source (hardware validation pending)
+
+New manifests declaring `single_credit_parked_v1` require explicit
+`--source litex-credit --fps 2`; old `--source litex` rejects them. Legacy `013`
+remains a distinct circular-DMA baseline. New capture allocates one native BO,
+parks all store addresses on it, grants one frame, waits for error-free
+automatic halt and next-SOF geometry closure, copies RGB, then ACKs its lease.
+No new credit is granted before release; slow TCP consumes independent copies.
+The complete ABI, source IDs, sampling counts, and pending hardware assumptions
+are in [source accounting](source-accounting.md).
+
+The credit reader uses a bounded raw HALTED poll before frontend close or native
+free. A timeout/MMIO failure retains the allocation and invokes the same
+indefinite CLI hold; resetting the PL/board safely is required before process
+teardown. It does not invoke the stock unbounded circular-channel stop.
