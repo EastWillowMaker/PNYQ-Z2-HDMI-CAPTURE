@@ -1,5 +1,43 @@
 # Progress and handoff
 
+2026-10-15 20:27 Asia/Taipei — build017/v10 first real RGB capture passed:
+11 distinct exact640x480 frames in5.399744s, zero pixel/mixed/repeat/metadata/
+transport errors. Raw DMA0x11001 auto-halted, held IDs and sampling arithmetic
+validated300native intervals=10acquisitions+290skips. Short-run evidence only;
+ten-minute and interruption tests still required. Local source fix34e35dd.
+
+017 CAD exit0: setup/hold0.401/0.014ns,56skewMET,0criticalCDC/DRC;256Gray+6reset
+ASYNC_REG confirmed. Fresh HLS and actual exported RTL pass exact drain/stall
+checks. Paired artifact hashes matched on board at
+`/tmp/hdmi-capture-credit-017-v10/overlay-017`. Source PYTHONPATH is its parent.
+Cooperative smoke shutdown halted safely before free; one selected-completed
+frame was cancelled before acquisition commit at the boundary (101vs100),
+outside the explicitly reconciled delivered window. UIO destructor warning retained.
+
+New900-second sender launched for sustained qualification; startup PID10326 is
+sudo, find the actual Python child before resource sampling or signaling. No
+other sender remained at launch. Source/DRM fixture from20:17 stays active.
+Next: wait listening, start600-second/600frame qualifier with resource samples,
+then client pause/reconnect, mode and physical unplug/recovery. See
+[smoke](results/2026-10-15/m1-017-smoke.md) and
+[CAD](results/2026-10-15/credit-017-build.md).
+
+2026-10-15 20:22 Asia/Taipei — current candidate017 is building from frozen
+`artifacts/m1-project-017-source`; shell handle30743, console
+`artifacts/m1-project-017-console.log`. Fresh HLS and four exact generated-RTL
+drain cases passed; Vivado IP synthesis is running. No017 board capture yet.
+Implementation commit34e35dd fixes the isolated copied color pipeline with
+style=flp; original016 reproduces the five-pixel stall. Ordinary308tests pass
+with one optional skip. Strict DMA/timing/CDC/DRC checks remain enabled.
+
+The PC is unlocked with active640x480p59.94 animated GLES output. Bounded source
+and read-only DRM logs use `artifacts/operator/m1-017-*` (2400seconds from20:17).
+V10 source and resource sampler are hash-verified at
+`/tmp/hdmi-capture-credit-017-v10`;017 overlay transfer waits for accepted CAD.
+No board sender is running. Sudo refreshed noninteractively at20:20 while valid.
+After strict build success, pair017 with this unchanged v10 source, run a short
+exactRGB/accounting smoke, then600seconds/600newframes and interruption tests.
+
 2026-10-15 20:12 Asia/Taipei — operator resumed with active HDMI and sudo renewed.
 016/v10 now configured real input, selected SOF66/native67 and closed one credit,
 but VDMA did not complete: zero acquisitions. Safe abort halted before free.

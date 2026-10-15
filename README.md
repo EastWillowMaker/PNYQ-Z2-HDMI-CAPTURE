@@ -3,11 +3,17 @@
 PC Python receives real PYNQ-Z2 HDMI input through a LiteX capture gate,
 VDMA/PS DDR and onboard PS Ethernet as complete raw RGB888 NumPy arrays.
 
-The 640×480p60 sustained criterion passed: **1,201 distinct exact frames in
+Legacy013 passed the 640×480p60 delivered-image criterion: **1,201 distinct exact frames in
 600.506 seconds, 2.000 FPS, 14.745 Mbps**, with zero pixel, mixed, repeat,
 metadata or transport errors. LiteX gate control, client pause/reconnect and
 explicit restart after a 60→59.94 Hz mode change were also exercised.
 Physical HDMI cable removal/reinsertion remains pending.
+
+M1 is incomplete: the new single-credit path adds required physical source IDs
+and sampling counts. Build017 passed CAD and its first real capture smoke:
+11 distinct byte-exact frames with automatic DMA halt and reconciled source IDs.
+Ten-minute and interruption qualification remain pending. See
+[current progress](docs/progress.md).
 
 See the [qualification report](docs/results/2026-10-15/m1-qualification.md)
 for raw evidence, startup invalid attribution, resource use, timing and limits.

@@ -1,6 +1,8 @@
 # Requirements and decision record
 
-Date: 2026-10-15 (Asia/Taipei). Status: M1 sustained capture, gate, client reconnect and mode restart verified; P4 source accounting and physical cable test incomplete.
+Date: 2026-10-15 (Asia/Taipei). Status: legacy013 delivered-image/reconnect/mode
+evidence retained; build017 single-credit capture passed an11-frame smoke with
+source accounting. Ten-minute and physical cable qualification remain incomplete.
 Normative source: [complete user prompt](../PYNQ_Z2_LiteX_HDMI_Capture_Codex_Prompt.md),
 SHA256 `38b149ac12077729ded5e6183f715d06e281df6ea6ba70aa7124c5cb24a744ae`.
 The complete source remains applicable; this record indexes it rather than replacing it.
@@ -115,3 +117,15 @@ progress is verified, using GPT-6.1 Sol medium subagents where useful. This
 supersedes the earlier absence of commit authorization. Push and PR publication
 remain unauthorized. The first verified capture milestone is being committed
 with its failed attempts and remaining physical-test limitations retained.
+
+## Isolated-frame drain implementation decision
+
+2026-10-15: P4's single-credit selection leaves deliberate gaps in downstream
+input. The actual generated color converter must therefore drain its pipeline
+without a later pixel. Build016 exposed a retained five-pixel tail despite valid
+gate completion. Change only the isolated pinned converter copy to style=flp;
+retain its matrix/interfaces, the packer, source acceptance and strict DMA
+auto-halt proof. Require generated-RTL exact-data/boundary/drain tests before CAD.
+This implements the accepted capture contract and needs no new product decision.
+Other coefficients/packing modes remain unverified by the identity/VGA drain
+test; actual RGB, DMA completion and source accounting require physical evidence.

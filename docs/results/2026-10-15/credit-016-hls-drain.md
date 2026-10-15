@@ -53,6 +53,15 @@ See hls-drain-regression.txt and hls-drain-source-hashes.json. The ordinary
 software suite remains308passed/1optional skip in3.24s; no hosted CI was run.
 CAD and physical tests for017 remain pending at this checkpoint.
 
+The tested color converter's Verilog is byte-identical to both its exported IP
+and the Vivado-imported module. Pixel packing's export differs only by an unused
+find_kernel_block register and synthesis-translate-off monitor; the imported
+module matches that export. A separate run compiling the actual exported
+modules, including their monitor, also passes full640x480 with both input and
+output stalls:307200 pixels/230400 exact packed words/480EOL. See
+hls-drain-exported-017.txt. This closes the generated-versus-imported RTL gap;
+it remains simulation evidence, not DDR or hardware completion.
+
 Probe: artifacts/build-probe/hls-drain-016/{tb.v,isolated.log,extra.log,pack-only.log}.
 The isolated test exits1; pack-only exits0. Source artifacts are from016,
 not a hand-written model of the HLS implementation.

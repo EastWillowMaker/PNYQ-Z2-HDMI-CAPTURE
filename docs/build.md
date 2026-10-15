@@ -16,8 +16,9 @@ validation.
 
 ## Reproduce
 
-Run from the repository root with CPython 3.12 (tested: 3.12.13), Git, and licensed
-Vivado/Vitis 2025.2 already installed. Create the gateware environment inside
+Run from the repository root with CPython 3.12 (tested: 3.12.13), Git, Icarus
+(`iverilog` and `vvp`), and licensed Vivado/Vitis2025.2 already installed.
+Create the gateware environment inside
 ignored `artifacts/`; no sibling checkout or global Python installation is needed:
 
 ```bash
@@ -65,6 +66,14 @@ the wrapper. `bitstream` additionally implements and exports matching
 hardware, changes Linux, or edits the SD image. Existing output directories
 cause failure rather than replacement. Source download and output are ignored
 under `artifacts/`; the source license headers remain in the checkout.
+
+Every HLS/project/bitstream build first checks the actual synthesized HLS pair
+with `scripts/check_hls_drain.py OUTPUT/hls`. It must drain an isolated frame
+without subsequent input and preserve exact data/boundaries under backpressure.
+The isolated color_convert copy uses pipeline style=flp; the original default
+stalling pipeline retained five final pixels in build016. Small/VGA regression
+cases, missing modules and timeouts gate CAD. See the
+[before/after evidence](results/2026-10-15/credit-016-hls-drain.md).
 
 The extraction retains board-specific PS DDR configuration, including training
 and board delays; it disables unused GP1, S_AXI_GP0, HP2, and FCLK3 ports.

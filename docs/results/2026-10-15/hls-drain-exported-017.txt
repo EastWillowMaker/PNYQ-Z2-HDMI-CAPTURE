@@ -1,0 +1,3 @@
+DRAIN input=307200 color_pixels=307200 packed_words=230400 color_eol=480 packed_eol=480
+PASS 640x480 input_stall=1 output_stall=1
+hardware/hls_drain_tb.v:111: $finish called at 3988971000 (1ps)
