@@ -1,0 +1,9 @@
+{
+  "started": "2026-10-15T22:50:43.605658+08:00",
+  "uart_bytes_written": 0,
+  "received_bytes": 28269,
+  "stop_reason": "shell_prompt",
+  "error": null,
+  "elapsed_seconds": 256.7632985949749,
+  "finished": "2026-10-15T22:55:00.368986+08:00"
+}

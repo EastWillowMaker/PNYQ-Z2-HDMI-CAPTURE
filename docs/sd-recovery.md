@@ -170,3 +170,12 @@ and insert it in PYNQ. Keep the old card and its backup. Power PYNQ on and recor
 the first boot through UART. Check the runtime version, storage errors and clean
 shutdown before resuming the existing 017/v10 capture work. Passing image
 readback does not establish those boot or runtime checks.
+
+## First boot result
+
+The new card booted and expanded root to about 57 GiB. PYNQ 3.0.1 and Python
+3.10.4 match the prior capture environment. Basic commands and IPv6 pings pass.
+The baseline retains an SD high-speed-switch warning, haveged SIGSYS failures
+and failed DHCP server units. A bounded file fsync succeeded; persistence after
+normal reboot and full kernel/SD diagnostics remain pending. See the
+[first-boot report](results/2026-10-15/new-card-first-boot-report.md).

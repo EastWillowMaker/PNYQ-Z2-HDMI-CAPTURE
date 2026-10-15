@@ -1,5 +1,16 @@
 # Progress and handoff
 
+2026-10-15 22:58 Asia/Taipei: fresh-card FIRST BOOT PASSED.
+PYNQ 3.0.1, Python 3.10.4, Linux 5.15.19. Root expanded to 57 GiB with about
+49 GiB free. Card serial/capacity match the new SD. Commands and imports work;
+no recurrence of old EXT4 I/O errors in the captured evidence. Dedicated IPv6
+profile restored and 2/2 pings passed. Retain warnings: mmc high-speed switch,
+haveged SIGSYS/restart limit, failed DHCP servers and journal ACL lookup.
+16 MiB test file+directory fsynced; persistence after reboot NOT yet checked.
+Sudo authentication required for full diagnostics/reboot; requested local auth.
+Do not claim full storage/M1 qualification. See
+[first boot](results/2026-10-15/new-card-first-boot-report.md).
+
 2026-10-15 22:47 Asia/Taipei: NEW CARD READBACK PASSED.
 The verify-only helper read all 7,858,807,808 bytes in 94.805 seconds. The SHA256
 matches the official PYNQ-Z2 v3.0.1 image. It wrote zero bytes. The original

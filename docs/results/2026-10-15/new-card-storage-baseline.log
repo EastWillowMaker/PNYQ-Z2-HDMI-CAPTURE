@@ -1,0 +1,32 @@
+
+[?2004l[?2004hxilinx@pynq:~$ printf "CARD_SERIAL\n"; cat /sys/block/mmcblk0/device/serial; printf "KERNEL_STORAGE_LOG\n"; journalctl -k -b --no-pager | grep -Ei "mmc|ext4|fat-fs|I/O error|buffer i/o|timeout|error -"; printf "ROOT_SERVICE_STATE\n"; systemctl --failed --no-pager; printf "ROOT_MOUNT\n"; findmnt -n -o SOURCE,FSTYPE,OPTIONS /; printf "PROCESS_READ\n"; ps -p 1 -o pid,comm; printf "LINK\n"; ip -6 addr show dev eth0; printf "RX_BYTES\n"; cat /sys/class/net/eth0/statistics/rx_bytes; printf "\nCONSOLE_DONE_4798a11abe0a41ba880472394d145246:%s\n" "$?"
+[?2004lCARD_SERIAL
+0x94980972
+KERNEL_STORAGE_LOG
+Failed to search journal ACL: Operation not supported
+Oct 21 23:07:05 pynq kernel: [01;31m[KEXT4[m[K-fs ([01;31m[Kmmc[m[Kblk0p2): resizing filesystem from 1885118 to 15237120 blocks
+Oct 21 23:07:09 pynq kernel: [01;31m[KEXT4[m[K-fs ([01;31m[Kmmc[m[Kblk0p2): resized filesystem to 15237120
+ROOT_SERVICE_STATE
+[0m[0;4m [0m[0m[0;4m UNIT                    [0m[0m[0;4m LOAD  [0m[0m[0;4m ACTIVE[0m[0m[0;4m SUB   [0m[0m[0;4m DESCRIPTION                     [0m
+[0;1;31m●[0m[0;1;31m [0m[0;1;31mhaveged.service         [0m[0;1;31m [0mloaded [0;1;31mfailed[0m[0;1;31m [0m[0;1;31mfailed[0m[0;1;31m [0mEntropy Daemon based on the HAV…
+[0;1;31m●[0m[0;1;31m [0m[0;1;31misc-dhcp-server.service [0m[0;1;31m [0mloaded [0;1;31mfailed[0m[0;1;31m [0m[0;1;31mfailed[0m[0;1;31m [0mISC DHCP IPv4 server
+[0;1;31m●[0m[0;1;31m [0m[0;1;31misc-dhcp-server6.service[0m[0;1;31m [0mloaded [0;1;31mfailed[0m[0;1;31m [0m[0;1;31mfailed[0m[0;1;31m [0mISC DHCP IPv6 server
+
+LOAD   = Reflects whether the unit definition was properly loaded.
+ACTIVE = The high-level unit activation state, i.e. generalization of SUB.
+SUB    = The low-level unit activation state, values depend on unit type.
+3 loaded units listed.
+ROOT_MOUNT
+/dev/mmcblk0p2 ext4   rw,relatime
+PROCESS_READ
+  PID COMMAND
+    1 systemd
+LINK
+3: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    inet6 fe80::200:5ff:fe6b:1a0/64 scope link 
+       valid_lft forever preferred_lft forever
+RX_BYTES
+3740
+
+CONSOLE_DONE_4798a11abe0a41ba880472394d145246:0
+[?2004hxilinx@pynq:~$ 

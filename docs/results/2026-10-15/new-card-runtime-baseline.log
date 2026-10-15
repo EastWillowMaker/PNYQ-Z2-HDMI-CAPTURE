@@ -1,0 +1,20 @@
+
+[?2004l[?2004hxilinx@pynq:~$ id; uname -r; cat /sys/block/mmcblk0/device/cid; cat /sys/block/mmcblk0/device/name; lsblk -b -o NAME,SIZE,FSTYPE,MOUNTPOINTS; df -h / /boot; sudo -n true; printf "SUDO_PROBE=%s\n" "$?"; /usr/local/share/pynq-venv/bin/python -c "import pynq,sys; print(\"PYNQ_VERSION\",pynq.__version__); print(\"PYTHON\",sys.version)"; printf "\nCONSOLE_DONE_5e5b3216d2bc4f198d2be301826ce61a:%s\n" "$?"
+[?2004luid=1000(xilinx) gid=1000(xilinx) groups=1000(xilinx),4(adm),27(sudo)
+5.15.19-xilinx-v2022.1
+9f544953443634476194980972018200
+SD64G
+NAME               SIZE FSTYPE MOUNTPOINTS
+mmcblk0     62549655552        
+├─mmcblk0p1   136314880 vfat   /boot
+└─mmcblk0p2 62412292096 ext4   /
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        57G  5.6G   49G  11% /
+/dev/mmcblk0p1  130M  7.3M  123M   6% /boot
+sudo: a password is required
+SUDO_PROBE=1
+PYNQ_VERSION 3.0.1
+PYTHON 3.10.4 (main, Apr  2 2022, 09:04:19) [GCC 11.2.0]
+
+CONSOLE_DONE_5e5b3216d2bc4f198d2be301826ce61a:0
+[?2004hxilinx@pynq:~$ 

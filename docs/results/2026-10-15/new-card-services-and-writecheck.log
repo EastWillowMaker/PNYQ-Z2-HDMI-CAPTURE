@@ -1,0 +1,66 @@
+
+[?2004l[?2004hxilinx@pynq:~$ journalctl -b -u haveged -u isc-dhcp-server -u isc-dhcp-server6 --no-pager -n 45; /usr/local/share/pynq-venv/bin/python -c 'import os,hashlib,json,time
+[?2004l[?2004h> from pathlib import Path
+[?2004l[?2004h> p=Path('"'"'/home/xilinx/.cache/hdmi-capture-storage-check.bin'"'"')
+[?2004l[?2004h> p.parent.mkdir(parents=True,exist_ok=True)
+[?2004l[?2004h> block=bytes(range(256))*256
+[?2004l[?2004h> h=hashlib.sha256()
+[?2004l[?2004h> t=time.monotonic()
+[?2004l[?2004h> with p.open('"'"'xb'"'"') as f:
+[?2004l[?2004h>  for _ in range(256):
+[?2004l[?2004h>   f.write(block); h.update(block)
+[?2004l[?2004h>  f.flush(); os.fsync(f.fileno())
+[?2004l[?2004h> d=os.open(str(p.parent),os.O_RDONLY|os.O_DIRECTORY)
+[?2004l[?2004h> os.fsync(d); os.close(d)
+[?2004l[?2004h> print(json.dumps({'"'"'path'"'"':str(p),'"'"'bytes'"'"':p.stat().st_size,'"'"'expected_sha256'"'"':h.hexdigest(),'"'"'file_and_directory_fsynced'"'"':True,'"'"'elapsed_seconds'"'"':time.monotonic()-t}))
+[?2004l[?2004h> '; printf "\nCONSOLE_DONE_ce3372f94af546b6847c388be1e51bb8:%s\n" "$?"
+[?2004l[0;1;31mFailed to search journal ACL: Operation not supported[0m
+Oct 21 23:07:53 pynq systemd[1]: haveged.service: Scheduled restart job, restart counter is at 19.
+Oct 21 23:07:53 pynq systemd[1]: Stopped Entropy Daemon based on the HAVEGE algorithm.
+Oct 21 23:07:53 pynq systemd[1]: Started Entropy Daemon based on the HAVEGE algorithm.
+Oct 21 23:07:54 pynq systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mhaveged.service: Main process exited, code=dumped, status=31/SYS[0m
+Oct 21 23:07:54 pynq systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mhaveged.service: Failed with result 'core-dump'.[0m
+Oct 21 23:07:54 pynq systemd[1]: haveged.service: Scheduled restart job, restart counter is at 20.
+Oct 21 23:07:54 pynq systemd[1]: Stopped Entropy Daemon based on the HAVEGE algorithm.
+Oct 21 23:07:54 pynq systemd[1]: Started Entropy Daemon based on the HAVEGE algorithm.
+Oct 21 23:07:56 pynq systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mhaveged.service: Main process exited, code=dumped, status=31/SYS[0m
+Oct 21 23:07:56 pynq systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mhaveged.service: Failed with result 'core-dump'.[0m
+Oct 21 23:07:57 pynq systemd[1]: haveged.service: Scheduled restart job, restart counter is at 21.
+Oct 21 23:07:57 pynq systemd[1]: Stopped Entropy Daemon based on the HAVEGE algorithm.
+Oct 21 23:07:57 pynq systemd[1]: Started Entropy Daemon based on the HAVEGE algorithm.
+Oct 21 23:08:00 pynq systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mhaveged.service: Main process exited, code=dumped, status=31/SYS[0m
+Oct 21 23:08:00 pynq systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mhaveged.service: Failed with result 'core-dump'.[0m
+Oct 21 23:08:00 pynq systemd[1]: haveged.service: Scheduled restart job, restart counter is at 22.
+Oct 21 23:08:00 pynq systemd[1]: Stopped Entropy Daemon based on the HAVEGE algorithm.
+Oct 21 23:08:00 pynq systemd[1]: Started Entropy Daemon based on the HAVEGE algorithm.
+Oct 21 23:08:02 pynq systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mhaveged.service: Main process exited, code=dumped, status=31/SYS[0m
+Oct 21 23:08:02 pynq systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mhaveged.service: Failed with result 'core-dump'.[0m
+Oct 21 23:08:02 pynq systemd[1]: haveged.service: Scheduled restart job, restart counter is at 23.
+Oct 21 23:08:02 pynq systemd[1]: Stopped Entropy Daemon based on the HAVEGE algorithm.
+Oct 21 23:08:02 pynq systemd[1]: Started Entropy Daemon based on the HAVEGE algorithm.
+Oct 21 23:08:04 pynq systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mhaveged.service: Main process exited, code=dumped, status=31/SYS[0m
+Oct 21 23:08:04 pynq systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mhaveged.service: Failed with result 'core-dump'.[0m
+Oct 21 23:08:04 pynq systemd[1]: haveged.service: Scheduled restart job, restart counter is at 24.
+Oct 21 23:08:04 pynq systemd[1]: Stopped Entropy Daemon based on the HAVEGE algorithm.
+Oct 21 23:08:04 pynq systemd[1]: Started Entropy Daemon based on the HAVEGE algorithm.
+Oct 21 23:08:06 pynq systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mhaveged.service: Main process exited, code=dumped, status=31/SYS[0m
+Oct 21 23:08:06 pynq systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mhaveged.service: Failed with result 'core-dump'.[0m
+Oct 21 23:08:06 pynq systemd[1]: haveged.service: Scheduled restart job, restart counter is at 25.
+Oct 21 23:08:06 pynq systemd[1]: Stopped Entropy Daemon based on the HAVEGE algorithm.
+Oct 21 23:08:06 pynq systemd[1]: Started Entropy Daemon based on the HAVEGE algorithm.
+Oct 21 23:08:08 pynq systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mhaveged.service: Main process exited, code=dumped, status=31/SYS[0m
+Oct 21 23:08:08 pynq systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mhaveged.service: Failed with result 'core-dump'.[0m
+Oct 21 23:08:08 pynq systemd[1]: haveged.service: Scheduled restart job, restart counter is at 26.
+Oct 21 23:08:08 pynq systemd[1]: Stopped Entropy Daemon based on the HAVEGE algorithm.
+Oct 21 23:08:08 pynq systemd[1]: Started Entropy Daemon based on the HAVEGE algorithm.
+Oct 21 23:08:10 pynq systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mhaveged.service: Main process exited, code=dumped, status=31/SYS[0m
+Oct 21 23:08:10 pynq systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mhaveged.service: Failed with result 'core-dump'.[0m
+Oct 21 23:08:10 pynq systemd[1]: haveged.service: Scheduled restart job, restart counter is at 27.
+Oct 21 23:08:10 pynq systemd[1]: Stopped Entropy Daemon based on the HAVEGE algorithm.
+Oct 21 23:08:10 pynq systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mhaveged.service: Start request repeated too quickly.[0m
+Oct 21 23:08:10 pynq systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mhaveged.service: Failed with result 'core-dump'.[0m
+Oct 21 23:08:10 pynq systemd[1]: [0;1;31m[0;1;39m[0;1;31mFailed to start Entropy Daemon based on the HAVEGE algorithm.[0m
+{"path": "/home/xilinx/.cache/hdmi-capture-storage-check.bin", "bytes": 16777216, "expected_sha256": "341aacac661ccb210720bedaa9ead5d668fe5ea41a73532fc147c71e34040df1", "file_and_directory_fsynced": true, "elapsed_seconds": 3.1507186169999954}
+
+CONSOLE_DONE_ce3372f94af546b6847c388be1e51bb8:0
+[?2004hxilinx@pynq:~$ 
