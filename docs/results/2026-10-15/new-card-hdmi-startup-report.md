@@ -105,3 +105,28 @@ changing source success, requested modes, pixel data or permissions. It never
 maps framebuffer pixels. Python compilation passed; an actual20-second timing
 probe is pending. The original720s run predates this instrumentation and has
 no kernel-state file. Missing native VSYNC still requires diagnosis.
+
+## Timing002: native frame synchronization resumes
+
+The20-second source completed75 page flips, exit0 and restored the original
+VT. The new kernel snapshot executed without read error. It shows the test
+plane asXR24/640x480 and CRTC421 active at640x480/25200kHz, totals800x525.
+The generic state file has no adjusted_mode field and does not measure the
+wire timing. Connector max_requested_bpc16 is a limit, not proof of actual
+deep-color output. No electrical RGB format claim is made from plane metadata.
+
+Three board samples read nativeVSYNC623,683,743:delta120 in2.003853s
+(59.885Hz). Unlike KMS001 after reload, actual native frame sync now
+advances. However invalid_frames increases by the same120, with gate disabled,
+selected0, DMA RS0/Halted1 and no capture buffers. This is not a valid-image
+pass. Frontend configuration has not yet established a supported input mode.
+
+Next isolate overlay reload: an operator-only subclass attaches the already
+verified pair, checks DMA Halted/RS0 and command reset0, then creates VideoIn
+and uses the original mode/integrity/DMA logic. No pixel tolerance, accounting
+exception or source-mode check is relaxed. The short attach003 experiment is
+staged, not yet executed. It is not production CLI attach support or fullM1.
+A temporary local source worker accepts only duration/frame_id, fixedVT3 and
+fixed output paths; six runs/30minutes maximum. Five parser cases pass for a
+supported request and rejected bool duration, out-of-range duration/ID, and
+an extra command field. Root hardware/session execution is pending.

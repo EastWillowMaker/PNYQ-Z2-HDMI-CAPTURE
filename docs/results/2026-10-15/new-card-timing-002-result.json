@@ -1,0 +1,16 @@
+{
+  "source_page_flips": 75,
+  "source_exit": 0,
+  "original_vt_restored": true,
+  "native_counter_first": 623,
+  "native_counter_last": 743,
+  "native_delta": 120,
+  "board_sample_seconds": 2.003852551,
+  "observed_native_hz": 59.88464567421158,
+  "invalid_delta": 120,
+  "selected_delta": 0,
+  "capture_frames_received": 0,
+  "full_m1_qualification": false,
+  "kernel_mode": "640x480,25200kHz,800x525 total",
+  "limitation": "DRM state prints mode, but no adjusted_mode or measured physical wire timing; XR24 plane is not electrical format proof"
+}

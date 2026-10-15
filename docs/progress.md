@@ -1,5 +1,18 @@
 # Progress and handoff
 
+Timing002 completed:75 source flips, exit0, originalVT restored. Kernel DRM
+snapshot now captured successfully: test planeXR24/640x480, CRTC mode25200kHz/
+800x525 totals; no adjusted_mode field or physical wire-format proof. Actual
+board nativeVSYNC623→683→743 (120 in2.003853s,~59.885Hz), but invalid_frames
+also+120 while gate disabled/selected0/DMAHalted. No capture/qualification pass.
+Prepared operator-only attached-source contrast using original capture checks,
+current verified017/reset0command and no FPGA reload. New runtime variant is
+explicitly experimental. Attach003 coordinator session82445 waits up to30minutes for
+artifacts/operator/kms-source-session-003/run-01. Local bounded source worker
+terminal opened: one PCsudo auth, first90s source queued; fixedVT3/output,
+max6runs/30min. Five request-parser cases pass; root/session execution pending.
+No production capture adapter changes yet. Preserve failed001 and timing002.
+
 KMS001 source has now returned normally:2700 page flips, childexit0,
 originalVT2 restored. Capture still failed before any frames; source success
 is not capture success. Post-run scaling mode=None and link-statusGood;

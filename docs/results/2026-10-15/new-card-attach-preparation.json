@@ -1,0 +1,16 @@
+{
+  "status": "PREPARED_NOT_RUN",
+  "scope": "one-run diagnostic, no production attach API",
+  "helpers_sha256": {
+    "artifacts/deploy/attached-credit-sender.py": "d51b2fa88d2aecd925fd8e2019021faed050ea4097b63680f8aa6874e6b34b14",
+    "artifacts/deploy/new-card-attach-session.py": "c20588b1d7035993f507d636fd2999f983502a160dbc41f819106daeb33187cb",
+    "artifacts/operator/kms-source-session.py": "282750b7afea7b940419885322efa928de8db44bc9d558d8b46482ba983cfb47",
+    "artifacts/operator/coordinate-new-card-attach.py": "79d6907533e89033b1b91412b3ff5f0f2625774e6d5e5381d9a76a1807f5cde7"
+  },
+  "checks": [
+    "Python compilation",
+    "5 request parser cases",
+    "unprivileged execution rejected"
+  ],
+  "full_m1_qualification": false
+}
