@@ -7,7 +7,7 @@ after checking its exact owned PID/command and confirming no child serial client
 
 014 is prepared as a local two-stage wizard. It does not start its preparation
 or source timers until the human authenticates. Phase1 opens normal PYNQ UART
-for sudo-v, then immediately stages the immutable v13 archive and its known-idle
+for sudo-v, then immediately stages the immutable v14 archive and its known-idle
 bootstrap. It verifies the old boot and raw PYNQ ledger/old017 hashes before
 MMIO, rejects active DMA/gate or old SDK shutdown maps, and proves storage.
 Only a confirmed RS0/Halted1/gateoff allows a same017 PL reload. That gives an
@@ -36,7 +36,7 @@ All package hashes and the pure artifact verifier passed locally. Python files
 compile, bash syntax passes, and the UART checksum formatter was independently
 checked to emit real newlines. The checksum formatter was checked explicitly before any UART execution.
 These are static checks of ignored orchestration helpers, not a hardware pass.
-Core tracked implementation has465 passing host tests plus one optional skip.
+Core tracked implementation has466 passing host tests plus one optional skip.
 
 The new local window is PYNQ tracked capture - board then PC. The user must
 enter passwords only at the board and PC hidden sudo prompts. No password is
@@ -48,3 +48,12 @@ address/port8766; it serves deployment files, not capture arrays.
 See prepared-014-preflight.json for helper/package hashes. End-to-end result,
 new bitstream hardware qualification, interruption/restart, mode/held-buffer
 observations and final600second criterion remain NOT_RUN. The goal stays active.
+
+Before authentication, v14 superseded v13 to correct the global observer
+completion check. The old archive is preserved and was not run. The selected
+credit counters must still be empty; ordinary unselected input may advance.
+See prepared-counter-guard.md and prepared-v14-package.json. The checksum
+formatter was exercised through the actual quoted shell printf/sha256sum
+pipeline against a local fixture and passed. Core source revision3343dac is
+packaged exactly; the fresh replay bitstream/HWH pair is unchanged. Candidate
+replacement was atomic while no staging directory/helper process existed.
