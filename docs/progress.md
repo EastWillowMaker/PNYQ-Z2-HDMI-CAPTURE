@@ -1,5 +1,37 @@
 # Progress and handoff
 
+2026-10-15 09:22 Asia/Taipei — current candidate is build016 plus sender v10.
+M1 remains incomplete. Build016 passed CAD with setup/hold0.399/0.033ns,
+56 bus-skew checks MET, zero criticalCDC/DRC and verified synchronizer attributes.
+Latest software tests:308 passed,1optional-dependency skip; dedicated gate/manifest:
+64 passed. These local checks do not establish successful new physical capture.
+
+The board-loaded016/v9 attempt acquired zero frames: PC ScreenSaver=true,
+PowerSaveMode3 and inactive DRM DP-2 caused no incoming HDMI signal. Latest
+read-only recheck still shows the desktop locked/output off, board alive and
+no capture process. All CAD, shader and scanout processes have terminated.
+User wake/unlock and replyDone are pending; HDMI should remain connected.
+Do not restart capture until actual scanout is active. Existing overlay/network
+permission persists; credential availability must be rechecked separately.
+
+Use source PYTHONPATH `/tmp/hdmi-capture-credit-016-v10` with paired files at
+`/tmp/hdmi-capture-credit-016/overlay-016/{capture.bit,capture.hwh,build-manifest.json}`.
+Both package transfers matched SHA256. Current local commits include359ba31,
+0390bb9 and53e23a9. Source/counter diagnostics and cleanup preserve known errors;
+formal qualification requires clean source and cleanup counters. No images uploaded.
+
+Next authorized actions: confirm active640x480p59.94/60 source, restart animated
+GLES fixture with contemporaneous scanout logs, recheck sudo, run short smoke
+requiring DMA autoHALT+IRQ and next-SOF-closed held identity with exactRGB. Only
+then run600-second/600-new-frame qualification, client reconnect, source unplug
+and mode-change recovery tests. No web/bypass/LCD work is started.
+
+Evidence: [016build](results/2026-10-15/credit-016-build.md),
+[diagnostic tests](results/2026-10-15/credit-fault-reporting.md),
+[failed015timing](results/2026-10-15/credit-015-timing.md).
+
+## Credit bring-up history
+
 2026-10-15 — Build014 single-credit implementation and local checks completed;
 first physical smoke failed automatic DMA halt; continued investigation required. Do not mark M1 complete. See
 [the new checkpoint](results/2026-10-15/credit-014-build.md) for artifacts,
