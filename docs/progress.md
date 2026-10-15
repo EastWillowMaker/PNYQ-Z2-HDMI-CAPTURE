@@ -1,5 +1,14 @@
 # Progress and handoff
 
+2026-10-15 22:47 Asia/Taipei: NEW CARD READBACK PASSED.
+The verify-only helper read all 7,858,807,808 bytes in 94.805 seconds. The SHA256
+matches the official PYNQ-Z2 v3.0.1 image. It wrote zero bytes. The original
+uutils dd zero-byte failure is retained. No second flash occurred. New card
+is unmounted/RO on the PC, ready for a powered-off move to PYNQ and first boot.
+Old card and complete backup remain preserved. Boot/storage/clean-shutdown
+checks and the remaining M1 recovery tests are still pending. Evidence:
+[new card verified](results/2026-10-15/new-card-readback-verified.json).
+
 2026-10-15 22:43 Asia/Taipei — old-card backup COMPLETE:15,978,201,088B,
 all rescued/0readerrors. FATdirty(exit1),ext4errors(exit4) with journal skipped;
 no physical fault proved, preserve original/image. User flashed newmmcblk0:

@@ -54,7 +54,7 @@ It guards the already-written new-card CID/capacity and requires unmounted,
 kernel-read-only state. It records a separate result in`new-card-verify-001/`,
 preserving the first failure. The raw read must finish all image bytes with
 SHA256`f17405d25298a2c5ea23ccf95f868b42b18f819ff9d7fe5d079ac9ef53415861`
-before reportingverified=true. The actual new-card execution is pending.
+before reportingverified=true. The subsequent new-card execution passed. Its result is recorded below.
 
 The original raw device/identity guard and image hash remain mandatory.
 Supported512-byte-aligned complete inputs now use explicit aligned direct reads;
@@ -65,3 +65,17 @@ read. Other filesystems, devices, sector sizes and operating systems are
 unverified. There is no write path in the reader or verification-only helper.
 The one-run writer was updated to use the same reader for any future separately
 authorized write; it was not rerun on this card.
+
+## Completed new-card verification
+
+The verification-only helper read all 7,858,807,808 bytes from the identified
+new SD card in 94.805 seconds. It used the aligned O_DIRECT reader and wrote
+zero bytes to the card. The complete read matched SHA256
+`f17405d25298a2c5ea23ccf95f868b42b18f819ff9d7fe5d079ac9ef53415861`.
+No error occurred. See [new-card-readback-verified.json](new-card-readback-verified.json).
+
+This confirms the written image matches the downloaded official image. The
+first zero-byte result was a verifier failure, not a completed comparison that
+found different content. No second flash was needed. Card boot, long-term
+reliability and unused capacity beyond the image remain unverified. PYNQ
+first-boot and storage checks are the next step before loading the overlay.

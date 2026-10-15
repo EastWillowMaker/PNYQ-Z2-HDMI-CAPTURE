@@ -152,3 +152,21 @@ bytes. This is not an established content mismatch. The same command fails on
 the local image; an explicitly aligned reader passes the local whole-image
 hash. A verification-only raw-card helper is prepared and awaits local sudo,
 with no rewrite. See[readback diagnosis](results/2026-10-15/sd-readback-diagnosis.md).
+
+## New card ready for first boot
+
+At 22:47:22 the verification-only read completed successfully. It read all
+7,858,807,808 image bytes in 94.805 seconds using aligned O_DIRECT reads. Its
+SHA256 equals the official image's locally recorded hash. It wrote zero bytes.
+The new card remains unmounted and kernel-read-only on this host. The host's
+read-only flag does not travel with the card when it is removed.
+
+Evidence: [verified new-card readback](results/2026-10-15/new-card-readback-verified.json).
+Keep the original failed verification report as part of the diagnosis. The new
+card was flashed once and did not need another write.
+
+With PYNQ powered off, remove the new SD64G card from the PC's built-in reader
+and insert it in PYNQ. Keep the old card and its backup. Power PYNQ on and record
+the first boot through UART. Check the runtime version, storage errors and clean
+shutdown before resuming the existing 017/v10 capture work. Passing image
+readback does not establish those boot or runtime checks.

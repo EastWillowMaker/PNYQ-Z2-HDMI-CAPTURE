@@ -1,0 +1,16 @@
+{
+  "device": "/dev/mmcblk0",
+  "cid": "9f544953443634476194980972018201",
+  "operation": "verification_only",
+  "card_bytes_written": 0,
+  "expected_sha256": "f17405d25298a2c5ea23ccf95f868b42b18f819ff9d7fe5d079ac9ef53415861",
+  "expected_bytes": 7858807808,
+  "readback_bytes": 7858807808,
+  "readback_verified": true,
+  "error": null,
+  "mode": "4096-aligned_pread_O_DIRECT",
+  "started": "2026-10-15T22:45:47.194808+08:00",
+  "readback_sha256": "f17405d25298a2c5ea23ccf95f868b42b18f819ff9d7fe5d079ac9ef53415861",
+  "elapsed_seconds": 94.80464884499088,
+  "finished": "2026-10-15T22:47:22.000415+08:00"
+}
