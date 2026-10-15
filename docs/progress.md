@@ -1,5 +1,14 @@
 # Progress and handoff
 
+KMS001 source has now returned normally:2700 page flips, childexit0,
+originalVT2 restored. Capture still failed before any frames; source success
+is not capture success. Post-run scaling mode=None and link-statusGood;
+GPU upscaling is not established. New20s timing probe prepared and local host
+sudo terminal opened. The VT runner now records bounded kernel DRM metadata
+after source readiness; py_compile passes, actual diagnostic execution pending.
+Timing source dir:artifacts/operator/kms-vt-newcard-timing-002; watcher session
+59012 waits for ready then samples board MMIO, without starting DMA.
+
 Fresh-card KMS001 failed before frames: KMS ready XR24/640x480/25200kHz,
 sender then timed out in native frontend.configure and exited1. No smoke or
 600s qualifier ran. Coordinator shutdown_safe=null remains original; resource

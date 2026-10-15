@@ -2,7 +2,7 @@
 """Run the exact KMS source on a temporary VT, then return to the original VT.
 
 Requires local sudo. Never stops GNOME or edits persistent display settings.
-Direct KMS runtime remains unverified until the operator executes this probe.
+This verifies the source lifecycle; receiver qualification is separate.
 """
 import argparse
 import json
@@ -11,10 +11,45 @@ from pathlib import Path
 import signal
 import subprocess
 import sys
+import threading
 import time
 
 ROOT = Path(__file__).resolve().parents[1]
 BINARY = ROOT / 'artifacts/kms-fixture/hdmi-pattern-kms'
+
+
+def record_kernel_state(output):
+    """Record DRM timings after KMS readiness, without changing display state."""
+    deadline = time.monotonic() + 30
+    source = output / 'source.jsonl'
+    while time.monotonic() < deadline:
+        try:
+            with source.open() as handle:
+                ready = json.loads(handle.readline(1024))
+        except (OSError, ValueError):
+            time.sleep(.1)
+            continue
+        if ready.get('event') == 'kms_ready':
+            break
+        time.sleep(.1)
+    else:
+        return
+    status = {'sample_begin_monotonic': time.monotonic(),
+              'source_ready': ready, 'error': None}
+    try:
+        # Read metadata only. This does not map or export framebuffer pixels.
+        with Path('/sys/kernel/debug/dri/2/state').open() as handle:
+            state = handle.read(2 * 1024 * 1024 + 1)
+        if len(state) > 2 * 1024 * 1024:
+            raise ValueError('DRM state exceeds the diagnostic size limit')
+        with (output / 'kernel-state-during.txt').open('x') as handle:
+            handle.write(state)
+    except (OSError, ValueError) as error:
+        status['error'] = str(error)
+    status['sample_end_monotonic'] = time.monotonic()
+    with (output / 'kernel-state-during.json').open('x') as handle:
+        json.dump(status, handle, indent=2)
+        handle.write('\n')
 
 
 def main():
@@ -99,6 +134,8 @@ def main():
                    '--frame-id', str(args.frame_id), '--card', args.card,
                    '--connector', args.connector, '--output', str(output)]
         child = subprocess.Popen(command, start_new_session=True)
+        threading.Thread(target=record_kernel_state, args=(output,),
+                         daemon=True).start()
         child.wait(timeout=args.duration + 45)
         result = json.loads((output / 'child-result.json').read_text())
         return result['exit_code']

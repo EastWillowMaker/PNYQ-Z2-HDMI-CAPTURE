@@ -88,3 +88,20 @@ no valid640x480 input mode has been measured by PYNQ. KMS page flips alone do
 not prove electrical VGA timings at the receiver. GPU scaling or bridge mode
 selection remains to be checked. No new bitstream or pixel-check change was
 made during these probes.
+
+## Source001 normal return and next timing probe
+
+The720s source completed2700 page flips, exit0, and restore.json confirms
+return to the originalVT2. This is a source lifecycle pass, with zero capture
+frames. Source log/result/restore evidence are saved with the KMS001 prefix.
+After restoration, connector scaling mode reads None; link-status reads Good.
+This post-run snapshot does not establish every setting during the run. It
+does not support declaring GPU upscaling the cause.
+
+The root VT runner now includes a metadata probe that does not affect source success after
+KMS readiness: it reads bounded kernel DRM state into kernel-state-during.txt
+and records sample times/errors. Failure to read debugfs is recorded without
+changing source success, requested modes, pixel data or permissions. It never
+maps framebuffer pixels. Python compilation passed; an actual20-second timing
+probe is pending. The original720s run predates this instrumentation and has
+no kernel-state file. Missing native VSYNC still requires diagnosis.

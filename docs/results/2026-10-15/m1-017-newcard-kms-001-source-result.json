@@ -1,0 +1,25 @@
+{
+  "source_only": true,
+  "received_capture_frames": 0,
+  "kms_ready": {
+    "event": "kms_ready",
+    "connector_id": 446,
+    "crtc": 421,
+    "format": "XR24",
+    "clock_khz": 25200,
+    "width": 640,
+    "height": 480
+  },
+  "page_flips": 2700,
+  "first_id": 500001,
+  "last_id": 502700,
+  "first_to_last_presentation_seconds": 719.7267763980199,
+  "child_result": {
+    "exit_code": 0
+  },
+  "desktop_return": {
+    "original_vt_restored": true
+  },
+  "full_m1_qualification": false,
+  "source_log_sha256": "c8c1fb73a5f0d7a0150ee1a15c2d794bffa555ce3d1e8f0c7d1912a9cd0d3020"
+}

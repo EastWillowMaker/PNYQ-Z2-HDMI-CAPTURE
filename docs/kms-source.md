@@ -89,3 +89,18 @@ change was followed by the focused9-case compiled-source suite, all passing.
 No hosted CI was run. The subsequent direct-VT smoke test is recorded above. The CRTC selector prefers the
 requested connector's existing CRTC, otherwise an unused compatible CRTC, and
 fails when none exists rather than stealing another active output's CRTC.
+
+## Kernel timing evidence
+
+The VT runner now attempts one bounded, read-only kernel DRM state snapshot
+after the new source reports readiness. It saves `kernel-state-during.txt`
+and a JSON record with host monotonic sample times or the read error. This
+does not read pixels or change modes. Missing/unreadable debugfs does not
+change the source exit status, so inspect the JSON before claiming kernel
+timing evidence. The new diagnostic has passed Python compilation; its first
+20-second board/source execution is pending local PC authentication.
+
+The fresh-card source001 completed2700 flips and restoredVT2, but the receiver
+never became ready and delivered zero capture frames. Its requested VGA mode
+is not sufficient proof of receiver input. The first host-visible EDID has an
+unexplained4K preferred DTD. See the [startup diagnosis](results/2026-10-15/new-card-hdmi-startup-report.md).

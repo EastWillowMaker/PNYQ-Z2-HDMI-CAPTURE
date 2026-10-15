@@ -1,0 +1,130 @@
+{
+  "scanout": {
+    "connector": "DP-2",
+    "connector_id": 446,
+    "connection": 1,
+    "encoder_id": 0,
+    "properties": {
+      "DPMS": 3,
+      "link-status": 0,
+      "Broadcast RGB": 0,
+      "underscan": 0,
+      "max bpc": 16,
+      "Colorspace": 0,
+      "HDR_OUTPUT_METADATA": 0
+    },
+    "active": false
+  },
+  "connector_properties": {
+    "EDID": {
+      "value": 499,
+      "enums": {}
+    },
+    "DPMS": {
+      "value": 3,
+      "enums": {
+        "On": 0,
+        "Standby": 1,
+        "Suspend": 2,
+        "Off": 3
+      }
+    },
+    "link-status": {
+      "value": 0,
+      "enums": {
+        "Good": 0,
+        "Bad": 1
+      }
+    },
+    "non-desktop": {
+      "value": 0,
+      "enums": {}
+    },
+    "TILE": {
+      "value": 0,
+      "enums": {}
+    },
+    "scaling mode": {
+      "value": 0,
+      "enums": {
+        "None": 0,
+        "Full": 1,
+        "Center": 2,
+        "Full aspect": 3
+      }
+    },
+    "Broadcast RGB": {
+      "value": 0,
+      "enums": {
+        "Automatic": 0,
+        "Full": 1,
+        "Limited 16:235": 2
+      }
+    },
+    "underscan": {
+      "value": 0,
+      "enums": {
+        "off": 0,
+        "on": 1,
+        "auto": 2
+      }
+    },
+    "underscan hborder": {
+      "value": 0,
+      "enums": {}
+    },
+    "underscan vborder": {
+      "value": 0,
+      "enums": {}
+    },
+    "max bpc": {
+      "value": 16,
+      "enums": {}
+    },
+    "Colorspace": {
+      "value": 0,
+      "enums": {
+        "Default": 0,
+        "BT709_YCC": 2,
+        "opRGB": 7,
+        "BT2020_RGB": 9,
+        "BT2020_YCC": 10
+      }
+    },
+    "HDR_OUTPUT_METADATA": {
+      "value": 0,
+      "enums": {}
+    },
+    "vrr_capable": {
+      "value": 0,
+      "enums": {}
+    },
+    "Content Protection": {
+      "value": 0,
+      "enums": {
+        "Undesired": 0,
+        "Desired": 1,
+        "Enabled": 2
+      }
+    },
+    "HDCP Content Type": {
+      "value": 0,
+      "enums": {
+        "HDCP Type0": 0,
+        "HDCP Type1": 1
+      }
+    },
+    "subconnector": {
+      "value": 11,
+      "enums": {
+        "Unknown": 0,
+        "VGA": 1,
+        "DVI-D": 3,
+        "HDMI": 11,
+        "DP": 10,
+        "Wireless": 18,
+        "Native": 15
+      }
+    }
+  }
+}
