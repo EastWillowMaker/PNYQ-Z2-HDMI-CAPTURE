@@ -125,3 +125,24 @@ locally in0.97s; new probe syntax and help checked. The regression's meaningful
 red/green evidence is the actual board run above, not a mocked test. No hosted CI
 was run. Temporary prototypes remain clearly isolated under ignored
 `artifacts/debug/frame-difference/`; production code contains no debug logging.
+
+### Completed suppression run and source alternatives
+
+`m1-017-v10-dnd` completed600.196309s:1201 delivered,1148 exact,53 pixel failures,
+zero metadata/transport errors. It failed. Notifications were restored totrue
+and the backup restoration timer stopped. The board later exited its bounded
+run withdma_shutdown_safe=true and zero source/cleanup errors.
+
+An isolated10-bit GLES prototype encoded each8-bit reference valuev as10-bit4v.
+Actual packed10-bit framebuffer readback equaled the analytic values; the same
+notification regression passed15/15 real RGB888 frames with banners enabled.
+This is short-run evidence only. It was not promoted into the normal fixture
+because the user requested an independent framebuffer/KMS source instead.
+
+Direct DRM lease successfully produced XR24 scanout, but its teardown triggered
+a GNOME50.1 signal11 crash and desktop-session restart. This was a real regression
+of the experiment, not just a slow DBus response. The lease prototype is isolated
+and not a normal execution path. The restored display and crash evidence are
+recorded separately. A compiled direct-KMS source plus a bounded standalone-VT
+runner is prepared; it requires local sudo and has not been hardware-qualified.
+See [KMS source](../../kms-source.md) for the exact command, evidence and limits.

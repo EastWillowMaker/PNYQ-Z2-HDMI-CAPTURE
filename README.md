@@ -24,6 +24,10 @@ for raw evidence, startup invalid attribution, resource use, timing and limits.
 VDMA physical sequence/drop attribution is incomplete; earlier M0 failures and
 PYNQ cleanup warnings remain disclosed. Web, bypass and LCD are deferred.
 
+For a source outside GNOME composition, see the experimental
+[direct DRM/KMS source](docs/kms-source.md). Its VT hardware run is still pending;
+the failed DRM-lease prototype must not be treated as a safe desktop path.
+
 Start with the [clean-checkout-to-first-frame guide](docs/quickstart.md),
 [build guide](docs/build.md), and [current progress](docs/progress.md).
 

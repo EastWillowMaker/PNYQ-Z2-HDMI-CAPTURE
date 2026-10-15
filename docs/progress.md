@@ -1,5 +1,15 @@
 # Progress and handoff
 
+2026-10-15 21:09 Asia/Taipei — user requested HDMI source outside GNOME.
+Notification suppression failed600s (1148/1201 exact); settings restored.
+10-bit analytic GLES prototype passed15/15 with notifications but remains only
+an isolated experiment. A DRM-lease prototype produced18 page flips then crashed
+GNOME50.1 during revoke; main desktop restarted. No further lease retries.
+DP-2 restored59.940, main monitor unchanged, banners=true. Board bounded sender
+exited safely. Direct KMS C source and temporary-VT runner are built;9 source
+tests pass, active-desktop master acquisition refuses safely. Direct-VT live
+output/return remains unverified and needs local sudo. See[kms-source](kms-source.md).
+
 2026-10-15 20:44 Asia/Taipei — frame difference reproduced and isolated to a
 notification-triggered source-presentation failure mode. The first017 ten-minute
 run failed (1189/1200 exact;7 one-LSB cases and4 damaged-marker cases). Fixed-ID
