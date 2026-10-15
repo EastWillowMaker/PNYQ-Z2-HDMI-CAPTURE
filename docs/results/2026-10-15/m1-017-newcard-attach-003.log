@@ -1,0 +1,24 @@
+{"event": "source_startup", "timestamp_ns": 4378219758856, "stage": "litex_artifact_verification"}
+{"event": "source_startup", "timestamp_ns": 4378939861027, "stage": "pynq_import"}
+{"event": "source_startup", "timestamp_ns": 4378940466664, "stage": "overlay_attach"}
+{"event": "source_startup", "timestamp_ns": 4380861982827, "stage": "operator_attached_without_fpga_reload"}
+Traceback (most recent call last):
+  File "/tmp/hdmi-capture-newcard-017-v10/attached-credit-sender.py", line 23, in <module>
+    sender.main()
+  File "/tmp/hdmi-capture-newcard-017-v10/hdmi_capture/sender.py", line 339, in main
+    asyncio.run(sender.run(args.host, args.port, args.duration))
+  File "/usr/lib/python3.10/asyncio/runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 646, in run_until_complete
+    return future.result()
+  File "/tmp/hdmi-capture-newcard-017-v10/hdmi_capture/sender.py", line 192, in run
+    address = await self.start(host, port)
+  File "/tmp/hdmi-capture-newcard-017-v10/hdmi_capture/sender.py", line 175, in start
+    self.source.start()
+  File "/tmp/hdmi-capture-newcard-017-v10/hdmi_capture/sources.py", line 660, in start
+    self.hdmi.configure(self.pixel_format)
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/lib/video/hierarchies.py", line 81, in configure
+    self._hdmi.start()
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/lib/video/dvi.py", line 45, in start
+    self._capture = pynq.lib._video._capture(
+LookupError: _video._capture initialization failed [1]: No incoming video signal detected

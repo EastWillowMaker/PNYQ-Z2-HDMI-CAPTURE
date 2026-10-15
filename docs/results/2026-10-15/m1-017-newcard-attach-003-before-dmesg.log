@@ -1,0 +1,251 @@
+[    2.179189] xor: using function: arm4regs (1045 MB/sec)
+[    2.183129] Key type asymmetric registered
+[    2.185923] Asymmetric key parser 'x509' registered
+[    2.189754] io scheduler mq-deadline registered
+[    2.193021] io scheduler kyber registered
+[    2.196953] zynq-pinctrl 700.pinctrl: zynq pinctrl initialized
+[    2.204632] dma-pl330 f8003000.dmac: Loaded driver for PL330 DMAC-241330
+[    2.210062] dma-pl330 f8003000.dmac: 	DBUFF-128x8bytes Num_Chans-8 Num_Peri-4 Num_Events-16
+[    2.230341] brd: module loaded
+[    2.240726] loop: module loaded
+[    2.244253] spi_master spi0: cannot find modalias for /axi/spi@e000d000/flash@0
+[    2.250333] spi_master spi0: Failed to create SPI device for /axi/spi@e000d000/flash@0
+[    2.259846] tun: Universal TUN/TAP device driver, 1.6
+[    2.263873] CAN device driver interface
+[    2.940244] macb e000b000.ethernet eth0: Cadence GEM rev 0x00020118 at 0xe000b000 irq 36 (00:00:05:6b:01:a0)
+[    2.949151] e1000e: Intel(R) PRO/1000 Network Driver
+[    2.952871] e1000e: Copyright(c) 1999 - 2015 Intel Corporation.
+[    2.958369] ehci_hcd: USB 2.0 'Enhanced' Host Controller (EHCI) Driver
+[    2.963642] ehci-pci: EHCI PCI platform driver
+[    2.966896] usbcore: registered new interface driver cdc_acm
+[    2.971277] cdc_acm: USB Abstract Control Model driver for USB modems and ISDN adapters
+[    2.978045] usbcore: registered new interface driver cdc_wdm
+[    2.982490] usbcore: registered new interface driver usb-storage
+[    2.987305] usbcore: registered new interface driver usbserial_generic
+[    2.992593] usbserial: USB Serial support registered for generic
+[    2.997349] usbcore: registered new interface driver usb_serial_simple
+[    3.002633] usbserial: USB Serial support registered for carelink
+[    3.007455] usbserial: USB Serial support registered for zio
+[    3.011864] usbserial: USB Serial support registered for funsoft
+[    3.016604] usbserial: USB Serial support registered for flashloader
+[    3.021727] usbserial: USB Serial support registered for google
+[    3.026379] usbserial: USB Serial support registered for libtransistor
+[    3.031659] usbserial: USB Serial support registered for vivopay
+[    3.036395] usbserial: USB Serial support registered for moto_modem
+[    3.041413] usbserial: USB Serial support registered for motorola_tetra
+[    3.046760] usbserial: USB Serial support registered for novatel_gps
+[    3.051918] usbserial: USB Serial support registered for hp4x
+[    3.056396] usbserial: USB Serial support registered for suunto
+[    3.061066] usbserial: USB Serial support registered for siemens_mpi
+[    3.067080] ULPI transceiver vendor/product ID 0x0451/0x1507
+[    3.071503] Found TI TUSB1210 ULPI transceiver.
+[    3.074749] ULPI integrity check: passed.
+[    3.078110] ci_hdrc ci_hdrc.0: EHCI Host Controller
+[    3.081729] ci_hdrc ci_hdrc.0: new USB bus registered, assigned bus number 1
+[    3.116341] ci_hdrc ci_hdrc.0: USB 2.0 started, EHCI 1.00
+[    3.121450] hub 1-0:1.0: USB hub found
+[    3.123959] hub 1-0:1.0: 1 port detected
+[    3.128638] i2c_dev: i2c /dev entries driver
+[    3.132313] cdns-i2c e0004000.i2c: 100 kHz mmio e0004000 irq 30
+[    3.137555] cdns-i2c e0005000.i2c: 100 kHz mmio e0005000 irq 31
+[    3.144140] cdns-wdt f8005000.watchdog: Xilinx Watchdog Timer with timeout 10s
+[    3.151174] device-mapper: ioctl: 4.45.0-ioctl (2021-03-22) initialised: dm-devel@redhat.com
+[    3.158734] EDAC MC: ECC not enabled
+[    3.161214] Xilinx Zynq CpuIdle Driver started
+[    3.164860] sdhci: Secure Digital Host Controller Interface driver
+[    3.169794] sdhci: Copyright(c) Pierre Ossman
+[    3.172850] sdhci-pltfm: SDHCI platform and OF driver helper
+[    3.177994] ledtrig-cpu: registered to indicate activity on CPUs
+[    3.183215] clocksource: ttc_clocksource: mask: 0xffff max_cycles: 0xffff, max_idle_ns: 551318127 ns
+[    3.191211] timer #0 at (ptrval), irq=49
+[    3.194289] usbcore: registered new interface driver usbhid
+[    3.198643] usbhid: USB HID core driver
+[    3.201369] xlnk xlnk: Major 243
+[    3.203512] xlnk xlnk: xlnk driver loaded
+[    3.206263] xlnk xlnk: xlnk_pdev is not null
+[    3.212066] fpga_manager fpga0: Xilinx Zynq FPGA Manager registered
+[    3.212796] mmc0: SDHCI controller on e0100000.mmc [e0100000.mmc] using ADMA
+[    3.218871] IPVS: Registered protocols (TCP, UDP)
+[    3.226318] IPVS: Connection hash table configured (size=4096, memory=32Kbytes)
+[    3.232590] IPVS: ipvs loaded.
+[    3.234349] IPVS: [rr] scheduler registered.
+[    3.237709] Initializing XFRM netlink socket
+[    3.240846] NET: Registered PF_INET6 protocol family
+[    3.246403] Segment Routing with IPv6
+[    3.248813] In-situ OAM (IOAM) with IPv6
+[    3.251606] sit: IPv6, IPv4 and MPLS over IPv4 tunneling driver
+[    3.256856] mmc0: Problem switching card into high-speed mode!
+[    3.257125] NET: Registered PF_PACKET protocol family
+[    3.261507] mmc0: new SDXC card at address 0001
+[    3.265230] can: controller area network core
+[    3.269233] mmcblk0: mmc0:0001 SD64G 58.3 GiB 
+[    3.271600] NET: Registered PF_CAN protocol family
+[    3.277278]  mmcblk0: p1 p2
+[    3.278228] can: raw protocol
+[    3.281296] can: broadcast manager protocol
+[    3.284195] can: netlink gateway - max_hops=1
+[    3.287888] Registering SWP/SWPB emulation handler
+[    3.291647] Loading compiled-in X.509 certificates
+[    3.296246] Btrfs loaded, crc32c=crc32c-generic, zoned=no, fsverity=no
+[    3.312523] of-fpga-region fpga-full: FPGA Region probed
+[    3.317008] of_cfs_init
+[    3.318271] of_cfs_init: OK
+[    3.320013] cfg80211: Loading compiled-in X.509 certificates for regulatory database
+[    3.330339] cfg80211: Loaded X.509 cert 'sforshee: 00b28ddf47aef9cea7'
+[    3.335776] platform regulatory.0: Direct firmware load for regulatory.db failed with error -2
+[    3.343115] cfg80211: failed to load regulatory.db
+[    3.345078] clk: Not disabling unused clocks
+[    3.349575] ALSA device list:
+[    3.351238]   No soundcards found.
+[    3.405493] EXT4-fs (mmcblk0p2): mounted filesystem with ordered data mode. Opts: (null). Quota mode: disabled.
+[    3.414391] VFS: Mounted root (ext4 filesystem) on device 179:2.
+[    3.420559] devtmpfs: mounted
+[    3.425210] Freeing unused kernel image (initmem) memory: 1024K
+[    3.455966] Run /sbin/init as init process
+[    3.458792]   with arguments:
+[    3.458798]     /sbin/init
+[    3.458806]     earlyprintk
+[    3.458812]   with environment:
+[    3.458818]     HOME=/
+[    3.458824]     TERM=linux
+[    3.874954] random: fast init done
+[    4.758213] systemd[1]: System time before build time, advancing clock.
+[    4.856282] systemd[1]: Failed to find module 'autofs4'
+[    4.957940] systemd[1]: systemd 249.11-0ubuntu3 running in system mode (+PAM +AUDIT +SELINUX +APPARMOR +IMA +SMACK +SECCOMP +GCRYPT +GNUTLS -OPENSSL +ACL +BLKID +CURL +ELFUTILS -FIDO2 +IDN2 -IDN +IPTC +KMOD +LIBCRYPTSETUP -LIBFDISK +PCRE2 -PWQUALITY -P11KIT -QRENCODE +BZIP2 +LZ4 +XZ +ZLIB +ZSTD -XKBCOMMON +UTMP +SYSVINIT default-hierarchy=unified)
+[    4.988386] systemd[1]: Detected architecture arm.
+[    5.026609] systemd[1]: Hostname set to <pynq>.
+[    6.350001] systemd[1]: Queued start job for default target Multi-User System.
+[    6.358586] random: systemd: uninitialized urandom read (16 bytes read)
+[    6.369608] systemd[1]: Created slice Slice /system/modprobe.
+[    6.405318] random: systemd: uninitialized urandom read (16 bytes read)
+[    6.413809] systemd[1]: Created slice Slice /system/serial-getty.
+[    6.445386] random: systemd: uninitialized urandom read (16 bytes read)
+[    6.452967] systemd[1]: Created slice User and Session Slice.
+[    6.485963] systemd[1]: Started Dispatch Password Requests to Console Directory Watch.
+[    6.525798] systemd[1]: Started Forward Password Requests to Wall Directory Watch.
+[    6.566046] systemd[1]: Condition check resulted in Arbitrary Executable File Formats File System Automount Point being skipped.
+[    6.576821] systemd[1]: Reached target Local Encrypted Volumes.
+[    6.615920] systemd[1]: Reached target Remote File Systems.
+[    6.655412] systemd[1]: Reached target Slice Units.
+[    6.685736] systemd[1]: Reached target Local Verity Protected Volumes.
+[    6.727491] systemd[1]: Listening on Syslog Socket.
+[    6.755862] systemd[1]: Listening on initctl Compatibility Named Pipe.
+[    6.808164] systemd[1]: Condition check resulted in Journal Audit Socket being skipped.
+[    6.816281] systemd[1]: Listening on Journal Socket (/dev/log).
+[    6.856463] systemd[1]: Listening on Journal Socket.
+[    6.900829] systemd[1]: Listening on udev Control Socket.
+[    6.936351] systemd[1]: Listening on udev Kernel Socket.
+[    6.976353] systemd[1]: Condition check resulted in Huge Pages File System being skipped.
+[    6.989699] systemd[1]: Mounting POSIX Message Queue File System...
+[    7.032027] systemd[1]: Mounting Kernel Debug File System...
+[    7.066456] systemd[1]: Condition check resulted in Kernel Trace File System being skipped.
+[    7.086952] systemd[1]: Starting Journal Service...
+[    7.130119] systemd[1]: Starting Restore / save the current clock...
+[    7.183141] systemd[1]: Starting Set the console keyboard layout...
+[    7.225598] systemd[1]: Condition check resulted in Create List of Static Device Nodes being skipped.
+[    7.244624] systemd[1]: Starting Load Kernel Module configfs...
+[    7.302534] systemd[1]: Starting Load Kernel Module drm...
+[    7.363178] systemd[1]: Starting Load Kernel Module fuse...
+[    7.403322] systemd[1]: Started Nameserver information manager.
+[    7.443160] systemd[1]: Reached target Preparation for Network.
+[    7.488000] systemd[1]: Starting Load Kernel Modules...
+[    7.522367] systemd[1]: Starting Remount Root and Kernel File Systems...
+[    7.583163] systemd[1]: Starting Coldplug All udev Devices...
+[    7.629742] systemd[1]: Started Journal Service.
+[    8.222882] systemd-journald[110]: Received client request to flush runtime journal.
+[    8.294855] Adding 524284k swap on /var/swap.  Priority:-2 extents:1 across:524284k SS
+[    8.319798] systemd-journald[110]: File /var/log/journal/b4e19d1e11f24633a2f2e1fe2798cbe4/system.journal corrupted or uncleanly shut down, renaming and replacing.
+[   10.845793] zocl: loading out-of-tree module taints kernel.
+[   10.853910] [drm] Probing for xlnx,zocl
+[   10.853961] zocl-drm axi:zyxclmm_drm: IRQ index 0 not found
+[   10.929269] [drm] PR[0] Isolation addr 0x0
+[   10.978946] [drm] Initialized zocl 0.0.0  for axi:zyxclmm_drm on minor 0
+[   12.615123] random: crng init done
+[   12.615143] random: 7 urandom warning(s) missed due to ratelimiting
+[   14.665944] macb e000b000.ethernet eth0: PHY [e000b000.ethernet-ffffffff:00] driver [RTL8211E Gigabit Ethernet] (irq=POLL)
+[   14.665981] macb e000b000.ethernet eth0: configuring for phy/rgmii-id link mode
+[   17.789862] macb e000b000.ethernet eth0: Link is Up - 1Gbps/Full - flow control tx
+[   17.789938] IPv6: ADDRCONF(NETDEV_CHANGE): eth0: link becomes ready
+[   49.025096] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(305), ret: 0
+[   49.025285] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(305)
+[   49.027018] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(305), ret: 0
+[   82.749982] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(807), ret: 0
+[   82.750108] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(807)
+[   82.750829] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(807), ret: 0
+[   86.521704] fpga_manager fpga0: writing base.bin to Xilinx Zynq FPGA Manager
+[   88.710211] [drm] skip kind 29(AIE_RESOURCES) return code: -22
+[   88.710246] [drm] skip kind 8(IP_LAYOUT) return code: -22
+[   88.710260] [drm] skip kind 9(DEBUG_IP_LAYOUT) return code: -22
+[   88.710273] [drm] skip kind 25(AIE_METADATA) return code: -22
+[   88.710283] [drm] skip kind 7(CONNECTIVITY) return code: -22
+[   88.710294] [drm] found kind 6(MEM_TOPOLOGY)
+[   88.710406] [drm] Memory 0 is not reserved in device tree. Will allocate memory from CMA
+[   88.710473] [drm] Memory 1 is not reserved in device tree. Will allocate memory from CMA
+[   88.710532] [drm] Memory 2 is not reserved in device tree. Will allocate memory from CMA
+[   88.710589] [drm] Memory 3 is not reserved in device tree. Will allocate memory from CMA
+[   88.710649] [drm] Memory 4 is not reserved in device tree. Will allocate memory from CMA
+[   88.710707] [drm] zocl_xclbin_read_axlf 3c5ec091-9a62-2c70-fc5d-950f32b184f5 ret: 0
+[   88.792053] [drm] bitstream 3c5ec091-9a62-2c70-fc5d-950f32b184f5 locked, ref=1
+[   88.792114] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_add_context: Client pid(305) add context Domain(0) CU(0xffffffff) shared(true)
+[   88.792206] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_del_context: Client pid(305) del context Domain(0) CU(0xffffffff)
+[   88.792233] [drm] bitstream 3c5ec091-9a62-2c70-fc5d-950f32b184f5 unlocked, ref=0
+[   96.414467] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(305)
+[   97.133805] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(807)
+[ 1088.952599] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(2368), ret: 0
+[ 1088.952716] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(2368)
+[ 1088.953333] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(2368), ret: 0
+[ 1094.170914] fpga_manager fpga0: writing capture.bin to Xilinx Zynq FPGA Manager
+[ 1094.254889] [drm] skip kind 29(AIE_RESOURCES) return code: -22
+[ 1094.254932] [drm] skip kind 8(IP_LAYOUT) return code: -22
+[ 1094.254945] [drm] skip kind 9(DEBUG_IP_LAYOUT) return code: -22
+[ 1094.254957] [drm] skip kind 25(AIE_METADATA) return code: -22
+[ 1094.254967] [drm] skip kind 7(CONNECTIVITY) return code: -22
+[ 1094.254978] [drm] found kind 6(MEM_TOPOLOGY)
+[ 1094.255179] [drm] Memory 0 is not reserved in device tree. Will allocate memory from CMA
+[ 1094.255754] [drm] zocl_xclbin_read_axlf 5ded8172-9314-44e2-7940-cda8c5ee2938 ret: 0
+[ 1094.280545] [drm] bitstream 5ded8172-9314-44e2-7940-cda8c5ee2938 locked, ref=1
+[ 1094.280599] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_add_context: Client pid(2368) add context Domain(0) CU(0xffffffff) shared(true)
+[ 1094.280687] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_del_context: Client pid(2368) del context Domain(0) CU(0xffffffff)
+[ 1094.280714] [drm] bitstream 5ded8172-9314-44e2-7940-cda8c5ee2938 unlocked, ref=0
+[ 1156.895463] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(2368)
+[ 1513.641824] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(2989), ret: 0
+[ 1513.641937] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(2989)
+[ 1513.642544] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(2989), ret: 0
+[ 1517.538703] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(2989)
+[ 1631.032671] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(3168), ret: 0
+[ 1631.032784] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(3168)
+[ 1631.033387] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(3168), ret: 0
+[ 1634.367268] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(3168)
+[ 1694.193509] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(3275), ret: 0
+[ 1694.193618] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(3275)
+[ 1694.194212] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(3275), ret: 0
+[ 1696.327183] fpga_manager fpga0: writing capture.bin to Xilinx Zynq FPGA Manager
+[ 1696.406547] [drm] skip kind 29(AIE_RESOURCES) return code: -22
+[ 1696.406594] [drm] skip kind 8(IP_LAYOUT) return code: -22
+[ 1696.406609] [drm] skip kind 9(DEBUG_IP_LAYOUT) return code: -22
+[ 1696.406621] [drm] skip kind 25(AIE_METADATA) return code: -22
+[ 1696.406632] [drm] skip kind 7(CONNECTIVITY) return code: -22
+[ 1696.406643] [drm] found kind 6(MEM_TOPOLOGY)
+[ 1696.406758] [drm] Memory 0 is not reserved in device tree. Will allocate memory from CMA
+[ 1696.406804] [drm] zocl_xclbin_read_axlf 139b63fc-9975-f67c-7c0d-4dc25da59201 ret: 0
+[ 1696.432467] [drm] bitstream 139b63fc-9975-f67c-7c0d-4dc25da59201 locked, ref=1
+[ 1696.432522] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_add_context: Client pid(3275) add context Domain(0) CU(0xffffffff) shared(true)
+[ 1696.432614] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_del_context: Client pid(3275) del context Domain(0) CU(0xffffffff)
+[ 1696.432642] [drm] bitstream 139b63fc-9975-f67c-7c0d-4dc25da59201 unlocked, ref=0
+[ 1757.777502] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(3275)
+[ 1866.033412] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(3612), ret: 0
+[ 1866.033525] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(3612)
+[ 1866.034141] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(3612), ret: 0
+[ 1870.265378] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(3612)
+[ 1942.129653] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(3736), ret: 0
+[ 1942.129766] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(3736)
+[ 1942.130378] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(3736), ret: 0
+[ 1954.500339] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(3736)
+[ 2061.139639] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(3905), ret: 0
+[ 2061.139752] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(3905)
+[ 2061.140356] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(3905), ret: 0
+[ 2065.034809] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(3905)
+[ 2664.151625] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(4825), ret: 0
+[ 2664.151738] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(4825)
+[ 2664.152347] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(4825), ret: 0
+[ 2670.480099] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(4825)

@@ -1,5 +1,47 @@
 # Progress and handoff
 
+2026-10-16 00:37 Asia/Taipei: physical USB-C replug005 observed disconnect then
+reconnect, but PYNQ also has NEW boot1dd70e40-85cc-4c9b-a2e2-03b9814e290f,
+uptime61s and erased/tmp deployment. Asked user whether board reset/power/UART
+was also touched; no agent reboot was sent. Current FPGA stateunknown, so do
+not reuse previous boot Halted/loaded-overlay assumptions. EDID now256B,
+SHA1b05659c...c80dc, manufacturerzero/nameblank/1080p preferred, notDGL.
+No source03 or capture queued; keep sink identity guard. Saved current dmesg:
+journal unclean/corrupt and FAT dirty warnings, ext4errorcount0/16MiBhashstill
+correct. Cause of reboot/media health not established. Restored existing NIC
+profile after ifindex12→13; re-staged unchanged017/v10 via linklocal HTTP8766
+(old8765 server scope stale), all hashesmatch. New fixedboot preparation helper
+prepare-after-replug-005.py compiled/staged but NOT RUN; needs real board sudo
+auth after reboot. Await physical-action clarification before next experiment.
+Root sourceworker494498 remains idle with no request03; deadline~00:48. Details:
+results/2026-10-16/fresh-card-input-diagnosis.md and post-replug-005-* logs.
+
+2026-10-16 00:28 Asia/Taipei: attach003 also FAILED native input init, exit1;
+source90s returned normally. No frames/DMA armed. Storagebeforeafter ext4count0/
+testhashunchanged. Sourceworker003 is now running with cached local privilege,
+rootPID494498, deadline hostmonotonic272337.54 (~00:48); keep its window open.
+Used second slot for60s native-init004: independentMMIOobserves lock1 and VTC
+enabled0xa, but no valid input; native5s constructor fails. Nativecounter1018
+was already frozen before childcall, so do not blame HPD/nativecall as proved.
+All source modes stillrequestedVGA; actualEDIDdifferenceunresolved. Helpers have
+not fixed capture. Docs/results/2026-10-16/fresh-card-input-diagnosis.md preserves
+findings; failedattach003 rawresults remain in2026-10-15. Asked physicalPCUSB-C
+adapter replug; watcher session59292 logs artifacts/operator/usb-replug-005,
+await disconnect/reconnect. No request03 queued and no sender currently active.
+After Done: inspect watcher/EDID/connector identity, verify current Halted before
+any new load, then use remaining sourceworker slots without another PCsudo if
+still alive. Never weaken geometry/pixel/integrity checks to force a pass.
+
+2026-10-16 00:14 Asia/Taipei: user requested retry again. No source-session
+ready/run outputs exist, no sender is running, and the previous auth window
+has ended. Fresh board sudo-n-v requires a password. Reopened one local
+terminal PYNQ retry - board then PC using retry-kms-source-session.sh: board
+sudo-v/miniterm exit, immediate noninteractive verification, then local PCsudo
+and the existing bounded source worker. The queued90s run and coordinator
+session82445 remain pending; no hardware capture has started. Do not contend
+UART while the operator miniterm is open. Evidence:
+artifacts/operator/new-card-attach-003-retry-preflight.log.
+
 Timing002 completed:75 source flips, exit0, originalVT restored. Kernel DRM
 snapshot now captured successfully: test planeXR24/640x480, CRTC mode25200kHz/
 800x525 totals; no adjusted_mode field or physical wire-format proof. Actual

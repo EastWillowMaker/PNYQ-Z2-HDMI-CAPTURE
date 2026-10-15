@@ -1,0 +1,24 @@
+
+[?2004l[?2004hxilinx@pynq:~$ printf "PL_STATE\n"; cat /sys/class/fpga_manager/fpga0/state; printf "ROOT_ERRORS\n"; cat /sys/fs/ext4/mmcblk0p2/errors_count; printf "ROOT_MOUNT\n"; findmnt -n -o SOURCE,FSTYPE,OPTIONS /; printf "BOOT_ID\n"; cat /proc/sys/kernel/random/boot_id; printf "REBOOT_CAUSE\n"; dmesg | head -n 10; printf "\nCONSOLE_DONE_c3478c709683461a8ab5b05b5bd15409:%s\n" "$?"
+[?2004lPL_STATE
+unknown
+ROOT_ERRORS
+0
+ROOT_MOUNT
+/dev/mmcblk0p2 ext4   rw,relatime
+BOOT_ID
+1dd70e40-85cc-4c9b-a2e2-03b9814e290f
+REBOOT_CAUSE
+[    0.000000] L2C-310 ID prefetch enabled, offset 1 lines
+[    0.000000] L2C-310 dynamic clock gating enabled, standby mode enabled
+[    0.000000] L2C-310 cache controller enabled, 8 ways, 512 kB
+[    0.000000] L2C-310: CACHE_ID 0x410000c8, AUX_CTRL 0x76760001
+[    0.000000] random: get_random_bytes called from start_kernel+0x364/0x5f8 with crng_init=0
+[    0.000000] zynq_clock_init: clkc starts at (ptrval)
+[    0.000000] Zynq clock init
+[    0.000001] sched_clock: 64 bits at 162MHz, resolution 6ns, wraps every 4398046511101ns
+[    0.000030] clocksource: arm_global_timer: mask: 0xffffffffffffffff max_cycles: 0x257a3bfb55, max_idle_ns: 440795207830 ns
+[    0.000071] Switching to timer-based delay loop, resolution 6ns
+
+CONSOLE_DONE_c3478c709683461a8ab5b05b5bd15409:0
+[?2004hxilinx@pynq:~$ 

@@ -5,7 +5,8 @@ Goal: compare loading017 after KMS readiness with attaching the already-loaded
 single-credit ownership, TCP framing, and halt-before-free policy. This is an
 operator experiment; production sender/adapter code is unchanged at c81e819.
 Recommended reading order: dispatch and load ownership, startup checks, native
-DMA/cleanup, then the local source worker. Hardware attach003 is NOT RUN.
+DMA/cleanup, then the local source worker. Hardware attach003 has now run and failed frontend initialization; see
+../2026-10-16/fresh-card-input-diagnosis.md for actual results.
 
 ## Call and state map
 
@@ -79,9 +80,15 @@ duration, duration721, negative ID, extra command key (five parser cases total),
 and unprivileged worker execution rejection. These validate request routing,
 not root runtime, display restoration or hardware capture. The20-second source
 probe has separate real root/VT/read-only kernel snapshot and native-sync
-results. Root worker normal/signal/error paths and attach003 remain unexecuted.
+results. Root worker normal execution and VT restoration passed two runs (90s/60s).
+Attach003 executed without FPGA reload but failed frontend initialization,
+with no capture frames or DMA allocation. Its original null cleanup report
+is preserved separately from later previous-boot Halted evidence. Worker
+signal/error/expiry paths remain unverified.
 Existing host-only timeout SIGKILL in the VT runner is not board DMA cleanup.
-No hosted CI, full software suite or physical unplug/mode-change test was run.
+No hosted CI, full software suite or input-mode-change test was run. A later
+physical USB-C replug also coincided with a changed board boot; it is not a
+controlled capture interruption/recovery pass.
 
 Graph coverage at2026-10-15T15:59:17Z reported no recorded gaps for sender.py,
 sources.py and run_kms_vt.py. Operator/deploy files are excluded; full source was

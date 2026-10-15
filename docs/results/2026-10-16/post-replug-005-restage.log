@@ -1,0 +1,29 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-newcard-017-v10$ cd /tmp/hdmi-capture-newcard-017-v10 && curl -g --noproxy "*" --fail --max-time 20 "http://[fe80::560f:ee4c:ed84:e6ce%eth0]:8766/sender-m1-v10.tar.gz" -o sender-m1-v10.tar.gz && curl -g --noproxy "*" --fail --max-time 20 "http://[fe80::560f:ee4c:ed84:e6ce%eth0]:8766/overlay-m1-017.tar.gz" -o overlay-m1-017.tar.gz && printf "%s\n" "8c716223f7928571a3704eb049e3827045c85168081f99b186b1009b24c298ae  sender-m1-v10.tar.gz" "15a5301661f5f67fbbff075d95e2af3729522a4a6c4bab967b3692d00061883c  overlay-m1-017.tar.gz" | sha256sum -c - && tar -xzf sender-m1-v10.tar.gz && tar -xzf overlay-m1-017.tar.gz && curl -g --noproxy "*" --fail --max-time 20 "http://[fe80::560f:ee4c:ed84:e6ce%eth0]:8766/prepare-after-replug-005.py" -o prepare-after-replug-005.py && sha256sum overlay-017/capture.bit overlay-017/capture.hwh prepare-after-replug-005.py; printf "\nCONSOLE_DONE_6350901e09a147759f0747b6cb5e44f4:%s\n" "$?"
+[?2004l  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100 19650  100 19650    0     0  3699k      0 --:--:-- --:--:-- --:--:-- 4797k
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100  389k  100  389k    0     0  21.5M      0 --:--:-- --:--:-- --:--:-- 22.3M
+sender-m1-v10.tar.gz: OK
+overlay-m1-017.tar.gz: OK
+tar: hdmi_capture/__init__.py: time stamp 2026-10-14 16:13:16.7008255 is 125596441.864888826 s in the future
+tar: hdmi_capture/__main__.py: time stamp 2026-10-14 16:13:16.7008255 is 125596441.864120174 s in the future
+tar: hdmi_capture/cli.py: time stamp 2026-10-14 16:20:31.1484249 is 125596876.311040165 s in the future
+tar: hdmi_capture/client.py: time stamp 2026-10-14 18:12:39.8601966 is 125603605.022170701 s in the future
+tar: hdmi_capture/protocol.py: time stamp 2026-10-14 16:16:12.4938903 is 125596617.655039638 s in the future
+tar: hdmi_capture/sender.py: time stamp 2026-10-15 01:12:56.2216585 is 125628821.381891075 s in the future
+tar: hdmi_capture/sources.py: time stamp 2026-10-15 01:02:29.7075162 is 125628194.866348843 s in the future
+tar: overlay-017/capture.bit: time stamp 2026-10-15 12:23:48 is 125669072.986074582 s in the future
+tar: overlay-017/capture.hwh: time stamp 2026-10-15 12:16:10 is 125668614.965163942 s in the future
+tar: overlay-017/build-manifest.json: time stamp 2026-10-15 12:23:59 is 125669083.964332391 s in the future
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100  2045  100  2045    0     0   149k      0 --:--:-- --:--:-- --:--:--  166k
+dbcfa96f370ade0655e08c610903e34af08535649b8d9363be4ac590b00cdf1b  overlay-017/capture.bit
+99563e23f95ca7dba525ca2132df2e8b75ce73e3e528fffebb86639549614b2e  overlay-017/capture.hwh
+c1563a633d024f72fa72ccb24f5cd96ade0ae81227e1e081d3e28b200d27b9a2  prepare-after-replug-005.py
+
+CONSOLE_DONE_6350901e09a147759f0747b6cb5e44f4:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-newcard-017-v10$ 

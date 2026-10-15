@@ -1,0 +1,8 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-newcard-017-v10$ printf "SENDER_PROCESSES\n"; pgrep -af "[a]ttached-credit-sender|[n]ew-card-attach-session|[h]dmi_capture.sender"; sudo -n -v; printf "NATIVE_LIB\n"; find /usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/lib -maxdepth 1 -name "*_video*" -printf "%f\n"; printf "\nCONSOLE_DONE_09091c258a9948c2bba4324224a7e2e3:%s\n" "$?"
+[?2004lSENDER_PROCESSES
+NATIVE_LIB
+_video.cpython-310-arm-linux-gnueabihf.so
+
+CONSOLE_DONE_09091c258a9948c2bba4324224a7e2e3:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-newcard-017-v10$ 

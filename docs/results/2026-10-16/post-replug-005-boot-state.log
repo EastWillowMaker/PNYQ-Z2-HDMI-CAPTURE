@@ -1,0 +1,36 @@
+
+[?2004l[?2004hxilinx@pynq:~$ date -Iseconds; uptime; cat /proc/uptime; ls -ld /tmp/hdmi-capture-newcard-017-v10; ls /sys/class/fpga_manager/fpga0; cat /sys/class/fpga_manager/fpga0/state; cat /sys/class/mmc_host/mmc0/mmc0:*/cid; last -x reboot | head -n 4; dmesg | tail -n 20; printf "\nCONSOLE_DONE_286496895c1348aab3c0a678c7b427f0:%s\n" "$?"
+[?2004l2022-10-22T00:17:54+00:00
+ 00:17:54 up 1 min,  1 user,  load average: 2.36, 0.73, 0.26
+61.30 14.40
+ls: cannot access '/tmp/hdmi-capture-newcard-017-v10': No such file or directory
+device    flags  name     power  status     uevent
+firmware  key    of_node  state  subsystem
+unknown
+9f544953443634476194980972018200
+reboot   system boot  5.15.19-xilinx-v Sat Oct 22 00:16   still running
+reboot   system boot  5.15.19-xilinx-v Fri Oct 21 23:18   still running
+reboot   system boot  5.15.19-xilinx-v Fri Oct 21 23:06 - 23:18  (00:11)
+
+[    8.227392] Adding 524284k swap on /var/swap.  Priority:-2 extents:1 across:524284k SS
+[    8.274285] systemd-journald[110]: Received client request to flush runtime journal.
+[    8.354596] systemd-journald[110]: File /var/log/journal/b4e19d1e11f24633a2f2e1fe2798cbe4/system.journal corrupted or uncleanly shut down, renaming and replacing.
+[    9.070315] systemd-journald[110]: Failed to read journal file /var/log/journal/b4e19d1e11f24633a2f2e1fe2798cbe4/user-1000.journal for rotation, trying to move it out of the way: Text file busy
+[   11.254068] zocl: loading out-of-tree module taints kernel.
+[   11.262938] [drm] Probing for xlnx,zocl
+[   11.262987] zocl-drm axi:zyxclmm_drm: IRQ index 0 not found
+[   11.317184] [drm] PR[0] Isolation addr 0x0
+[   11.319766] [drm] Initialized zocl 0.0.0  for axi:zyxclmm_drm on minor 0
+[   12.715215] random: crng init done
+[   12.715234] random: 7 urandom warning(s) missed due to ratelimiting
+[   15.228569] FAT-fs (mmcblk0p1): Volume was not properly unmounted. Some data may be corrupt. Please run fsck.
+[   15.724517] macb e000b000.ethernet eth0: PHY [e000b000.ethernet-ffffffff:00] driver [RTL8211E Gigabit Ethernet] (irq=POLL)
+[   15.724569] macb e000b000.ethernet eth0: configuring for phy/rgmii-id link mode
+[   18.827709] macb e000b000.ethernet eth0: Link is Up - 1Gbps/Full - flow control tx
+[   18.827773] IPv6: ADDRCONF(NETDEV_CHANGE): eth0: link becomes ready
+[   45.390261] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(317), ret: 0
+[   45.390429] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(317)
+[   45.391239] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(317), ret: 0
+[   48.367963] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(317)
+
+CONSOLE_DONE_286496895c1348aab3c0a678c7b427f0:0
