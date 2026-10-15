@@ -8,6 +8,7 @@ import shutil
 from pathlib import Path
 import subprocess
 from build_edid import make_vga_edid, self_test
+from check_hls_drain import check as check_hls_drain
 
 ROOT = Path(__file__).resolve().parents[1]
 PIN = '93ddd21ab623883590a8c8b07f0b157b2855da4b'
@@ -146,7 +147,16 @@ def main():
         hls.mkdir(exist_ok=True)
         shutil.copytree(vendor / 'boards/ip/hls' / ip, hls / ip,
                         ignore=shutil.ignore_patterns('solution1', '.autopilot', '*.log'))
+        if ip == 'color_convert':
+            source = hls / ip / f'{ip}.cpp'
+            original = source.read_text()
+            anchor = '#pragma HLS pipeline II=1'
+            if original.count(anchor) != 1:
+                raise RuntimeError('Pinned color pipeline pragma changed')
+            # Isolated selected frames must drain without a following pixel.
+            source.write_text(original.replace(anchor, anchor + ' style=flp'))
         run([args.vitis_run, '--mode', 'hls', '--tcl', f'{ip}/script.tcl'], cwd=hls)
+    check_hls_drain(output / 'hls')
     if args.stage == 'hls':
         return
     gateware = output / 'litex_capture.v'

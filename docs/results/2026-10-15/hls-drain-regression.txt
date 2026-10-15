@@ -1,0 +1,30 @@
+BEFORE: python3 scripts/check_hls_drain.py artifacts/m1-project-016/hls
+Exit1
+DRAIN input=32 color_pixels=27 packed_words=18 color_eol=3 packed_eol=3
+FATAL: /home/eastwillow/Documents/litex-hdmi-capture/hardware/hls_drain_tb.v:109: Isolated whole frame did not drain
+       Time: 1974000  Scope: hls_drain_tb
+Traceback (most recent call last):
+  File "/home/eastwillow/Documents/litex-hdmi-capture/scripts/check_hls_drain.py", line 43, in <module>
+    main()
+    ~~~~^^
+  File "/home/eastwillow/Documents/litex-hdmi-capture/scripts/check_hls_drain.py", line 39, in main
+    check(parser.parse_args().hls_root.resolve())
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eastwillow/Documents/litex-hdmi-capture/scripts/check_hls_drain.py", line 33, in check
+    subprocess.run(['vvp', str(executable)], check=True, timeout=120)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['vvp', '/tmp/hdmi-hls-drain-a26tveiq/drain.vvp']' returned non-zero exit status 1.
+
+AFTER: automatic build017 pre-CAD generated-RTL check
+Exit0; four cases
+DRAIN input=32 color_pixels=32 packed_words=24 color_eol=4 packed_eol=4
+PASS 8x4 input_stall=0 output_stall=0
+DRAIN input=32 color_pixels=32 packed_words=24 color_eol=4 packed_eol=4
+PASS 8x4 input_stall=1 output_stall=1
+DRAIN input=307200 color_pixels=307200 packed_words=230400 color_eol=480 packed_eol=480
+PASS 640x480 input_stall=0 output_stall=0
+DRAIN input=307200 color_pixels=307200 packed_words=230400 color_eol=480 packed_eol=480
+PASS 640x480 input_stall=1 output_stall=1

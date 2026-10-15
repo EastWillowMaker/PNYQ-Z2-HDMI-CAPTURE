@@ -42,6 +42,17 @@ coefficients/interfaces and pixel packing, and require the generated RTL drain
 test before CAD. Original vendor checkout and prior evidence stay preserved.
 Physical behavior of that change remains unverified.
 
+The durable generated-RTL regression now rejects original016 with exit1 at
+27/32 color pixels. Fresh build017 changes only the copied color pipeline
+pragma to style=flp; its four pre-CAD cases all pass:8x4 and640x480, each with
+and without input bubbles/output backpressure. Identity coefficients are written
+through the actual AXI-Lite interface; every color pixel, packed byte, SOF/EOL
+and stalled-output stability is checked. VGA drains307200 pixels/230400 words/
+480EOL with no following input. Missing synthesized modules also reject.
+See hls-drain-regression.txt and hls-drain-source-hashes.json. The ordinary
+software suite remains308passed/1optional skip in3.24s; no hosted CI was run.
+CAD and physical tests for017 remain pending at this checkpoint.
+
 Probe: artifacts/build-probe/hls-drain-016/{tb.v,isolated.log,extra.log,pack-only.log}.
 The isolated test exits1; pack-only exits0. Source artifacts are from016,
 not a hand-written model of the HLS implementation.

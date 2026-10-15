@@ -204,3 +204,32 @@ next-SOF closure; it never substitutes manual stop. Existing legacy paths retain
 their original semantics. The latest broad test run was300passed/1optional skip
 before this legacy-field guard correction; the corrected19manifest and5source
 mode tests pass. New bitstream and physical correctness remain pending.
+
+## Isolated-frame HLS drain requirement
+
+Build016/v10 reached real HDMI but again timed out with one completed gate
+credit and no DMA completion. The generated color_convert RTL retained five
+pixels after the final input, as reproduced independently of the VDMA with the
+actual HLS pair. Continuous legacy input masks that defect by advancing the
+pipeline with the next source frame. A gate DONE only establishes transfer to
+the converter and therefore cannot substitute for native DMA completion.
+
+The build now changes only the isolated pinned color_convert C++ copy from
+`pipeline II=1` to `pipeline II=1 style=flp`. The converter keeps its matrix,
+register map and AXIS interfaces; pixel_pack and source acceptance stay intact.
+The new `scripts/check_hls_drain.py` requires Icarus (`iverilog` and `vvp`) and
+simulates both actual generated HLS modules before Vivado project generation.
+It writes the identity matrix over AXI-Lite, checks every color pixel and packed
+byte plus SOF/EOL, and requires full drain without any following input. Small
+and640x480 isolated frames run with and without input bubbles/output backpressure;
+output must remain stable while stalled. Missing modules, simulation failures
+and timeouts reject the build. Other packing modes, nonidentity coefficient
+matrices and malformed HLS input are unverified by this particular test; the
+separate gate tests cover malformed geometry before these HLS blocks.
+
+Before the change the32-pixel regression fails at27 converter pixels; source
+pixels and boundaries already transferred by the gate stay stranded downstream.
+After the change, only generated-RTL test results may establish drain behavior;
+physical exactRGB and automatic DMA halt still require board execution. No
+manual-stop completion, weakened DMA proof or new data dummy frame is allowed.
+See [before/after evidence](results/2026-10-15/credit-016-hls-drain.md).

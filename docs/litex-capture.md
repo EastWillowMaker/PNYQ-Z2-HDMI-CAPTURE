@@ -1,8 +1,11 @@
 # LiteX frame capture boundary
 
-Date: 2026-10-15. Evidence: Migen handshake simulation and compiled generated
-Verilog simulation. This component has not been synthesized, timed, programmed,
-or measured on PYNQ-Z2. It does not satisfy the M1 ten-minute/600-frame criterion.
+Date: 2026-10-15. Builds014 and016 synthesized, timed and loaded this credit
+interface on PYNQ-Z2. Both selected and closed a real HDMI frame, but neither
+completed downstream DMA or delivered RGB. Generated-HLS simulation now exposes
+a five-pixel color-conversion tail stall; build017 tests a flushable repair.
+See [physical evidence](results/2026-10-15/credit-016-hls-drain.md).
+M1's ten-minute/600-frame criterion remains incomplete for this interface.
 
 ## Current single-credit interface
 
@@ -101,7 +104,7 @@ an artifact with this interface.
 ## Placement and format
 
 `gateware/capture.py` implements a real `LiteXModule` with LiteX stream endpoints.
-The proposed PYNQ seam is `frontend/video_out -> litex_capture ->
+The implemented PYNQ seam is `frontend/video_out -> litex_capture ->
 color_convert/stream_in_24`, all on the existing video AXIS clock. The frontend
 provides one 24-bit pixel per transfer; these bytes are passed unchanged.
 The existing PYNQ path uses BGR channel order. This block does not establish RGB
@@ -111,7 +114,8 @@ must reorder BGR to the API's RGB888 representation without gamma/range changes.
 The initial suggestion to place this 24-bit block after `pixel_pack` cannot be
 used if packing changes the stream width or pixel-per-transfer relationship.
 The approved seam precedes that packing and conversion. Exact installed-overlay
-IP versions, interface widths and clock connections still require build validation.
+IP versions, interface widths and clock connections are retained in each build's
+paired HWH and source snapshot; runtime correctness needs separate qualification.
 
 `s_axis_tuser`/`m_axis_tuser` are one-bit **start-of-frame** signals;
 `s_axis_tlast`/`m_axis_tlast` are **end-of-line**, never end-of-frame. The fixed
