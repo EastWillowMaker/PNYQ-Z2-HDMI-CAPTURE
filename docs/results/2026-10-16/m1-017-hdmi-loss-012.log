@@ -1,0 +1,23 @@
+{"event": "source_startup", "timestamp_ns": 3140501339790, "stage": "litex_artifact_verification"}
+{"event": "source_startup", "timestamp_ns": 3141252262207, "stage": "pynq_import"}
+{"event": "source_startup", "timestamp_ns": 3141252851204, "stage": "overlay_attach"}
+{"event": "source_startup", "timestamp_ns": 3143275754813, "stage": "operator_attached_without_fpga_reload"}
+{"event": "source_startup", "timestamp_ns": 3144352117070, "stage": "credit_source_ready", "counters": {"enabled": false, "observed_frames": 4626, "selected_frames": 0, "completed_frames": 4623, "dropped_frames": 4626, "invalid_frames": 4, "snapshot_begin_ns": 3144343606670, "snapshot_end_ns": 3144343822541, "timestamp_clock": "board_monotonic", "snapshot_atomic": false, "sample_point": "before_first_credit_while_gate_disabled_dma_halted", "counter_bits": 32, "frontend_overflow_episodes": 0, "native_vsync_edges": 4627, "overflow_units": "assertion_episodes_not_lost_frames", "frontend_underflow_episodes": 0}}
+{"listening": ["::", 9022, 0, 0], "source": "hdmi", "session_id": "a08f2b53-7f91-4697-bbb5-8410a9b12999"}
+Fatal Python error: Bus error
+
+Current thread 0xb6f0b020 (most recent call first):
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/lib/video/dvi.py", line 62 in mode
+  File "/tmp/hdmi-capture-newcard-017-v10/hdmi_capture/sources.py", line 711 in _healthy
+  File "/tmp/hdmi-capture-newcard-017-v10/hdmi_capture/sources.py", line 745 in idle
+  File "/tmp/hdmi-capture-newcard-017-v10/hdmi_capture/sources.py", line 731 in _wait
+  File "/tmp/hdmi-capture-newcard-017-v10/hdmi_capture/sources.py", line 748 in read
+  File "/usr/lib/python3.10/asyncio/events.py", line 80 in _run
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1896 in _run_once
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 600 in run_forever
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 633 in run_until_complete
+  File "/usr/lib/python3.10/asyncio/runners.py", line 44 in run
+  File "/tmp/hdmi-capture-newcard-017-v10/hdmi_capture/sender.py", line 355 in main
+  File "/tmp/hdmi-capture-newcard-017-v10/attached-credit-sender.py", line 23 in <module>
+
+Extension modules: numpy.core._multiarray_umath, numpy.core._multiarray_tests, numpy.linalg.lapack_lite, numpy.linalg._umath_linalg, numpy.fft._pocketfft_internal, numpy.random._common, numpy.random.bit_generator, numpy.random._bounded_integers, numpy.random._mt19937, numpy.random.mtrand, numpy.random._philox, numpy.random._pcg64, numpy.random._sfc64, numpy.random._generator, zmq.libzmq, zmq.backend.cython.context, zmq.backend.cython.message, zmq.backend.cython.socket, zmq.backend.cython._device, zmq.backend.cython._poll, zmq.backend.cython._proxy_steerable, zmq.backend.cython._version, zmq.backend.cython.error, zmq.backend.cython.utils, tornado.speedups, psutil._psutil_linux, psutil._psutil_posix, _cffi_backend (total: 28)

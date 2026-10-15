@@ -1,0 +1,19 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-newcard-017-v10$ test ! -e /tmp/hdmi-capture-newcard-017-v12 && mkdir /tmp/hdmi-capture-newcard-017-v12 && cd /tmp/hdmi-capture-newcard-017-v12 && curl -sS -g --noproxy '*' --fail --max-time 20 'http://[fe80::560f:ee4c:ed84:e6ce%eth0]:8766/sender-m1-v12.tar.gz' -o sender-m1-v12.tar.gz && printf '%s\n' '837ca5b0b115f79bc66919a67a368a83477397061c5f0cb44dfd583a98bc1284  sender-m1-v12.tar.gz' | sha256sum -c - && curl -sS -g --noproxy '*' --fail --max-time 20 'http://[fe80::560f:ee4c:ed84:e6ce%eth0]:8766/prepare-hdmi-loss-013.py' -o prepare-hdmi-loss-013.py && printf '%s\n' 'eebc24059ffbda40841bd0581d47c4b8c6f96e015f3cc49e94b9834494505a3e  prepare-hdmi-loss-013.py' | sha256sum -c - && curl -sS -g --noproxy '*' --fail --max-time 20 'http://[fe80::560f:ee4c:ed84:e6ce%eth0]:8766/hdmi-loss-session-013.py' -o hdmi-loss-session-013.py && printf '%s\n' '5b313121635fc7997c6a9c80ea8a0df81fee68e309566ff2be082fb4116252d9  hdmi-loss-session-013.py' | sha256sum -c - && tar -xzf sender-m1-v12.tar.gz && cp -a /tmp/hdmi-capture-newcard-017-v10/overlay-017 . && cp /tmp/hdmi-capture-newcard-017-v10/attached-credit-sender.py /tmp/hdmi-capture-newcard-017-v10/board-resources-017.py . && sha256sum hdmi_capture/sources.py hdmi_capture/sender.py overlay-017/capture.bit overlay-017/capture.hwh; printf "\nCONSOLE_DONE_5238893832c54caebbe4a3f6c4b3d89c:%s\n" "$?"
+[?2004lsender-m1-v12.tar.gz: OK
+prepare-hdmi-loss-013.py: OK
+hdmi-loss-session-013.py: OK
+tar: hdmi_capture/__init__.py: time stamp 2026-10-14 16:13:16.7008255 is 125588676.049366521 s in the future
+tar: hdmi_capture/__main__.py: time stamp 2026-10-14 16:13:16.7008255 is 125588676.048616921 s in the future
+tar: hdmi_capture/cli.py: time stamp 2026-10-14 16:20:31.1484249 is 125589110.495548001 s in the future
+tar: hdmi_capture/client.py: time stamp 2026-10-14 18:12:39.8601966 is 125595839.206800907 s in the future
+tar: hdmi_capture/protocol.py: time stamp 2026-10-14 16:16:12.4938903 is 125588851.839790952 s in the future
+tar: hdmi_capture/sender.py: time stamp 2026-10-15 17:00:10.628226 is 125677889.973221058 s in the future
+tar: hdmi_capture/sources.py: time stamp 2026-10-15 17:35:45.5829692 is 125680024.926570695 s in the future
+babad497c165b84a5cbccc8a8112316752a3b46002a9023c5be6ec3b26726926  hdmi_capture/sources.py
+b821579af0d65178535a3424f1d04ca66e7dd6c6b61db37c4501e505108c42d0  hdmi_capture/sender.py
+dbcfa96f370ade0655e08c610903e34af08535649b8d9363be4ac590b00cdf1b  overlay-017/capture.bit
+99563e23f95ca7dba525ca2132df2e8b75ce73e3e528fffebb86639549614b2e  overlay-017/capture.hwh
+
+CONSOLE_DONE_5238893832c54caebbe4a3f6c4b3d89c:0
+

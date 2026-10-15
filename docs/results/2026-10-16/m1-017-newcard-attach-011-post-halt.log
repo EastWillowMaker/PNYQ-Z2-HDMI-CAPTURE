@@ -1,0 +1,8 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-newcard-017-v10$ cd /tmp/hdmi-capture-newcard-017-v10 && sudo -n -v && sudo -n env XILINX_XRT=/usr PYTHONPATH=/tmp/hdmi-capture-newcard-017-v10 /usr/local/share/pynq-venv/bin/python -c 'from hdmi_capture.sources import LiteXCreditSource;import pynq,json;s=LiteXCreditSource('"'"'overlay-017/capture.bit'"'"','"'"'overlay-017/build-manifest.json'"'"');s.load_overlay(download=False);v=s.overlay.ip_dict['"'"'video/axi_vdma'"'"'];m=pynq.MMIO(v['"'"'phys_addr'"'"'],v['"'"'addr_range'"'"']);cr=m.read(48);sr=m.read(52);command=s.control.registers['"'"'capture_control'"'"'].read(0);assert cr&1==0 and sr&1==1 and command==0;print(json.dumps(dict(event='"'"'independent_after_capture_halted'"'"',cr=hex(cr),sr=hex(sr),command=command)))' && cat /proc/sys/kernel/random/boot_id && cat /sys/fs/ext4/mmcblk0p2/errors_count; printf "\nCONSOLE_DONE_4ebeb60bd6b8456a8bcb138d1eba189d:%s\n" "$?"
+[?2004lTraceback (most recent call last):
+  File "<string>", line 1, in <module>
+AssertionError
+
+CONSOLE_DONE_4ebeb60bd6b8456a8bcb138d1eba189d:1
+[?2004hxilinx@pynq:/tmp/hdmi-capture-newcard-017-v10$ 

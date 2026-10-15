@@ -1,5 +1,25 @@
 # Progress and handoff
 
+2026-10-16T01:38:01+08:00:011 NORMAL600s PASS;012 HDMI LOSS FAIL.
+011 received1201 exact distinct frames/600.368226s/2.000439FPS, allmetadata and
+source-ID correlation passed. Senderexit0/DMAcleanuptrue, independent raw halt
+confirmed; storageafterpass. FullM1false. Source008/run04 exit0/VTrestored.
+012 user CONFIRMED HDMI-only unplug/replug5s, Hub/Micro-B untouched.88 exact
+frames then sender SIGBUS(-7) in native VTC mode via _healthy; kernel external
+abort. Sourcechildexit1, misleading outerworker0, VTrestored. Storagehealthy.
+Emergency fixed-clock halt PASS RS0/Halted1/gateoff; no source/sender active.
+Currentboot1dd70e40. v12 fix removes runtime native VTC read only; startup mode
+checks and LiteX geometry/FIFO/sequence/VDMA checks remain.5-case red regression
+then focused93pass/fullhost312pass1skip; adding isolated counter guards.
+v12 source/archive staged and hashes matched; privileged013 preparation PENDING.
+Both board and PC sudo now require local auth.013 fusedwizard prepared at
+artifacts/operator/run-hdmi-loss-013.sh; fixed900s rootwaiter prevents boardauth
+expiry between prepare and KMS ready. Source120s; manualHDMI-only at45s/5s.
+Do not contend UART while userauthwindow active.316hostpass1skip,45RTLpass.
+Coordinator not started yet. No new overlay or DMA since raw012 safe stop.
+Report results/2026-10-16/capture-011-loss-012-report.md; raw011/012 preserved.
+No forced kill/reload while DMA unsafe; current raw recovery did prove safe.
+
 2026-10-16T01:06:38+08:00:010 HARDWARE SHORT PASS.
 Same smoke→immediate reconnect, no sleep/retry:21/21exactdistinctframes in
 10.395406s/2.020123FPS, pixel/metadata/transporterrors0/accounting21validated.

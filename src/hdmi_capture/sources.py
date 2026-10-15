@@ -702,13 +702,16 @@ class LiteXCreditSource(LiteXSource):
             raise SourceError("Single-credit command/source-sequence fault")
 
     def _healthy(self):
-        # Preserve the actual diagnostic snapshot even when mode/identity rejects
+        # Preserve the actual diagnostic snapshot even when identity rejects
         # the source. A failed read must not leave an older clean snapshot behind.
         self.integrity_previous = None
         try:
             current = self.control.snapshot()
             self.integrity_previous = current
-            self._check_mode(self.hdmi.frontend.mode)
+            # VTC registers require the HDMI pixel clock even with an independent
+            # AXI clock (PG016). Loss of that clock can cause SIGBUS, not a Python
+            # exception. Startup checks mode before allocation; runtime uses the
+            # fixed-clock gate geometry, FIFO and native-sequence fault signals.
             identity = self.control.identity()
             if identity is None:
                 return None

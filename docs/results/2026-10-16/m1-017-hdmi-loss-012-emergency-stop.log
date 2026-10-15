@@ -1,0 +1,11 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-newcard-017-v10$ cd /tmp/hdmi-capture-newcard-017-v10 && sudo -n -v && curl -g --noproxy "*" --fail --max-time 15 "http://[fe80::560f:ee4c:ed84:e6ce%eth0]:8766/stop-after-loss-012.py" -o stop-after-loss-012.py && printf "%s\n" 'b832c551a0ae71317fc35419390bff2bcb3a769253bffc9dd89c42ced4e59f8f  stop-after-loss-012.py' | sha256sum -c - && sudo -n env XILINX_XRT=/usr PYTHONPATH=/tmp/hdmi-capture-newcard-017-v10 /usr/local/share/pynq-venv/bin/python -u stop-after-loss-012.py; printf "\nCONSOLE_DONE_f773f762553d4928955d178418500f2b:%s\n" "$?"
+[?2004l  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   985  100   985    0     0   222k      0 --:--:-- --:--:-- --:--:--  320k
+stop-after-loss-012.py: OK
+{"event": "before_emergency_raw_stop", "cr": "0x15010", "sr": "0x11001", "command": "0x1"}
+{"event": "raw_stop_verified", "cr": "0x15010", "sr": "0x11001", "command": "0x0", "new_buffers_allocated": 0}
+
+CONSOLE_DONE_f773f762553d4928955d178418500f2b:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-newcard-017-v10$ 

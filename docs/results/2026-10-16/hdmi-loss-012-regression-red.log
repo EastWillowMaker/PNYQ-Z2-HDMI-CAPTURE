@@ -1,0 +1,143 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+__________ test_credit_input_clock_loss_never_reads_native_vtc[idle] ___________
+tests/test_sources.py:997: in test_credit_input_clock_loss_never_reads_native_vtc
+    asyncio.run(run())
+../../.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/asyncio/runners.py:195: in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/asyncio/runners.py:118: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/asyncio/base_events.py:691: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+tests/test_sources.py:988: in run
+    await source.read()
+src/hdmi_capture/sources.py:748: in read
+    await self._wait(idle)
+src/hdmi_capture/sources.py:731: in _wait
+    value = predicate()
+            ^^^^^^^^^^^
+src/hdmi_capture/sources.py:745: in idle
+    identity = self._healthy()
+               ^^^^^^^^^^^^^^^
+src/hdmi_capture/sources.py:711: in _healthy
+    self._check_mode(self.hdmi.frontend.mode)
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_sources.py:955: in mode
+    raise AssertionError('VTC register access after input clock loss')
+E   AssertionError: VTC register access after input clock loss
+__________ test_credit_input_clock_loss_never_reads_native_vtc[armed] __________
+tests/test_sources.py:997: in test_credit_input_clock_loss_never_reads_native_vtc
+    asyncio.run(run())
+../../.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/asyncio/runners.py:195: in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/asyncio/runners.py:118: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/asyncio/base_events.py:691: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+tests/test_sources.py:988: in run
+    await source.read()
+src/hdmi_capture/sources.py:754: in read
+    await self._wait(armed)
+src/hdmi_capture/sources.py:731: in _wait
+    value = predicate()
+            ^^^^^^^^^^^
+src/hdmi_capture/sources.py:752: in armed
+    identity = self._healthy()
+               ^^^^^^^^^^^^^^^
+src/hdmi_capture/sources.py:711: in _healthy
+    self._check_mode(self.hdmi.frontend.mode)
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_sources.py:955: in mode
+    raise AssertionError('VTC register access after input clock loss')
+E   AssertionError: VTC register access after input clock loss
+________ test_credit_input_clock_loss_never_reads_native_vtc[complete] _________
+tests/test_sources.py:997: in test_credit_input_clock_loss_never_reads_native_vtc
+    asyncio.run(run())
+../../.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/asyncio/runners.py:195: in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/asyncio/runners.py:118: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/asyncio/base_events.py:691: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+tests/test_sources.py:988: in run
+    await source.read()
+src/hdmi_capture/sources.py:765: in read
+    identity, status = await self._wait(complete)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/hdmi_capture/sources.py:731: in _wait
+    value = predicate()
+            ^^^^^^^^^^^
+src/hdmi_capture/sources.py:757: in complete
+    identity = self._healthy()
+               ^^^^^^^^^^^^^^^
+src/hdmi_capture/sources.py:711: in _healthy
+    self._check_mode(self.hdmi.frontend.mode)
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_sources.py:955: in mode
+    raise AssertionError('VTC register access after input clock loss')
+E   AssertionError: VTC register access after input clock loss
+_________ test_credit_input_clock_loss_never_reads_native_vtc[release] _________
+tests/test_sources.py:997: in test_credit_input_clock_loss_never_reads_native_vtc
+    asyncio.run(run())
+../../.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/asyncio/runners.py:195: in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/asyncio/runners.py:118: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/asyncio/base_events.py:691: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+tests/test_sources.py:970: in run
+    sample.close()
+src/hdmi_capture/sources.py:42: in close
+    release()
+src/hdmi_capture/sources.py:805: in _release_credit
+    identity = self._healthy()
+               ^^^^^^^^^^^^^^^
+src/hdmi_capture/sources.py:711: in _healthy
+    self._check_mode(self.hdmi.frontend.mode)
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_sources.py:955: in mode
+    raise AssertionError('VTC register access after input clock loss')
+E   AssertionError: VTC register access after input clock loss
+_________ test_credit_input_clock_loss_never_reads_native_vtc[cleanup] _________
+tests/test_sources.py:997: in test_credit_input_clock_loss_never_reads_native_vtc
+    asyncio.run(run())
+../../.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/asyncio/runners.py:195: in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/asyncio/runners.py:118: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/asyncio/base_events.py:691: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+tests/test_sources.py:992: in run
+    source.close()
+src/hdmi_capture/sources.py:854: in close
+    raise failure
+src/hdmi_capture/sources.py:822: in close
+    self._healthy()
+src/hdmi_capture/sources.py:711: in _healthy
+    self._check_mode(self.hdmi.frontend.mode)
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_sources.py:955: in mode
+    raise AssertionError('VTC register access after input clock loss')
+E   AssertionError: VTC register access after input clock loss
+=========================== short test summary info ============================
+FAILED tests/test_sources.py::test_credit_input_clock_loss_never_reads_native_vtc[idle]
+FAILED tests/test_sources.py::test_credit_input_clock_loss_never_reads_native_vtc[armed]
+FAILED tests/test_sources.py::test_credit_input_clock_loss_never_reads_native_vtc[complete]
+FAILED tests/test_sources.py::test_credit_input_clock_loss_never_reads_native_vtc[release]
+FAILED tests/test_sources.py::test_credit_input_clock_loss_never_reads_native_vtc[cleanup]
+5 failed, 66 deselected in 0.30s

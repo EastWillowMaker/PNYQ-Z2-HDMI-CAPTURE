@@ -1,0 +1,43 @@
+{
+  "scope": "intentional_hdmi_loss_fail_stop_only",
+  "smoke_passed": false,
+  "qualification_passed": false,
+  "shutdown_safe": null,
+  "storage_after_passed": true,
+  "error": "RuntimeError: Client loss check failed; preserve all evidence",
+  "full_m1_qualification": false,
+  "source_ready": {
+    "event": "kms_ready",
+    "connector_id": 446,
+    "crtc": 421,
+    "format": "XR24",
+    "clock_khz": 25200,
+    "width": 640,
+    "height": 480
+  },
+  "sender_pid": 5586,
+  "client_loss_check_passed": false,
+  "board_session": {
+    "started_monotonic": 3128.636312601,
+    "dma_shutdown_safe": null,
+    "sender_exit": -7,
+    "error": null,
+    "full_m1_qualification": false,
+    "before": {
+      "dmesg_exit": 0,
+      "ext4_errors_count": "0",
+      "test_bytes": 16777216,
+      "test_sha256": "341aacac661ccb210720bedaa9ead5d668fe5ea41a73532fc147c71e34040df1"
+    },
+    "sender_pid": 5586,
+    "after": {
+      "dmesg_exit": 0,
+      "ext4_errors_count": "0",
+      "test_bytes": 16777216,
+      "test_sha256": "341aacac661ccb210720bedaa9ead5d668fe5ea41a73532fc147c71e34040df1"
+    },
+    "finished_monotonic": 3218.754858799
+  },
+  "source_failure_detected": false,
+  "cleanup_error": "RuntimeError: Expected source fail-stop was not recorded"
+}

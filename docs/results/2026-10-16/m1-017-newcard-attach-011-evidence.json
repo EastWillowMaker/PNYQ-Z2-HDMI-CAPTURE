@@ -1,0 +1,96 @@
+{
+  "scope": "completed_frame_and_source_correlation_not_full_m1",
+  "source_ready": {
+    "event": "kms_ready",
+    "connector_id": 446,
+    "crtc": 421,
+    "format": "XR24",
+    "clock_khz": 25200,
+    "width": 640,
+    "height": 480
+  },
+  "source_completed_page_flips": 2700,
+  "received_frames": 1201,
+  "exact_frames": 1201,
+  "matched_source_ids": 1201,
+  "distinct_matched_ids": 1201,
+  "unmatched_ids": [],
+  "incoherent_frames": [],
+  "ambiguous_ids": [],
+  "host_timing_errors": [],
+  "metadata_failure_frames": 0,
+  "source_generation_to_host_receipt_seconds": {
+    "min": 0.10541821701917797,
+    "p50": 0.2390405529877171,
+    "p95": 0.3458366539562121,
+    "max": 0.3729146709665656
+  },
+  "latency_scope": "Host synthetic buffer generation to host complete receive, not physical HDMI presentation or Ethernet-only latency",
+  "kernel_snapshot": {
+    "sample_begin_monotonic": 273400.306153103,
+    "source_ready": {
+      "event": "kms_ready",
+      "connector_id": 446,
+      "crtc": 421,
+      "format": "XR24",
+      "clock_khz": 25200,
+      "width": 640,
+      "height": 480
+    },
+    "error": null,
+    "sample_end_monotonic": 273400.30664505
+  },
+  "scanout_sampling_scope": "One bounded kernel DRM metadata snapshot; no periodic scanout samples in this run",
+  "resource_received_window": {
+    "samples": 120,
+    "clock": "board_monotonic",
+    "cpu_samples": 120,
+    "cpu_percent_one_core_min_max": [
+      17.973270289023674,
+      20.40672682500871
+    ],
+    "rss_bytes_min_max": [
+      78610432,
+      80461824
+    ],
+    "cma_free_kib_min_max": [
+      49068,
+      50500
+    ]
+  },
+  "source_accounting_received_window": {
+    "first_native_source_id": 1604,
+    "last_native_source_id": 37605,
+    "native_frame_intervals": 36001,
+    "acquired_frame_intervals": 1200,
+    "intentional_skips": 34801,
+    "acquired_frames_not_delivered": 0,
+    "native_startup_skips": null
+  },
+  "source_exit": {
+    "exit_code": 0
+  },
+  "desktop_return": {
+    "original_vt_restored": true
+  },
+  "criterion_passed": true,
+  "dma_shutdown_safe": true,
+  "storage_after_passed": true,
+  "full_m1_qualification": false,
+  "input_sha256": {
+    "docs/results/2026-10-16/m1-017-newcard-attach-011.json": "dc2a88316501786a9e42f1e0b0da36278996e0c0c09087a378188899193dfea3",
+    "docs/results/2026-10-16/m1-017-newcard-attach-011.jsonl": "4336326fa13aee82aabca21fe61d8171d50d09a24befa4ff6bb5db32446a9d35",
+    "docs/results/2026-10-16/m1-017-newcard-attach-011-coordinator.json": "b7eb15db823bc3a89ee4aff34763b37e6940c1c8a3a024ce22f02bb058f399f2",
+    "docs/results/2026-10-16/m1-017-newcard-attach-011-resources.jsonl": "43045f03e0d15765c1915e238cf749deb543e482b3b0d5661d43fb7b06f18079",
+    "artifacts/operator/kms-source-session-008/run-04/source.jsonl": "1374754561e50b6d475bf890077071726307e7ff33dafa8927b935a6cee3cdf8",
+    "artifacts/operator/kms-source-session-008/run-04/kernel-state-during.json": "8a3cb5adad09d5e6f47737e4de6abb17ffb67ca3812688f2b0e3b3bdfe5d38e7",
+    "artifacts/operator/kms-source-session-008/run-04/kernel-state-during.txt": "91fa02f0fd09ae8bc3a72b2a5fa4371e1aef969a32762fa0b4b4fe3b9848c58e",
+    "artifacts/operator/kms-source-session-008/run-04/child-result.json": "e89df0eae5ec7db81135aed16463968955c578bcc4f2ec43172eff351f080c17",
+    "artifacts/operator/kms-source-session-008/run-04/restore.json": "8ab87a5389f87af50b0a5f05ba25665a8ffdcee70ded51f58ff0813b7e493b35",
+    "src/hdmi_capture/sender.py": "b821579af0d65178535a3424f1d04ca66e7dd6c6b61db37c4501e505108c42d0",
+    "src/hdmi_capture/sources.py": "a9e1ac134c7926b9832fe59394727cc2602296c8aa862646fcbf037895799313",
+    "tools/hdmi_pattern_kms.c": "df4c8430353c567cfcc4742d5bca034b2cbe5d1995f0140b15dc7ee7aa89fac3",
+    "artifacts/kms-fixture/hdmi-pattern-kms": "1e0af0dedc2f03238b695f16aaa647fa7b8bca7a28422fe57b0914176e7683c5",
+    "artifacts/deploy/sender-m1-v11.tar.gz": "01e66269264fe0eeab36cf7451c56ab33e785576256e4217ca91237f5012ea13"
+  }
+}

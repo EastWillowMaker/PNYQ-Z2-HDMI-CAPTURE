@@ -1,0 +1,6 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-newcard-017-v12$ cd /tmp/hdmi-capture-newcard-017-v12 && curl -sS -g --noproxy '*' --fail --max-time 20 'http://[fe80::560f:ee4c:ed84:e6ce%eth0]:8766/wait-hdmi-loss-013.py' -o wait-hdmi-loss-013.py && printf '%s\n' 'ed904f7cd6a426411e2091a0385278cea17dd7223feb98dec124fa3d396730b2  wait-hdmi-loss-013.py' | sha256sum -c -; printf "\nCONSOLE_DONE_c3aaa29c180444dc9ee507760f9ddfd3:%s\n" "$?"
+[?2004lwait-hdmi-loss-013.py: OK
+
+CONSOLE_DONE_c3aaa29c180444dc9ee507760f9ddfd3:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-newcard-017-v12$ 

@@ -690,6 +690,18 @@ def test_credit_faults_prevent_request_or_delivery(field, value):
     assert not source.leased
 
 
+@pytest.mark.parametrize('field', ['invalid_frames', 'frontend_overflow_episodes',
+                                 'frontend_underflow_episodes'])
+def test_credit_integrity_counter_change_rejects_before_dma_arm(field):
+    source, registers = credit_reader_fixture()
+    source.control.snapshot = lambda: dict(source.integrity_baseline,
+        **{field: source.integrity_baseline[field] + 1})
+    with pytest.raises(SourceError, match=field):
+        asyncio.run(source.read())
+    assert registers.writes == [] and source.acquired == 0
+    assert source.integrity_failure['counter'] == field
+
+
 def test_credit_identity_changed_during_copy_prevents_ack():
     source, _ = credit_reader_fixture()
     async def run():
@@ -940,3 +952,70 @@ def test_credit_cleanup_retains_first_fault_snapshot_after_safe_release():
     assert source.integrity_failure['error'] == first['error']
     assert 'final_accounting_error' in source.integrity_failure
     assert source.native is None and source.dma_shutdown_safe
+
+
+@pytest.mark.parametrize('phase', ['idle', 'armed', 'complete', 'release', 'cleanup', 'timeout'])
+def test_credit_input_clock_loss_never_reads_native_vtc(phase):
+    source, registers = credit_reader_fixture()
+    freed = []
+    write = registers.write
+    def stop_capable_write(offset, value):
+        write(offset, value)
+        if offset == 0x30 and not value & 1:
+            registers.values[0x34] |= 1
+    registers.write = stop_capable_write
+    source.control.enable = lambda enabled: setattr(source.control, 'command', int(enabled))
+    source.native.buffer.freebuffer = lambda: freed.append(registers.read(0x34) & 1)
+
+    class ClocklessFrontend:
+        @property
+        def mode(self):
+            raise AssertionError('VTC register access after input clock loss')
+
+        def stop(self):
+            pass  # PYNQ 3.0.1 HDMIInFrontend.stop is empty.
+
+    def lose_clock(fault=True):
+        source.hdmi.frontend = ClocklessFrontend()
+        source.control.state.update(credit_failed=fault, source_sequence_fault=fault)
+
+    async def run():
+        if phase in ('release', 'cleanup'):
+            sample = await source.read()
+            lose_clock()
+            if phase == 'release':
+                with pytest.raises(SourceError, match='source-sequence fault'):
+                    sample.close()
+                assert source.leased and source.control.state['credit_done']
+        else:
+            if phase == 'idle':
+                lose_clock()
+            elif phase == 'timeout':
+                lose_clock(fault=False)
+                def request_without_input():
+                    source.control.command ^= 2
+                    source.control.state['credit_busy'] = True
+                source.control.request = request_without_input
+            elif phase == 'armed':
+                original = source.native.arm
+                def arm():
+                    original()
+                    lose_clock()
+                source.native.arm = arm
+            else:
+                original = source.control.request
+                def request():
+                    original()
+                    lose_clock()
+                source.control.request = request
+            with pytest.raises(SourceError, match='timed out' if phase == 'timeout' else 'source-sequence fault'):
+                await source.read()
+            assert not source.leased and source.native.buffer.invalidations == 0
+        source._started = True
+        with pytest.raises(SourceError, match='Native source stopped' if phase == 'timeout' else 'source-sequence fault'):
+            source.close()
+        assert source.native is None and source.dma_shutdown_safe
+        assert not registers.read(0x30) & 1 and registers.read(0x34) & 1
+        assert source.control.command & 1 == 0 and freed == [1]
+
+    asyncio.run(run())

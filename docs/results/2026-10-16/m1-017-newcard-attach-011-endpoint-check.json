@@ -1,0 +1,64 @@
+{
+  "first": {
+    "path": "artifacts/captures/m1-017-newcard-attach-011/first.npy",
+    "shape": [
+      480,
+      640,
+      3
+    ],
+    "dtype": "uint8",
+    "file_sha256": "e8d3398920e2d968d10cedefcb39d3d885f3bf2564a49b868e41527bd19e70c1",
+    "verification": {
+      "expected_id": 1300102,
+      "expected_id_source": "majority_valid_optical_rows",
+      "valid_marker_rows": 480,
+      "invalid_marker_rows": [],
+      "optical_ids": {
+        "1300102": 480
+      },
+      "mixed_optical_ids": false,
+      "exact_match": true,
+      "mismatched_pixels": 0,
+      "mismatched_bytes": 0,
+      "mismatched_bytes_by_channel": [
+        0,
+        0,
+        0
+      ],
+      "mismatched_rows": [],
+      "first_mismatch_y_x": null,
+      "max_absolute_error": 0
+    }
+  },
+  "last": {
+    "path": "artifacts/captures/m1-017-newcard-attach-011/last.npy",
+    "shape": [
+      480,
+      640,
+      3
+    ],
+    "dtype": "uint8",
+    "file_sha256": "23f8e747b99b648a808365aefaa4e097892ff3802a191dbb754776245c9a7f8a",
+    "verification": {
+      "expected_id": 1302352,
+      "expected_id_source": "majority_valid_optical_rows",
+      "valid_marker_rows": 480,
+      "invalid_marker_rows": [],
+      "optical_ids": {
+        "1302352": 480
+      },
+      "mixed_optical_ids": false,
+      "exact_match": true,
+      "mismatched_pixels": 0,
+      "mismatched_bytes": 0,
+      "mismatched_bytes_by_channel": [
+        0,
+        0,
+        0
+      ],
+      "mismatched_rows": [],
+      "first_mismatch_y_x": null,
+      "max_absolute_error": 0
+    }
+  }
+}
