@@ -13,8 +13,10 @@ The direct-VT source smoke test **passed** on2026-10-15: actualVT3,
 640x480 progressive60Hz (25200kHz pixel clock), XR24,37 completed page flips
 in the10-second run, exit0, and verified return toVT2. The compiled source also
 matches all921600 reference bytes for five IDs; four invalid-ID cases fail
-before display access. These9 tests pass locally. This proves a real KMS source
-and normal return on this machine, **not PYNQ RGB capture or sustained M1**.
+before display access. These9 tests pass locally. This proved the source and normal return. The subsequent720-second run also
+passed the600-second PYNQ pixel/accounting criterion (1201/1201 exact frames),
+but board storage errors and SIGBUS left DMA shutdown unverified; fullM1 remains
+incomplete. See the [capture report](results/2026-10-15/m1-017-kms-001-report.md).
 Evidence: [probe002](results/2026-10-15/kms-vt-probe-002.json).
 
 The first VT attempt failed DRM-master acquisition because openvt choseVT1 and

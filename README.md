@@ -9,15 +9,16 @@ metadata or transport errors. LiteX gate control, client pause/reconnect and
 explicit restart after a 60→59.94 Hz mode change were also exercised.
 Physical HDMI cable removal/reinsertion remains pending.
 
-M1 is incomplete: the new single-credit path adds required physical source IDs
-and sampling counts. Build017 passed CAD and its first real capture smoke:
-11 distinct byte-exact frames with automatic DMA halt and reconciled source IDs.
-Its first ten-minute run failed pixel comparison (1189/1200 exact). Desktop
-notifications reproducibly trigger one-LSB differences through source composition;
-suppressing banners alone is insufficient. See the
-[diagnosis](docs/results/2026-10-15/frame-difference-diagnosis.md).
-Ten-minute and interruption qualification remain pending. See
-[current progress](docs/progress.md).
+Build017 with the direct DRM/KMS source passed the strict ten-minute image and
+single-credit accounting criteria: **1201/1201 exact frames in600.155seconds,
+2.001FPS**, with zero pixel, mixed, repeat, metadata or transport failures.
+See the [KMS capture report](docs/results/2026-10-15/m1-017-kms-001-report.md).
+
+M1 remains incomplete: board SD/EXT4 I/O errors prevented the normal shutdown
+command; the sender later reported SIGBUS, so safe DMA shutdown is unverified.
+Further board tests require recovery. Interruption/physical recovery validation
+also remains outstanding. The earlier desktop-source failures are retained in
+[the diagnosis](docs/results/2026-10-15/frame-difference-diagnosis.md).
 
 See the [qualification report](docs/results/2026-10-15/m1-qualification.md)
 for raw evidence, startup invalid attribution, resource use, timing and limits.
@@ -25,8 +26,8 @@ VDMA physical sequence/drop attribution is incomplete; earlier M0 failures and
 PYNQ cleanup warnings remain disclosed. Web, bypass and LCD are deferred.
 
 For a source outside GNOME composition, see the experimental
-[direct DRM/KMS source](docs/kms-source.md). Its10-second direct-VT source and return test passed; real PYNQ capture from
-that source is still pending;
+[direct DRM/KMS source](docs/kms-source.md). Its direct-VT source and600-second real PYNQ pixel criterion passed;
+board shutdown remains unresolved;
 the failed DRM-lease prototype must not be treated as a safe desktop path.
 
 Start with the [clean-checkout-to-first-frame guide](docs/quickstart.md),

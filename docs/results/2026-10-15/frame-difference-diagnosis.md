@@ -146,3 +146,12 @@ and not a normal execution path. The restored display and crash evidence are
 recorded separately. A compiled direct-KMS source plus a bounded standalone-VT
 runner is prepared; it requires local sudo and has not been hardware-qualified.
 See [KMS source](../../kms-source.md) for the exact command, evidence and limits.
+
+### Direct KMS sustained result
+
+The subsequent direct KMS/017/v10 run passed1201/1201 exact frames over
+600.155270s, with unchanged capture code and strict comparisons. It removes
+the desktop composition failure mode in this tested source path. SD/EXT4 I/O
+errors then prevented normal shutdown, and a sender SIGBUS was recovered;
+DMA shutdown remains unknown, so this is not fullM1 completion. See
+[m1-017-kms-001-report.md](m1-017-kms-001-report.md).

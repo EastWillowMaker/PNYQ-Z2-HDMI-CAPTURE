@@ -1,0 +1,64 @@
+{
+  "source_ready": {
+    "event": "kms_ready",
+    "connector_id": 446,
+    "crtc": 421,
+    "format": "XR24",
+    "clock_khz": 25200,
+    "width": 640,
+    "height": 480
+  },
+  "source_completed_page_flips": 2700,
+  "received_frames": 1201,
+  "matched_source_ids": 1201,
+  "unmatched_ids": [],
+  "source_generation_to_host_receipt_seconds": {
+    "min": 0.11896189200342633,
+    "p50": 0.2539301990182139,
+    "p95": 0.36392506500124,
+    "max": 0.4192467499815393
+  },
+  "latency_scope": "Host KMS buffer generation to host complete receive; not pure network or physical presentation latency",
+  "scanout_received_window": {
+    "samples": 2397,
+    "formats": {
+      "XR24": 2397
+    },
+    "errors": 0,
+    "nonatomic_inconsistent_samples": 1,
+    "caveat": "250ms metadata samples, not continuous physical-output proof"
+  },
+  "resource_received_window": {
+    "samples": 115,
+    "clock": "board_monotonic",
+    "cpu_samples": 114,
+    "cpu_percent_one_core_min_max": [
+      17.973844177943015,
+      20.583283060230162
+    ],
+    "rss_bytes_min_max": [
+      79372288,
+      81219584
+    ],
+    "cma_free_kib_min_max": [
+      18524,
+      68828
+    ]
+  },
+  "source_exit": {
+    "exit_code": 0
+  },
+  "desktop_return": {
+    "original_vt_restored": true
+  },
+  "full_m1_qualification": false,
+  "dma_shutdown_safe": null,
+  "input_sha256": {
+    "docs/results/2026-10-15/m1-017-kms-001.jsonl": "294cb3231a0495efbacd0c5233c56f5fe5f35f8c782468605ff222d3a00844fc",
+    "artifacts/operator/kms-vt-capture-001/source.jsonl": "388b1819b2acead42b0ee3b8f90ef1fa9927271c623521a26300ec81d2207f7b",
+    "artifacts/operator/m1-017-kms-001-scanout.jsonl": "9967dca0fad8e97452468b2c89613bf2921fa7bf2d8ff46c6411031f6f81d046",
+    "docs/results/2026-10-15/m1-017-kms-001-resources.jsonl": "ff2cbe9a12ef038a1ecd944ea8a05f23bf80d6e3dc8ca65f386da2b4b79a9d99",
+    "tools/hdmi_pattern_kms.c": "df4c8430353c567cfcc4742d5bca034b2cbe5d1995f0140b15dc7ee7aa89fac3",
+    "artifacts/kms-fixture/hdmi-pattern-kms": "1e0af0dedc2f03238b695f16aaa647fa7b8bca7a28422fe57b0914176e7683c5"
+  }
+}

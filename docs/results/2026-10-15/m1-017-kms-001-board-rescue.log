@@ -1,0 +1,32 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-credit-017-v10$ printf "BEGIN_SENDER_LOG\n"; while IFS= read -r line; do printf "%s\n" "$line"; done < /tmp/hdmi-capture-credit-017-v10/m1-017-kms-001.log; printf "END_SENDER_LOG\n"; if test -d /proc/16610; then printf "SENDER_PROC_PRESENT\n"; else printf "SENDER_PROC_ABSENT\n"; fi; printf "\nCONSOLE_DONE_9ace4f8a77384f068f5a4cbbb26b314d:%s\n" "$?"
+[?2004lBEGIN_SENDER_LOG
+{"event": "source_startup", "timestamp_ns": 74563275553023, "stage": "litex_artifact_verification"}
+{"event": "source_startup", "timestamp_ns": 74563806632265, "stage": "pynq_import"}
+{"event": "source_startup", "timestamp_ns": 74571966597213, "stage": "overlay_load"}
+{"event": "source_startup", "timestamp_ns": 74588181673275, "stage": "credit_source_ready", "counters": {"enabled": false, "observed_frames": 64, "selected_frames": 0, "completed_frames": 63, "dropped_frames": 64, "invalid_frames": 1, "snapshot_begin_ns": 74588173014653, "snapshot_end_ns": 74588173237669, "timestamp_clock": "board_monotonic", "snapshot_atomic": false, "sample_point": "before_first_credit_while_gate_disabled_dma_halted", "counter_bits": 32, "frontend_overflow_episodes": 0, "native_vsync_edges": 65, "overflow_units": "assertion_episodes_not_lost_frames", "frontend_underflow_episodes": 0}}
+{"listening": ["::", 9022, 0, 0], "source": "hdmi", "session_id": "6f83de87-3407-401d-b978-9bf07220c5a4"}
+Fatal Python error: Bus error
+
+Current thread 0xb6f25020 (most recent call first):
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/lib/video/dvi.py", line 62 in mode
+  File "/tmp/hdmi-capture-credit-017-v10/hdmi_capture/sources.py", line 711 in _healthy
+  File "/tmp/hdmi-capture-credit-017-v10/hdmi_capture/sources.py", line 757 in complete
+  File "/tmp/hdmi-capture-credit-017-v10/hdmi_capture/sources.py", line 731 in _wait
+  File "/tmp/hdmi-capture-credit-017-v10/hdmi_capture/sources.py", line 765 in read
+  File "/usr/lib/python3.10/asyncio/events.py", line 80 in _run
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1896 in _run_once
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 600 in run_forever
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 633 in run_until_complete
+  File "/usr/lib/python3.10/asyncio/runners.py", line 44 in run
+  File "/tmp/hdmi-capture-credit-017-v10/hdmi_capture/sender.py", line 339 in main
+  File "/tmp/hdmi-capture-credit-017-v10/hdmi_capture/sender.py", line 365 in <module>
+  File "/usr/lib/python3.10/runpy.py", line 86 in _run_code
+  File "/usr/lib/python3.10/runpy.py", line 196 in _run_module_as_main
+
+Extension modules: numpy.core._multiarray_umath, numpy.core._multiarray_tests, numpy.linalg.lapack_lite, numpy.linalg._umath_linalg, numpy.fft._pocketfft_internal, numpy.random._common, numpy.random.bit_generator, numpy.random._bounded_integers, numpy.random._mt19937, numpy.random.mtrand, numpy.random._philox, numpy.random._pcg64, numpy.random._sfc64, numpy.random._generator, zmq.libzmq, zmq.backend.cython.context, zmq.backend.cython.message, zmq.backend.cython.socket, zmq.backend.cython._device, zmq.backend.cython._poll, zmq.backend.cython._proxy_steerable, zmq.backend.cython._version, zmq.backend.cython.error, zmq.backend.cython.utils, tornado.speedups, psutil._psutil_linux, psutil._psutil_posix, _cffi_backend (total: 28)
+END_SENDER_LOG
+SENDER_PROC_ABSENT
+
+CONSOLE_DONE_9ace4f8a77384f068f5a4cbbb26b314d:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-credit-017-v10$ 

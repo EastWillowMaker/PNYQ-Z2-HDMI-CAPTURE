@@ -1,5 +1,16 @@
 # Progress and handoff
 
+2026-10-15 21:55 Asia/Taipei — KMS/017/v10 strict600s capture PASSED:
+1201/1201 exact RGB frames in600.155270s (2.001149FPS), zero pixel/mixed/repeat/
+metadata/transport/storage failures. Native accounting36000=1200+34800;
+all1201 optical IDs matched KMS records. Source completed720s/2700flips and
+returnedVT2, exit0. HOWEVER cooperative shutdown could not execute sudo due
+EXT4/mmcblk0p2 I/O errors. ps/tail also fail. Builtin rescue recovered resources
+and sender fatalSIGBUS trace; /proc/16610 absent, DMA safetyUNKNOWN. Do not load
+another overlay or claim fullM1. No SD repair attempted. Preserve evidence and
+recover hardware/storage before interruption testing. See
+[full report](results/2026-10-15/m1-017-kms-001-report.md).
+
 2026-10-15 21:29 Asia/Taipei — direct KMS source probe002 passed: VT3,
 XR24/640x480p60 (25200kHz),37 completed page flips, exit0, returnVT2 verified.
 Omitted --vt is correct because default is3. This is source-only proof, not

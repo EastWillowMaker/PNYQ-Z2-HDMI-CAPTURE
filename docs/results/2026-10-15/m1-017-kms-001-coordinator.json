@@ -1,0 +1,21 @@
+{
+  "event": "kms_coordinator",
+  "source": "/home/eastwillow/Documents/litex-hdmi-capture/artifacts/operator/kms-vt-capture-001/source.jsonl",
+  "sender_pid": 16610,
+  "smoke_passed": true,
+  "qualification_passed": true,
+  "error": null,
+  "shutdown_safe": null,
+  "full_m1_qualification": false,
+  "source_ready": {
+    "event": "kms_ready",
+    "connector_id": 446,
+    "crtc": 421,
+    "format": "XR24",
+    "clock_khz": 25200,
+    "width": 640,
+    "height": 480
+  },
+  "source_ready_host_monotonic": 260951.502214153,
+  "cleanup_error": "RuntimeError: Board command failed; inspect /home/eastwillow/Documents/litex-hdmi-capture/artifacts/operator/m1-017-kms-001-uart-23.log"
+}
