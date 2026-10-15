@@ -1,5 +1,17 @@
 # Progress and handoff
 
+2026-10-15 22:17 Asia/Taipei — user inserted new SD asmmcblk0 (SD64G,
+CID9f544953443634476194980972018201,58.3GiB) and old PYNQ SD assdb
+(14.9GiB, knownPYNQ/root UUIDs). Old boot partition unmounted, root unmounted.
+User requested fresh official image plus sub-agent old-card audit. Official
+v3.0.1 archive downloaded/extracted withCRC+SHA checks; preserves tested runtime
+baseline. New-card dry preparation verified; NO FLASH YET, explicit target
+consent pending. Old-card raw backup/check needs local sudo. First helper run
+safely rejected flatlsblk JSON;--tree fixed and actual identities passed. Waiting
+operator retry; no backup/health verdict yet. Sub-agent initial audit finds FAT
+unclean warning, no host I/O errors yet, cannot certify media. See
+[SD recovery](sd-recovery.md) and[old-card audit](results/2026-10-15/old-sd-audit.md).
+
 2026-10-15 21:55 Asia/Taipei — KMS/017/v10 strict600s capture PASSED:
 1201/1201 exact RGB frames in600.155270s (2.001149FPS), zero pixel/mixed/repeat/
 metadata/transport/storage failures. Native accounting36000=1200+34800;

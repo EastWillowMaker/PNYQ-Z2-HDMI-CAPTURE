@@ -1,0 +1,13 @@
+{
+  "board": "PYNQ-Z2",
+  "version": "3.0.1",
+  "source_page": "https://www.pynq.io/index.html",
+  "official_download_url": "https://download.amd.com/opendownload/xlnx/pynq_z2_v3.0.1.zip",
+  "archive_bytes": 1811523457,
+  "archive_sha256": "ea6372e2d95e241dc7f891d30abc8af2eaf6650c0c16788c27dafba97f41cf8b",
+  "zip_member_crc_verified": true,
+  "image_bytes": 7858807808,
+  "image_sha256": "f17405d25298a2c5ea23ccf95f868b42b18f819ff9d7fe5d079ac9ef53415861",
+  "publisher_sha256_available": false,
+  "publisher_hash_note": "No published checksum retrieved; these are local integrity hashes, not an independently published signature."
+}
