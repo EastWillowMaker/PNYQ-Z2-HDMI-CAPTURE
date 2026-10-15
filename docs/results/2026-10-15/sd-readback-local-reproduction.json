@@ -1,0 +1,9 @@
+{
+  "same_local_image_dd_exit": 1,
+  "same_local_image_dd_bytes": 0,
+  "dd_stderr": "dd: IO error: Input/output error\n",
+  "aligned_pread_bytes": 4194304,
+  "aligned_pread_sha256": "0b7436c91fbdb49e883502ced8d80d9674391f291acf0d428cbb1b02fcf09c05",
+  "buffered_reference_sha256": "0b7436c91fbdb49e883502ced8d80d9674391f291acf0d428cbb1b02fcf09c05",
+  "matched": true
+}

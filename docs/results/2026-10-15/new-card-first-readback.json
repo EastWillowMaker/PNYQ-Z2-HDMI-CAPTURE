@@ -1,0 +1,31 @@
+{
+  "device": "/dev/mmcblk0",
+  "cid": "9f544953443634476194980972018201",
+  "before": {
+    "path": "/dev/mmcblk0",
+    "type": "disk",
+    "size": 62549655552,
+    "uuid": null,
+    "mountpoints": [],
+    "children": [
+      {
+        "path": "/dev/mmcblk0p1",
+        "type": "part",
+        "size": 52428800,
+        "uuid": "788A-0755",
+        "mountpoints": [
+          "/run/media/eastwillow/788A-0755"
+        ]
+      }
+    ]
+  },
+  "image_sha256": "f17405d25298a2c5ea23ccf95f868b42b18f819ff9d7fe5d079ac9ef53415861",
+  "started": "2026-10-15T22:32:10.734783+08:00",
+  "written_bytes": 7858807808,
+  "readback_verified": false,
+  "error": "RuntimeError: Full image readback does not match; do not boot this card",
+  "readback_exit": 1,
+  "readback_bytes": 0,
+  "readback_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "finished": "2026-10-15T22:39:55.748291+08:00"
+}

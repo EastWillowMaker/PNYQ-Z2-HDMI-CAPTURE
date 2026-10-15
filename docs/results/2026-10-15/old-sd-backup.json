@@ -1,0 +1,92 @@
+{
+  "device": "/dev/sdb",
+  "size_bytes": 15978201088,
+  "devices": [
+    {
+      "path": "/dev/sdb",
+      "type": "disk",
+      "size": 15978201088,
+      "uuid": null,
+      "mountpoints": [],
+      "children": [
+        {
+          "path": "/dev/sdb1",
+          "type": "part",
+          "size": 136314880,
+          "uuid": "8498-161A",
+          "mountpoints": []
+        },
+        {
+          "path": "/dev/sdb2",
+          "type": "part",
+          "size": 15840837632,
+          "uuid": "40aa3f0d-35f3-47ee-96d1-9fb50b1adbbd",
+          "mountpoints": []
+        }
+      ]
+    }
+  ],
+  "started": "2026-10-15T22:17:12.574549+08:00",
+  "new_card_accessed": false,
+  "card_writes_performed": false,
+  "filesystem_checks_on": "read-only loop devices over preserved image",
+  "ddrescue_sha256": "eb5c3134a718fd30d0c6286e430665b2c3562f9efedbe04834ceb48037844085",
+  "checks": [
+    {
+      "partition": 1,
+      "command": [
+        "fsck.fat",
+        "-n",
+        "-v",
+        "/dev/loop25"
+      ],
+      "exit_code": 1
+    },
+    {
+      "partition": 2,
+      "command": [
+        "e2fsck",
+        "-f",
+        "-n",
+        "/dev/loop25"
+      ],
+      "exit_code": 4
+    }
+  ],
+  "error": null,
+  "ddrescue_exit": 0,
+  "image_bytes": 15978201088,
+  "image_sha256": "deb6ed5f9d0bc58906455194a8d02c4b025adffc5f5eb7bd9f10fe56930096e1",
+  "partition_table": {
+    "label": "dos",
+    "id": "0x365e43c1",
+    "device": "/home/eastwillow/Documents/litex-hdmi-capture/artifacts/sd-recovery/old-card-backup-001/old-pynq-card.img",
+    "unit": "sectors",
+    "sectorsize": 512,
+    "partitions": [
+      {
+        "node": "/home/eastwillow/Documents/litex-hdmi-capture/artifacts/sd-recovery/old-card-backup-001/old-pynq-card.img1",
+        "start": 8,
+        "size": 266240,
+        "type": "c",
+        "bootable": true
+      },
+      {
+        "node": "/home/eastwillow/Documents/litex-hdmi-capture/artifacts/sd-recovery/old-card-backup-001/old-pynq-card.img2",
+        "start": 268288,
+        "size": 30939136,
+        "type": "83"
+      }
+    ]
+  },
+  "map_bytes_by_status": {
+    "+": 15978201088,
+    "?": 0,
+    "*": 0,
+    "/": 0,
+    "-": 0
+  },
+  "all_source_bytes_rescued": true,
+  "filesystems_clean": false,
+  "finished": "2026-10-15T22:31:20.876899+08:00"
+}

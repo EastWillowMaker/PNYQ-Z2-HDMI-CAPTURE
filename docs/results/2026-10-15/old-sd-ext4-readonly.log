@@ -1,0 +1,34 @@
+e2fsck 1.47.2 (1-Jan-2025)
+Warning: skipping journal recovery because doing a read-only filesystem check.
+Pass 1: Checking inodes, blocks, and sizes
+Pass 2: Checking directory structure
+Entry '16912' in /var/lib/samba/private/msg.sock (780291) has deleted/unused inode 780560.  Clear? no
+
+Entry '16912' in /var/lib/samba/private/msg.sock (780291) has an incorrect filetype (was 6, should be 1).
+Fix? no
+
+Pass 3: Checking directory connectivity
+Pass 4: Checking reference counts
+Unattached inode 780556
+Connect to /lost+found? no
+
+Unattached inode 780557
+Connect to /lost+found? no
+
+Pass 5: Checking group summary information
+Block bitmap differences:  -(1769952--1769953) -(1772344--1772346)
+Fix? no
+
+Free blocks count wrong (2237723, counted=2217419).
+Fix? no
+
+Inode bitmap differences:  +(780556--780557) -780560
+Fix? no
+
+Free inodes count wrong (1698255, counted=1698034).
+Fix? no
+
+
+root: ********** WARNING: Filesystem still has errors **********
+
+root: 219953/1918208 files (0.2% non-contiguous), 1628901/3866624 blocks

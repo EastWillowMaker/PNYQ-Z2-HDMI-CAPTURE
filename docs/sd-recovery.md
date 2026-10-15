@@ -136,3 +136,19 @@ original image/map are still partial, so no filesystem-check conclusion exists.
 The backup process is bounded to1hour; if it times out, keep the partial image
 and map rather than starting over or repairing the source. The new-card write
 is independently prepared and remains unexecuted pending explicit acceptance.
+
+## Completed old-card rescue and first new-card verification failure
+
+The old image completed at22:31:20:all15,978,201,088bytes recovered withzero
+read errors, SHA256deb6ed5f9d0bc58906455194a8d02c4b025adffc5f5eb7bd9f10fe56930096e1.
+FAT readonly check exits1 (dirtybit); ext4 readonly check exits4 with directory,
+inode and bitmap/count errors while journal recovery was skipped. This is not
+a clean filesystem or a proven physical-card failure. Sub-agent final audit
+records the distinction; the original source/image remain preserved.
+
+User explicitly ran the new-card erase command. All7,858,807,808image bytes were
+written, but the originaluutilsdd0.8 direct readback failed before reading any
+bytes. This is not an established content mismatch. The same command fails on
+the local image; an explicitly aligned reader passes the local whole-image
+hash. A verification-only raw-card helper is prepared and awaits local sudo,
+with no rewrite. See[readback diagnosis](results/2026-10-15/sd-readback-diagnosis.md).

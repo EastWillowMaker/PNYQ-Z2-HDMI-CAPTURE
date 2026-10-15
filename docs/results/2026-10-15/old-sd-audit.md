@@ -64,15 +64,17 @@ PYNQ board reported ext4 directory-read errors on `mmcblk0p2`; the sender also
 recorded a fatal `SIGBUS`. That is stronger evidence of a serious read-path
 failure than the host's FAT warning, but it does not distinguish damaged
 filesystem metadata from an SD/media, reader, or board MMC read-path problem.
-The card's physical health remains unknown. A successful limited read would not
-clear that uncertainty.
+The complete host-side image pass below is positive evidence that this reader
+and host read the whole card once without ddrescue-reported read errors. It does
+not establish physical health or rule out intermittent faults, and does not
+explain the earlier board-side I/O errors. The card's physical health remains
+unknown.
 
 I performed no filesystem repair, `fsck`, `e2fsck`, `fstrim`, mount, raw scan,
-or content read. The coordinator later began a single forward ddrescue image
-pass; the sampled progress below is incomplete and does not establish a card
-health verdict. No filesystem checks have been reported yet.
+or content read. The coordinator performed the preservation pass and
+read-only filesystem checks described below. No repair was performed.
 
-## Preservation pass snapshot (in progress)
+## Preservation pass progress snapshots
 
 The coordinator reports the pass began at 2026-10-15 22:17:12 local. At the
 22:22:45 mapfile update, the saved map covered a `+` range from byte 0 through
@@ -93,15 +95,53 @@ For the same interval, the filtered host kernel journal had no matching
 Sysfs reported the reader state `running`; `/dev/sdb`, `/dev/sdb1`, and
 `/dev/sdb2` each reported kernel read-only state `1`. The block stat snapshot
 reported zero writes and two I/Os in progress. These observations do not
-establish whole-card readability or physical health. The image was still
-partial at this snapshot and was not inspected by this audit.
+establish whole-card readability or physical health. The image was partial at
+this snapshot and was not inspected by this audit.
+
+## Completed preservation and read-only checks
+
+The coordinator's GNU ddrescue 1.30 pass began at 22:17:12 and finished at
+22:31:04 local. The final map has one `+` range covering byte 0 through
+`0x3B8600000` (15,978,201,088 bytes; all 31,207,424 source sectors), with no
+remaining, trimmed, scraped, or bad-sector ranges. The command exited 0 and the
+final console log reports zero read errors, zero bad areas, and 100% rescued.
+The progress rate slowed substantially near 8 GB, then returned to higher
+rates as the pass continued; this is observed variation only, with no cause
+established. The helper reports image SHA-256
+`deb6ed5f9d0bc58906455194a8d02c4b025adffc5f5eb7bd9f10fe56930096e1` and
+`all_source_bytes_rescued=true`. See the [rescue report](../../../artifacts/sd-recovery/old-card-backup-001/report.json),
+[mapfile](../../../artifacts/sd-recovery/old-card-backup-001/old-pynq-card.map),
+and [ddrescue log](../../../artifacts/sd-recovery/old-card-backup-001/ddrescue.log).
+
+Both filesystem checks ran against read-only loop mappings of the preserved
+image. `fsck.fat -n -v` on the 130 MiB PYNQ partition exited 1: its FAT dirty
+bit is set, while the report says 6 files and 1,848 of 33,241 clusters used.
+The checker left the filesystem unchanged. This confirms the unclean FAT state
+seen at card insertion; it does not by itself show a media read failure.
+
+`e2fsck -f -n` on the ext4 root partition exited 4 and left reported errors
+unfixed. With read-only `-n`, journal recovery was skipped. The log reports a
+directory entry under `/var/lib/samba/private/msg.sock` pointing to deleted or
+unused inode 780560 with an incorrect file type; unattached inodes 780556 and
+780557; and block/inode bitmap and free-count discrepancies. Because recovery
+was deliberately skipped and every proposed change was declined, this check
+does not show whether journal replay would reconcile any of these findings.
+No writable check or repair was run on the source card or preserved image.
+See the [FAT check log](../../../artifacts/sd-recovery/old-card-backup-001/partition-1-fsck.log)
+and [ext4 check log](../../../artifacts/sd-recovery/old-card-backup-001/partition-2-fsck.log).
+
+Taken together, the evidence establishes filesystem inconsistencies in the
+read-only image view and a successful single full read through this host and
+USB reader. It does not prove the card healthy, prove a hardware fault, or
+attribute the earlier board I/O errors to filesystem metadata alone. The prior
+board error, current ext4 findings, and clean host-side read can coexist; the
+available evidence does not isolate the cause.
 
 ## Safe next evidence
 
-Wait for the rescue pass and final mapfile/report. Then run non-writing
-filesystem checks against an explicitly read-only loop mapping of the image,
-not the source card. Check FAT and ext4 separately and record command exit
-status plus `e2fsck -fn` diagnostics. If imaging reports unreadable sectors,
-retain the ddrescue mapfile and its ranges; do not infer whole-card health from
-successful regions. Any source-card reads beyond the recovery image should be
-purpose-limited and coordinated after the image is verified.
+Keep the source card and completed image unchanged. To test journal recovery or
+repair effects, make and verify a separate working copy first, then run any
+writable checks only on that copy and record their results. The current logs do
+not establish post-replay ext4 state or any full-capacity/long-duration media
+health guarantee. Further source-card reads should be purpose-limited and
+coordinated against the preserved image.

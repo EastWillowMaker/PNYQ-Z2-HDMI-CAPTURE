@@ -1,5 +1,14 @@
 # Progress and handoff
 
+2026-10-15 22:43 Asia/Taipei — old-card backup COMPLETE:15,978,201,088B,
+all rescued/0readerrors. FATdirty(exit1),ext4errors(exit4) with journal skipped;
+no physical fault proved, preserve original/image. User flashed newmmcblk0:
+7,858,807,808B written, original readback failed0bytes dueuutilsdd0.8 direct-I/O
+path (same failure reproduced on localimage). Native4096-alignedpreadO_DIRECT
+reads full localimage with expectedSHA;7 direct-filetests pass. Verification-only
+helper prepared; waiting local sudo raw-card verification, do NOT rewrite or
+boot until verified. See[diagnosis](results/2026-10-15/sd-readback-diagnosis.md).
+
 2026-10-15 22:25 Asia/Taipei — readonly old-card rescue now ACTIVE after
 lsblk--tree correction. Source sdb/sdb1/sdb2 allRO=1, no raw writes. At~7m35s,
 8,174MB/51.16% recovered with0 read errors; rate fell from~50MB/s to variable

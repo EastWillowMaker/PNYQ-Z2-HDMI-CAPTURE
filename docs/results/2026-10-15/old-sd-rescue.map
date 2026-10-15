@@ -1,0 +1,9 @@
+# Mapfile. Created by GNU ddrescue version 1.30
+# Command line: /home/eastwillow/Documents/litex-hdmi-capture/artifacts/sd-recovery/tools/gddrescue/usr/bin/ddrescue --no-scrape --no-trim --retry-passes=0 --timeout=30s /dev/sdb /home/eastwillow/Documents/litex-hdmi-capture/artifacts/sd-recovery/old-card-backup-001/old-pynq-card.img /home/eastwillow/Documents/litex-hdmi-capture/artifacts/sd-recovery/old-card-backup-001/old-pynq-card.map
+# Start time:   2026-10-15 22:17:12
+# Current time: 2026-10-15 22:31:04
+# Finished
+# current_pos  current_status  current_pass
+0x3B85F0000     +               1
+#      pos        size  status
+0x00000000  0x3B8600000  +
