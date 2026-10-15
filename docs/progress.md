@@ -18,15 +18,20 @@ parent resumed direct checks and finished the local checkpoint.
 [First build014 board attempt](results/2026-10-15/m1-014-bringup.md) records
 zero delivered frames, safe halt-before-free, and the qualifier integration fix.
 
-Build015 failed the strict timing gate with WNS -0.071ns on native-counter→DONE;
-no accepted manifest was exported and it must not be loaded. The equivalent
-watchdog equality implementation is now building as016, with handle97016 and
-console `artifacts/m1-project-016-console.log`. Sources are frozen in
-`artifacts/m1-project-016-source`. See [timing investigation](results/2026-10-15/credit-015-timing.md).
-The latest source package is v9; earlier v7/v8 packages are historical inputs.
-Sudo was refreshed while the user's authentication remained valid; recheck before
-next load. No sender or optical fixture is active. Next: require successful CAD,
-then run a bounded real-source smoke before renewed600-second qualification.
+Build015 failed strict timing and was rejected. Build016 then passed CAD
+(setup/hold0.399/0.033ns,56skewMET, no criticalCDC/DRC) and was board-loaded with
+v9. Its first configuration found no HDMI signal because the PC screen was
+locked/powered off (ScreenSaver=true, PowerSaveMode3; DRM DP-2 inactive). Sender
+exited before DMA allocation/start; no hardware sender or fixture is active.
+The user has been asked to wake/unlock the PC and replyDone, leaving HDMI connected.
+This real source prerequisite is pending; don't reask overlay permission.
+See [016checkpoint](results/2026-10-15/credit-016-build.md) and
+[timing investigation](results/2026-10-15/credit-015-timing.md).
+The paired016 artifacts and v9 package are transferred, with matching hashes.
+Next: verify source output active after operator reply, restart animated fixture,
+run bounded smoke requiring autoHALT/IRQ plus held frame identity and exactRGB,
+then renewed600-second run and physical/interruption tests. Sudo was noninteractively
+refreshed at08:38 while valid; recheck before restart. No images were uploaded.
 
 ## Preserved previous checkpoint
 

@@ -1,0 +1,38 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-credit-016$ cat /tmp/hdmi-capture-credit-016/m1-016-v9-smoke.log; uptime; printf "\nCONSOLE_DONE_9bbd0d7bdbf948d282e7ef72f1d6762a:%s\n" "$?"
+[?2004l{"event": "source_startup", "timestamp_ns": 28177422812851, "stage": "litex_artifact_verification"}
+{"event": "source_startup", "timestamp_ns": 28177953079145, "stage": "pynq_import"}
+{"event": "source_startup", "timestamp_ns": 28186366595502, "stage": "overlay_load"}
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/usr/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/tmp/hdmi-capture-credit-016/hdmi_capture/sender.py", line 337, in <module>
+    main()
+  File "/tmp/hdmi-capture-credit-016/hdmi_capture/sender.py", line 311, in main
+    asyncio.run(sender.run(args.host, args.port, args.duration))
+  File "/usr/lib/python3.10/asyncio/runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 646, in run_until_complete
+    return future.result()
+  File "/tmp/hdmi-capture-credit-016/hdmi_capture/sender.py", line 171, in run
+    address = await self.start(host, port)
+  File "/tmp/hdmi-capture-credit-016/hdmi_capture/sender.py", line 161, in start
+    self.source.start()
+  File "/tmp/hdmi-capture-credit-016/hdmi_capture/sources.py", line 660, in start
+    self.hdmi.configure(self.pixel_format)
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/lib/video/hierarchies.py", line 81, in configure
+    self._hdmi.start()
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/lib/video/dvi.py", line 45, in start
+    self._capture = pynq.lib._video._capture(
+LookupError: _video._capture initialization failed [1]: No incoming video signal detected
+Exception ignored in: <function UioController.__del__ at 0xb33adda8>
+Traceback (most recent call last):
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/uio.py", line 79, in __del__
+  File "/usr/lib/python3.10/asyncio/events.py", line 656, in get_event_loop
+RuntimeError: There is no current event loop in thread 'MainThread'.
+ 08:08:42 up  7:51,  1 user,  load average: 0.40, 0.29, 0.11
+
+CONSOLE_DONE_9bbd0d7bdbf948d282e7ef72f1d6762a:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-credit-016$ 

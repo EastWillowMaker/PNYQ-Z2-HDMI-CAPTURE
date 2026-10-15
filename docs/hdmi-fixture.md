@@ -388,3 +388,15 @@ and choose a new report path. Final parsing rejects partial JSONL. Reports
 retain unmatched/ambiguous IDs, failed pixel checks, inconsistent metadata
 samples and intervals without a scanout sample. Format sampling and exact
 pixel verification remain distinct evidence.
+
+## Desktop lock and source power prerequisite
+
+A GLES framebuffer can pass synthetic readback while the physical output is off.
+The016 startup attempt observed ScreenSaver=true, PowerSaveMode3 and inactive
+DRM DP-2 while shader readback remained exact; board capture correctly reported
+no incoming signal. Wake/unlock the local desktop before hardware testing.
+Do not treat configured Mutter mode or SDL monitor enumeration as active scanout.
+Check contemporaneous `monitor_hdmi_scanout.py` samples for active output and
+its real format/clock. Keep the SDL idle inhibitor alive for the bounded source
+fixture. An inhibitor prevents later idle power-off; it cannot retroactively
+unlock an already locked desktop. No screen-lock policy was changed.

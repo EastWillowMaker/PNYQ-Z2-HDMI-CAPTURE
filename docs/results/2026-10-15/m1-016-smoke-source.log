@@ -1,0 +1,16 @@
+{"driver": "wayland", "GL_version": "OpenGL ES 3.2 Mesa 26.0.3-1ubuntu1", "GL_renderer": "AMD Radeon 890M Graphics (radeonsi, strix1, ACO, DRM 3.64, 7.0.0-38-generic)", "channel_bits": {"red": {"SDL": 8, "GL": 8}, "green": {"SDL": 8, "GL": 8}, "blue": {"SDL": 8, "GL": 8}, "alpha": {"SDL": 0, "GL": 0}}}
+Synthetic framebuffer exact: checks=1, frame-id=80000, bytes=921600
+Fixture ready: monitor-index=1, frame-id=80000, renderer=GLES
+Synthetic framebuffer exact: checks=50, frame-id=80049, bytes=921600
+Synthetic framebuffer exact: checks=100, frame-id=80099, bytes=921600
+Synthetic framebuffer exact: checks=150, frame-id=80149, bytes=921600
+Synthetic framebuffer exact: checks=200, frame-id=80199, bytes=921600
+Synthetic framebuffer exact: checks=250, frame-id=80249, bytes=921600
+Synthetic framebuffer exact: checks=300, frame-id=80299, bytes=921600
+Synthetic framebuffer exact: checks=350, frame-id=80349, bytes=921600
+Synthetic framebuffer exact: checks=400, frame-id=80399, bytes=921600
+Synthetic framebuffer exact: checks=450, frame-id=80449, bytes=921600
+Synthetic framebuffer exact: checks=500, frame-id=80499, bytes=921600
+Synthetic framebuffer exact: checks=550, frame-id=80549, bytes=921600
+Synthetic framebuffer exact: checks=600, frame-id=80599, bytes=921600
+Synthetic framebuffer exact: checks=650, frame-id=80649, bytes=921600

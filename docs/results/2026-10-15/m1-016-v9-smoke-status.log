@@ -1,0 +1,11 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-credit-016$ tail -n 16 /tmp/hdmi-capture-credit-016/m1-016-v9-smoke.log; pgrep -af "hdmi_capture.sender"; printf "\nCONSOLE_DONE_fc244f03e9784bb7a509352b78d040e5:%s\n" "$?"
+[?2004l{"event": "source_startup", "timestamp_ns": 28177422812851, "stage": "litex_artifact_verification"}
+{"event": "source_startup", "timestamp_ns": 28177953079145, "stage": "pynq_import"}
+{"event": "source_startup", "timestamp_ns": 28186366595502, "stage": "overlay_load"}
+15577 sudo -n env XILINX_XRT=/usr PYTHONPATH=/tmp/hdmi-capture-credit-016 nohup /usr/local/share/pynq-venv/bin/python -u -X faulthandler -m hdmi_capture.sender --source litex-credit --bitfile /tmp/hdmi-capture-credit-016/overlay-016/capture.bit --manifest /tmp/hdmi-capture-credit-016/overlay-016/build-manifest.json --host :: --port 9022 --fps 2 --duration 120 --startup-diagnostics
+15582 sudo -n env XILINX_XRT=/usr PYTHONPATH=/tmp/hdmi-capture-credit-016 nohup /usr/local/share/pynq-venv/bin/python -u -X faulthandler -m hdmi_capture.sender --source litex-credit --bitfile /tmp/hdmi-capture-credit-016/overlay-016/capture.bit --manifest /tmp/hdmi-capture-credit-016/overlay-016/build-manifest.json --host :: --port 9022 --fps 2 --duration 120 --startup-diagnostics
+15583 /usr/local/share/pynq-venv/bin/python -u -X faulthandler -m hdmi_capture.sender --source litex-credit --bitfile /tmp/hdmi-capture-credit-016/overlay-016/capture.bit --manifest /tmp/hdmi-capture-credit-016/overlay-016/build-manifest.json --host :: --port 9022 --fps 2 --duration 120 --startup-diagnostics
+
+CONSOLE_DONE_fc244f03e9784bb7a509352b78d040e5:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-credit-016$ 
