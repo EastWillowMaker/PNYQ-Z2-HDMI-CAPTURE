@@ -1,0 +1,28 @@
+{
+  "archive": "artifacts/deploy/m1-prepared-v13.tar.gz",
+  "archive_bytes": 410599,
+  "archive_sha256": "f5417929152efcff9a71ae64059079cff19af9dcfb9c7abae41eb4aa093bdca9",
+  "source_revision": "8a90bc0a7c42996bbcb9a413e4635c32502aff2f",
+  "files": {
+    "overlay/build-manifest.json": "4dc7867f34b7bfdbf782c9cde078669b5fb2d2c1ec1930187f6f646592541227",
+    "overlay/capture.bit": "ae3a65d77b1662fedef9ffbc62dd9484cdd8a155af136596da3e6b695fb6846e",
+    "overlay/capture.hwh": "3bfbbf124960ec932a4a53bb4fcb4a5969b89b9a96d6329143bdfc8442eef9a6",
+    "src/hdmi_capture/__init__.py": "2b9eb60f3d6cdca5b5bfba25440cc508016d746844a1f1bdf8554caf953ed39a",
+    "src/hdmi_capture/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "src/hdmi_capture/cli.py": "eb01a928fdbb2396e323b24b303fd1e8820d286e7411820e1330b1aa145f9279",
+    "src/hdmi_capture/client.py": "49fcd09083907eabf05b5fbc6d7742449753b7d299fc877d64fb8d676913ee54",
+    "src/hdmi_capture/prepared.py": "234f3de3d8b8149f69777e4bba86eb5808daee40124b921a01dfec0e34240cd5",
+    "src/hdmi_capture/protocol.py": "f47e8bd7bac61cb4a7d40cb1c765c9b256f1bd7c4d809d10ab1ea5f88f93fde2",
+    "src/hdmi_capture/sender.py": "8790276c947e85d3a1755097faa2b09811d8f00c906d2a48dfd1a98ebe60059e",
+    "src/hdmi_capture/sources.py": "90798eb897756d199d4b9967e4bb2f405837e3f2f3805f04fd0ba4cb379e1727",
+    "tools/check_credit_lease.py": "6428bd94575551746150b208efd42f5c481350582a317e2e31d7f37ba7630ba9",
+    "tools/hdmi_pattern.py": "fc86f02ff25e086698307bdb8d81b4e6156cd30fe9990ed5cbdb670a0f711816",
+    "deployment.json": "83443ca77ef5a7c6bc460a88bccbe978252dcc7a0ac72237f1692ecfa3b2cf19"
+  },
+  "pynq": "3.0.1",
+  "board_python": "/usr/local/share/pynq-venv/bin/python",
+  "XILINX_XRT": "/usr",
+  "PYTHONPATH": "src",
+  "scope": "prepared_runtime_and_fresh_replay_pair_NOT_RUN_on_board",
+  "full_m1_qualification": false
+}

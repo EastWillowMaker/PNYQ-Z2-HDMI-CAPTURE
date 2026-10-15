@@ -1,5 +1,23 @@
 # Progress and handoff
 
+2026-10-16T03:34:50+08:00:014 NEW AUTH WINDOW READY; NO PRE-AUTH TEST TIMER.
+013terminalNOT_RUN preserved. Unused013wizardonly wasclosedafterexactPID/empty
+childcheck; noUARTclient/nativeprocess killed. Newwizard PID1103733:
+artifacts/operator/run-prepared-014.sh, titlePYNQ tracked capture - board then PC.
+Questionpending: userboard sudo-v/Ctrl+] thenPCsudo; firstnormal120s source,
+90s sender/20s strictframes, keepallcablesconnected. OUT artifacts/operator/prepared-014
+DOESNOTEXIST untiluserauth->stage. No board preparation/capture coordinator yet.
+V13 archive f5417929152efcff9a71ae64059079cff19af9dcfb9c7abae41eb4aa093bdca9
+contains tracked8a90bc0 runtime + freshreplay017pair andchecker, pureartifactverifyPASS.
+Specificbootstrap checksoldboot1dd70e40/oldloadedpairledger/storage/RS0Halted1gateoff
+before knownold017PLreload, then actualtrackedprepare--after-reset makesreceipt.
+Changedboot/state aborts ratherthanprobeunknownHW. Newcapture uses realCLI, no
+operatorcustomsource. AfterPCauth rootworker max6runs/30min, each<=720s; first120s,
+continuesawaitingnextrequestwithper-runexitstatus, abortifVTrestoreunverified.
+Coordinator startsONLYafterboardauth soovernightwaitingwontexpiretestagain.
+Do NOTtouchUARTwhilehumanminitermactive; monitorlocalfilesandPIDs only.
+Report prepared-014-auth-ready.md/preflightJSON. HILnewpair/flow/lease NOT_RUN.
+
 2026-10-16T03:20+08:00: TRACKED READY PIPELINE HOST PASS;013 NOT_RUN.
 Sender --wait-ready-file/--ready-timeout blocks before sourceconstruction; host
 trigger_prepared_capture.py validatesfreshKMS and waits actualboardTCPbindbefore

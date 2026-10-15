@@ -1,0 +1,24 @@
+{
+  "scope": "ready_for_local_auth_NOT_RUN",
+  "created": "2026-10-16T03:34:50.425640+08:00",
+  "wizard": "artifacts/operator/run-prepared-014.sh",
+  "wizard_pid": 1103733,
+  "board_dir": "/tmp/hdmi-capture-prepared-014",
+  "source_package": "artifacts/deploy/m1-prepared-v13.tar.gz",
+  "source_package_sha256": "f5417929152efcff9a71ae64059079cff19af9dcfb9c7abae41eb4aa093bdca9",
+  "bitstream_sha256": "ae3a65d77b1662fedef9ffbc62dd9484cdd8a155af136596da3e6b695fb6846e",
+  "hwh_sha256": "3bfbbf124960ec932a4a53bb4fcb4a5969b89b9a96d6329143bdfc8442eef9a6",
+  "source_duration_seconds": 120,
+  "sender_duration_seconds": 90,
+  "qualifier_seconds": 20,
+  "capture_started": false,
+  "privileged_preparation_started": false,
+  "full_m1_qualification": false,
+  "helper_sha256": {
+    "artifacts/deploy/bootstrap-known-idle-014.py": "4c89a65bff0b10bcea47cea2cf2fef06bc51a96af8e8abc41850977dce011bbc",
+    "artifacts/operator/stage-prepared-014.py": "2934fc485545add91fb3a91a91f2e485a34a52c030ddcebca349e0007d1fadd7",
+    "artifacts/operator/coordinate-prepared-014.py": "5dc6e005aa293015b0b4c68a8b14f92d52753a1c9763cc28cab760ab33166411",
+    "artifacts/operator/kms-source-session-014.py": "8ab4f0a516057ee584252c5222a3146411cda9e66356a7660945258e4f5cd934",
+    "artifacts/operator/run-prepared-014.sh": "d8ae3602e6043f6830ac7f533917d8e285d4d428584047129cc8828c63970209"
+  }
+}
