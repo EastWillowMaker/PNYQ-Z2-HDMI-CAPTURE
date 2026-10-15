@@ -1,0 +1,15 @@
+{
+  "original.json": {
+    "vt": 2,
+    "card": "/dev/dri/card2",
+    "connector": "DP-2",
+    "duration": 10,
+    "vendor": "DGL"
+  },
+  "child-result.json": {
+    "exit_code": 1
+  },
+  "restore.json": {
+    "original_vt_restored": true
+  }
+}

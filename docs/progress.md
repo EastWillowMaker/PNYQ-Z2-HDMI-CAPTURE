@@ -1,5 +1,11 @@
 # Progress and handoff
 
+2026-10-15 21:16 Asia/Taipei — first operator direct-VT probe returned toVT2
+but source failed DRM-master acquisition. openvt pickedVT1, starting a GDM
+greeter compositor (sessionc2/tty1). Runner now explicitly targets unusedVT3,
+rejects occupied session VTs, and logs actual VT/session state. Revised local
+sudo probe pending; source never produced a frame in the first VT test.
+
 2026-10-15 21:09 Asia/Taipei — user requested HDMI source outside GNOME.
 Notification suppression failed600s (1148/1201 exact); settings restored.
 10-bit analytic GLES prototype passed15/15 with notifications but remains only

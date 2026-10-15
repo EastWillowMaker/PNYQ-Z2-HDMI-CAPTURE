@@ -9,7 +9,11 @@ involved. The PC receiver still compares every RGB888 byte strictly.
 
 ## Current validation and important limitation
 
-The direct-VT path is **prepared but not hardware-qualified**. The compiled C
+The direct-VT path is **not hardware-qualified**. Its first run returned safely
+but failed to acquire DRM master; openvt chose VT1 and GDM started a greeter
+compositor there. The runner now explicitly selects VT3 (or another unused
+VT3–12) and rejects VTs already owned by a login session. The revised hardware
+run is pending. The compiled C
 source matches all921600 reference bytes for five IDs, including0 and UINT32_MAX;
 four invalid-ID cases fail before display access. Nine tests pass locally.
 The program also refuses DRM master acquisition while the desktop owns it.
@@ -46,7 +50,7 @@ sudo /usr/bin/python3 tools/run_kms_vt.py --duration 10 \
 Run the sudo command locally; never paste its password in chat. The evidence
 directory must be new. Before switching, the runner validates a connected DGL
 EDID oncard2-DP-2, records the original foreground VT, and requires a built
-binary. It uses`openvt -s -w` to choose a free terminal; no session logout,
+binary. It uses`openvt -c 3 -s -w` without force, after checking login sessions; no session logout,
 display-manager stop, or forced DRM-master takeover occurs. Your desktop is
 unavailable while this VT is active. The bounded program exits and openvt returns
 to the original terminal; the runner also callschvt and verifiesfgconsole.

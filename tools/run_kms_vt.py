@@ -24,8 +24,11 @@ def main():
     parser.add_argument('--card', choices=['/dev/dri/card2'], default='/dev/dri/card2')
     parser.add_argument('--connector', choices=['DP-2'], default='DP-2')
     parser.add_argument('--output', type=Path, required=True, help='New evidence directory under artifacts')
+    parser.add_argument('--vt', type=int, default=3, help='Test VT3..12; never use login-screen VT1')
     parser.add_argument('--child', action='store_true', help=argparse.SUPPRESS)
     args = parser.parse_args()
+    if not 3 <= args.vt <= 12:
+        parser.error('test VT must be3..12')
     if not 1 <= args.duration <= 900 or not 0 <= args.frame_id <= 0xFFFFFFFF:
         parser.error('duration must be1..900 and frame ID uint32')
     output = args.output.resolve()
@@ -36,7 +39,14 @@ def main():
     if not BINARY.is_file():
         parser.error('Run bash scripts/build_kms_fixture.sh first')
     if args.child:
-        # openvt already switched away from the desktop; allow DRM master release.
+        active = subprocess.check_output(['/usr/bin/fgconsole'], text=True).strip()
+        sessions = subprocess.check_output(['/usr/bin/loginctl', 'list-sessions', '--no-legend'], text=True)
+        (output / 'active-vt.json').write_text(json.dumps({'actual_vt': active,
+                                                         'requested_vt': args.vt,
+                                                         'sessions': sessions}) + '\n')
+        if active != str(args.vt):
+            raise RuntimeError('openvt did not activate the requested VT')
+        # Allow the desktop to release DRM master after the confirmed switch.
         time.sleep(2)
         with (output / 'source.jsonl').open('x') as events:
             try:
@@ -53,6 +63,16 @@ def main():
     original_vt = subprocess.check_output(['/usr/bin/fgconsole'], text=True).strip()
     if not original_vt.isdigit() or not 1 <= int(original_vt) <= 63:
         raise RuntimeError('Cannot identify original active VT')
+    # VT1 can activate GDM and let its compositor acquire DRM master. Do not
+    # let openvt's free-console heuristic select it. Never force an occupied VT.
+    for line in subprocess.check_output(['/usr/bin/loginctl', 'list-sessions', '--no-legend'], text=True).splitlines():
+        session = line.split()[0]
+        vt = subprocess.check_output(['/usr/bin/loginctl', 'show-session', session,
+                                      '-p', 'VTNr', '--value'], text=True).strip()
+        if vt == str(args.vt):
+            raise RuntimeError('Requested VT belongs to a login session; choose another --vt')
+    if original_vt == str(args.vt):
+        raise RuntimeError('Test VT must differ from original VT')
     edids = list(Path('/sys/class/drm').glob('card2-DP-2/edid'))
     if len(edids) != 1 or not edids[0].read_bytes():
         raise RuntimeError('Expected connected DP-2 EDID is absent')
@@ -74,8 +94,8 @@ def main():
     signal.signal(signal.SIGTERM, interrupt)
     signal.signal(signal.SIGINT, interrupt)
     try:
-        command = ['/usr/bin/openvt', '-s', '-w', '--', '/usr/bin/python3',
-                   str(Path(__file__).resolve()), '--child', '--duration', str(args.duration),
+        command = ['/usr/bin/openvt', '-c', str(args.vt), '-s', '-w', '--', '/usr/bin/python3',
+                   str(Path(__file__).resolve()), '--child', '--vt', str(args.vt), '--duration', str(args.duration),
                    '--frame-id', str(args.frame_id), '--card', args.card,
                    '--connector', args.connector, '--output', str(output)]
         child = subprocess.Popen(command, start_new_session=True)
