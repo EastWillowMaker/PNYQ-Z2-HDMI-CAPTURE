@@ -18,14 +18,15 @@ parent resumed direct checks and finished the local checkpoint.
 [First build014 board attempt](results/2026-10-15/m1-014-bringup.md) records
 zero delivered frames, safe halt-before-free, and the qualifier integration fix.
 
-Build015 is now running with S2MM free-run synchronization and the unchanged
-credit gate. Process handle `88216`; console `artifacts/m1-project-015-console.log`.
-Inputs are snapshotted in `artifacts/m1-project-015-source`; the packaging-only
-legacy-FSYNC guard correction is recorded there. Actual HWH confirms per-channel
-mode0 and retained legacy combined1. The v7 archive predates that guard correction
-and must not be deployed; generate a new source archive after final checks.
-Sudo was renewed noninteractively while the user's authentication remained valid;
-recheck before the next hardware run. No DMA sender is currently active.
+Build015 failed the strict timing gate with WNS -0.071ns on native-counter→DONE;
+no accepted manifest was exported and it must not be loaded. The equivalent
+watchdog equality implementation is now building as016, with handle97016 and
+console `artifacts/m1-project-016-console.log`. Sources are frozen in
+`artifacts/m1-project-016-source`. See [timing investigation](results/2026-10-15/credit-015-timing.md).
+The latest source package is v9; earlier v7/v8 packages are historical inputs.
+Sudo was refreshed while the user's authentication remained valid; recheck before
+next load. No sender or optical fixture is active. Next: require successful CAD,
+then run a bounded real-source smoke before renewed600-second qualification.
 
 ## Preserved previous checkpoint
 

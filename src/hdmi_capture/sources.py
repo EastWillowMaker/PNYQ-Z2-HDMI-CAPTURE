@@ -571,6 +571,9 @@ class CreditControl(LiteXControl):
         self.command = (self.command & ~1) | int(enabled)
         self.registers["capture_control"].write(0, self.command)
 
+    def snapshot(self, sample_point="sequential_gpio_reads_during_credit_health_check"):
+        return super().snapshot(sample_point)
+
     def request(self):
         self.command ^= 2
         self.registers["capture_control"].write(0, self.command)

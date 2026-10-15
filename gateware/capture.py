@@ -152,7 +152,7 @@ class VideoCapture(LiteXModule):
         output_end_pending = Signal()
         tail_transfer = Signal()
         previous_native = Signal(32)
-        native_delta = Signal(32)
+        expected_next_native = Signal(32)
         request_edge = Signal()
         ack_edge = Signal()
         command_fault = Signal()
@@ -164,12 +164,13 @@ class VideoCapture(LiteXModule):
             ack_edge.eq(self.ack_toggle != self.ack_seen),
             command_fault.eq(request_edge & (~self.enable | self.busy | self.failed) |
                              ack_edge & (~self.busy | ~self.done | self.failed)),
-            native_delta.eq(self.native_vsync_edges - previous_native),
             source_fault.eq((self.enable | self.busy) & (
                 self.receiver_reset |
                 (observer._accepted & ~observer.active & ~self.sink.first) |
-                (self.native_armed & (native_delta > 1)) |
-                (self.native_armed & observer._accepted & self.sink.first & (native_delta != 1)))),
+                (self.native_armed & (self.native_vsync_edges != previous_native) &
+                 (self.native_vsync_edges != expected_next_native)) |
+                (self.native_armed & observer._accepted & self.sink.first &
+                 (self.native_vsync_edges != expected_next_native)))),
             observer.enable.eq(waiting & self.enable & ~self.failed &
                                ~command_fault & ~source_fault),
             select_sof.eq(observer._accepted & self.sink.first & observer.enable),
@@ -206,7 +207,8 @@ class VideoCapture(LiteXModule):
             If(self.receiver_reset & ~self.enable & ~self.busy,
                self.native_armed.eq(0)
             ).Elif(observer._accepted & self.sink.first,
-                   previous_native.eq(self.native_vsync_edges), self.native_armed.eq(1)),
+                   previous_native.eq(self.native_vsync_edges),
+                   expected_next_native.eq(self.native_vsync_edges + 1), self.native_armed.eq(1)),
             If(command_fault,
                self.command_errors.eq(self.command_errors + 1)),
             If(source_fault & ~self.source_sequence_fault,
