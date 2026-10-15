@@ -1,0 +1,9 @@
+{
+  "helpers_sha256": {
+    "artifacts/deploy/prepare-new-card-hpd-v2.py": "964e493744b807cda1dcf1c055ab39be3791d24917d072c35c7a138f1a3845c7",
+    "artifacts/deploy/probe-new-card-hpd-pulse.py": "f51109d36ef08bf123ef931d2f425ba564f84d9c34c6663b5c508f9374e4031a",
+    "artifacts/operator/coordinate-new-card-kms.py": "0b63ca246893ffeb3d9dca2baaa7c9ba57ec6526d08cb0bdb8052a96215649d2"
+  },
+  "scope": "one-run startup diagnosis, not cold-boot support",
+  "production_capture_code_changed": false
+}

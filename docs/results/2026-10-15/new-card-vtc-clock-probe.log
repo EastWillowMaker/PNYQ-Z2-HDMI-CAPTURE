@@ -1,0 +1,6 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-newcard-017-v10$ sudo -n env XILINX_XRT=/usr PYTHONPATH=/tmp/hdmi-capture-newcard-017-v10 /usr/local/share/pynq-venv/bin/python -c 'import pynq,json; o=pynq.Overlay("/tmp/hdmi-capture-newcard-017-v10/overlay-017/capture.bit",download=False); v=o.ip_dict["video/hdmi_in/frontend/vtc_in"];m=pynq.MMIO(v["phys_addr"],v["addr_range"]); print(json.dumps(dict(fclk2_mhz=pynq.Clocks.fclk2_mhz,vtc={hex(k):hex(m.read(k)) for k in [0,4,12,32,36,40,44,48,52,56,60]},slcr_fpga_reset=hex(pynq.MMIO(0xf8000240,4).read()))))'; printf "\nCONSOLE_DONE_384b798bacde41b796cb932c3fb662f2:%s\n" "$?"
+[?2004l{"fclk2_mhz": 200.0, "vtc": {"0x0": "0x0", "0x4": "0x0", "0xc": "0x0", "0x20": "0x0", "0x24": "0x0", "0x28": "0x0", "0x2c": "0x1c", "0x30": "0x1", "0x34": "0x1", "0x38": "0x10001", "0x3c": "0x0"}, "slcr_fpga_reset": "0x0"}
+
+CONSOLE_DONE_384b798bacde41b796cb932c3fb662f2:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-newcard-017-v10$ 

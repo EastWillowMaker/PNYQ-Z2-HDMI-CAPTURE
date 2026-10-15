@@ -1,0 +1,13 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-newcard-017-v10$ sudo -n env XILINX_XRT=/usr PYTHONPATH=/tmp/hdmi-capture-newcard-017-v10 /usr/local/share/pynq-venv/bin/python -u -X faulthandler /tmp/hdmi-capture-newcard-017-v10/preload-new-card-hdmi.py; printf "\nCONSOLE_DONE_f564d168c6b443dfa56e41ba57399446:%s\n" "$?"
+[?2004lTraceback (most recent call last):
+  File "/tmp/hdmi-capture-newcard-017-v10/preload-new-card-hdmi.py", line 14, in <module>
+    source.hdmi.configure(source.pixel_format)
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/lib/video/hierarchies.py", line 81, in configure
+    self._hdmi.start()
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/lib/video/dvi.py", line 45, in start
+    self._capture = pynq.lib._video._capture(
+LookupError: _video._capture initialization failed [1]: No incoming video signal detected
+
+CONSOLE_DONE_f564d168c6b443dfa56e41ba57399446:1
+[?2004hxilinx@pynq:/tmp/hdmi-capture-newcard-017-v10$ 

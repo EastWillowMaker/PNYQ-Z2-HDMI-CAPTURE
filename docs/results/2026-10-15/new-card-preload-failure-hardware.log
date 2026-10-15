@@ -1,0 +1,7 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-newcard-017-v10$ sudo -n -v && printf "DMA_AND_GPIO\n" && sudo -n env XILINX_XRT=/usr PYTHONPATH=/tmp/hdmi-capture-newcard-017-v10 /usr/local/share/pynq-venv/bin/python -c 'import pynq,json; o=pynq.Overlay("/tmp/hdmi-capture-newcard-017-v10/overlay-017/capture.bit",download=False); v=o.ip_dict["video/axi_vdma"]; g=o.ip_dict["video/hdmi_in/frontend/axi_gpio_hdmiin"]; m=pynq.MMIO(v["phys_addr"],v["addr_range"]); h=pynq.MMIO(g["phys_addr"],g["addr_range"]); print(json.dumps(dict(vdma_cr=hex(m.read(48)),vdma_sr=hex(m.read(52)),hpd=h.read(0),hpd_tri=h.read(4),locked=h.read(8))))'; printf "\nCONSOLE_DONE_eba23cec3fb148409457818cff3025ee:%s\n" "$?"
+[?2004lDMA_AND_GPIO
+{"vdma_cr": "0x10002", "vdma_sr": "0x10001", "hpd": 1, "hpd_tri": 4294967295, "locked": 0}
+
+CONSOLE_DONE_eba23cec3fb148409457818cff3025ee:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-newcard-017-v10$ 

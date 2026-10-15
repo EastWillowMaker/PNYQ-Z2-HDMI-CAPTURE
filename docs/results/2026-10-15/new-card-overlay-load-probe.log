@@ -1,0 +1,72 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-newcard-017-v10$ printf "SENDER_PROCESSES\n"; ps -eo pid,ppid,stat,wchan:24,args | grep -E "[h]dmi_capture.sender|[n]ew-card-board-session|[p]l_server|[p]ynq"; printf "SUPERVISOR\n"; tail -n 8 /tmp/hdmi-capture-newcard-017-v10/m1-017-newcard-kms-001-supervisor.log; printf "SENDER\n"; tail -n 15 /tmp/hdmi-capture-newcard-017-v10/m1-017-newcard-kms-001.log; printf "EXT4_ERRORS="; cat /sys/fs/ext4/mmcblk0p2/errors_count; printf "RECENT_KERNEL\n"; sudo -n dmesg --color=never | tail -n 45; printf "\nCONSOLE_DONE_a034023da0594acf989ea8a8ceb70fa4:%s\n" "$?"
+[?2004lSENDER_PROCESSES
+  422     1 S    -                        /usr/local/share/[01;31m[Kpynq[m[K-venv/bin/python3 /usr/local/share/[01;31m[Kpynq[m[K-venv/bin/jupyter-notebook --no-browser --allow-root
+SUPERVISOR
+{"started_monotonic": 1681.667743883, "dma_shutdown_safe": null, "sender_exit": 1, "error": null, "full_m1_qualification": false, "before": {"dmesg_exit": 0, "ext4_errors_count": "0", "test_bytes": 16777216, "test_sha256": "341aacac661ccb210720bedaa9ead5d668fe5ea41a73532fc147c71e34040df1"}, "sender_pid": 3275, "after": {"dmesg_exit": 0, "ext4_errors_count": "0", "test_bytes": 16777216, "test_sha256": "341aacac661ccb210720bedaa9ead5d668fe5ea41a73532fc147c71e34040df1"}, "finished_monotonic": 1758.286419406}
+SENDER
+    address = await self.start(host, port)
+  File "/tmp/hdmi-capture-newcard-017-v10/hdmi_capture/sender.py", line 175, in start
+    self.source.start()
+  File "/tmp/hdmi-capture-newcard-017-v10/hdmi_capture/sources.py", line 660, in start
+    self.hdmi.configure(self.pixel_format)
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/lib/video/hierarchies.py", line 81, in configure
+    self._hdmi.start()
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/lib/video/dvi.py", line 45, in start
+    self._capture = pynq.lib._video._capture(
+LookupError: _video._capture initialization failed [1]: No incoming video signal detected
+Exception ignored in: <function UioController.__del__ at 0xb334cdf0>
+Traceback (most recent call last):
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/uio.py", line 79, in __del__
+  File "/usr/lib/python3.10/asyncio/events.py", line 656, in get_event_loop
+RuntimeError: There is no current event loop in thread 'MainThread'.
+EXT4_ERRORS=0
+RECENT_KERNEL
+[   88.792233] [drm] bitstream 3c5ec091-9a62-2c70-fc5d-950f32b184f5 unlocked, ref=0
+[   96.414467] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(305)
+[   97.133805] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(807)
+[ 1088.952599] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(2368), ret: 0
+[ 1088.952716] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(2368)
+[ 1088.953333] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(2368), ret: 0
+[ 1094.170914] fpga_manager fpga0: writing capture.bin to Xilinx Zynq FPGA Manager
+[ 1094.254889] [drm] skip kind 29(AIE_RESOURCES) return code: -22
+[ 1094.254932] [drm] skip kind 8(IP_LAYOUT) return code: -22
+[ 1094.254945] [drm] skip kind 9(DEBUG_IP_LAYOUT) return code: -22
+[ 1094.254957] [drm] skip kind 25(AIE_METADATA) return code: -22
+[ 1094.254967] [drm] skip kind 7(CONNECTIVITY) return code: -22
+[ 1094.254978] [drm] found kind 6(MEM_TOPOLOGY)
+[ 1094.255179] [drm] Memory 0 is not reserved in device tree. Will allocate memory from CMA
+[ 1094.255754] [drm] zocl_xclbin_read_axlf 5ded8172-9314-44e2-7940-cda8c5ee2938 ret: 0
+[ 1094.280545] [drm] bitstream 5ded8172-9314-44e2-7940-cda8c5ee2938 locked, ref=1
+[ 1094.280599] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_add_context: Client pid(2368) add context Domain(0) CU(0xffffffff) shared(true)
+[ 1094.280687] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_del_context: Client pid(2368) del context Domain(0) CU(0xffffffff)
+[ 1094.280714] [drm] bitstream 5ded8172-9314-44e2-7940-cda8c5ee2938 unlocked, ref=0
+[ 1156.895463] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(2368)
+[ 1513.641824] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(2989), ret: 0
+[ 1513.641937] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(2989)
+[ 1513.642544] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(2989), ret: 0
+[ 1517.538703] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(2989)
+[ 1631.032671] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(3168), ret: 0
+[ 1631.032784] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(3168)
+[ 1631.033387] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(3168), ret: 0
+[ 1634.367268] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(3168)
+[ 1694.193509] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(3275), ret: 0
+[ 1694.193618] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(3275)
+[ 1694.194212] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(3275), ret: 0
+[ 1696.327183] fpga_manager fpga0: writing capture.bin to Xilinx Zynq FPGA Manager
+[ 1696.406547] [drm] skip kind 29(AIE_RESOURCES) return code: -22
+[ 1696.406594] [drm] skip kind 8(IP_LAYOUT) return code: -22
+[ 1696.406609] [drm] skip kind 9(DEBUG_IP_LAYOUT) return code: -22
+[ 1696.406621] [drm] skip kind 25(AIE_METADATA) return code: -22
+[ 1696.406632] [drm] skip kind 7(CONNECTIVITY) return code: -22
+[ 1696.406643] [drm] found kind 6(MEM_TOPOLOGY)
+[ 1696.406758] [drm] Memory 0 is not reserved in device tree. Will allocate memory from CMA
+[ 1696.406804] [drm] zocl_xclbin_read_axlf 139b63fc-9975-f67c-7c0d-4dc25da59201 ret: 0
+[ 1696.432467] [drm] bitstream 139b63fc-9975-f67c-7c0d-4dc25da59201 locked, ref=1
+[ 1696.432522] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_add_context: Client pid(3275) add context Domain(0) CU(0xffffffff) shared(true)
+[ 1696.432614] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_del_context: Client pid(3275) del context Domain(0) CU(0xffffffff)
+[ 1696.432642] [drm] bitstream 139b63fc-9975-f67c-7c0d-4dc25da59201 unlocked, ref=0
+[ 1757.777502] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(3275)
+
+CONSOLE_DONE_a034023da0594acf989ea8a8ceb70fa4:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-newcard-017-v10$ 

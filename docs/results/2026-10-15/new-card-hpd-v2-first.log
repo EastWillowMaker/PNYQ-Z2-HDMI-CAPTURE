@@ -1,0 +1,10 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-newcard-017-v10$ cd /tmp/hdmi-capture-newcard-017-v10 && test ! -e prepare-new-card-hpd-v2.py && curl -g --noproxy "*" --max-time 20 "http://[fe80::560f:ee4c:ed84:e6ce%eth0]:8765/prepare-new-card-hpd-v2.py" -o prepare-new-card-hpd-v2.py && sha256sum prepare-new-card-hpd-v2.py && sudo -n -v && sudo -n env XILINX_XRT=/usr PYTHONPATH=/tmp/hdmi-capture-newcard-017-v10 /usr/local/share/pynq-venv/bin/python -u prepare-new-card-hpd-v2.py; printf "\nCONSOLE_DONE_0bcf0adc507a477ab3580dad4a59a989:%s\n" "$?"
+[?2004l  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100  1804  100  1804    0     0   172k      0 --:--:-- --:--:-- --:--:--  195k
+964e493744b807cda1dcf1c055ab39be3791d24917d072c35c7a138f1a3845c7  prepare-new-card-hpd-v2.py
+{"event": "receiver_hpd_ready_before_kms", "hpd": 1, "receiver_locked": 0, "vdma_cr": "0x10002", "vdma_sr": "0x10001", "capture_enabled": false, "allocated_capture_buffers": 0, "input_mode_verified": false}
+
+CONSOLE_DONE_0bcf0adc507a477ab3580dad4a59a989:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-newcard-017-v10$ 

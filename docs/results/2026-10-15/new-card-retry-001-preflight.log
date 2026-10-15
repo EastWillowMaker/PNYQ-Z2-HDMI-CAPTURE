@@ -1,0 +1,10 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-newcard-017-v10$ printf "BOOT_ID="; cat /proc/sys/kernel/random/boot_id; printf "ROOT_ERRORS="; cat /sys/fs/ext4/mmcblk0p2/errors_count; printf "SENDER_PROCESSES\n"; pgrep -af "[h]dmi_capture.sender|[n]ew-card-board-session"; printf "SUDO_CHECK\n"; sudo -n -v; printf "\nCONSOLE_DONE_f14645aed8b24fe58cc7353c977f485e:%s\n" "$?"
+[?2004lBOOT_ID=888441ac-9433-48f9-816a-38b40be71c0e
+ROOT_ERRORS=0
+SENDER_PROCESSES
+SUDO_CHECK
+sudo: a password is required
+
+CONSOLE_DONE_f14645aed8b24fe58cc7353c977f485e:1
+[?2004hxilinx@pynq:/tmp/hdmi-capture-newcard-017-v10$ 

@@ -1,5 +1,40 @@
 # Progress and handoff
 
+Fresh-card KMS001 failed before frames: KMS ready XR24/640x480/25200kHz,
+sender then timed out in native frontend.configure and exited1. No smoke or
+600s qualifier ran. Coordinator shutdown_safe=null remains original; resource
+log fetch failed because no resource sampler was launched. Supervisor before/
+after storage checks pass, ext4count0/hash unchanged. Later raw S2MM RS0/Halted1,
+gate disabled/selected0/completed0 establish current stopped hardware state.
+HPD one-second pulse did not resume nativeVSYNC counts. Clocks match100/
+142.857143/200MHz, SLCR reset0. KMS source remains bounded720s and will return
+VT2; wait for restore.json before another source run. Host connector scaling/
+adjusted timing remains to inspect after DRM access returns. Do not claim a
+new-card capture pass. See new-card-hdmi-startup-report.md and failed KMS001
+coordinator/logs. No sender is running; no capture pool was allocated.
+
+2026-10-15 23:35 Asia/Taipei: first fresh-card frontend preload FAILED.
+Actual sudo succeeded but configure waited for unsupported4K desktop video and
+reported no input. Host-visible DGL EDID differs from builtVGA EDID, including
+4K DTD; origin unresolved. No sender/DMA started; raw CR0x10002/SR0x10001.
+Revised one-run HPD-only attach passed on board without waiting for lock or
+allocating capture buffers. Keep gate disabled and DMA Halted until directKMS
+VGA is ready. Original failed preload and EDID/Mutter/MMIO evidence retained in
+[new startup report](results/2026-10-15/new-card-hdmi-startup-report.md).
+Coordinator is waiting for new source readiness. Opened a local terminal
+PYNQ KMS - PC sudo only; board auth currently valid, only host VT sudo needed.
+The old full wizard remains failed; do not rerun/reuse its evidence paths.
+Newcard sustained capture/cleanup and EDID cause still unverified.
+
+2026-10-15 23:22 Asia/Taipei: retry preflight confirms same board boot ID,
+ext4 errors_count0, no sender/supervisor processes, and no existing new-card
+KMS/preload/coordinator evidence. Board sudo and host sudo both still require
+interactive authentication. No overlay/capture retry was sent by this probe.
+Opened a local Ptyxis terminal titled PYNQ capture retry, waiting for the
+operator to press Enter and start the prepared wizard. No password is read by
+the launcher; passwords go only to local sudo prompts. The terminal launch
+command returned0, but operator interaction/test execution is not yet confirmed.
+
 Fresh-card capture replay PREPARED, NOT RUN (after storage pass).
 Unchanged sender-v10 and overlay017 archives copied to
 `/tmp/hdmi-capture-newcard-017-v10`; archives and paired bit/HWH hashes match.

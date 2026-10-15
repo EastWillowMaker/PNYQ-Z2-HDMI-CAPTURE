@@ -78,3 +78,17 @@ For full-sized MTU1500 IPv6 TCP segments without options, 1440 payload bytes con
 1538 wire bytes including Ethernet header/FCS/preamble/IFG: ratio 1.0681, excluding
 ACKs/options/short segments/application metadata. Actual overhead and CPU remain
 unmeasured. A 1 Gb/s link cannot carry 720p60 raw RGB888 payload.
+
+## 2026-10-15: requested KMS timing is not complete physical proof
+
+Official Linux DRM documentation separates userspace `mode` from driver
+`adjusted_mode`, and documents connector scaling modes. Sources:
+https://cdn.kernel.org/doc/html/latest/gpu/drm-kms.html#c.drm_crtc_state
+and https://cdn.kernel.org/doc/html/latest/gpu/drm-kms.html#standard-connector-properties.
+Read on2026-10-15. They support checking adjusted hardware timing/scaling, not
+a conclusion that this AMD GPU is currently scaling. Local directKMS reports
+640x480/25200kHz and page flips, yet no board native VSYNC edges are observed.
+Host-visible EDID contains4K although the paired FPGA artifact was built for
+VGA. Actual source scaling, bridge behavior and EDID changes remain unverified.
+The inactive desktop user's DRM access returns EACCES while VT3 is active;
+a connector-property query is prepared for after normal VT restoration.
