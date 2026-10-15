@@ -379,7 +379,7 @@ class LiteXSource(PynqSource):
         self.integrity_previous = None
         self.integrity_failure = None
 
-    def load_overlay(self, download=True):
+    def load_overlay(self, download=True, *, video_drivers=True):
         self._stage("litex_artifact_verification")
         self.manifest = verify_litex_artifacts(self.bitfile, self.manifest_path)
         if self.manifest.get("capture_interface") != getattr(self, "capture_interface", None):
@@ -388,8 +388,6 @@ class LiteXSource(PynqSource):
         import pynq
         if pynq.__version__ != "3.0.1":
             raise SourceError("LiteX adapter requires PYNQ3.0.1")
-        from pynq.lib.video import PIXEL_BGR
-        from pynq.lib.video.hierarchies import VideoIn
         self._stage("overlay_load" if download else "overlay_attach")
         self.overlay = pynq.Overlay(str(Path(self.bitfile).resolve()), download=download)
         if not self.overlay.is_loaded():
@@ -405,10 +403,15 @@ class LiteXSource(PynqSource):
                 "source_health" not in self.control.registers or
                 "source_faults" not in self.control.registers):
             raise SourceError("Manifest requires the complete source-health GPIO resources")
-        if not download:
+        if not download or not video_drivers:
             # GPIO-only control must not instantiate video drivers. PixelPacker
             # construction writes its mode register even when no DMA is started.
             return
+        self._initialize_video()
+
+    def _initialize_video(self):
+        from pynq.lib.video import PIXEL_BGR
+        from pynq.lib.video.hierarchies import VideoIn
         self.hdmi = VideoIn(self.overlay.video.hdmi_in.description,
                             self.overlay.video.axi_vdma)
         self.pixel_format = PIXEL_BGR
@@ -606,7 +609,8 @@ class LiteXCreditSource(LiteXSource):
     paces_capture = True
     capture_interface = CREDIT_ABI
 
-    def __init__(self, bitfile, manifest, *, capture_fps=2, progress=None, timeout=3):
+    def __init__(self, bitfile, manifest, *, capture_fps=2, progress=None, timeout=3,
+                 prepared_receipt=None):
         super().__init__(bitfile, manifest, progress=progress)
         if not math.isfinite(capture_fps) or not 0 < capture_fps <= 60:
             raise ValueError("Credit capture FPS must be in(0,60]")
@@ -621,6 +625,13 @@ class LiteXCreditSource(LiteXSource):
         self.next_request = 0
         self.ack_pending = False
         self.final_accounting = None
+        self.prepared_receipt = prepared_receipt
+
+    def load_overlay(self, download=True):
+        if self.prepared_receipt is None:
+            return super().load_overlay(download=download)
+        from .prepared import attach_prepared
+        attach_prepared(self, self.prepared_receipt, video_drivers=download)
 
     def start(self):
         record = verify_litex_artifacts(self.bitfile, self.manifest_path)

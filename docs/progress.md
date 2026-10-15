@@ -1,5 +1,20 @@
 # Progress and handoff
 
+2026-10-16: TRACKED PREPARE/ATTACH + LEASE CHECK HOST PASS.
+New sender prepare --receipt [--after-reset] and --prepared-receipt validate
+boot/artifact/rawPYNQ ledger identity and stopped/emptyhardware beforevideo.
+No-unknown-MMIO initialreset assertion is explicit; receipt is a softwareledger,
+not hardwarebuild-ID proof. SavedSDKshutdownmaps reject; fixed-outputHPD TRI
+is not read. Failed inactive guards discard unowned/stale maps, so finally-close
+cannot disable existingcapture or writeoldaddresses afterreprogramming. Active
+owners reject before refschange. New bounded tools/check_credit_lease.py records
+heldrawbuffer/IDs/VDMA/nativeprogress, guardsrearm, compares2exactpatterns and
+holds unsafeDMArefs oncleanup failure. Hostfinal413pass1skip;79prepared and18
+leasecases; actualproductionprepare/attach/lease NOT_RUN. See new prepared-capture,
+credit-lease-check and results/2026-10-16/prepared-lease-integration.md.
+013stillwaits userauth via immutabledeployedv12; no newDMA. Newfull017isolated
+freshHLS/CADreplay delegated to replay_017, nohardwareactions. Keepgoalactive.
+
 2026-10-16T01:38:01+08:00:011 NORMAL600s PASS;012 HDMI LOSS FAIL.
 011 received1201 exact distinct frames/600.368226s/2.000439FPS, allmetadata and
 source-ID correlation passed. Senderexit0/DMAcleanuptrue, independent raw halt

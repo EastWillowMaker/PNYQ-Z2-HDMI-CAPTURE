@@ -5,6 +5,7 @@ import asyncio
 from contextlib import suppress
 import json
 import math
+from pathlib import Path
 import signal
 import sys
 import time
@@ -303,6 +304,8 @@ def main(argv=None, *, unsafe_hold=None):
     argv = sys.argv[1:] if argv is None else argv
     if argv and argv[0] == "control":
         return control_main(argv[1:])
+    if argv and argv[0] == "prepare":
+        return prepare_main(argv[1:])
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", required=True, choices=("pynq", "synthetic", "litex", "litex-credit"))
     parser.add_argument("--host", default="0.0.0.0")
@@ -313,12 +316,15 @@ def main(argv=None, *, unsafe_hold=None):
     parser.add_argument("--height", type=int, default=480)
     parser.add_argument("--bitfile", default="base.bit")
     parser.add_argument("--manifest", help="Required build-manifest.json for the LiteX source")
+    parser.add_argument("--prepared-receipt", help="Attach a prepared litex-credit receiver without reloading")
     parser.add_argument("--read-timeout", type=float, default=3)
     parser.add_argument("--send-timeout", type=float, default=5)
     parser.add_argument("--duration", type=float)
     parser.add_argument("--startup-diagnostics", action="store_true",
                         help="Emit JSON startup and DMA cleanup stages to stderr")
     args = parser.parse_args(argv)
+    if args.prepared_receipt is not None and args.source != "litex-credit":
+        parser.error("--prepared-receipt requires --source litex-credit")
     if args.duration is not None and (not math.isfinite(args.duration) or args.duration <= 0):
         parser.error("duration must be finite and positive")
     if args.source in ("pynq", "litex", "litex-credit"):
@@ -336,6 +342,8 @@ def main(argv=None, *, unsafe_hold=None):
             options = dict(progress=progress if args.startup_diagnostics else None)
             if args.source == "litex-credit":
                 options.update(capture_fps=args.fps, timeout=args.read_timeout)
+                if args.prepared_receipt is not None:
+                    options["prepared_receipt"] = args.prepared_receipt
             source_class = LiteXCreditSource if args.source == "litex-credit" else LiteXSource
             source = source_class(args.bitfile, args.manifest, **options)
         else:
@@ -362,6 +370,21 @@ def main(argv=None, *, unsafe_hold=None):
     finally:
         for signum, handler in previous_handlers.items():
             signal.signal(signum, handler)
+
+
+def prepare_main(argv):
+    from .prepared import prepare
+    parser = argparse.ArgumentParser(description="Prepare the credit receiver before starting HDMI input")
+    parser.add_argument("--bitfile", required=True)
+    parser.add_argument("--manifest", required=True)
+    parser.add_argument("--receipt", required=True)
+    parser.add_argument("--after-reset", action="store_true",
+                        help="Assert board or PL reset and no active DMA; does not reset hardware")
+    args = parser.parse_args(argv)
+    source = LiteXCreditSource(args.bitfile, args.manifest)
+    receipt = prepare(source, args.receipt, after_reset=args.after_reset)
+    print(json.dumps(dict(event="receiver_prepared", receipt=str(Path(args.receipt).resolve()),
+                          preparation=receipt["preparation"], input_mode_verified=False)), flush=True)
 
 
 def control_main(argv):
