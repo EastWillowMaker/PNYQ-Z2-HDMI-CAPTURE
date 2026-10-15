@@ -107,3 +107,37 @@ Next: establish why the boot changed, authenticate the board once for the
 fixed preparation, then inspect the resulting EDID before using any remaining
 bounded local source-worker slots. The worker's deadline still applies; do
 not reuse previous source evidence or weaken the DGL/mode/pixel checks.
+
+
+## Shared Hub explanation and next guarded probe006
+
+The user confirmed that the PYNQ Micro-B is connected to the same USB-to-HDMI
+Hub that was removed. This accounts for the shared connection interruption observed alongside
+the board reboot and recreated Ethernet interface; the action cannot isolate an HDMI adapter
+reset. Keep the Hub connected. Future HDMI-only interruption should be at
+the HDMI cable, with board power/UART continuity checked first. This does not
+explain the input failures that preceded the physical replug.
+
+A fresh preflight still finds boot1dd70e40, the staged helper's expected hash,
+ext4 errors_count0 and sudo authentication required. Opened one local terminal
+with prepare-shared-hub-006.sh: existing board-only authentication wizard,
+then immediate guarded fixed-boot receiver load/HPD preparation. It verifies
+the helper hash and rejects a running sender before loading; it neither starts
+capture DMA nor asks for a host password. Shell syntax passed. The wizard's
+library is reused unchanged. Actual privileged preparation is pending.
+
+watch-shared-hub-006.py waits for successful preparation and UART-client exit.
+It requires connected DGL EDID, a live worker with time for the bounded run,
+and unused request03/output. It stages and hashes the native frontend probe,
+checks real board sudo, then requests90s fixed VGA KMS and checks XR24/VGA/
+25200kHz readiness before probing. The native call has5s input timeout, parent
+MMIO observation25s, and never allocates a capture buffer or starts DMA. Root
+source return/VT restoration are collected even when the native probe fails.
+The output is artifacts/operator/shared-hub-006, watcher exec session88428.
+No unsupported sink fallback or acceptance change was introduced. Compilation
+passed; this new coordinator's real preparation/source/probe paths are pending.
+If auth is delayed beyond the worker deadline, it stops without queuing a run.
+
+The board power jumper and supply voltage were not measured. The confirmed
+fact is the shared Hub wiring and coincident reboot, not an electrical fault
+diagnosis or evidence that all earlier input failures had the same cause.

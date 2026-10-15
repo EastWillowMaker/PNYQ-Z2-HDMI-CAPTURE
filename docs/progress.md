@@ -1,5 +1,19 @@
 # Progress and handoff
 
+2026-10-16 00:41 Asia/Taipei: user CONFIRMED PYNQ Micro-B shares the USB-C HDMI
+Hub. Hub removal explains the board reboot; replug005 is not HDMI-only evidence.
+Keep Hub connected; future loss stimulus at HDMI cable with power/UART intact.
+Preflight sameboot1dd70e40, ext4count0/helperhashmatch; board sudo requiresauth.
+Opened PYNQ receiver - board auth only with prepare-shared-hub-006.sh; user
+sudo-v/Ctrl+] then immediate fixedboot017+HPD prepare, no DMA/hostsudo. Do not
+contend UART while wizard open. Watcher session88428 waits preparation, DGL
+EDID, live boundedsourceworker and remainingdeadline, then stages nativeprobe
+and queues unused source03/90s VGA. It records input/VTC/halting only, no capture
+buffers. artifacts/operator/shared-hub-006/summary.json records actual result.
+New helper/watcher syntax/compilepassed, runtimepending. If worker~00:48 expires,
+watcher refuses request03. Physical rootcause clarified; prior input-init bug
+remains unresolved. See fresh-card-input-diagnosis.md for dispatch/guards.
+
 2026-10-16 00:37 Asia/Taipei: physical USB-C replug005 observed disconnect then
 reconnect, but PYNQ also has NEW boot1dd70e40-85cc-4c9b-a2e2-03b9814e290f,
 uptime61s and erased/tmp deployment. Asked user whether board reset/power/UART

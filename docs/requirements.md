@@ -129,3 +129,13 @@ auto-halt proof. Require generated-RTL exact-data/boundary/drain tests before CA
 This implements the accepted capture contract and needs no new product decision.
 Other coefficients/packing modes remain unverified by the identity/VGA drain
 test; actual RGB, DMA completion and source accounting require physical evidence.
+
+## Shared USB-C Hub wiring (confirmed, 2026-10-16)
+
+The user confirmed that the PYNQ Micro-B connection is on the same USB-C Hub
+as the PC HDMI source adapter. Removing the Hub can therefore interrupt the
+board connection and, as observed in replug005, restart the board. Do not use
+a Hub unplug as an isolated HDMI-loss stimulus in this fixture. Keep the Hub
+connected and perform future HDMI-only interruption at the HDMI cable, after
+checking that power and UART remain present. This wiring fact does not change
+the RGB capture acceptance criteria or prove the cause of prior input failures.
