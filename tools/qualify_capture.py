@@ -78,7 +78,9 @@ def _health_errors(metadata, *, allow_legacy=False):
         errors.append("startup baseline was not taken with capture held disabled")
     if type(startup.get("selected_frames")) is not int or startup["selected_frames"] != 0:
         errors.append("startup baseline does not establish zero selected frames")
-    if startup.get("sample_point") != "sequential_gpio_reads_after_dma_start_before_capture_enable":
+    startup_point = ("sequential_gpio_reads_after_dma_start_before_capture_enable" if allow_legacy
+                     else "before_first_credit_while_gate_disabled_dma_halted")
+    if startup.get("sample_point") != startup_point:
         errors.append("startup baseline was not taken before capture enable")
     for name in ("frontend_overflow_episodes", "frontend_underflow_episodes"):
         if startup.get(name) != 0:
@@ -129,7 +131,8 @@ def _accounting_errors(metadata, previous=None):
         return value
 
     for key, expected in (("abi", "single_credit_parked_v1"),
-                          ("dma_completion_mode", "parked_frame_count_halt_v1")):
+                          ("dma_completion_mode", "parked_frame_count_halt_v1"),
+                          ("gate_completion_policy", "next_sof_after_selected_output_drain_v1")):
         if record.get(key) != expected:
             errors.append(f"unsupported or missing {key}")
     for key in ("dma_auto_halted", "buffer_stable_until_release", "credit_busy",
@@ -296,8 +299,10 @@ def run(args, *, client_factory=CaptureClient, clock=time.monotonic):
                     reasons = []
                     if meta.get("source_origin") != "hdmi":
                         reasons.append("source is not real HDMI")
+                    implementation = ("litex_video_gate" if args.legacy_delivered_image_criterion
+                                      else "litex_single_credit_gate")
                     if args.require_litex and (meta.get("baseline_only") is not False or
-                            meta.get("capture_implementation") != "litex_video_gate" or
+                            meta.get("capture_implementation") != implementation or
                             "litex_capture" not in meta.get("flags", [])):
                         reasons.append("required LiteX capture metadata missing or baseline-only")
                     if args.require_litex:

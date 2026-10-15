@@ -1,7 +1,7 @@
 # Progress and handoff
 
 2026-10-15 — Build014 single-credit implementation and local checks completed;
-physical validation remains pending. Do not mark M1 complete. See
+first physical smoke failed automatic DMA halt; continued investigation required. Do not mark M1 complete. See
 [the new checkpoint](results/2026-10-15/credit-014-build.md) for artifacts,
 behavioral impact, 291 software tests and 62 gate/manifest tests. The new producer
 is `--source litex-credit`; legacy013 requires `--source litex` and the qualifier's
@@ -10,10 +10,13 @@ from old continuous-ring counts.
 
 Build014 bit/HWH/manifest and v6 deployment packages are ready. Latest UART
 preflight is `artifacts/operator/credit-ready-preflight.log`; sudo authentication
-must be rechecked/renewed locally before board load. No sender or optical fixture
-is currently armed. User physical-unplug availability remains pending; never ask
+must be rechecked/renewed locally before board load. The first sender exited safely after a read timeout; no active DMA remains.
+The optical fixture has a bounded duration and must be rechecked before use. User physical-unplug availability remains pending; never ask
 them to unplug until a new capture is running. Subagents hit usage limits;
 parent resumed direct checks and finished the local checkpoint.
+
+[First build014 board attempt](results/2026-10-15/m1-014-bringup.md) records
+zero delivered frames, safe halt-before-free, and the qualifier integration fix.
 
 ## Preserved previous checkpoint
 

@@ -43,14 +43,15 @@ def frame(i, *, optical=None, origin="hdmi", baseline=False):
         acquisition_id=i+1, source_sequence=100+i, frame_source_id=i,
         source_sequence_domain="native_vsync_edge_counter", source_sequence_bits=32,
         source_sequence_policy="reject_wrap_or_reset",
-        capture_implementation="litex_video_gate", flags=["litex_capture"],
+        capture_implementation="litex_single_credit_gate", flags=["litex_capture"],
         litex_counters=health, litex_startup_counters=dict(health, native_vsync_edges=90,
             enabled=False, selected_frames=0,
-            sample_point="sequential_gpio_reads_after_dma_start_before_capture_enable"),
+            sample_point="before_first_credit_while_gate_disabled_dma_halted"),
         capture_enable_reset=0,
         integrity_policy="single_credit_parked_auto_halt_fail_closed_v1",
         source_accounting=dict(abi="single_credit_parked_v1",
-            dma_completion_mode="parked_frame_count_halt_v1", buffer_slot=0,
+            dma_completion_mode="parked_frame_count_halt_v1",
+            gate_completion_policy="next_sof_after_selected_output_drain_v1", buffer_slot=0,
             dma_auto_halted=True, raw_dma_status=0x1001, buffer_stable_until_release=True,
             credit_busy=True, credit_done=True, credit_failed=False, request_seen=1,
             ack_seen=0, selected_completed=i+1, command_errors=0, source_sequence_faults=0,
@@ -92,6 +93,8 @@ def test_legacy_013_delivered_images_do_not_claim_full_m1(tmp_path):
         sample.metadata["counters"].update(source_skips=None, source_overruns=None,
                                            source_invalid_frames=None)
         sample.metadata.pop("source_accounting")
+        sample.metadata["capture_implementation"] = "litex_video_gate"
+        sample.metadata["litex_startup_counters"]["sample_point"] = "sequential_gpio_reads_after_dma_start_before_capture_enable"
         sample.metadata["integrity_policy"] = "disabled_zero_selected_baseline_then_stop_on_integrity_change"
     args, factory, clock = setup_run(tmp_path, samples, legacy=True)
     report = run(args, client_factory=factory, clock=clock)
@@ -405,3 +408,56 @@ def test_native_sampling_not_combined_with_old_software_sampling_counter():
         source_intentional_sampling_total=9, intentional_skips_since_previous=9)
     current["counters"].update(source_skips=9, intentional_sampling_drops=0)
     assert _accounting_errors(current, previous) == []
+
+
+def test_real_credit_producer_wire_metadata_passes_formal_qualifier(tmp_path):
+    """Exercise the reader/sender/parser boundary instead of hand-written metadata."""
+    import asyncio
+    import socket
+    import threading
+
+    from test_sources import credit_reader_fixture
+    from hdmi_capture.protocol import encode_frame, read_frame
+    from hdmi_capture.sender import Sender
+
+    source, _ = credit_reader_fixture()
+    source.manifest.update(frame(0).metadata['source_health_provenance'])
+    baseline = dict(source.integrity_baseline,
+        overflow_units='assertion_episodes_not_lost_frames',
+        sample_point='before_first_credit_while_gate_disabled_dma_halted')
+    source.integrity_baseline = source.integrity_previous = baseline
+    source.control.snapshot = lambda: dict(baseline, enabled=True,
+        native_vsync_edges=source.control.next_native + 1)
+    sender = Sender(source, fps=2)
+
+    async def acquire():
+        received = []
+        for i in range(3):
+            source.control.next_native = 102 + 30*i
+            source.control.next_sof = 22 + 30*i
+            source.native.buffer[:] = pattern(i)[..., ::-1]
+            sample = await source.read()
+            sender.counters['acquired'] = i+1
+            rgb = sample.copy_rgb()
+            wire = encode_frame(rgb, sender._metadata(sample, i+1))
+            sample.close()
+            # This must fit the production protocol bound and decode actual bytes.
+            left, right = socket.socketpair()
+            try:
+                thread = threading.Thread(target=right.sendall, args=(wire,))
+                thread.start()
+                received.append(read_frame(left))
+                thread.join(2)
+                assert not thread.is_alive()
+            finally:
+                left.close()
+                right.close()
+        return received
+
+    samples = asyncio.run(acquire())
+    args, factory, clock = setup_run(tmp_path, samples)
+    report = run(args, client_factory=factory, clock=clock)
+    assert report['passed'], report
+    assert report['source_accounting_validated_frames'] == 3
+    assert report['source_accounting_metadata_validated']
+    assert report['last_metadata']['counters']['source_skips'] == 58

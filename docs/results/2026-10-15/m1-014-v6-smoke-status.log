@@ -1,0 +1,33 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-credit$ tail -n 28 /tmp/hdmi-capture-credit/m1-014-v6-smoke.log; pgrep -af "hdmi_capture.sender"; printf "\nCONSOLE_DONE_2e5b21d3b48f46bf876ddc3cbaf5e1ba:%s\n" "$?"
+[?2004l  File "/usr/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/usr/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/tmp/hdmi-capture-credit/hdmi_capture/sender.py", line 337, in <module>
+    main()
+  File "/tmp/hdmi-capture-credit/hdmi_capture/sender.py", line 311, in main
+    asyncio.run(sender.run(args.host, args.port, args.duration))
+  File "/usr/lib/python3.10/asyncio/runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 646, in run_until_complete
+    return future.result()
+  File "/tmp/hdmi-capture-credit/hdmi_capture/sender.py", line 183, in run
+    await self.close()
+  File "/tmp/hdmi-capture-credit/hdmi_capture/sender.py", line 206, in close
+    await self._capture_task
+  File "/tmp/hdmi-capture-credit/hdmi_capture/sender.py", line 180, in run
+    self._capture_task.result()
+  File "/tmp/hdmi-capture-credit/hdmi_capture/sender.py", line 75, in _capture
+    sample = await asyncio.wait_for(self.source.read(), self.read_timeout)
+  File "/usr/lib/python3.10/asyncio/tasks.py", line 458, in wait_for
+    raise exceptions.TimeoutError() from exc
+asyncio.exceptions.TimeoutError
+Exception ignored in: <function UioController.__del__ at 0xb342adf0>
+Traceback (most recent call last):
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/uio.py", line 79, in __del__
+  File "/usr/lib/python3.10/asyncio/events.py", line 656, in get_event_loop
+RuntimeError: There is no current event loop in thread 'MainThread'.
+
+CONSOLE_DONE_2e5b21d3b48f46bf876ddc3cbaf5e1ba:1
+[?2004hxilinx@pynq:/tmp/hdmi-capture-credit$ 
