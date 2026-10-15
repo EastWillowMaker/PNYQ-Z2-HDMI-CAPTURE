@@ -65,7 +65,8 @@ def frame(i, *, optical=None, origin="hdmi", baseline=False):
             source_health_counters_lifetime="fpga_load",
             source_health_overruns_unit="overflow_episodes",
             receiver_source_reset_policy="shared_per_clock"),
-        counters={"source_overruns": 0, "source_skips": 0, "source_invalid_frames": 0}))
+        counters={"source_overruns": 0, "source_skips": 0, "source_invalid_frames": 0,
+                  "source_errors": 0, "source_cleanup_errors": 0}))
 
 
 def test_requires_both_window_and_distinct_exact_frames(tmp_path):
@@ -393,7 +394,9 @@ def test_summary_reconciles_received_window_and_keeps_startup_unknown(tmp_path):
 
 @pytest.mark.parametrize("key,value", [("source_skips", None), ("source_skips", 1),
     ("source_overruns", None), ("source_overruns", 1),
-    ("source_invalid_frames", None), ("source_invalid_frames", 1)])
+    ("source_invalid_frames", None), ("source_invalid_frames", 1),
+    ("source_errors", None), ("source_errors", 1),
+    ("source_cleanup_errors", None), ("source_cleanup_errors", 1)])
 def test_public_source_counters_must_be_known_and_reconciled(key, value):
     sample = frame(0)
     sample.metadata["counters"][key] = value

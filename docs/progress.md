@@ -28,10 +28,14 @@ This real source prerequisite is pending; don't reask overlay permission.
 See [016checkpoint](results/2026-10-15/credit-016-build.md) and
 [timing investigation](results/2026-10-15/credit-015-timing.md).
 The paired016 artifacts and v9 package are transferred, with matching hashes.
+V10 is the current source package, including truthful failure/cleanup counts;
+transfer it before the next run. [Diagnostic evidence](results/2026-10-15/credit-fault-reporting.md)
+records308 passing tests and1optional skip.
 Next: verify source output active after operator reply, restart animated fixture,
 run bounded smoke requiring autoHALT/IRQ plus held frame identity and exactRGB,
 then renewed600-second run and physical/interruption tests. Sudo was noninteractively
-refreshed at08:38 while valid; recheck before restart. No images were uploaded.
+refreshed at08:38 while valid, but may have expired during the operator wait;
+recheck before restart. No images were uploaded.
 
 ## Preserved previous checkpoint
 

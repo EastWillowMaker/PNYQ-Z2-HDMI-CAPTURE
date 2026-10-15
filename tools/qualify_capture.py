@@ -179,7 +179,7 @@ def _accounting_errors(metadata, previous=None):
         public_skips = integer(public, "source_skips", maximum=2**64-1)
         if public_skips != total:
             errors.append("public source_skips must equal cumulative native intentional sampling")
-        for key in ("source_overruns", "source_invalid_frames"):
+        for key in ("source_overruns", "source_invalid_frames", "source_errors", "source_cleanup_errors"):
             if integer(public, key) != 0:
                 errors.append(f"public {key} must be observed zero for the fail-closed owned buffer")
     first_id = integer(record, "first_acquired_source_id")

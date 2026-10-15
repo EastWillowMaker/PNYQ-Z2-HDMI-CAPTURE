@@ -158,7 +158,7 @@ class PynqSource:
 
     def _check_mode(self, mode):
         if (mode.width, mode.height, mode.bits_per_pixel) != (640, 480, 24):
-            raise SourceError("M0 accepts only 640x480 with 24-bit DMA pixels")
+            raise SourceError("Capture accepts only 640x480 with 24-bit DMA pixels")
 
     def _stage(self, name, details=None):
         if self.progress is not None:
@@ -702,20 +702,28 @@ class LiteXCreditSource(LiteXSource):
             raise SourceError("Single-credit command/source-sequence fault")
 
     def _healthy(self):
-        self._check_mode(self.hdmi.frontend.mode)
-        identity = self.control.identity()
-        if identity is None:
-            return None
-        self._check_identity(identity)
-        if not identity["native_armed"]:
-            raise SourceError("Native source pairing lost")
-        current = self.control.snapshot()
-        for name in ("invalid_frames", "frontend_overflow_episodes", "frontend_underflow_episodes"):
-            if current[name] != self.integrity_baseline[name]:
-                self.integrity_failure = dict(counter=name, snapshot=current)
-                raise SourceError(f"Credit integrity counter changed: {name}")
-        self.integrity_previous = current
-        return identity
+        # Preserve the actual diagnostic snapshot even when mode/identity rejects
+        # the source. A failed read must not leave an older clean snapshot behind.
+        self.integrity_previous = None
+        try:
+            current = self.control.snapshot()
+            self.integrity_previous = current
+            self._check_mode(self.hdmi.frontend.mode)
+            identity = self.control.identity()
+            if identity is None:
+                return None
+            self._check_identity(identity)
+            if not identity["native_armed"]:
+                raise SourceError("Native source pairing lost")
+            for name in ("invalid_frames", "frontend_overflow_episodes", "frontend_underflow_episodes"):
+                if current[name] != self.integrity_baseline[name]:
+                    self.integrity_failure = dict(counter=name, snapshot=current)
+                    raise SourceError(f"Credit integrity counter changed: {name}")
+            return identity
+        except BaseException as error:
+            if self.integrity_failure is None:
+                self.integrity_failure = dict(error=str(error), snapshot=self.integrity_previous)
+            raise
 
     async def _wait(self, predicate):
         deadline = time.monotonic() + self.timeout
@@ -822,7 +830,7 @@ class LiteXCreditSource(LiteXSource):
                     interval_seconds=0.05, passed=True)
             except Exception as error:
                 failure = error
-                self.integrity_failure = dict(final_accounting_error=str(error))
+                self.integrity_failure = dict(self.integrity_failure or {}, final_accounting_error=str(error))
         if self.control is not None:
             self.control.enable(False)
         if self.native is not None or not self.dma_shutdown_safe:

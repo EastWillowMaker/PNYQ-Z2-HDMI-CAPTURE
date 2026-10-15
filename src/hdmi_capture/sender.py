@@ -27,7 +27,7 @@ class Sender:
                              intentional_sampling_drops=0,
                              network_backpressure_drops=0,
                              client_discarded=0, transport_enqueued=0,
-                             source_errors=0, network_errors=0)
+                             source_errors=0, source_cleanup_errors=0, network_errors=0)
         # PYNQ's driver does not provide reliable hardware sequence/error counts.
         self.counters.update(source_skips=None, source_overruns=None,
                              source_invalid_frames=None)
@@ -66,6 +66,19 @@ class Sender:
             metadata.update(sample.extra_metadata)
         return metadata
 
+    def _failed_source_counters(self):
+        if not isinstance(self.source, LiteXCreditSource):
+            return
+        # Zero overruns was conditional on a clean source monitor. A failed
+        # session cannot infer physical loss counts from the previous good frame.
+        self.counters["source_overruns"] = None
+        baseline = self.source.integrity_baseline or {}
+        current = self.source.integrity_previous or {}
+        initial, invalid = baseline.get("invalid_frames"), current.get("invalid_frames")
+        self.counters["source_invalid_frames"] = (
+            invalid-initial if type(initial) is int and type(invalid) is int
+            and 0 <= initial <= invalid < 2**32 else None)
+
     async def _capture(self):
         next_sample = 0
         paced = getattr(self.source, "paces_capture", False)
@@ -102,6 +115,7 @@ class Sender:
             raise
         except BaseException:
             self.counters["source_errors"] += 1
+            self._failed_source_counters()
             self.ready = None
             if self._server is not None:
                 self._server.close()
@@ -162,7 +176,14 @@ class Sender:
         try:
             self._server = await asyncio.start_server(self._serve_client, host, port)
         except BaseException:
-            self.source.close()
+            try:
+                self.source.close()
+            except BaseException:
+                self.counters["source_cleanup_errors"] += 1
+                raise
+            finally:
+                if self.counters["source_errors"] or self.counters["source_cleanup_errors"]:
+                    self._failed_source_counters()
             raise
         self._capture_task = asyncio.create_task(self._capture())
         return self._server.sockets[0].getsockname()
@@ -217,7 +238,14 @@ class Sender:
                 await self._server.wait_closed()
             self.ready = None
             self._ready_event.set()
-            self.source.close()
+            try:
+                self.source.close()
+            except BaseException:
+                self.counters["source_cleanup_errors"] += 1
+                raise
+            finally:
+                if self.counters["source_errors"] or self.counters["source_cleanup_errors"]:
+                    self._failed_source_counters()
 
 
 def _hold_unsafe_dma(source, error, wait=None):

@@ -327,3 +327,56 @@ def test_paced_credit_source_keeps_first_and_all_acquisitions():
         assert sender.ready.metadata['counters']['source_invalid_frames'] == 0
         await sender.close()
     asyncio.run(run())
+
+
+@pytest.mark.parametrize('mode_fault', [False, True])
+def test_credit_failure_reports_observed_invalid_geometry(mode_fault):
+    from types import SimpleNamespace
+    from test_sources import credit_reader_fixture
+    from hdmi_capture.sources import SourceError
+    source, registers = credit_reader_fixture()
+    source.control.snapshot = lambda: dict(source.integrity_baseline, invalid_frames=2)
+    if mode_fault:
+        source.hdmi.frontend.mode = SimpleNamespace(width=1280, height=720, bits_per_pixel=24)
+    else:
+        source.control.state['credit_failed'] = True
+    sender = Sender(source)
+    with pytest.raises(SourceError):
+        asyncio.run(sender._capture())
+    assert sender.counters['source_errors'] == 1
+    assert sender.counters['source_invalid_frames'] == 1
+    assert sender.counters['source_overruns'] is None
+    assert source.integrity_failure['snapshot']['invalid_frames'] == 2
+    assert registers.writes == [] and sender.ready is None
+
+
+def test_credit_failure_does_not_reuse_stale_zero_when_counters_unavailable():
+    from test_sources import credit_reader_fixture
+    source, _ = credit_reader_fixture()
+    def unavailable():
+        raise OSError('GPIO is unavailable')
+    source.control.snapshot = unavailable
+    sender = Sender(source)
+    sender.counters.update(source_invalid_frames=0, source_overruns=0)
+    with pytest.raises(OSError):
+        asyncio.run(sender._capture())
+    assert sender.counters['source_invalid_frames'] is None
+    assert sender.counters['source_overruns'] is None
+
+
+def test_credit_cleanup_failure_reports_latest_diagnostic_without_hiding_acquisition_error():
+    from test_sources import credit_reader_fixture
+    from hdmi_capture.sources import SourceError
+    source, _ = credit_reader_fixture()
+    sender = Sender(source)
+    sender.counters.update(source_errors=1, source_invalid_frames=1)
+    def cleanup():
+        source.integrity_previous = dict(source.integrity_baseline, invalid_frames=4)
+        raise SourceError('Final source proof failed')
+    source.close = cleanup
+    with pytest.raises(SourceError):
+        asyncio.run(sender.close())
+    assert sender.counters['source_errors'] == 1
+    assert sender.counters['source_cleanup_errors'] == 1
+    assert sender.counters['source_invalid_frames'] == 3
+    assert sender.counters['source_overruns'] is None

@@ -922,3 +922,21 @@ def test_credit_fsync_artifact_guard_before_programming(tmp_path, declared, s2mm
     else:
         with pytest.raises(SourceError, match='free-run|C_USE_'):
             verify_litex_artifacts(bitfile, manifest)
+
+
+def test_credit_cleanup_retains_first_fault_snapshot_after_safe_release():
+    source, _ = credit_reader_fixture()
+    source.control.state['credit_failed'] = True
+    source.control.snapshot = lambda: dict(source.integrity_baseline, invalid_frames=2)
+    source.control.enable = lambda enabled: setattr(source.control, 'command', int(enabled))
+    source.native.buffer.freebuffer = lambda: None
+    with pytest.raises(SourceError):
+        source._healthy()
+    first = dict(source.integrity_failure)
+    with pytest.raises(SourceError):
+        source.close()
+    assert source.integrity_failure['snapshot'] == first['snapshot']
+    assert source.integrity_failure['snapshot']['invalid_frames'] == 2
+    assert source.integrity_failure['error'] == first['error']
+    assert 'final_accounting_error' in source.integrity_failure
+    assert source.native is None and source.dma_shutdown_safe

@@ -146,3 +146,9 @@ It is not a physical source-disconnect test. A killed process cannot execute
 process CPU/RSS and board memory/CMA samples on the board. CPU percentage uses
 one core as 100%; observations are sampled rather than true peak measurements.
 The sampler stops on process exit and rejects PID reuse.
+
+Credit frame records must also report zero source_errors and source_cleanup_errors.
+A failed source session reports physical overruns as unknown and preserves the
+actual last invalid geometry/orphan counter delta when readable. Final cleanup
+errors are separate from acquisition failures; inspect the final sender report
+and halt proof even after this receiver's frame-window criterion passes.
