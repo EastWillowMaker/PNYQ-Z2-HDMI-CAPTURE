@@ -49,7 +49,7 @@ def credit_hwh():
         'capture_control': dict(C_GPIO_WIDTH='32', C_IS_DUAL='1', C_ALL_OUTPUTS='1',
             C_ALL_INPUTS_2='1', C_GPIO2_WIDTH='32', C_DOUT_DEFAULT='0x00000000'),
         'axi_vdma': dict(C_INCLUDE_S2MM='1', C_INCLUDE_MM2S='0', C_NUM_FSTORES='4',
-                        C_ENABLE_DEBUG_INFO_15='1'),
+                        C_ENABLE_DEBUG_INFO_15='1', C_USE_S2MM_FSYNC='0', C_USE_FSYNC='1'),
     }
     for name in ('capture_credit', 'capture_completion', 'capture_sequence'):
         modules[name] = dict(C_GPIO_WIDTH='32', C_GPIO2_WIDTH='32', C_IS_DUAL='1',
@@ -71,6 +71,8 @@ def test_credit_hwh_has_exact_default_disabled_32_bit_controls_and_frame_counter
     ('capture_control', 'C_DOUT_DEFAULT', '0x00000001'),
     ('capture_control', 'C_DOUT_DEFAULT', '0x00000002'),
     ('capture_control', 'C_DOUT_DEFAULT', None),
+    ('axi_vdma', 'C_USE_S2MM_FSYNC', '2'),
+    ('axi_vdma', 'C_USE_S2MM_FSYNC', None),
     ('axi_vdma', 'C_ENABLE_DEBUG_INFO_15', '0'),
     ('axi_vdma', 'C_ENABLE_DEBUG_INFO_15', None),
     ('capture_sequence', 'C_ALL_INPUTS_2', '0'),

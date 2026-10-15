@@ -35,7 +35,8 @@ def require_credit_configuration(hwh):
         '/video/capture_control': {'C_GPIO_WIDTH': '32', 'C_IS_DUAL': '1',
             'C_ALL_OUTPUTS': '1', 'C_ALL_INPUTS_2': '1', 'C_GPIO2_WIDTH': '32'},
         '/video/axi_vdma': {'C_INCLUDE_S2MM': '1', 'C_INCLUDE_MM2S': '0',
-            'C_NUM_FSTORES': '4', 'C_ENABLE_DEBUG_INFO_15': '1'},
+            'C_NUM_FSTORES': '4', 'C_ENABLE_DEBUG_INFO_15': '1',
+            'C_USE_S2MM_FSYNC': '0'},
     }
     for name in ('capture_credit', 'capture_completion', 'capture_sequence'):
         expected['/video/' + name] = {'C_GPIO_WIDTH': '32', 'C_GPIO2_WIDTH': '32',
@@ -96,6 +97,7 @@ def main():
         'gate_completion_policy': 'next_sof_after_selected_output_drain_v1',
         'vdma_completion_mode': 'parked_frame_count_halt_v1',
         'vdma_frame_counter_enabled': True,
+        'vdma_fsync_mode': 'free_run',
         'source_identity_bits': 32,
         'source_identity_policy': 'native_delta_one_per_accepted_sof_with_watchdog',
         'receiver_reset_sync_sha256': sha256(args.output / 'receiver_reset_sync.v'),

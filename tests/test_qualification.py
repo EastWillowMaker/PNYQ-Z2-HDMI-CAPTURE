@@ -50,7 +50,7 @@ def frame(i, *, optical=None, origin="hdmi", baseline=False):
         capture_enable_reset=0,
         integrity_policy="single_credit_parked_auto_halt_fail_closed_v1",
         source_accounting=dict(abi="single_credit_parked_v1",
-            dma_completion_mode="parked_frame_count_halt_v1",
+            dma_completion_mode="parked_frame_count_halt_v1", vdma_fsync_mode="free_run",
             gate_completion_policy="next_sof_after_selected_output_drain_v1", buffer_slot=0,
             dma_auto_halted=True, raw_dma_status=0x1001, buffer_stable_until_release=True,
             credit_busy=True, credit_done=True, credit_failed=False, request_seen=1,

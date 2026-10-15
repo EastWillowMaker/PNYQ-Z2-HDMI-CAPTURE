@@ -799,7 +799,7 @@ def test_credit_startup_baseline_precedes_enable_without_stock_dma_start(monkeyp
         <MODULE FULLNAME="/video/axi_vdma"><PARAMETERS><PARAMETER NAME="C_ENABLE_DEBUG_INFO_15" VALUE="1"/>
         </PARAMETERS></MODULE></ROOT>''')
     record = dict(capture_interface=module.CREDIT_ABI, vdma_completion_mode='parked_frame_count_halt_v1',
-                  vdma_frame_counter_enabled=True, gate_completion_policy='next_sof_after_selected_output_drain_v1',
+                  vdma_frame_counter_enabled=True, vdma_fsync_mode='free_run', gate_completion_policy='next_sof_after_selected_output_drain_v1',
                   source_health_sha256='a'*64, capture_control_width=32, capture_control_reset=0,
                   source_identity_bits=32, source_identity_policy='native_delta_one_per_accepted_sof_with_watchdog',
                   receiver_reset_sync_sha256='a'*64, capture_lock_sync_sha256='b'*64, gateware_sha256='c'*64)
@@ -890,3 +890,35 @@ def test_credit_close_checks_final_source_proof_then_halts_before_release_once()
     assert source.native is None and source.dma_shutdown_safe
     source.close()
     assert trace.count('free') == 1
+
+
+@pytest.mark.parametrize('declared,s2mm,combined,accepted', [
+    (None, '0', '0', False),
+    ('tuser', '0', '0', False),
+    ('free_run', '2', '1', False),
+    ('free_run', '0', '1', True),
+    ('free_run', '0', '0', True),
+])
+def test_credit_fsync_artifact_guard_before_programming(tmp_path, declared, s2mm, combined, accepted):
+    import hashlib
+    import json
+    import xml.etree.ElementTree as ET
+    from hdmi_capture.sources import verify_litex_artifacts
+    bitfile, manifest = make_litex_artifacts(tmp_path)
+    hwh = bitfile.with_suffix('.hwh')
+    root = ET.parse(hwh).getroot()
+    dma = ET.SubElement(root, 'MODULE', FULLNAME='/video/axi_vdma')
+    parameters = ET.SubElement(dma, 'PARAMETERS')
+    for name, value in [('C_USE_S2MM_FSYNC', s2mm), ('C_USE_FSYNC', combined),
+                        ('C_ENABLE_DEBUG_INFO_15', '1')]:
+        ET.SubElement(parameters, 'PARAMETER', NAME=name, VALUE=value)
+    hwh.write_bytes(ET.tostring(root))
+    record = json.loads(manifest.read_text())
+    record.update(capture_interface='single_credit_parked_v1', vdma_fsync_mode=declared,
+                  hwh_sha256=hashlib.sha256(hwh.read_bytes()).hexdigest())
+    manifest.write_text(json.dumps(record))
+    if accepted:
+        assert verify_litex_artifacts(bitfile, manifest)['vdma_fsync_mode'] == 'free_run'
+    else:
+        with pytest.raises(SourceError, match='free-run|C_USE_'):
+            verify_litex_artifacts(bitfile, manifest)

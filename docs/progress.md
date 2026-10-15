@@ -18,6 +18,15 @@ parent resumed direct checks and finished the local checkpoint.
 [First build014 board attempt](results/2026-10-15/m1-014-bringup.md) records
 zero delivered frames, safe halt-before-free, and the qualifier integration fix.
 
+Build015 is now running with S2MM free-run synchronization and the unchanged
+credit gate. Process handle `88216`; console `artifacts/m1-project-015-console.log`.
+Inputs are snapshotted in `artifacts/m1-project-015-source`; the packaging-only
+legacy-FSYNC guard correction is recorded there. Actual HWH confirms per-channel
+mode0 and retained legacy combined1. The v7 archive predates that guard correction
+and must not be deployed; generate a new source archive after final checks.
+Sudo was renewed noninteractively while the user's authentication remained valid;
+recheck before the next hardware run. No DMA sender is currently active.
+
 ## Preserved previous checkpoint
 
 

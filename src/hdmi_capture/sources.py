@@ -296,6 +296,19 @@ def verify_litex_artifacts(bitfile, manifest):
         raise SourceError("HWH capture control reset is unspecified") from error
     if reset != 0:
         raise SourceError("HWH capture control must reset disabled")
+    if record.get("capture_interface") == "single_credit_parked_v1":
+        if record.get("vdma_fsync_mode") != "free_run":
+            raise SourceError("Single-credit DMA requires free-run frame synchronization")
+        dmas = [module for module in root.findall(".//MODULE")
+                if module.get("FULLNAME") == "/video/axi_vdma"]
+        if len(dmas) != 1:
+            raise SourceError("HWH must contain one credit VDMA")
+        for name, expected in (("C_USE_S2MM_FSYNC", "0"),
+                               ("C_ENABLE_DEBUG_INFO_15", "1")):
+            actual = [row.get("VALUE") for row in dmas[0].findall("./PARAMETERS/PARAMETER")
+                      if row.get("NAME") == name]
+            if actual != [expected]:
+                raise SourceError(f"Credit HWH requires {name}={expected}")
     return record
 
 
@@ -611,6 +624,7 @@ class LiteXCreditSource(LiteXSource):
         if (record.get("capture_interface") != CREDIT_ABI or
                 record.get("vdma_completion_mode") != "parked_frame_count_halt_v1" or
                 record.get("vdma_frame_counter_enabled") is not True or
+                record.get("vdma_fsync_mode") != "free_run" or
                 record.get("gate_completion_policy") != "next_sof_after_selected_output_drain_v1"):
             raise SourceError("Artifact does not declare the single-credit DMA ABI")
         if "source_health_sha256" not in record:
@@ -754,6 +768,7 @@ class LiteXCreditSource(LiteXSource):
         self.acquired += 1
         self.leased = True
         accounting = dict(identity, abi=CREDIT_ABI, dma_completion_mode="parked_frame_count_halt_v1",
+                          vdma_fsync_mode="free_run",
                           gate_completion_policy="next_sof_after_selected_output_drain_v1",
                           buffer_slot=0, raw_dma_status=status, dma_auto_halted=True,
                           buffer_stable_until_release=True, acquired_frames_total=self.acquired,

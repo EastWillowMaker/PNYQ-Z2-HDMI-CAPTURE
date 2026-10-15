@@ -37,7 +37,7 @@ connect_bd_intf_net [get_bd_intf_ports hdmi_in_ddc] [get_bd_intf_pins video/hdmi
 create_bd_port -dir O -from 0 -to 0 hdmi_in_hpd
 connect_bd_net [get_bd_ports hdmi_in_hpd] [get_bd_pins video/hdmi_in/hdmi_in_hpd]
 create_bd_cell -type ip -vlnv xilinx.com:ip:axi_vdma:6.3 video/axi_vdma
-set_property -dict [list CONFIG.c_include_mm2s {0} CONFIG.c_include_sg {0} CONFIG.c_m_axi_s2mm_data_width {32} CONFIG.c_num_fstores {4} CONFIG.c_s2mm_genlock_mode {0} CONFIG.c_s2mm_linebuffer_depth {4096} CONFIG.c_s2mm_max_burst_length {32}] [get_bd_cells video/axi_vdma]
+set_property -dict [list CONFIG.c_include_mm2s {0} CONFIG.c_include_sg {0} CONFIG.c_use_s2mm_fsync {0} CONFIG.c_m_axi_s2mm_data_width {32} CONFIG.c_num_fstores {4} CONFIG.c_s2mm_genlock_mode {0} CONFIG.c_s2mm_linebuffer_depth {4096} CONFIG.c_s2mm_max_burst_length {32}] [get_bd_cells video/axi_vdma]
 create_bd_cell -type module -reference litex_capture video/litex_capture
 create_bd_cell -type module -reference source_health video/source_monitor
 connect_bd_net [get_bd_pins video/hdmi_in/PixelClk] [get_bd_pins video/source_monitor/pixel_clk]

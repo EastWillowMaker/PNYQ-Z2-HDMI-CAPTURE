@@ -132,6 +132,7 @@ def _accounting_errors(metadata, previous=None):
 
     for key, expected in (("abi", "single_credit_parked_v1"),
                           ("dma_completion_mode", "parked_frame_count_halt_v1"),
+                          ("vdma_fsync_mode", "free_run"),
                           ("gate_completion_policy", "next_sof_after_selected_output_drain_v1")):
         if record.get(key) != expected:
             errors.append(f"unsupported or missing {key}")

@@ -178,3 +178,29 @@ auto-halt behavior, receiver CDC correctness, or hardware qualification. The
 running transition before source SOF remains a physical readback requirement;
 it must not be weakened to accept initial stale HALTED if the IP behaves
 differently.
+
+## Free-run DMA candidate after build014 failure
+
+The first build014 board run selected and SOF-closed one frame, but VDMA remained
+running with status0x10000, no frame IRQ, and zero acquisitions. It halted safely
+only during explicit abort/cleanup; that abort is not completion evidence.
+Build015 changes only the per-channel S2MM synchronization option to free-run,
+while the LiteX gate, fixed parked buffer and strict auto-halt proof remain.
+Fresh HLS and CAD are being rebuilt; board behavior is unverified.
+
+Manifest and producer now require `vdma_fsync_mode=free_run` and paired HWH
+`C_USE_S2MM_FSYNC=0`, checked before programming. The generated legacy combined
+`C_USE_FSYNC` field stays1 even with the actual per-channel mode0. Vendor6.3_24
+RTL69143 derives S2MM selection directly from the per-channel parameter; it does
+not derive it from that legacy field. Requiring combined0 would reject the real
+supported candidate, so this incorrect packaging-only check was removed. The
+initial snapshot validator was preserved, and its correction was recorded while
+CAD continued; generated IP/RTL and constraints were unchanged by that correction.
+
+The supported and rejected synchronization classes are covered by source and
+manifest tests. Metadata must also identify free-run mode. The qualifier still
+requires error-free automatic HALTED, frame IRQ, held source identity and strict
+next-SOF closure; it never substitutes manual stop. Existing legacy paths retain
+their original semantics. The latest broad test run was300passed/1optional skip
+before this legacy-field guard correction; the corrected19manifest and5source
+mode tests pass. New bitstream and physical correctness remain pending.
