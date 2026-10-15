@@ -1,0 +1,6 @@
+
+[?2004l[?2004hxilinx@pynq:~$ sudo -n -v && sudo -n dmesg --color=never && printf "\nMMC_IOS\n" && sudo -n cat /sys/kernel/debug/mmc0/ios && printf "\nBOOT_ID\n" && cat /proc/sys/kernel/random/boot_id; printf "\nCONSOLE_DONE_2cc7a59251e14eb1bfad091932bde413:%s\n" "$?"
+[?2004lsudo: a password is required
+
+CONSOLE_DONE_2cc7a59251e14eb1bfad091932bde413:1
+[?2004hxilinx@pynq:~$ 

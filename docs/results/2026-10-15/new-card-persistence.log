@@ -1,0 +1,6 @@
+
+[?2004l[?2004hxilinx@pynq:~$ python3 -c 'import hashlib,json,pathlib;p=pathlib.Path("/home/xilinx/.cache/hdmi-capture-storage-check.bin");r={"boot_id":pathlib.Path("/proc/sys/kernel/random/boot_id").read_text().strip(),"bytes":p.stat().st_size,"sha256":hashlib.sha256(p.read_bytes()).hexdigest()};print(json.dumps(r));assert r["boot_id"]!='"'"'2719a530-7f3b-42d8-9af9-a6e1d9176ad9'"'"',"Boot ID did not change";assert r["bytes"]==16777216,"File size changed";assert r["sha256"]=="341aacac661ccb210720bedaa9ead5d668fe5ea41a73532fc147c71e34040df1","File hash changed"'; printf "\nCONSOLE_DONE_59f7b918e5934315838e396e9c678d26:%s\n" "$?"
+[?2004l{"boot_id": "888441ac-9433-48f9-816a-38b40be71c0e", "bytes": 16777216, "sha256": "341aacac661ccb210720bedaa9ead5d668fe5ea41a73532fc147c71e34040df1"}
+
+CONSOLE_DONE_59f7b918e5934315838e396e9c678d26:0
+[?2004hxilinx@pynq:~$ 

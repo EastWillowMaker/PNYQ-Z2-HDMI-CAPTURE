@@ -179,3 +179,23 @@ The baseline retains an SD high-speed-switch warning, haveged SIGSYS failures
 and failed DHCP server units. A bounded file fsync succeeded; persistence after
 normal reboot and full kernel/SD diagnostics remain pending. See the
 [first-boot report](results/2026-10-15/new-card-first-boot-report.md).
+
+### Immediate authentication handoff (23:04)
+
+The latest board `sudo -n -v` still required a password after the chat Done.
+No normal reboot was sent. The operator command is now
+`bash artifacts/operator/new-card-storage-check.sh`: authenticate with
+`sudo -v` on UART and press Ctrl+] when the shell returns. The wrapper then
+runs full kernel/SD diagnostics, one normal reboot and the existing file's
+size/SHA256 check without waiting for chat. It refuses existing output paths
+and stops at a failed step. Only Bash syntax and Python compilation have been
+checked; its board execution and file persistence result are pending.
+
+### Normal reboot and file persistence passed
+
+The wrapper completed a normal reboot in49.202s, changed the boot ID, and
+verified the full16MiB file with its expected SHA256. The post-reboot ext4
+error counter is0. The SD high-speed switch warning remains; the measured
+pre-reboot bus is25MHz/4-bit/legacy. Storage checks permit the next capture
+experiment, not a full media-health or M1 pass. Raw logs and limitations are
+in [the storage report](results/2026-10-15/new-card-storage-report.md).

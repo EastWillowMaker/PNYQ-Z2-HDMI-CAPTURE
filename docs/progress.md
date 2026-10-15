@@ -1,5 +1,28 @@
 # Progress and handoff
 
+2026-10-15 23:09 Asia/Taipei: new-card normal REBOOT/PERSISTENCE PASSED.
+Operator wrapper completed at23:07:03: 49.202s normal reboot, changed boot ID,
+16,777,216-byte file retained with expected SHA256. All evidence hashes match.
+Full privileged pre-reboot dmesg and shutdown/new-boot UART saved. Post-reboot
+ext4 errors_count=0; no old block/EXT4 I/O errors observed in captured logs.
+SD high-speed warning persists: measured actual25MHz,4-bit,legacy timing.
+DHCP units still failed; do not claim fully clean OS or complete media health.
+No capture overlay/sender loaded yet. Resume unchanged017/v10 staging and fresh
+capture+safe-cleanup validation; fullM1 remains incomplete. See
+[storage result](results/2026-10-15/new-card-storage-report.md).
+
+2026-10-15 23:04 Asia/Taipei: full SD diagnostics/reboot still PENDING.
+After the user's Done, a fresh UART `sudo -n -v` returned password required;
+no reboot command was sent. The failure is preserved in
+`results/2026-10-15/new-card-auth-expired.log`. Prepared an operator wrapper:
+`bash artifacts/operator/new-card-storage-check.sh`. It opens the existing
+UART authentication wizard, then immediately runs diagnostics, one normal
+reboot and the persisted 16 MiB file check after miniterm exits. This avoids
+the chat round trip before use of the sudo cache. Any failed step stops the
+sequence; existing evidence prevents a repeat or overwrite. Bash syntax and
+Python compilation passed; the complete operator sequence is NOT RUN.
+No capture overlay/sender deployed yet. User authentication is pending.
+
 2026-10-15 22:58 Asia/Taipei: fresh-card FIRST BOOT PASSED.
 PYNQ 3.0.1, Python 3.10.4, Linux 5.15.19. Root expanded to 57 GiB with about
 49 GiB free. Card serial/capacity match the new SD. Commands and imports work;

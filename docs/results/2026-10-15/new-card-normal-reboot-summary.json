@@ -1,0 +1,12 @@
+{
+  "started": "2026-10-15T23:06:14.740077+08:00",
+  "reboot_command": "sudo -n systemctl reboot",
+  "reboot_sent": true,
+  "old_boot_id": "2719a530-7f3b-42d8-9af9-a6e1d9176ad9",
+  "new_boot_seen": true,
+  "auto_shell_returned": true,
+  "error": null,
+  "elapsed_seconds": 49.20210475102067,
+  "finished": "2026-10-15T23:07:03.942207+08:00",
+  "uart_log_sha256": "0b5bf46cbb245fe40d245ecacab548897e93b9a131b0834439777003aaf85dcd"
+}

@@ -1,0 +1,15 @@
+{
+  "boot_id": "888441ac-9433-48f9-816a-38b40be71c0e",
+  "bytes": 16777216,
+  "sha256": "341aacac661ccb210720bedaa9ead5d668fe5ea41a73532fc147c71e34040df1",
+  "old_boot_id": "2719a530-7f3b-42d8-9af9-a6e1d9176ad9",
+  "normal_reboot_returned": true,
+  "persistence_verified": true,
+  "full_m1_qualified": false,
+  "evidence_sha256": {
+    "new-card-root-storage-ready.log": "71936c946457a1294841454bd6075790d80630cdc780b1c723ac32ea02c6ad2e",
+    "new-card-normal-reboot.log": "0b5bf46cbb245fe40d245ecacab548897e93b9a131b0834439777003aaf85dcd",
+    "new-card-normal-reboot-summary.json": "1062a72fd455c2826b13ea7b2cc479665b06f3f7bc1a9fc2b760dc1f23e46224",
+    "new-card-persistence.log": "3f4e03ef8a1614548a729c6973bf67cc835a6a99bb869de5f70ef74e3265eee7"
+  }
+}
