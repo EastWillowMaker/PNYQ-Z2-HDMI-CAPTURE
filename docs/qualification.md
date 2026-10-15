@@ -75,9 +75,10 @@ even when all RGB pixels match. The sender must verify manifest and paired HWH
 capture-enable reset defaults are zero, report `capture_enable_reset=0`, and
 hold capture disabled throughout the complete startup snapshot. That snapshot
 must report `enabled=false`, `selected_frames=0`, and sample point
-`sequential_gpio_reads_after_dma_start_before_capture_enable`, with integrity
+`before_first_credit_while_gate_disabled_dma_halted`, with integrity
 policy `single_credit_parked_auto_halt_fail_closed_v1`. The explicit legacy
-criterion instead accepts
+criterion instead uses startup sample point
+`sequential_gpio_reads_after_dma_start_before_capture_enable` and also accepts
 `disabled_zero_selected_baseline_then_stop_on_integrity_change`.
 
 A nonzero startup invalid-frame count is accepted only with every one of those

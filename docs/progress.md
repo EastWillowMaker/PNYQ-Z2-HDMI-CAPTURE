@@ -1,5 +1,14 @@
 # Progress and handoff
 
+2026-10-15 20:12 Asia/Taipei — operator resumed with active HDMI and sudo renewed.
+016/v10 now configured real input, selected SOF66/native67 and closed one credit,
+but VDMA did not complete: zero acquisitions. Safe abort halted before free.
+Actual generated-HLS simulation reproduces the cause: color_convert holds five
+tail pixels when an isolated selected frame ends; pack-only drains completely.
+Candidate repair is a flushable color pipeline with a generated-RTL regression
+before fresh CAD. Additional DMA issues remain possible; M1 is incomplete.
+See [drain evidence](results/2026-10-15/credit-016-hls-drain.md).
+
 2026-10-15 09:22 Asia/Taipei — current candidate is build016 plus sender v10.
 M1 remains incomplete. Build016 passed CAD with setup/hold0.399/0.033ns,
 56 bus-skew checks MET, zero criticalCDC/DRC and verified synchronizer attributes.

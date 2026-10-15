@@ -1,0 +1,60 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-credit-016-v10$ cat /tmp/hdmi-capture-credit-016-v10/m1-016-v10-smoke.log; printf "\nCONSOLE_DONE_7af9f2435e2147ddbbb45277c61db3c3:%s\n" "$?"
+[?2004l{"event": "source_startup", "timestamp_ns": 69051759204565, "stage": "litex_artifact_verification"}
+{"event": "source_startup", "timestamp_ns": 69052295518921, "stage": "pynq_import"}
+{"event": "source_startup", "timestamp_ns": 69060932130717, "stage": "overlay_load"}
+{"event": "source_startup", "timestamp_ns": 69077317774281, "stage": "credit_source_ready", "counters": {"enabled": false, "observed_frames": 64, "selected_frames": 0, "completed_frames": 63, "dropped_frames": 64, "invalid_frames": 1, "snapshot_begin_ns": 69077306290527, "snapshot_end_ns": 69077306515948, "timestamp_clock": "board_monotonic", "snapshot_atomic": false, "sample_point": "before_first_credit_while_gate_disabled_dma_halted", "counter_bits": 32, "frontend_overflow_episodes": 0, "native_vsync_edges": 64, "overflow_units": "assertion_episodes_not_lost_frames", "frontend_underflow_episodes": 0}}
+{"listening": ["::", 9022, 0, 0], "source": "hdmi", "session_id": "e38f3a05-500c-4f73-88b7-6df4acd12d92"}
+{"event": "source_cleanup", "timestamp_ns": 69080378439888, "stage": "dma_stop_status_before", "control": 86033, "status": 65536}
+{"event": "source_cleanup", "timestamp_ns": 69080379148891, "stage": "dma_stop_status_after", "control": 86032, "status": 65537}
+{"session_id": "e38f3a05-500c-4f73-88b7-6df4acd12d92", "counters": {"acquired": 0, "startup_discarded": 0, "intentional_sampling_drops": 0, "network_backpressure_drops": 0, "client_discarded": 0, "transport_enqueued": 0, "source_errors": 1, "source_cleanup_errors": 0, "network_errors": 0, "source_skips": null, "source_overruns": null, "source_invalid_frames": 0}, "dma_shutdown_safe": true, "source_integrity": {"startup": {"enabled": false, "observed_frames": 64, "selected_frames": 0, "completed_frames": 63, "dropped_frames": 64, "invalid_frames": 1, "snapshot_begin_ns": 69077306290527, "snapshot_end_ns": 69077306515948, "timestamp_clock": "board_monotonic", "snapshot_atomic": false, "sample_point": "before_first_credit_while_gate_disabled_dma_halted", "counter_bits": 32, "frontend_overflow_episodes": 0, "native_vsync_edges": 64, "overflow_units": "assertion_episodes_not_lost_frames", "frontend_underflow_episodes": 0}, "last": {"enabled": true, "observed_frames": 249, "selected_frames": 1, "completed_frames": 247, "dropped_frames": 248, "invalid_frames": 1, "snapshot_begin_ns": 69080377857894, "snapshot_end_ns": 69080378050744, "timestamp_clock": "board_monotonic", "snapshot_atomic": false, "sample_point": "sequential_gpio_reads_during_credit_health_check", "counter_bits": 32, "frontend_overflow_episodes": 0, "native_vsync_edges": 249, "overflow_units": "assertion_episodes_not_lost_frames", "frontend_underflow_episodes": 0}, "failure": null}, "final_source_accounting": {"identity": {"credit_busy": true, "credit_done": true, "credit_failed": false, "request_seen": 1, "ack_seen": 0, "source_sequence_fault": false, "native_armed": true, "selected_sof_id": 66, "selected_native_vsync_id": 67, "selected_completed": 1, "command_errors": 0, "source_sequence_faults": 0, "identity_snapshot_coherent": true}, "native_edges_begin": 245, "native_edges_end": 249, "interval_seconds": 0.05, "passed": true}}
+Traceback (most recent call last):
+  File "/tmp/hdmi-capture-credit-016-v10/hdmi_capture/sources.py", line 765, in read
+    identity, status = await self._wait(complete)
+  File "/tmp/hdmi-capture-credit-016-v10/hdmi_capture/sources.py", line 734, in _wait
+    await asyncio.sleep(0.001)
+  File "/usr/lib/python3.10/asyncio/tasks.py", line 605, in sleep
+    return await future
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/asyncio/tasks.py", line 456, in wait_for
+    return fut.result()
+asyncio.exceptions.CancelledError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/usr/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/tmp/hdmi-capture-credit-016-v10/hdmi_capture/sender.py", line 365, in <module>
+    main()
+  File "/tmp/hdmi-capture-credit-016-v10/hdmi_capture/sender.py", line 339, in main
+    asyncio.run(sender.run(args.host, args.port, args.duration))
+  File "/usr/lib/python3.10/asyncio/runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 646, in run_until_complete
+    return future.result()
+  File "/tmp/hdmi-capture-credit-016-v10/hdmi_capture/sender.py", line 204, in run
+    await self.close()
+  File "/tmp/hdmi-capture-credit-016-v10/hdmi_capture/sender.py", line 227, in close
+    await self._capture_task
+  File "/tmp/hdmi-capture-credit-016-v10/hdmi_capture/sender.py", line 201, in run
+    self._capture_task.result()
+  File "/tmp/hdmi-capture-credit-016-v10/hdmi_capture/sender.py", line 88, in _capture
+    sample = await asyncio.wait_for(self.source.read(), self.read_timeout)
+  File "/usr/lib/python3.10/asyncio/tasks.py", line 458, in wait_for
+    raise exceptions.TimeoutError() from exc
+asyncio.exceptions.TimeoutError
+Exception ignored in: <function UioController.__del__ at 0xb33ddd18>
+Traceback (most recent call last):
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/uio.py", line 79, in __del__
+  File "/usr/lib/python3.10/asyncio/events.py", line 656, in get_event_loop
+RuntimeError: There is no current event loop in thread 'MainThread'.
+
+CONSOLE_DONE_7af9f2435e2147ddbbb45277c61db3c3:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-credit-016-v10$ 
