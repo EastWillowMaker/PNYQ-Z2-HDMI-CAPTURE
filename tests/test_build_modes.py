@@ -10,6 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
 
 from build_capture import main as build_capture_main
+from build_capture import copy_capture_sources
 from build_capture import require_gateware_mode as require_build_gateware_mode
 from build_edid import make_edid, make_vga_edid, self_test_mode, validate_mode_edid
 from build_manifest import (
@@ -112,6 +113,29 @@ def test_gateware_mode_checks_allow_only_matching_geometry_and_clock(
             error = ValueError if checker is require_build_gateware_mode else RuntimeError
             with pytest.raises(error):
                 checker(gate, mode)
+
+
+@pytest.mark.parametrize('mode_name,pixel_clock_hz', [
+    ('vga', 25_200_000),
+    ('1080p30', 74_250_000),
+])
+def test_prepared_capture_sources_declare_selected_pixel_clock(
+        tmp_path, mode_name, pixel_clock_hz):
+    output = tmp_path / mode_name
+    output.mkdir()
+    copy_capture_sources(output, get_mode(mode_name))
+
+    source_health = (output / 'source_health.v').read_bytes()
+    original_source_health = (ROOT / 'hardware/source_health.v').read_bytes()
+    expected_source_health = original_source_health.replace(
+        b'X_INTERFACE_PARAMETER = "FREQ_HZ 25200000, ASSOCIATED_RESET pixel_reset"',
+        f'X_INTERFACE_PARAMETER = "FREQ_HZ {pixel_clock_hz}, ASSOCIATED_RESET pixel_reset"'.encode(),
+    )
+    assert source_health == expected_source_health
+    assert (output / 'capture_lock_sync.v').read_bytes() == (
+        ROOT / 'hardware/capture_lock_sync.v').read_bytes()
+    assert (output / 'receiver_reset_sync.v').read_bytes() == (
+        ROOT / 'hardware/receiver_reset_sync.v').read_bytes()
 
 
 def test_hdmi_output_flag_rejects_vga_before_creating_build_directory(monkeypatch, tmp_path):

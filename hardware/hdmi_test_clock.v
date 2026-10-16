@@ -1,11 +1,22 @@
 // Fixed 1080p30 TMDS clocks for the optional PYNQ-Z2 output fixture.
 // The clock pair follows PYNQ's pinned axi_dynclk MMCM -> BUFIO/BUFR path.
 module hdmi_test_clock (
+    (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 ref_clk_100 CLK",
+       X_INTERFACE_PARAMETER = "XIL_INTERFACENAME ref_clk_100, FREQ_HZ 100000000" *)
     input  wire ref_clk_100,
+    // This resets only the MMCM primitive; serializer_reset resets the clock
+    // consumers after lock and owns their pixel/serial clock association.
+    (* X_INTERFACE_IGNORE = "true" *)
     input  wire resetn,
+    (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 pixel_clk CLK",
+       X_INTERFACE_PARAMETER = "XIL_INTERFACENAME pixel_clk, FREQ_HZ 74250000, ASSOCIATED_RESET serializer_reset" *)
     output wire pixel_clk,
+    (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 serial_clk CLK",
+       X_INTERFACE_PARAMETER = "XIL_INTERFACENAME serial_clk, FREQ_HZ 371250000, ASSOCIATED_RESET serializer_reset" *)
     output wire serial_clk,
     output wire locked,
+    (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 serializer_reset RST",
+       X_INTERFACE_PARAMETER = "XIL_INTERFACENAME serializer_reset, POLARITY ACTIVE_HIGH" *)
     output wire serializer_reset
 );
     // 100 MHz * 37.125 / 5 = 742.5 MHz VCO.  CLKOUT0 / 2 is

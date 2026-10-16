@@ -17,6 +17,8 @@ from check_hls_drain import check as check_hls_drain
 from hdmi_capture.modes import CaptureMode, get_mode, mode_metadata
 
 PIN = '93ddd21ab623883590a8c8b07f0b157b2855da4b'
+_VGA_PIXEL_CLOCK_METADATA = (
+    b'X_INTERFACE_PARAMETER = "FREQ_HZ 25200000, ASSOCIATED_RESET pixel_reset"')
 
 def run(command, cwd=ROOT):
     subprocess.run(command, cwd=cwd, check=True)
@@ -28,6 +30,25 @@ def require_gateware_mode(metadata: dict[str, object], mode: CaptureMode) -> Non
         raise ValueError(f'Gateware does not match capture mode {mode.name}')
 
 
+def copy_capture_sources(output: Path, mode: CaptureMode) -> None:
+    """Copy capture RTL and align its declared pixel clock with the mode."""
+    for rtl_name in ('capture_lock_sync.v', 'source_health.v', 'receiver_reset_sync.v'):
+        shutil.copyfile(ROOT / 'hardware' / rtl_name, output / rtl_name)
+
+    source_health = output / 'source_health.v'
+    source = source_health.read_bytes()
+    if source.count(_VGA_PIXEL_CLOCK_METADATA) != 1:
+        raise RuntimeError('source_health.v pixel clock metadata anchor changed')
+    selected_metadata = (
+        f'X_INTERFACE_PARAMETER = "FREQ_HZ {mode.pixel_clock_hz}, '
+        'ASSOCIATED_RESET pixel_reset"').encode()
+    if mode.pixel_clock_hz != 25_200_000:
+        source = source.replace(_VGA_PIXEL_CLOCK_METADATA, selected_metadata)
+        source_health.write_bytes(source)
+    if source.count(selected_metadata) != 1:
+        raise RuntimeError('source_health.v pixel clock metadata does not match capture mode')
+
+
 def prepare(vendor, output, mode, with_hdmi_output=False):
     actual = subprocess.check_output(['git', '-C', str(vendor), 'rev-parse', 'HEAD'], text=True).strip()
     if actual != PIN:
@@ -35,8 +56,7 @@ def prepare(vendor, output, mode, with_hdmi_output=False):
     run(['git', '-C', str(vendor), 'diff', '--exit-code', PIN, '--',
          'boards/Pynq-Z2/base/base.tcl', 'boards/Pynq-Z2/base/vivado/constraints/base.xdc',
          'boards/ip'])
-    for rtl_name in ('capture_lock_sync.v', 'source_health.v', 'receiver_reset_sync.v'):
-        shutil.copyfile(ROOT / 'hardware' / rtl_name, output / rtl_name)
+    copy_capture_sources(output, mode)
     # The RTL generic already supports range 5, but v1.7 packaging exposes
     # only 1/2. Extend only the copied package's enumerated choices for VGA.
     ip_root = output / 'rx_ip'

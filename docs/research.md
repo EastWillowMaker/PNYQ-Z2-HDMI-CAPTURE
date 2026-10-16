@@ -153,17 +153,69 @@ direct evaluation of its pinned 100 MHz reference-clock search finds about
 software calculation, not an MMCM run or physical measurement. The pinned
 [1080p mode table](https://github.com/Xilinx/PYNQ/blob/93ddd21ab623883590a8c8b07f0b157b2855da4b/pynq/lib/_pynq/_video/video_modes.h) contains a 1080p60 entry only, so the base `HDMIOutFrontend` cannot select the 30 Hz candidate without a mode-table/driver change or direct clock/VTC control.
 
-The custom capture overlay originally had **no HDMI output path**. The optional
-`--with-hdmi-output` path now adds a fixed 1080p30 source without connecting a
-second DMA or AXI video stream. It drives the pinned `rgb2dvi` video input
-directly from PL counters and pattern logic. This avoids DDR read traffic and
-does not take ownership of the capture VDMA. The normal capture overlay still
-has no TX path unless that option is selected.
+The current custom overlay has **no HDMI output path**. Its block design creates
+only the input hierarchy and a write-only VDMA (`MM2S` disabled); the build
+extracts only the pinned RX procedures and stops before the TX constraints.
+The stock TX hierarchy is a useful integration reference, but copying it alone
+would not make an end-to-end design: it also needs TX ports and constraints,
+AXI control and interrupts, VTC configuration, a clock/reset policy, HWH
+metadata, and a stream source. A practical first pattern can use a board-side
+frame buffer with a changing visible frame ID through the stock display path.
+A small PL test-pattern source could avoid the extra DDR read traffic, but
+requires another AXI-stream timing/boundary integration. Either option must
+keep the RX capture's source identity tied to complete frames.
+
+The 1080p30 raw RGB888 payload is 6,220,800 bytes per frame, or 186.624 MB/s
+if every input frame is written. At 1080p60 it is 373.248 MB/s. These values
+exclude memory padding, intermediate 32-bit pixels, output reads, CPU copies,
+and Ethernet. A DDR-backed HDMI output adds another full-frame read at its
+refresh rate. The 1 FPS host-delivery goal only sets roughly 49.77 Mbit/s of
+RGB888 application payload; it does not reduce the rate at which the input
+receiver and VDMA must accept pixels. Measure input/DDR copy, output-loop and
+network costs separately.
+
+The latest clean VGA build used 6,690/53,200 LUTs, 15,938/106,400 registers,
+7.5/140 BRAM tiles, 9/220 DSPs, and one of four MMCMs. Adding the stock TX
+clock generator would add another MMCM and output serializers; the existing
+logic counts leave apparent LUT/BRAM/DSP headroom. This utilization does not
+predict final placement, clock routing, I/O timing, resource interaction, or
+1080p closure. The replay report retained five input and two output external
+delay gaps even for VGA. See [clean build 017](results/2026-10-16/credit-017-clean-replay.md).
+
+Minimum next implementation steps are to add an explicit 1080p30 build profile
+for the receiver, EDID, constraints, gateware dimensions, HWH manifest, sender,
+and host frame parser; then integrate the output hierarchy and a known changing
+pattern source. Run block-design validation, synthesis, routed timing/CDC/DRC,
+and report the external I/O constraint gaps before programming a board. Only
+then run a short same-board OUT→IN test and compare its embedded frame IDs and
+pixels. The 1080p sustained 10-minute acceptance remains separate. The current
+source statically rejects dimensions other than 640×480 and uses a 25.2 MHz
+RX constraint, so changing the HDMI timing alone cannot produce a supported
+capture.
+
+Sources inspected locally and pinned above: `hardware/capture.tcl`,
+`scripts/build_capture.py`, `gateware/dependencies.json`, the PYNQ v3.0.1
+checkout, and `artifacts/clean-replay-017-20261016-0308` implementation output.
+The local dependency versions are Migen 0.9.2 at
+`e19524c963a8342952840983047557707fbe0b6a` and LiteX 2026.8 at
+`b2759f69bcae8be0357fb2ee5eebe216365d1f00`. No RX/TX 1080p IP build,
+board output-loop execution, 1080p input test, EDID interoperability test,
+or 1080p DDR/network performance measurement has been performed. The physical
+board revision, input/output connector margin at 74.25 MHz, and 1080p30
+compatibility with the chosen loop cable and source remain unverified.
+
+## 2026-10-17: standalone PL HDMI output fixture
+
+The optional `--with-hdmi-output` path adds a fixed 1080p30 source without
+connecting a second DMA or AXI video stream. It drives the pinned `rgb2dvi`
+video input directly from PL counters and pattern logic. This avoids DDR read
+traffic and does not take ownership of the capture VDMA. The normal capture
+overlay still has no TX path unless the option is selected.
 
 The source uses 1920×1080 active pixels within 2200×1125 totals. Its frame ID
 increments at the frame boundary, and the marker, color bars, ramps, and
 analytic RGB values match the host fixture in `tools/hdmi_pattern.py`. The
-fixture simulation compares two complete frames, including all active pixels,
+fixture simulation compares two complete frames, including active pixels,
 sync positions, and blanking, then reasserts reset mid-frame and checks that
 the next active pixel restarts at the frame origin. The test is
 `python -m pytest -q tests/test_hdmi_output.py`; it passed in Icarus Verilog.
@@ -208,42 +260,3 @@ HDMI pins officially only through 720p, and no 1080p30 cable loop has been
 measured. Full Vivado DRC, routed timing/CDC review, and board testing remain
 required. The loop also needs a source or sink that accepts the fixed timing;
 the transmitter does not negotiate a mode.
-
-The 1080p30 raw RGB888 payload is 6,220,800 bytes per frame, or 186.624 MB/s
-if every input frame is written. At 1080p60 it is 373.248 MB/s. These values
-exclude memory padding, intermediate 32-bit pixels, output reads, CPU copies,
-and Ethernet. A DDR-backed HDMI output adds another full-frame read at its
-refresh rate. The 1 FPS host-delivery goal only sets roughly 49.77 Mbit/s of
-RGB888 application payload; it does not reduce the rate at which the input
-receiver and VDMA must accept pixels. Measure input/DDR copy, output-loop and
-network costs separately.
-
-The latest clean VGA build used 6,690/53,200 LUTs, 15,938/106,400 registers,
-7.5/140 BRAM tiles, 9/220 DSPs, and one of four MMCMs. Adding the stock TX
-clock generator would add another MMCM and output serializers; the existing
-logic counts leave apparent LUT/BRAM/DSP headroom. This utilization does not
-predict final placement, clock routing, I/O timing, resource interaction, or
-1080p closure. The replay report retained five input and two output external
-delay gaps even for VGA. See [clean build 017](results/2026-10-16/credit-017-clean-replay.md).
-
-Minimum next implementation steps are to add an explicit 1080p30 build profile
-for the receiver, EDID, constraints, gateware dimensions, HWH manifest, sender,
-and host frame parser; then integrate the output hierarchy and a known changing
-pattern source. Run block-design validation, synthesis, routed timing/CDC/DRC,
-and report the external I/O constraint gaps before programming a board. Only
-then run a short same-board OUT→IN test and compare its embedded frame IDs and
-pixels. The 1080p sustained 10-minute acceptance remains separate. The current
-source statically rejects dimensions other than 640×480 and uses a 25.2 MHz
-RX constraint, so changing the HDMI timing alone cannot produce a supported
-capture.
-
-Sources inspected locally and pinned above: `hardware/capture.tcl`,
-`scripts/build_capture.py`, `gateware/dependencies.json`, the PYNQ v3.0.1
-checkout, and `artifacts/clean-replay-017-20261016-0308` implementation output.
-The local dependency versions are Migen 0.9.2 at
-`e19524c963a8342952840983047557707fbe0b6a` and LiteX 2026.8 at
-`b2759f69bcae8be0357fb2ee5eebe216365d1f00`. No RX/TX 1080p IP build,
-board output-loop execution, 1080p input test, EDID interoperability test,
-or 1080p DDR/network performance measurement has been performed. The physical
-board revision, input/output connector margin at 74.25 MHz, and 1080p30
-compatibility with the chosen loop cable and source remain unverified.
