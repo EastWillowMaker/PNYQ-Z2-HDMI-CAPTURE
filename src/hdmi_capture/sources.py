@@ -33,8 +33,13 @@ class Sample:
         # Keep channel conversion in plain ndarray views, independent of the
         # native-owning PynqBuffer subclass's finalization behavior.
         base = np.asarray(self.pixels)
-        pixels = base[..., ::-1] if self.bgr else base
-        rgb = np.array(pixels, order="C", copy=True)
+        if self.bgr:
+            rgb = np.empty(base.shape, dtype=np.uint8, order="C")
+            rgb[..., 0] = base[..., 2]
+            rgb[..., 1] = base[..., 1]
+            rgb[..., 2] = base[..., 0]
+        else:
+            rgb = np.array(base, order="C", copy=True)
         rgb.flags.writeable = False
         return rgb
 

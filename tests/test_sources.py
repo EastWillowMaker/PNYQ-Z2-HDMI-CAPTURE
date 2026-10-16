@@ -29,6 +29,43 @@ def test_owned_copy_and_exactly_once_release():
     assert released == [True]
 
 
+@pytest.mark.parametrize("bgr", [False, True])
+def test_full_hd1080_copy_is_plain_owned_contiguous_and_exact_for_native_strided_buffer(bgr):
+    width, height = 1920, 1080
+
+    class NativeFrame(np.ndarray):
+        def __array_finalize__(self, source):
+            self.native_owner = getattr(source, "native_owner", None)
+
+    storage = np.empty((height, width, 4), dtype=np.uint8)
+    x = np.arange(width, dtype=np.uint8)[None, :]
+    y = np.arange(height, dtype=np.uint8)[:, None]
+    storage[..., 0] = x
+    storage[..., 1] = y
+    storage[..., 2] = (x.astype(np.uint16) + y.astype(np.uint16) + 17) % 256
+    pixels = storage[..., :3].view(NativeFrame)
+    pixels.native_owner = object()
+    assert not pixels.flags.c_contiguous
+
+    released = []
+    sample = Sample(pixels, 1, bgr=bgr, release=lambda: released.append(True))
+    rgb = sample.copy_rgb()
+
+    assert type(rgb) is np.ndarray
+    assert rgb.shape == (1080, 1920, 3)
+    assert rgb.flags.c_contiguous and rgb.flags.owndata and not rgb.flags.writeable
+    assert not hasattr(rgb, "native_owner")
+    channels = (2, 1, 0) if bgr else (0, 1, 2)
+    for output_channel, input_channel in enumerate(channels):
+        np.testing.assert_array_equal(rgb[..., output_channel], pixels[..., input_channel])
+    assert released == []
+
+    sample.close()
+    pixels[:] = 0
+    assert rgb[0, 0].tolist() == ([17, 0, 0] if bgr else [0, 0, 17])
+    assert released == [True]
+
+
 class Buffer(np.ndarray):
     def freebuffer(self):
         self.freed += 1
