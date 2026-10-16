@@ -1,0 +1,17 @@
+{
+  "sample_count": 118,
+  "qualified_window_sample_count": 107,
+  "sample_begin_board_seconds": 92103.532307544,
+  "sample_end_board_seconds": 92689.797494209,
+  "qualified_acquisition_begin_board_seconds": 92042.16499563,
+  "qualified_acquisition_end_board_seconds": 92641.664865136,
+  "qualified_window_cpu_percent_one_core_weighted_mean": 71.88635773544272,
+  "qualified_window_cpu_percent_one_core_min": 67.98344851431278,
+  "qualified_window_cpu_percent_one_core_max": 76.2895225486907,
+  "qualified_window_process_rss_bytes_min": 89571328,
+  "qualified_window_process_rss_bytes_max": 101191680,
+  "qualified_window_mem_available_kib_min": 298228,
+  "qualified_window_mem_available_kib_max": 311064,
+  "process_missing_observed": true,
+  "initial_resource_window_unobserved_seconds": 61.36731191400031
+}

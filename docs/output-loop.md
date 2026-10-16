@@ -9,8 +9,10 @@ available as an independent source; this loop does not implement active bypass.
 Build the explicit `1080p30` profile with `--with-hdmi-output` as described in
 [build](build.md). Use its paired bitfile, adjacent HWH and build manifest.
 The [verified build005](results/2026-10-17/1080p30-build-005.md) has real short
-capture, held-lease and GUI/BMP evidence. Check [progress](progress.md) for the
-separate ten-minute criterion. An RX-only build does not generate this pattern.
+capture, held-lease and GUI/BMP evidence. The
+[ten-minute criterion](results/2026-10-17/1080p30-completion.md) passed1,200distinct
+exact frames at1.999744FPS with safe shutdown. An RX-only build does not generate
+this pattern.
 
 Stop other capture programs and verify their safe DMA shutdown before changing
 the loaded image. For first loading or switching profiles, follow the verified

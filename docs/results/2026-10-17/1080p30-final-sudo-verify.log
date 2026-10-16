@@ -1,0 +1,9 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-1080p30-002$ sudo -k -n id -u && sudo -n stat -c "%U:%G %a" /etc/sudoers.d/99-codex-xilinx && sudo -n cat /etc/sudoers.d/99-codex-xilinx && sudo -n visudo -cf /etc/sudoers.d/99-codex-xilinx; printf "\nCONSOLE_DONE_9f7f4b02dd6344b1a3e7bfe7df6f8ec0:%s\n" "$?"
+[?2004l0
+root:root 440
+xilinx ALL=(ALL:ALL) NOPASSWD: ALL
+/etc/sudoers.d/99-codex-xilinx: parsed OK
+
+CONSOLE_DONE_9f7f4b02dd6344b1a3e7bfe7df6f8ec0:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-1080p30-002$ 

@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "original_lines": 203,
+  "final_lines": 205,
+  "overlapping_suffix_prefix_lines": 59,
+  "new_lines": 146,
+  "new_fault_lines": []
+}

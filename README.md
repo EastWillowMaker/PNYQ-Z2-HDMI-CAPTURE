@@ -3,6 +3,14 @@
 PC Python receives real PYNQ-Z2 HDMI input through a LiteX capture gate,
 VDMA/PS DDR and onboard PS Ethernet as complete raw RGB888 NumPy arrays.
 
+The fixed1920×1080p30 board HDMI OUT→IN loop is verified: **1,200distinct exact
+frames in600.076875seconds,1.999744FPS**, with zero pixel, mixed/repeated-frame,
+metadata or transport errors and safe DMA shutdown. The desktop viewer's
+uncompressed24-bit BMP reproduces every received RGB byte after decoding.
+Board passwordless sudo, held-buffer ownership and measured performance work
+are complete for this scope. Start with the [1080p loop guide](docs/output-loop.md)
+and [completion evidence](docs/results/2026-10-17/1080p30-completion.md).
+
 The accepted640×480 progressive near60Hz M1 is verified: **1,201 distinct exact
 frames in600.300346seconds,2.000665FPS**, with zero pixel, mixed/repeated-frame,
 metadata or transport errors. Held-buffer ownership, clean-source first frame,

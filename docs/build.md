@@ -9,7 +9,9 @@ The qualified VGA build below remains the default. The new explicit
 passed CAD and strict timing/CDC/DRC checks. Real J9→J10 short captures,
 held-buffer ownership and GUI BMP saving also passed; see
 [loop measurements](results/2026-10-17/1080p30-loop-performance.md).
-The ten-minute production test is in progress; see [current status](progress.md).
+The [ten-minute production criterion](results/2026-10-17/1080p30-completion.md)
+also passed1,200distinct exact frames over600.076875seconds at1.999744FPS,
+followed by safe shutdown and storage/kernel checks.
 
 Generate matching gateware with the pinned environment, then build into a new
 directory. For the optional same-board output-loop fixture:

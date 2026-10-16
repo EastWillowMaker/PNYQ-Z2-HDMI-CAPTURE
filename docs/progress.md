@@ -1,5 +1,36 @@
 # Progress and handoff
 
+2026-10-17 — Accepted1080p30 scope complete.
+
+The physical J9OUT→J10IN loop passed1,200distinct exact1920×1080 RGB888 images
+in600.076875seconds at1.999744FPS, longest gap0.605705seconds, zero pixel/mixed/
+repeated/metadata/transport errors. Runtime `cfd30d3`, fresh build005 from
+`7935b71`. The uninstrumented sender ended0, DMA safe, zero source-cleanup-network
+errors; finalGPIO RS0/Halted1/gateoff, unchanged boot/storage SHA/ext4errors0.
+Kernel suffix/prefix overlap59 plus146new lines showed no new fault. See the
+[completion report](results/2026-10-17/1080p30-completion.md) and scoped aggregate
+JSON; original generic M1 flags and failures remain unchanged.
+
+Real GUI BMP save/all6,220,800RGB bytes, held lease through188native edges,
+separate DMA/copy/TCP measurements and verified copy improvement passed.
+Cached TCP629.465Mbps; actual native copy259.523→95.583ms, short delivered rate
+1.842234→2.480469FPS (+34.64%). Board sudo rechecked without cached credentials;
+login password and PC sudo policy were not changed. Fullhost592pass/1optional
+Migen/LiteX module skip, unchanged gate45passed in pinned environment, final
+profile/build47passed. No fresh PC-source1080p, VGA hardware rerun, arbitrary
+mode or missing-clock native-startup qualification is claimed.
+
+All task sender/viewer/sampler/HTTP processes ended. The005PL pattern continues
+in hardware with gate/DMA idle. Current overlay/receipt:
+`/tmp/hdmi-capture-1080p30-002`; runtime:
+`/tmp/hdmi-capture-1080p30-003/src`. Use normal preparation before another session
+and recheck ephemeral paths after reboot. [Loop instructions](output-loop.md)
+include clock-readiness and GUI/CLI steps. Local commits only/no push; unrelated
+untracked m1-recovery-scanout.log remains untouched. Prior checkpoints below
+are historical and do not describe active work.
+
+Preserved earlier real-loop checkpoint:
+
 2026-10-17 — Real1080p loop bring-up; final-accounting fix under verification.
 
 The user confirmed J9OUT→J10IN cabling with “Done”. The guarded switch loaded

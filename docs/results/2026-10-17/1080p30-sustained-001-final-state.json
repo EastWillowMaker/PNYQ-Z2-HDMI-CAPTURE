@@ -1,0 +1,47 @@
+{
+  "event": "final_state",
+  "passed": true,
+  "memory": {
+    "MemTotal_kib": 505428,
+    "MemAvailable_kib": 335704,
+    "SwapFree_kib": 522492,
+    "CmaTotal_kib": 131072,
+    "CmaFree_kib": 38832
+  },
+  "boot_id": "1dd70e40-85cc-4c9b-a2e2-03b9814e290f",
+  "hardware": {
+    "vdma_control": 86032,
+    "vdma_status": 69633,
+    "command": 2
+  },
+  "storage": {
+    "ext4_errors": "0",
+    "storage_bytes": 16777216,
+    "storage_sha256": "341aacac661ccb210720bedaa9ead5d668fe5ea41a73532fc147c71e34040df1"
+  },
+  "active_capture": [],
+  "counters": {
+    "enabled": false,
+    "observed_frames": 22021,
+    "selected_frames": 1301,
+    "completed_frames": 22020,
+    "dropped_frames": 20720,
+    "invalid_frames": 0,
+    "snapshot_begin_ns": 92734144896697,
+    "snapshot_end_ns": 92734145164118,
+    "timestamp_clock": "board_monotonic",
+    "snapshot_atomic": false,
+    "sample_point": "final_gpio_only_check",
+    "counter_bits": 32,
+    "frontend_overflow_episodes": 0,
+    "native_vsync_edges": 22021,
+    "overflow_units": "assertion_episodes_not_lost_frames",
+    "frontend_underflow_episodes": 0
+  },
+  "sender_result": {
+    "exit_code": 0,
+    "process_left_alive": false,
+    "pid": 4315,
+    "ended_monotonic": 92693.085365607
+  }
+}

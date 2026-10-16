@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "per_frame_log_sha256": "3feb2ad603bed7dc0490b3c2f0aef64fa9c70eec5bee6322ed9d6c910be6e96a",
+  "records": 1200,
+  "exact_distinct_frames": 1200,
+  "first_optical_id": 1593,
+  "last_optical_id": 19578,
+  "session_id": "4d623099-adaa-4216-a53e-8a3bbe9f6d10",
+  "first_transport_id": 2,
+  "last_transport_id": 1201,
+  "board_acquisition_span_seconds": 599.499869506,
+  "observed_native_vsync_hz": 30.000006530143207,
+  "longest_interframe_gap_seconds": 0.6057049660012126,
+  "payload_bytes": 7464960000
+}

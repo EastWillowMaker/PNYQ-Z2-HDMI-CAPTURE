@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "scope": "accepted_1080p30_capture_viewer_sudo_and_output_loop",
+  "complete": true,
+  "hardware": "PYNQ-Z2 physical HDMI OUT J9 to HDMI IN J10",
+  "runtime_revision": "cfd30d3",
+  "build_revision": "7935b71",
+  "requirements": {
+    "N1_real_1080p_rgb888": true,
+    "N2_board_passwordless_sudo": true,
+    "N3_changing_physical_output_loop": true,
+    "N4_600_second_new_exact_frame_criterion": true,
+    "N5_viewer_bmp_and_measured_performance": true
+  },
+  "frames": 1200,
+  "elapsed_seconds": 600.0768747319817,
+  "delivered_fps": 1.9997437837209908,
+  "longest_interframe_gap_seconds": 0.6057049660012126,
+  "pixel_failures": 0,
+  "mixed_frames": 0,
+  "repeated_frames": 0,
+  "metadata_failures": 0,
+  "transport_errors": 0,
+  "observed_native_vsync_hz": 30.000006530143207,
+  "sender_exit_code": 0,
+  "dma_shutdown_safe": true,
+  "post_state": {
+    "vdma_control": 86032,
+    "vdma_status": 69633,
+    "command": 2
+  },
+  "storage": {
+    "ext4_errors": "0",
+    "storage_bytes": 16777216,
+    "storage_sha256": "341aacac661ccb210720bedaa9ead5d668fe5ea41a73532fc147c71e34040df1"
+  },
+  "no_new_kernel_faults": true,
+  "generic_qualifier_full_m1_flag": false,
+  "generic_qualifier_flag_scope": "Original aggregate M1 flag is preserved; this record evaluates the separately accepted next scope",
+  "evidence": [
+    "1080p30-sustained-001-summary.json",
+    "1080p30-sustained-001-board.json",
+    "1080p30-sustained-001-frame-audit.json",
+    "1080p30-sustained-001-final-state.json",
+    "1080p30-sustained-001-resource-summary.json",
+    "1080p30-sustained-001-kernel-check.json",
+    "1080p30-lease-001.jsonl",
+    "1080p30-gui-hdmi-001.json",
+    "1080p30-loop-performance.md",
+    "../2026-10-16/board-sudo-verify.log"
+  ],
+  "limits": [
+    "Controlled fixed1080p30 loop only; no fresh PC-source1080p or arbitrary-mode qualification",
+    "Pixel-clock frequency and source range/format are not independently measured by runtime",
+    "Native startup skips and absolute optical-to-native identity mapping remain unknown",
+    "Native constructor still requires live HDMI clock; no automatic recovery",
+    "Ignored PYNQ UIO destructor warning remains after safe cleanup",
+    "Initial61.37seconds of the delivered window lack resource samples; no hosted CI claim",
+    "VGA remains the default with retained prior evidence; no fresh VGA hardware rerun at cfd30d3"
+  ]
+}

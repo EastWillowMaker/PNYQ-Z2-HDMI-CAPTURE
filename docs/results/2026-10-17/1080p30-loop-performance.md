@@ -87,7 +87,9 @@ showed roughly90–94% of one CPU core during observed active intervals and abou
 resource windows include time outside the client connection and are not a
 leak/stability qualification.
 
-These measurements complete the component comparison, not the ten-minute
-criterion. [Real GUI/BMP](1080p30-gui-hdmi-001.md) also passed; the uninstrumented
-600-second production run remains pending at this checkpoint. The independent PC fixture and prior qualified VGA
-evidence are retained; no new PC-source1080p hardware result is claimed here.
+These measurements are separate from the
+[passed ten-minute production criterion](1080p30-completion.md):1,200exact
+images over600.076875seconds at1.999744FPS, with safe shutdown.
+[Real GUI/BMP](1080p30-gui-hdmi-001.md) also passed. The independent PC fixture
+and prior qualified VGA evidence are retained; no new PC-source1080p hardware
+result is claimed here.
