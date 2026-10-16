@@ -6,6 +6,7 @@ import numpy as np
 import pytest
 
 from hdmi_capture.sources import Sample, SourceError
+from hdmi_capture.modes import get_mode
 from tools import check_credit_lease as checker
 from tools.check_credit_lease import check_lease, run_session
 from tools.hdmi_pattern import pattern
@@ -19,8 +20,9 @@ class Buffer(np.ndarray):
 
 
 class FakeSource:
-    def __init__(self, fault=None):
+    def __init__(self, fault=None, mode="vga"):
         self.fault = fault
+        self.profile = get_mode(mode)
         self.leased = False
         self.acquired = 0
         self.edges = 100
@@ -29,7 +31,8 @@ class FakeSource:
         self.started = self.closed = False
         self.acknowledgements = 0
         self.arm_calls = 0
-        self.native = SimpleNamespace(buffer=np.empty((480, 640, 3), dtype=np.uint8).view(Buffer),
+        self.native = SimpleNamespace(buffer=np.empty(
+            (self.profile.height, self.profile.width, 3), dtype=np.uint8).view(Buffer),
                                       mmio=SimpleNamespace(read=self.read_mmio), arm=self.arm)
         self.native.buffer.invalidations = 0
         self.control = SimpleNamespace(identity=self.identity, snapshot=self.snapshot, command=1)
@@ -42,7 +45,8 @@ class FakeSource:
 
     def read_mmio(self, offset):
         registers = {0x28: 0, 0x30: 0x15010, 0x34: 0x11001,
-                     0xA0: 480, 0xA4: 1920, 0xA8: 1920}
+                     0xA0: self.profile.height, 0xA4: self.profile.width * 3,
+                     0xA8: self.profile.width * 3}
         if self.fault == "running":
             registers[0x30], registers[0x34] = 0x15011, 0x11000
         if self.fault == "dma_error":
@@ -75,9 +79,10 @@ class FakeSource:
         self.leased = True
         self.dma_shutdown_safe = False
         optical_id = 1000 if self.fault == "repeat_pattern" else 1000 + self.acquired
-        self.native.buffer[:] = pattern(optical_id)[..., ::-1]
+        self.native.buffer[:] = pattern(optical_id, self.profile.name)[..., ::-1]
         return Sample(self.native.buffer, 1, sequence=self.selected_native, bgr=True,
-                      release=self.release, extra_metadata=dict(frame_source_id=self.selected_native - 1,
+                      release=self.release, extra_metadata=dict(capture_mode=self.profile.name,
+                          frame_source_id=self.selected_native - 1,
                           source_accounting=copy.deepcopy(self.identity()),
                           litex_startup_counters=self.snapshot()))
 
@@ -101,8 +106,8 @@ class FakeSource:
         self.dma_shutdown_safe = True
 
 
-def run(source, records):
-    return asyncio.run(run_session(source, records.append, hold_seconds=1, sleep=source.sleep))
+def run(source, records, *, mode="vga"):
+    return asyncio.run(run_session(source, records.append, mode=mode, hold_seconds=1, sleep=source.sleep))
 
 
 def test_holds_native_buffer_until_ack_and_observes_new_exact_pattern():
@@ -116,6 +121,25 @@ def test_holds_native_buffer_until_ack_and_observes_new_exact_pattern():
     assert [r["verification"]["expected_id"] for r in records
             if r["event"] in ("pattern_a", "pattern_b")] == [1001, 1002]
     assert not result["physical_source_sequence_verified"]
+
+
+def test_1080p_lease_checks_full_buffer_and_expected_geometry():
+    source, records = FakeSource(mode="1080p30"), []
+    result = run(source, records, mode="1080p30")
+    assert result["passed"] and result["dma_shutdown_safe"]
+    assert result["capture_mode"] == "1080p30"
+    assert source.native.buffer.nbytes == 6_220_800
+    assert source.acknowledgements == 2 and source.arm_calls == 2
+    assert [record["verification"]["expected_id"] for record in records
+            if record["event"] in ("pattern_a", "pattern_b")] == [1001, 1002]
+
+
+def test_1080p_lease_rejects_vga_geometry_before_releasing_credit():
+    source, records = FakeSource(), []
+    result = run(source, records, mode="1080p30")
+    assert not result["passed"] and "VDMA geometry changed" in result["error"]
+    assert source.closed and result["dma_shutdown_safe"]
+    assert source.acknowledgements == 0 and source.arm_calls == 1
 
 
 @pytest.mark.parametrize("fault, message", [

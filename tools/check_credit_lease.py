@@ -15,6 +15,7 @@ import time
 import numpy as np
 
 from hdmi_capture.sources import DMA_ERRORS, SourceError
+from hdmi_capture.modes import CAPTURE_MODES, get_mode
 
 try:
     from tools.hdmi_pattern import verify
@@ -59,15 +60,20 @@ def observe(source, sample):
     return proof
 
 
-def validate(proof, sample, previous=None):
+def validate(proof, sample, previous=None, *, mode="vga"):
+    profile = get_mode(mode)
     raw, identity = proof["vdma"], proof["identity_after"]
     require(raw["0x30"] & 0xFFFFFF7F == 0x15010
             and raw["0x34"] & 0x1001 == 0x1001 and not raw["0x34"] & DMA_ERRORS,
             "VDMA is not error-free single-frame auto-HALTED with RS0 and frame IRQ")
     require(raw["0x28"] & ((0x1F << 24) | (0x1F << 8)) == 0,
             "VDMA did not remain parked on store zero")
-    require((raw["0xa0"], raw["0xa4"], raw["0xa8"]) == (480, 1920, 1920),
+    require((raw["0xa0"], raw["0xa4"], raw["0xa8"]) ==
+            (profile.height, profile.width * 3, profile.width * 3),
             "VDMA geometry changed")
+    require(sample.pixels.dtype == np.uint8 and
+            sample.pixels.shape == (profile.height, profile.width, 3),
+            "Owned buffer does not match the selected capture mode")
     require(all(raw[hex(offset)] == proof["buffer_physical_address"]
                 for offset in (0xAC, 0xB0, 0xB4, 0xB8)),
             "VDMA store address differs from the owned buffer")
@@ -79,6 +85,8 @@ def validate(proof, sample, previous=None):
                     ("credit_failed", "source_sequence_fault", "command_errors",
                      "source_sequence_faults")), "Credit/source fault is present")
     metadata = sample.extra_metadata
+    require(metadata.get("capture_mode", "vga") == profile.name,
+            "Sample capture mode does not match the selected profile")
     accounting = metadata["source_accounting"]
     require(identity["selected_native_vsync_id"] == sample.sequence
             and identity["selected_sof_id"] == metadata["frame_source_id"]
@@ -131,28 +139,29 @@ async def reject_second_read(source):
         native.arm = original_arm
 
 
-async def check_lease(source, emit, *, hold_seconds=1, sleep=asyncio.sleep):
+async def check_lease(source, emit, *, mode="vga", hold_seconds=1, sleep=asyncio.sleep):
+    profile = get_mode(mode)
     require(math.isfinite(hold_seconds) and 0.1 <= hold_seconds <= 3,
             "Hold duration must be finite and in [0.1,3] seconds")
     sample_a = await source.read()
     a = observe(source, sample_a)
     emit(dict(event="lease_a", sample_sequence=sample_a.sequence,
               metadata=sample_a.extra_metadata, proof=a))
-    validate(a, sample_a)
-    verification_a = verify(sample_a.copy_rgb())
+    validate(a, sample_a, mode=profile.name)
+    verification_a = verify(sample_a.copy_rgb(), mode=profile.name)
     emit(dict(event="pattern_a", verification=verification_a))
     require(verification_a["exact_match"], "Sample A is not an exact analytic RGB pattern")
     await reject_second_read(source)
     after_rejection = observe(source, sample_a)
     emit(dict(event="leased_read_rejected", proof=after_rejection))
-    validate(after_rejection, sample_a, a)
+    validate(after_rejection, sample_a, a, mode=profile.name)
     previous = after_rejection
     hold_begin = time.monotonic_ns()
     for index in range(4):
         await sleep(hold_seconds / 4)
         current = observe(source, sample_a)
         emit(dict(event="lease_hold", index=index, proof=current))
-        validate(current, sample_a, previous)
+        validate(current, sample_a, previous, mode=profile.name)
         previous = current
     native_delta = previous["counters"]["native_vsync_edges"] - a["counters"]["native_vsync_edges"]
     require(native_delta >= 2, "Native source did not advance by at least two edges during lease")
@@ -167,8 +176,8 @@ async def check_lease(source, emit, *, hold_seconds=1, sleep=asyncio.sleep):
     b = observe(source, sample_b)
     emit(dict(event="lease_b", sample_sequence=sample_b.sequence,
               metadata=sample_b.extra_metadata, proof=b))
-    validate(b, sample_b)
-    verification_b = verify(sample_b.copy_rgb())
+    validate(b, sample_b, mode=profile.name)
+    verification_b = verify(sample_b.copy_rgb(), mode=profile.name)
     emit(dict(event="pattern_b", verification=verification_b))
     require(verification_b["exact_match"], "Sample B is not an exact analytic RGB pattern")
     old, new = a["identity_after"], b["identity_after"]
@@ -188,13 +197,14 @@ async def check_lease(source, emit, *, hold_seconds=1, sleep=asyncio.sleep):
               command_after_ack=source.control.command))
 
 
-async def run_session(source, emit, *, hold_seconds=1, sleep=asyncio.sleep):
+async def run_session(source, emit, *, mode="vga", hold_seconds=1, sleep=asyncio.sleep):
     result = dict(event="result", passed=False, dma_shutdown_safe=False,
                   physical_source_sequence_verified=False,
-                  scope="held_single_credit_buffer_ownership_observation")
+                  scope="held_single_credit_buffer_ownership_observation", capture_mode=mode)
     try:
+        get_mode(mode)
         source.start()
-        await check_lease(source, emit, hold_seconds=hold_seconds, sleep=sleep)
+        await check_lease(source, emit, mode=mode, hold_seconds=hold_seconds, sleep=sleep)
         result["passed"] = True
     except BaseException as error:
         result.update(error_type=type(error).__name__, error=str(error))
@@ -219,6 +229,7 @@ def main(argv=None):
     parser.add_argument("--prepared-receipt", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True, help="New JSONL evidence file")
     parser.add_argument("--hold-seconds", type=float, default=1)
+    parser.add_argument("--mode", choices=tuple(CAPTURE_MODES), default="vga")
     args = parser.parse_args(argv)
     if not math.isfinite(args.hold_seconds) or not 0.1 <= args.hold_seconds <= 3:
         parser.error("--hold-seconds must be finite and in [0.1,3]")
@@ -239,12 +250,12 @@ def main(argv=None):
                 pass
 
         source = sources_module.LiteXCreditSource(
-            args.bitfile, args.manifest, capture_fps=2,
+            args.bitfile, args.manifest, capture_mode=args.mode, capture_fps=2,
             prepared_receipt=args.prepared_receipt, progress=progress)
         files = dict(bitfile=args.bitfile, hwh=args.bitfile.with_suffix(".hwh"),
                      manifest=args.manifest, prepared_receipt=args.prepared_receipt,
                      checker=Path(__file__), runtime_sources=Path(sources_module.__file__))
-        emit(dict(event="configuration", hold_seconds=args.hold_seconds,
+        emit(dict(event="configuration", capture_mode=args.mode, hold_seconds=args.hold_seconds,
                   provenance={name: dict(path=str(path), sha256=hashlib.sha256(path.read_bytes()).hexdigest())
                               for name, path in files.items()},
                   pid=os.getpid(), boot_id=Path("/proc/sys/kernel/random/boot_id").read_text().strip(),
@@ -256,7 +267,7 @@ def main(argv=None):
             for signum in (signal.SIGINT, signal.SIGTERM, signal.SIGHUP, signal.SIGQUIT):
                 loop.add_signal_handler(signum, task.cancel)
             try:
-                return await run_session(source, emit, hold_seconds=args.hold_seconds)
+                return await run_session(source, emit, mode=args.mode, hold_seconds=args.hold_seconds)
             finally:
                 for signum in (signal.SIGINT, signal.SIGTERM, signal.SIGHUP, signal.SIGQUIT):
                     loop.remove_signal_handler(signum)
