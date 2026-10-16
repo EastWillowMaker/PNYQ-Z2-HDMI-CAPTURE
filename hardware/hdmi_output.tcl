@@ -26,6 +26,11 @@ set_property -dict [list \
     CONFIG.kClkRange {2} \
     CONFIG.kGenerateSerialClk {false} \
     CONFIG.kRstActiveHigh {true}] $tx_encoder
+set internal_serial_clock [string tolower \
+    [get_property CONFIG.kGenerateSerialClk $tx_encoder]]
+if {$internal_serial_clock ni {false 0}} {
+    error "HDMI output fixture requires an external serial clock"
+}
 
 # FCLK0 is the independent 100 MHz output reference.  The TX serializer uses
 # the clock module's MMCM -> BUFIO and BUFR /5 pair; it does not use RX PixelClk

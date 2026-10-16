@@ -48,6 +48,11 @@ set_property -dict [list \
     CONFIG.kClkRange {2} \
     CONFIG.kGenerateSerialClk {false} \
     CONFIG.kRstActiveHigh {true}] [get_bd_cells tx_encoder]
+set internal_serial_clock [string tolower \
+    [get_property CONFIG.kGenerateSerialClk [get_bd_cells tx_encoder]]]
+if {$internal_serial_clock ni {false 0}} {
+    error "HDMI output fixture requires an external serial clock"
+}
 
 connect_bd_net [get_bd_ports ref_clk_100] [get_bd_pins tx_clock/ref_clk_100]
 connect_bd_net [get_bd_ports resetn] [get_bd_pins tx_clock/resetn]

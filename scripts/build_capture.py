@@ -27,6 +27,9 @@ _RGB2DVI_ASYNC_RESET_PARAMETER = (
     '          <spirit:name>ASSOCIATED_ASYNC_RESET</spirit:name>\n'
     '          <spirit:value spirit:id="BUSIFPARAM_VALUE.SERIALCLK.ASSOCIATED_ASYNC_RESET">'
     'aRst:aRst_n:pRst:pRst_n</spirit:value>')
+_RGB2DVI_EXTERNAL_CLOCK_CONSTRAINT = (
+    b'create_generated_clock -source [get_ports PixelClk] -multiply_by 5 '
+    b'[get_ports SerialClk]')
 
 def run(command, cwd=ROOT):
     subprocess.run(command, cwd=cwd, check=True)
@@ -75,12 +78,24 @@ def adapt_rgb2dvi_async_reset_metadata(component: Path) -> None:
     component.write_text(xml[:begin] + interface + xml[end:])
 
 
+def remove_external_rgb2dvi_clock_constraint(xdc: Path) -> None:
+    """Drop the internal-clock relationship from the external-clock fixture."""
+    source = xdc.read_bytes()
+    if (source.count(_RGB2DVI_EXTERNAL_CLOCK_CONSTRAINT) != 1
+            or source.splitlines() != [b'### Clock constraints ###',
+                                       _RGB2DVI_EXTERNAL_CLOCK_CONSTRAINT]):
+        raise RuntimeError('Pinned rgb2dvi external clock constraint anchor changed')
+    xdc.write_bytes(source.replace(_RGB2DVI_EXTERNAL_CLOCK_CONSTRAINT, b'', 1))
+
+
 def copy_hdmi_output_sources(vendor: Path, output: Path) -> None:
-    """Stage the test-output IP and RTL, correcting only copied IP metadata."""
+    """Stage output IP and RTL, correcting copied metadata and clock constraints."""
     tx_ip = output / 'tx_ip'
     tx_ip.mkdir()
     shutil.copytree(vendor / 'boards/ip/rgb2dvi_v1_2', tx_ip / 'rgb2dvi_v1_2')
-    adapt_rgb2dvi_async_reset_metadata(tx_ip / 'rgb2dvi_v1_2/component.xml')
+    staged_ip = tx_ip / 'rgb2dvi_v1_2'
+    adapt_rgb2dvi_async_reset_metadata(staged_ip / 'component.xml')
+    remove_external_rgb2dvi_clock_constraint(staged_ip / 'src/rgb2dvi_clocks.xdc')
     tx_source = output / 'tx'
     tx_source.mkdir()
     for name in ('hdmi_output.tcl', 'hdmi_test_pattern.v', 'hdmi_test_clock.v'):
@@ -275,6 +290,8 @@ def main():
             'xdc_sha256': hashlib.sha256((output / 'hdmi_tx.xdc').read_bytes()).hexdigest(),
             'rgb2dvi_component_sha256': hashlib.sha256(
                 (output / 'tx_ip/rgb2dvi_v1_2/component.xml').read_bytes()).hexdigest(),
+            'rgb2dvi_clocks_xdc_sha256': hashlib.sha256(
+                (output / 'tx_ip/rgb2dvi_v1_2/src/rgb2dvi_clocks.xdc').read_bytes()).hexdigest(),
         }
     (output / 'source-manifest.json').write_text(json.dumps(source_manifest, indent=2) + '\n')
     run([args.vivado, '-mode', 'batch', '-source', str(ROOT / 'hardware/capture.tcl'),

@@ -84,6 +84,7 @@ def read_hdmi_output_fixture(output: Path, mode: CaptureMode) -> dict[str, objec
         'tcl_sha256': output / 'tx/hdmi_output.tcl',
         'xdc_sha256': output / 'hdmi_tx.xdc',
         'rgb2dvi_component_sha256': output / 'tx_ip/rgb2dvi_v1_2/component.xml',
+        'rgb2dvi_clocks_xdc_sha256': output / 'tx_ip/rgb2dvi_v1_2/src/rgb2dvi_clocks.xdc',
     }
     expected = {'mode': mode.name}
     for key, path in paths.items():

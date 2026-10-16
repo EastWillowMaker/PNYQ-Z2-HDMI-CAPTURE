@@ -50,6 +50,11 @@ create_hier_cell_hdmi_in /video hdmi_in
 set video /video
 if {$hdmi_output} {
     source [file join $output tx hdmi_output.tcl]
+    set tx_generate_serial_clock [string tolower \
+        [get_property CONFIG.kGenerateSerialClk [get_bd_cells hdmi_out_tx]]]
+    if {$tx_generate_serial_clock ni {false 0}} {
+        error "HDMI output fixture requires an external SerialClk source"
+    }
 }
 # Select the receiver PLL range for the selected input pixel clock. The
 # upstream base kClkRange=1 is for >=120 MHz and supports neither profile.

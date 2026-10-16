@@ -14,6 +14,7 @@ from build_capture import (
     adapt_rgb2dvi_async_reset_metadata,
     copy_capture_sources,
     copy_hdmi_output_sources,
+    remove_external_rgb2dvi_clock_constraint,
 )
 from build_capture import require_gateware_mode as require_build_gateware_mode
 from build_edid import make_edid, make_vga_edid, self_test_mode, validate_mode_edid
@@ -164,6 +165,13 @@ def test_prepared_hdmi_ip_marks_serial_clock_reset_async_without_editing_rtl(tmp
     vendor_rtl = vendor_ip / 'src/rgb2dvi.vhd'
     vendor_rtl.parent.mkdir()
     vendor_rtl.write_bytes(original_rtl)
+    original_clock_xdc = (
+        b'### Clock constraints ###\n'
+        b'create_generated_clock -source [get_ports PixelClk] -multiply_by 5 '
+        b'[get_ports SerialClk]')
+    (vendor_ip / 'src/rgb2dvi_clocks.xdc').write_bytes(original_clock_xdc)
+    ooc_xdc = b'create_clock -period 6.060 [get_ports PixelClk]\n'
+    (vendor_ip / 'src/rgb2dvi_ooc.xdc').write_bytes(ooc_xdc)
 
     output = tmp_path / 'output'
     output.mkdir()
@@ -175,12 +183,26 @@ def test_prepared_hdmi_ip_marks_serial_clock_reset_async_without_editing_rtl(tmp
     assert 'BUSIFPARAM_VALUE.SERIALCLK.ASSOCIATED_ASYNC_RESET' in staged_xml
     assert 'aRst:aRst_n:pRst:pRst_n</spirit:value>' in staged_xml
     assert (staged_ip / 'src/rgb2dvi.vhd').read_bytes() == original_rtl
+    assert (staged_ip / 'src/rgb2dvi_ooc.xdc').read_bytes() == ooc_xdc
+    assert (vendor_ip / 'src/rgb2dvi_clocks.xdc').read_bytes() == original_clock_xdc
+    assert (staged_ip / 'src/rgb2dvi_clocks.xdc').read_bytes() == (
+        b'### Clock constraints ###\n')
     assert staged_xml == original_xml.replace(
         '<spirit:name>ASSOCIATED_RESET</spirit:name>\n'
         '          <spirit:value spirit:id="BUSIFPARAM_VALUE.SERIALCLK.ASSOCIATED_RESET">',
         '<spirit:name>ASSOCIATED_ASYNC_RESET</spirit:name>\n'
         '          <spirit:value spirit:id="BUSIFPARAM_VALUE.SERIALCLK.ASSOCIATED_ASYNC_RESET">',
     )
+
+
+def test_external_clock_constraint_adaptation_fails_closed(tmp_path):
+    xdc = tmp_path / 'rgb2dvi_clocks.xdc'
+    original = b'### Clock constraints ###\n'
+    xdc.write_bytes(original)
+
+    with pytest.raises(RuntimeError, match='external clock constraint anchor changed'):
+        remove_external_rgb2dvi_clock_constraint(xdc)
+    assert xdc.read_bytes() == original
 
 
 def test_async_reset_metadata_adaptation_fails_closed_on_changed_xml(tmp_path):
@@ -240,6 +262,7 @@ def _write_fixture_files(output):
         'tcl_sha256': output / 'tx/hdmi_output.tcl',
         'xdc_sha256': output / 'hdmi_tx.xdc',
         'rgb2dvi_component_sha256': output / 'tx_ip/rgb2dvi_v1_2/component.xml',
+        'rgb2dvi_clocks_xdc_sha256': output / 'tx_ip/rgb2dvi_v1_2/src/rgb2dvi_clocks.xdc',
     }
     for index, path in enumerate(paths.values()):
         path.parent.mkdir(parents=True, exist_ok=True)
@@ -261,6 +284,11 @@ def test_output_fixture_manifest_binds_loopback_to_exact_sources(tmp_path):
 
     (output / 'tx/hdmi_test_pattern.v').write_text('changed fixture\n')
     with pytest.raises(RuntimeError, match='pattern_sha256'):
+        read_hdmi_output_fixture(output, get_mode('1080p30'))
+
+    (output / 'tx/hdmi_test_pattern.v').write_text('fixture-0\n')
+    (output / 'tx_ip/rgb2dvi_v1_2/src/rgb2dvi_clocks.xdc').write_text('changed constraint\n')
+    with pytest.raises(RuntimeError, match='rgb2dvi_clocks_xdc_sha256'):
         read_hdmi_output_fixture(output, get_mode('1080p30'))
 
 
