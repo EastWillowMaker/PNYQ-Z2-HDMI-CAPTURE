@@ -2,7 +2,7 @@
 // vid_pData uses the pinned rgb2dvi IP's documented RBG byte order.
 module hdmi_test_pattern (
     (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 pixel_clk CLK",
-       X_INTERFACE_PARAMETER = "XIL_INTERFACENAME pixel_clk, FREQ_HZ 74250000, ASSOCIATED_RESET arst" *)
+       X_INTERFACE_PARAMETER = "XIL_INTERFACENAME pixel_clk, FREQ_HZ 74250000, ASSOCIATED_ASYNC_RESET arst" *)
     input  wire        pixel_clk,
     (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 arst RST",
        X_INTERFACE_PARAMETER = "XIL_INTERFACENAME arst, POLARITY ACTIVE_HIGH" *)

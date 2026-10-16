@@ -9,10 +9,10 @@ module hdmi_test_clock (
     (* X_INTERFACE_IGNORE = "true" *)
     input  wire resetn,
     (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 pixel_clk CLK",
-       X_INTERFACE_PARAMETER = "XIL_INTERFACENAME pixel_clk, FREQ_HZ 74250000, ASSOCIATED_RESET serializer_reset" *)
+       X_INTERFACE_PARAMETER = "XIL_INTERFACENAME pixel_clk, FREQ_HZ 74250000, ASSOCIATED_ASYNC_RESET serializer_reset" *)
     output wire pixel_clk,
     (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 serial_clk CLK",
-       X_INTERFACE_PARAMETER = "XIL_INTERFACENAME serial_clk, FREQ_HZ 371250000, ASSOCIATED_RESET serializer_reset" *)
+       X_INTERFACE_PARAMETER = "XIL_INTERFACENAME serial_clk, FREQ_HZ 371250000, ASSOCIATED_ASYNC_RESET serializer_reset" *)
     output wire serial_clk,
     output wire locked,
     (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 serializer_reset RST",
