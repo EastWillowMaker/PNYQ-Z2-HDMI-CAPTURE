@@ -1,0 +1,29 @@
+{
+  "scope": "prepared_short_capture_and_supplemental_cleanup_evidence",
+  "source_revision": "3343dac618ada6099453415b5554c4185a544801",
+  "archive_sha256": "306f8d3234721bfa174cd2e2df66c5f7ef17ab55de2b3802eb2f3c5bced0080f",
+  "delivered_frames": 41,
+  "elapsed_seconds": 20.108463177049998,
+  "distinct_exact_fps": 2.038942490980302,
+  "all_optical_ids_matched_kms": true,
+  "original_controller_failed_receipt_collection": true,
+  "supplemental_validated": true,
+  "sender_process_exit_code": null,
+  "source_exit": 0,
+  "desktop_restored": true,
+  "full_m1_qualification": false,
+  "sha256": {
+    "m1-017-prepared-014-after-dmesg.log": "5d048dd61940ecd68ff11e9e00d4e192457a52ec226ab91053dccd1d13c6e38c",
+    "m1-017-prepared-014-before-dmesg.log": "098727401169218eda8bb506587090ba691f810cfaca77d499ca49916c161fb9",
+    "m1-017-prepared-014-controller.json": "70fb92e2d459c8583395df4e305884411d94fc3a6f90a2c7177ddfa8da279582",
+    "m1-017-prepared-014-prepared.json": "d7845eb15072e8feff06a2dfacbeebe59f973d832c4bf31e4d4a479a9efe9eed",
+    "m1-017-prepared-014-sender.log": "6a20d6c9f78d97e833cd219e15c8e1df5b62e264030160172f89985b7304b3c4",
+    "m1-017-prepared-014-source-child-result.json": "e89df0eae5ec7db81135aed16463968955c578bcc4f2ec43172eff351f080c17",
+    "m1-017-prepared-014-source-kernel-state-during.json": "782f88210e788ac35ede0eb35b4162dad84988278d685f965780c615e0351443",
+    "m1-017-prepared-014-source-restore.json": "8ab87a5389f87af50b0a5f05ba25665a8ffdcee70ded51f58ff0813b7e493b35",
+    "m1-017-prepared-014-source-source.jsonl": "9a8bc2e38fde22d64d383ccefded1029368b38c81682b25362973157630b4321",
+    "m1-017-prepared-014-supplemental.json": "ac2f0a24c34445c6e0aa74c60e28251d716bfe0f640d681e700a19f5d8370489",
+    "m1-017-prepared-014.json": "80e5a1047aa60a3c007988919b7da1f356388ad0c9c6ab0ae4af08f0c570b9a7",
+    "m1-017-prepared-014.jsonl": "c8c6a4b7a7835f046766e60d3b4c7e961557de9b4df97c81f91a005110c8c902"
+  }
+}

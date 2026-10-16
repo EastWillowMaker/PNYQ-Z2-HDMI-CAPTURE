@@ -1,0 +1,101 @@
+{
+  "scope": "tracked_prepared_short_first_frame_only",
+  "full_m1_qualification": false,
+  "pixel_passed": true,
+  "dma_shutdown_safe": true,
+  "storage_passed": true,
+  "source_exit": 0,
+  "desktop_restored": true,
+  "error": "RuntimeError: UART command failed; inspect /home/eastwillow/Documents/litex-hdmi-capture/artifacts/operator/prepared-014/capture-uart-20.log",
+  "pipeline_exit": 0,
+  "qualifier_summary": "docs/results/2026-10-16/m1-017-prepared-014.json",
+  "sender_final": {
+    "session_id": "4824b84a-ed29-4fdf-b847-5d995a63a407",
+    "counters": {
+      "acquired": 180,
+      "startup_discarded": 0,
+      "intentional_sampling_drops": 0,
+      "network_backpressure_drops": 137,
+      "client_discarded": 1,
+      "transport_enqueued": 41,
+      "source_errors": 0,
+      "source_cleanup_errors": 0,
+      "network_errors": 0,
+      "source_skips": 5191,
+      "source_overruns": 0,
+      "source_invalid_frames": 0
+    },
+    "dma_shutdown_safe": true,
+    "source_integrity": {
+      "startup": {
+        "enabled": false,
+        "observed_frames": 341,
+        "selected_frames": 0,
+        "completed_frames": 340,
+        "dropped_frames": 342,
+        "invalid_frames": 1,
+        "snapshot_begin_ns": 29546834566872,
+        "snapshot_end_ns": 29546834828700,
+        "timestamp_clock": "board_monotonic",
+        "snapshot_atomic": false,
+        "sample_point": "before_first_credit_while_gate_disabled_dma_halted",
+        "counter_bits": 32,
+        "frontend_overflow_episodes": 0,
+        "native_vsync_edges": 342,
+        "overflow_units": "assertion_episodes_not_lost_frames",
+        "frontend_underflow_episodes": 0
+      },
+      "last": {
+        "enabled": true,
+        "observed_frames": 5746,
+        "selected_frames": 181,
+        "completed_frames": 5745,
+        "dropped_frames": 5565,
+        "invalid_frames": 1,
+        "snapshot_begin_ns": 29636914502061,
+        "snapshot_end_ns": 29636914688590,
+        "timestamp_clock": "board_monotonic",
+        "snapshot_atomic": false,
+        "sample_point": "sequential_gpio_reads_during_credit_health_check",
+        "counter_bits": 32,
+        "frontend_overflow_episodes": 0,
+        "native_vsync_edges": 5746,
+        "overflow_units": "assertion_episodes_not_lost_frames",
+        "frontend_underflow_episodes": 0
+      },
+      "failure": null
+    },
+    "final_source_accounting": {
+      "identity": {
+        "credit_busy": true,
+        "credit_done": true,
+        "credit_failed": false,
+        "request_seen": 1,
+        "ack_seen": 0,
+        "source_sequence_fault": false,
+        "native_armed": true,
+        "selected_sof_id": 5743,
+        "selected_native_vsync_id": 5744,
+        "selected_completed": 181,
+        "command_errors": 0,
+        "source_sequence_faults": 0,
+        "identity_snapshot_coherent": true
+      },
+      "native_edges_begin": 5743,
+      "native_edges_end": 5746,
+      "interval_seconds": 0.05,
+      "passed": true
+    }
+  },
+  "sender_errors": 0,
+  "post_diagnostic": {
+    "boot": "1dd70e40-85cc-4c9b-a2e2-03b9814e290f",
+    "control": 86032,
+    "status": 69633,
+    "command": 2,
+    "ext4_errors": "0",
+    "test_bytes": 16777216,
+    "test_sha256": "341aacac661ccb210720bedaa9ead5d668fe5ea41a73532fc147c71e34040df1"
+  },
+  "raw_halt_verified": true
+}

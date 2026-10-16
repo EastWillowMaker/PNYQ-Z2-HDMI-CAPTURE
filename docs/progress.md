@@ -1,5 +1,27 @@
 # Progress and handoff
 
+2026-10-16T08:49+08:00:014 REAL PREPARED SHORT PASS; COLLECTOR ERROR PRESERVED.
+41 exact/distinctRGB frames20.108463s/2.038942FPS, all opticalIDs matchKMS and
+accountingvalid. Freshreplay017pair/source3343dac through trackedprepare/receipt/
+readytrigger/sender. SafeDMAclose and rawCR0x15010/SR0x11001/gateoff command2;
+SDpersistence/ext4count0/no newexternalabort/sourceexit0/VTrestored.
+Originalcontroller failed finalroot0600receipt fetch only. Readonlysudo supplement
+saved receipt/verifiedprocessabsence; originalfailedcontroller unchanged. Sender
+shell exitcode notcollected; inheritedUIOdestructorwarning preservedafterclose.
+Report results/2026-10-16/m1-017-prepared-014-report.md. FullM1false.
+Rootworker1259511 remainsbounded30min/deadline302719; do not replace itsfixture.
+Lease015 helper is now running session51888; no UART contention. Next gates:
+heldbuffer proof, physicalHDMI-onlyloss/restart, mode inputgap, final600seconds.
+
+2026-10-16T08:44+08:00:USER RETRY; BOARD AUTHENTICATION REACHED STAGING.
+Old014wizard/HTTP processes were absent; no local/board014 stage existed.
+Read-only UART confirmed unchanged boot1dd70e40, ext4errors0 and expiredsudo.
+Restarted direct-link HTTP8766 and one existing014wizard, PID1257893; user
+opened miniterm and exited. Stage helper PID1258058 is now running. Do not
+contend UART. No capture pass is established yet; inspect stage results and
+controller/source artifacts before continuing. V14 archive hash reverified.
+See results/2026-10-16/prepared-014-retry-001.json. All cables stay connected.
+
 2026-10-16T03:41:37+08:00:014 CANDIDATE UPDATED TO V14; STILL BEFORE AUTH.
 Commit3343dac corrects prepared attach: global unselected completed_frames may
 advance while waiting for input; selected-frame/selected-credit completion

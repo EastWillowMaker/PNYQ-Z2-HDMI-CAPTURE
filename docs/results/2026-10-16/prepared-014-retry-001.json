@@ -1,0 +1,16 @@
+{
+  "created": "2026-10-16T08:44:41.125426+08:00",
+  "scope": "retry_authentication_only_NOT_RUN",
+  "old_wizard_terminal": true,
+  "stage_directory_exists": false,
+  "board_boot_id": "1dd70e40-85cc-4c9b-a2e2-03b9814e290f",
+  "ext4_errors": 0,
+  "board_sudo_requires_password": true,
+  "preflight_log": "artifacts/operator/prepared-014-retry-preflight-001.log",
+  "preflight_sha256": "85a7a2f001a6d75660127f98d84e6f6a6c1d8f9a1c6b12a81191dd68a2e9f167",
+  "source_package": "artifacts/deploy/m1-prepared-v14.tar.gz",
+  "source_package_sha256": "306f8d3234721bfa174cd2e2df66c5f7ef17ab55de2b3802eb2f3c5bced0080f",
+  "window_title": "PYNQ tracked capture retry - board then PC",
+  "first_source_seconds": 120,
+  "full_m1_qualification": false
+}

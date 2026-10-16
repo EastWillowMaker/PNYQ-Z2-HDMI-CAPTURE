@@ -1,0 +1,18 @@
+{
+  "validated": true,
+  "scope": "short_hardware_path_with_supplemental_root_receipt_collection",
+  "original_controller_sha256": "70fb92e2d459c8583395df4e305884411d94fc3a6f90a2c7177ddfa8da279582",
+  "prior_audit_error": "RuntimeError: UART command failed; inspect /home/eastwillow/Documents/litex-hdmi-capture/artifacts/operator/prepared-014/capture-uart-20.log",
+  "prior_audit_error_is_receipt_permission_only": true,
+  "receipt_sha256": "d7845eb15072e8feff06a2dfacbeebe59f973d832c4bf31e4d4a479a9efe9eed",
+  "receipt_mode": "0o600",
+  "capture_processes_absent": true,
+  "no_new_external_abort": true,
+  "pixel_passed": true,
+  "dma_shutdown_safe": true,
+  "raw_halt_verified": true,
+  "storage_passed": true,
+  "source_exit": 0,
+  "desktop_restored": true,
+  "full_m1_qualification": false
+}

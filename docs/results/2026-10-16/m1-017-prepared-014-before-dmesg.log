@@ -1,0 +1,219 @@
+[    3.351108] ALSA device list:
+[    3.352771]   No soundcards found.
+[    3.602841] random: fast init done
+[    3.954594] EXT4-fs (mmcblk0p2): recovery complete
+[    3.959742] EXT4-fs (mmcblk0p2): mounted filesystem with ordered data mode. Opts: (null). Quota mode: disabled.
+[    3.968669] VFS: Mounted root (ext4 filesystem) on device 179:2.
+[    3.974802] devtmpfs: mounted
+[    3.979331] Freeing unused kernel image (initmem) memory: 1024K
+[    3.984378] Run /sbin/init as init process
+[    3.987211]   with arguments:
+[    3.987219]     /sbin/init
+[    3.987227]     earlyprintk
+[    3.987234]   with environment:
+[    3.987240]     HOME=/
+[    3.987246]     TERM=linux
+[    4.835871] systemd[1]: System time before build time, advancing clock.
+[    4.959393] systemd[1]: Failed to find module 'autofs4'
+[    5.048410] systemd[1]: systemd 249.11-0ubuntu3 running in system mode (+PAM +AUDIT +SELINUX +APPARMOR +IMA +SMACK +SECCOMP +GCRYPT +GNUTLS -OPENSSL +ACL +BLKID +CURL +ELFUTILS -FIDO2 +IDN2 -IDN +IPTC +KMOD +LIBCRYPTSETUP -LIBFDISK +PCRE2 -PWQUALITY -P11KIT -QRENCODE +BZIP2 +LZ4 +XZ +ZLIB +ZSTD -XKBCOMMON +UTMP +SYSVINIT default-hierarchy=unified)
+[    5.079016] systemd[1]: Detected architecture arm.
+[    5.116694] systemd[1]: Hostname set to <pynq>.
+[    6.460698] systemd[1]: Queued start job for default target Multi-User System.
+[    6.469268] random: systemd: uninitialized urandom read (16 bytes read)
+[    6.480262] systemd[1]: Created slice Slice /system/modprobe.
+[    6.515466] random: systemd: uninitialized urandom read (16 bytes read)
+[    6.523872] systemd[1]: Created slice Slice /system/serial-getty.
+[    6.555397] random: systemd: uninitialized urandom read (16 bytes read)
+[    6.562871] systemd[1]: Created slice User and Session Slice.
+[    6.596183] systemd[1]: Started Dispatch Password Requests to Console Directory Watch.
+[    6.635921] systemd[1]: Started Forward Password Requests to Wall Directory Watch.
+[    6.676042] systemd[1]: Condition check resulted in Arbitrary Executable File Formats File System Automount Point being skipped.
+[    6.686845] systemd[1]: Reached target Local Encrypted Volumes.
+[    6.725931] systemd[1]: Reached target Remote File Systems.
+[    6.765452] systemd[1]: Reached target Slice Units.
+[    6.795794] systemd[1]: Reached target Local Verity Protected Volumes.
+[    6.837668] systemd[1]: Listening on Syslog Socket.
+[    6.865921] systemd[1]: Listening on initctl Compatibility Named Pipe.
+[    6.917735] systemd[1]: Condition check resulted in Journal Audit Socket being skipped.
+[    6.925841] systemd[1]: Listening on Journal Socket (/dev/log).
+[    6.966522] systemd[1]: Listening on Journal Socket.
+[    7.009872] systemd[1]: Listening on udev Control Socket.
+[    7.056365] systemd[1]: Listening on udev Kernel Socket.
+[    7.096509] systemd[1]: Condition check resulted in Huge Pages File System being skipped.
+[    7.109655] systemd[1]: Mounting POSIX Message Queue File System...
+[    7.152009] systemd[1]: Mounting Kernel Debug File System...
+[    7.186061] systemd[1]: Condition check resulted in Kernel Trace File System being skipped.
+[    7.205494] systemd[1]: Starting Journal Service...
+[    7.245773] systemd[1]: Starting Restore / save the current clock...
+[    7.296573] systemd[1]: Starting Set the console keyboard layout...
+[    7.314232] systemd[1]: Condition check resulted in Create List of Static Device Nodes being skipped.
+[    7.334205] systemd[1]: Starting Load Kernel Module configfs...
+[    7.376098] systemd[1]: Starting Load Kernel Module drm...
+[    7.438837] systemd[1]: Starting Load Kernel Module fuse...
+[    7.493435] systemd[1]: Started Nameserver information manager.
+[    7.551840] systemd[1]: Reached target Preparation for Network.
+[    7.597555] systemd[1]: Starting Load Kernel Modules...
+[    7.632411] systemd[1]: Starting Remount Root and Kernel File Systems...
+[    7.693199] systemd[1]: Starting Coldplug All udev Devices...
+[    7.739851] systemd[1]: Started Journal Service.
+[    8.227392] Adding 524284k swap on /var/swap.  Priority:-2 extents:1 across:524284k SS
+[    8.274285] systemd-journald[110]: Received client request to flush runtime journal.
+[    8.354596] systemd-journald[110]: File /var/log/journal/b4e19d1e11f24633a2f2e1fe2798cbe4/system.journal corrupted or uncleanly shut down, renaming and replacing.
+[    9.070315] systemd-journald[110]: Failed to read journal file /var/log/journal/b4e19d1e11f24633a2f2e1fe2798cbe4/user-1000.journal for rotation, trying to move it out of the way: Text file busy
+[   11.254068] zocl: loading out-of-tree module taints kernel.
+[   11.262938] [drm] Probing for xlnx,zocl
+[   11.262987] zocl-drm axi:zyxclmm_drm: IRQ index 0 not found
+[   11.317184] [drm] PR[0] Isolation addr 0x0
+[   11.319766] [drm] Initialized zocl 0.0.0  for axi:zyxclmm_drm on minor 0
+[   12.715215] random: crng init done
+[   12.715234] random: 7 urandom warning(s) missed due to ratelimiting
+[   15.228569] FAT-fs (mmcblk0p1): Volume was not properly unmounted. Some data may be corrupt. Please run fsck.
+[   15.724517] macb e000b000.ethernet eth0: PHY [e000b000.ethernet-ffffffff:00] driver [RTL8211E Gigabit Ethernet] (irq=POLL)
+[   15.724569] macb e000b000.ethernet eth0: configuring for phy/rgmii-id link mode
+[   18.827709] macb e000b000.ethernet eth0: Link is Up - 1Gbps/Full - flow control tx
+[   18.827773] IPv6: ADDRCONF(NETDEV_CHANGE): eth0: link becomes ready
+[   45.390261] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(317), ret: 0
+[   45.390429] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(317)
+[   45.391239] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(317), ret: 0
+[   48.367963] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(317)
+[   68.810336] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(779), ret: 0
+[   68.810446] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(779)
+[   68.811031] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(779), ret: 0
+[   72.031167] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(779)
+[  528.387097] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(1496), ret: 0
+[  528.387209] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(1496)
+[  528.387813] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(1496), ret: 0
+[  532.746068] fpga_manager fpga0: writing capture.bin to Xilinx Zynq FPGA Manager
+[  534.071571] [drm] skip kind 29(AIE_RESOURCES) return code: -22
+[  534.071603] [drm] skip kind 8(IP_LAYOUT) return code: -22
+[  534.071615] [drm] skip kind 9(DEBUG_IP_LAYOUT) return code: -22
+[  534.071627] [drm] skip kind 25(AIE_METADATA) return code: -22
+[  534.071638] [drm] skip kind 7(CONNECTIVITY) return code: -22
+[  534.071648] [drm] found kind 6(MEM_TOPOLOGY)
+[  534.071756] [drm] Memory 0 is not reserved in device tree. Will allocate memory from CMA
+[  534.071810] [drm] zocl_xclbin_read_axlf b6b0a656-c308-5774-1a24-8566ad62be81 ret: 0
+[  534.103609] [drm] bitstream b6b0a656-c308-5774-1a24-8566ad62be81 locked, ref=1
+[  534.103667] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_add_context: Client pid(1496) add context Domain(0) CU(0xffffffff) shared(true)
+[  534.103756] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_del_context: Client pid(1496) del context Domain(0) CU(0xffffffff)
+[  534.103783] [drm] bitstream b6b0a656-c308-5774-1a24-8566ad62be81 unlocked, ref=0
+[  535.445334] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(1496)
+[  587.800528] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(1599), ret: 0
+[  587.800637] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(1599)
+[  587.801227] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(1599), ret: 0
+[  600.408943] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(1599)
+[ 1246.902974] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(2565), ret: 0
+[ 1246.903086] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(2565)
+[ 1246.903703] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(2565), ret: 0
+[ 1263.206627] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(2565)
+[ 1356.468169] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(2776), ret: 0
+[ 1356.468278] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(2776)
+[ 1356.468873] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(2776), ret: 0
+[ 1406.065835] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(2776)
+[ 1697.824854] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(3303), ret: 0
+[ 1697.824971] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(3303)
+[ 1697.825761] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(3303), ret: 0
+[ 1701.180159] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(3303)
+[ 1712.251025] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(3336), ret: 0
+[ 1712.251140] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(3336)
+[ 1712.251755] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(3336), ret: 0
+[ 1714.320346] fpga_manager fpga0: writing capture.bin to Xilinx Zynq FPGA Manager
+[ 1714.400278] [drm] skip kind 29(AIE_RESOURCES) return code: -22
+[ 1714.400324] [drm] skip kind 8(IP_LAYOUT) return code: -22
+[ 1714.400339] [drm] skip kind 9(DEBUG_IP_LAYOUT) return code: -22
+[ 1714.400351] [drm] skip kind 25(AIE_METADATA) return code: -22
+[ 1714.400362] [drm] skip kind 7(CONNECTIVITY) return code: -22
+[ 1714.400373] [drm] found kind 6(MEM_TOPOLOGY)
+[ 1714.400486] [drm] Memory 0 is not reserved in device tree. Will allocate memory from CMA
+[ 1714.400532] [drm] zocl_xclbin_read_axlf c8a27f1c-c4d8-a63e-8b03-6927b22dff94 ret: 0
+[ 1714.426116] [drm] bitstream c8a27f1c-c4d8-a63e-8b03-6927b22dff94 locked, ref=1
+[ 1714.426170] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_add_context: Client pid(3336) add context Domain(0) CU(0xffffffff) shared(true)
+[ 1714.426260] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_del_context: Client pid(3336) del context Domain(0) CU(0xffffffff)
+[ 1714.426287] [drm] bitstream c8a27f1c-c4d8-a63e-8b03-6927b22dff94 unlocked, ref=0
+[ 1715.931281] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(3336)
+[ 1727.139501] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(3369), ret: 0
+[ 1727.139617] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(3369)
+[ 1727.140236] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(3369), ret: 0
+[ 1739.459838] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(3369)
+[ 1792.320621] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(3487), ret: 0
+[ 1792.320735] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(3487)
+[ 1792.321348] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(3487), ret: 0
+[ 1794.406346] fpga_manager fpga0: writing capture.bin to Xilinx Zynq FPGA Manager
+[ 1794.486977] [drm] skip kind 29(AIE_RESOURCES) return code: -22
+[ 1794.487021] [drm] skip kind 8(IP_LAYOUT) return code: -22
+[ 1794.487035] [drm] skip kind 9(DEBUG_IP_LAYOUT) return code: -22
+[ 1794.487046] [drm] skip kind 25(AIE_METADATA) return code: -22
+[ 1794.487057] [drm] skip kind 7(CONNECTIVITY) return code: -22
+[ 1794.487068] [drm] found kind 6(MEM_TOPOLOGY)
+[ 1794.487179] [drm] Memory 0 is not reserved in device tree. Will allocate memory from CMA
+[ 1794.487226] [drm] zocl_xclbin_read_axlf 2f732ad1-b08b-ca5e-e696-2a44d47ba80a ret: 0
+[ 1794.511365] [drm] bitstream 2f732ad1-b08b-ca5e-e696-2a44d47ba80a locked, ref=1
+[ 1794.511416] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_add_context: Client pid(3487) add context Domain(0) CU(0xffffffff) shared(true)
+[ 1794.511507] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_del_context: Client pid(3487) del context Domain(0) CU(0xffffffff)
+[ 1794.511533] [drm] bitstream 2f732ad1-b08b-ca5e-e696-2a44d47ba80a unlocked, ref=0
+[ 1795.955081] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(3487)
+[ 1843.641746] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(3580), ret: 0
+[ 1843.641860] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(3580)
+[ 1843.642457] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(3580), ret: 0
+[ 1893.146375] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(3580)
+[ 1958.725399] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(3776), ret: 0
+[ 1958.725512] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(3776)
+[ 1958.726130] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(3776), ret: 0
+[ 1962.175884] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(3776)
+[ 1972.957253] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(3826), ret: 0
+[ 1972.957366] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(3826)
+[ 1972.957985] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(3826), ret: 0
+[ 1975.049372] fpga_manager fpga0: writing capture.bin to Xilinx Zynq FPGA Manager
+[ 1975.129540] [drm] skip kind 29(AIE_RESOURCES) return code: -22
+[ 1975.129585] [drm] skip kind 8(IP_LAYOUT) return code: -22
+[ 1975.129599] [drm] skip kind 9(DEBUG_IP_LAYOUT) return code: -22
+[ 1975.129611] [drm] skip kind 25(AIE_METADATA) return code: -22
+[ 1975.129622] [drm] skip kind 7(CONNECTIVITY) return code: -22
+[ 1975.129632] [drm] found kind 6(MEM_TOPOLOGY)
+[ 1975.129744] [drm] Memory 0 is not reserved in device tree. Will allocate memory from CMA
+[ 1975.129790] [drm] zocl_xclbin_read_axlf a2030cdd-9237-fb82-444b-23e153336bd2 ret: 0
+[ 1975.155367] [drm] bitstream a2030cdd-9237-fb82-444b-23e153336bd2 locked, ref=1
+[ 1975.155429] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_add_context: Client pid(3826) add context Domain(0) CU(0xffffffff) shared(true)
+[ 1975.155522] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_del_context: Client pid(3826) del context Domain(0) CU(0xffffffff)
+[ 1975.155547] [drm] bitstream a2030cdd-9237-fb82-444b-23e153336bd2 unlocked, ref=0
+[ 1976.617536] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(3826)
+[ 2022.606214] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(3917), ret: 0
+[ 2022.606331] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(3917)
+[ 2022.606958] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(3917), ret: 0
+[ 2677.285846] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(3917)
+[ 2752.475206] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(4989), ret: 0
+[ 2752.475337] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(4989)
+[ 2752.475963] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(4989), ret: 0
+[ 2755.946603] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(4989)
+[ 2987.221986] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(5333), ret: 0
+[ 2987.222101] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(5333)
+[ 2987.222712] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(5333), ret: 0
+[ 2990.584118] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(5333)
+[ 3034.531298] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(5424), ret: 0
+[ 3034.531413] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(5424)
+[ 3034.532027] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(5424), ret: 0
+[ 3036.706372] fpga_manager fpga0: writing capture.bin to Xilinx Zynq FPGA Manager
+[ 3036.786228] [drm] skip kind 29(AIE_RESOURCES) return code: -22
+[ 3036.786272] [drm] skip kind 8(IP_LAYOUT) return code: -22
+[ 3036.786288] [drm] skip kind 9(DEBUG_IP_LAYOUT) return code: -22
+[ 3036.786300] [drm] skip kind 25(AIE_METADATA) return code: -22
+[ 3036.786311] [drm] skip kind 7(CONNECTIVITY) return code: -22
+[ 3036.786322] [drm] found kind 6(MEM_TOPOLOGY)
+[ 3036.786436] [drm] Memory 0 is not reserved in device tree. Will allocate memory from CMA
+[ 3036.786482] [drm] zocl_xclbin_read_axlf 25840377-941c-75b4-c5fd-788f2fbe9539 ret: 0
+[ 3036.812747] [drm] bitstream 25840377-941c-75b4-c5fd-788f2fbe9539 locked, ref=1
+[ 3036.812801] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_add_context: Client pid(5424) add context Domain(0) CU(0xffffffff) shared(true)
+[ 3036.812890] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_del_context: Client pid(5424) del context Domain(0) CU(0xffffffff)
+[ 3036.812916] [drm] bitstream 25840377-941c-75b4-c5fd-788f2fbe9539 unlocked, ref=0
+[ 3038.266516] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(5424)
+[ 3141.291929] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(5586), ret: 0
+[ 3141.292045] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(5586)
+[ 3141.292662] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(5586), ret: 0
+[ 3192.393829] 8<--- cut here ---
+[ 3192.395599] Unhandled fault: external abort on non-linefetch (0x1018) at 0xb6ed0030
+[ 3192.401971] pgd = fde51c98
+[ 3192.403377] [b6ed0030] *pgd=0ebb2831, *pte=43c00743, *ppte=43c00c33
+[ 3218.242179] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(5586)
+[ 3383.157934] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(5976), ret: 0
+[ 3383.158047] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(5976)
+[ 3383.158661] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(5976), ret: 0
+[ 3386.391820] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(5976)
