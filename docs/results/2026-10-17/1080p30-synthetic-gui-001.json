@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "source_origin": "synthetic",
+  "frame_id": 190,
+  "shape": [
+    1080,
+    1920,
+    3
+  ],
+  "rgb_bytes": 6220800,
+  "sha256_rgb": "d33c482541882fb0af30fb3d2bee53f519b77d64d6981ae4a57dcaab8bc9ddbc",
+  "sha256_expected": "d33c482541882fb0af30fb3d2bee53f519b77d64d6981ae4a57dcaab8bc9ddbc",
+  "bmp_bits_per_pixel": 24,
+  "bmp_compression_code": 0,
+  "actual_button_invoked": true,
+  "file_dialog_automated": true,
+  "real_hdmi_test": false
+}

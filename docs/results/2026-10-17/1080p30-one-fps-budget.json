@@ -1,0 +1,253 @@
+{
+  "evidence_type": "calculated_budget_not_measured_bandwidth",
+  "nominal_inputs": {
+    "width": 1920,
+    "height": 1080,
+    "input_fps": 30.0,
+    "dma_fps": 1.0,
+    "sampled_fps": 1.0,
+    "delivered_fps": 1.0,
+    "duration_seconds": 600
+  },
+  "frame": {
+    "bytes_per_pixel": 3,
+    "bytes_per_frame": 6220800,
+    "wire_row_bytes": 5760,
+    "dma_stride_bytes": 5760,
+    "dma_storage_bytes_per_frame": 6220800,
+    "dma_padding_bytes_per_frame": 0,
+    "reported_alignment_bytes": 64,
+    "stride_aligned": true,
+    "suggested_aligned_stride": 5760,
+    "current_AXI_memory_beat_bytes": 4,
+    "stride_aligned_to_current_AXI_beat": true
+  },
+  "payload": {
+    "bytes_per_second": 6220800.0,
+    "Mbps": 49.7664,
+    "MB_per_second": 6.2208,
+    "MiB_per_second": 5.9326171875
+  },
+  "input_RGB_data_rate": {
+    "bytes_per_second": 186624000.0,
+    "Mbps": 1492.992,
+    "MB_per_second": 186.624,
+    "MiB_per_second": 177.978515625
+  },
+  "dma_RGB_write_data_rate": {
+    "bytes_per_second": 6220800.0,
+    "Mbps": 49.7664,
+    "MB_per_second": 6.2208,
+    "MiB_per_second": 5.9326171875
+  },
+  "sampled_RGB_copy_data_rate": {
+    "bytes_per_second": 6220800.0,
+    "Mbps": 49.7664,
+    "MB_per_second": 6.2208,
+    "MiB_per_second": 5.9326171875
+  },
+  "tcp_data_direction_estimate": {
+    "ip_version": 6,
+    "mtu": 1500,
+    "tcp_options_bytes": 12,
+    "assumed_mss_bytes": 1428,
+    "protocol_prefix_bytes": 20,
+    "metadata_bytes": 2048,
+    "metadata_length_source": "assumed",
+    "application_bytes_per_frame": 6222868,
+    "segments_per_frame": 4358,
+    "per_segment_physical_overhead_bytes": 110,
+    "last_segment_ethernet_padding_bytes": 0,
+    "physical_bytes_per_frame": 6702248,
+    "physical_overhead_over_RGB_percent": 7.739326131687241,
+    "application_stream_rate": {
+      "bytes_per_second": 6222868.0,
+      "Mbps": 49.782944,
+      "MB_per_second": 6.222868,
+      "MiB_per_second": 5.934589385986328
+    },
+    "estimated_physical_rate": {
+      "bytes_per_second": 6702248.0,
+      "Mbps": 53.617984,
+      "MB_per_second": 6.702248,
+      "MiB_per_second": 6.391761779785156
+    },
+    "excluded": [
+      "ACKs",
+      "TCP handshake",
+      "retransmissions",
+      "VLAN tags",
+      "IPv6 extensions",
+      "PHY coding overhead",
+      "control traffic"
+    ],
+    "segmentation_assumption": "each application frame segmented separately; offloads/coalescing unmeasured"
+  },
+  "board_memory_logical_budget": {
+    "dma_write_passes_per_input_frame": 0.03333333333333333,
+    "dma_write_payload_bytes_per_input_frame": 207360.0,
+    "input_frame_dma_write_accounting": "Nominal average over native input frames; a selected DMA frame is written whole, not fractionally.",
+    "dma_write_passes_per_dma_frame": 1,
+    "dma_write_payload_bytes_per_dma_frame": 6220800,
+    "native_dma_writes": {
+      "bytes_per_second": 6220800.0,
+      "Mbps": 49.7664,
+      "MB_per_second": 6.2208,
+      "MiB_per_second": 5.9326171875
+    },
+    "explicit_copy_passes": [
+      {
+        "name": "owned_DMA_BGR_to_RGB",
+        "full_payload_copies": 1,
+        "rate_fps": 1.0,
+        "read_write_traffic": {
+          "bytes_per_second": 12441600.0,
+          "Mbps": 99.5328,
+          "MB_per_second": 12.4416,
+          "MiB_per_second": 11.865234375
+        }
+      },
+      {
+        "name": "RGB_to_protocol_payload_bytes",
+        "full_payload_copies": 1,
+        "rate_fps": 1.0,
+        "read_write_traffic": {
+          "bytes_per_second": 12441600.0,
+          "Mbps": 99.5328,
+          "MB_per_second": 12.4416,
+          "MiB_per_second": 11.865234375
+        }
+      },
+      {
+        "name": "payload_to_protocol_envelope",
+        "full_payload_copies": 1,
+        "rate_fps": 1.0,
+        "read_write_traffic": {
+          "bytes_per_second": 12441600.0,
+          "Mbps": 99.5328,
+          "MB_per_second": 12.4416,
+          "MiB_per_second": 11.865234375
+        }
+      }
+    ],
+    "explicit_copy_read_write_total": {
+      "bytes_per_second": 37324800.0,
+      "Mbps": 298.5984,
+      "MB_per_second": 37.3248,
+      "MiB_per_second": 35.595703125
+    },
+    "sender_CRC_payload_scan": {
+      "bytes_per_second": 6220800.0,
+      "Mbps": 49.7664,
+      "MB_per_second": 6.2208,
+      "MiB_per_second": 5.9326171875
+    },
+    "native_writes_plus_explicit_copies_plus_CRC": {
+      "bytes_per_second": 49766400.0,
+      "Mbps": 398.1312,
+      "MB_per_second": 49.7664,
+      "MiB_per_second": 47.4609375
+    },
+    "optional_asyncio_buffering_extra_copy_traffic_range": {
+      "minimum": {
+        "bytes_per_second": 0,
+        "Mbps": 0.0,
+        "MB_per_second": 0.0,
+        "MiB_per_second": 0.0
+      },
+      "maximum_assuming_two_extra_copies": {
+        "bytes_per_second": 24891472.0,
+        "Mbps": 199.131776,
+        "MB_per_second": 24.891472,
+        "MiB_per_second": 23.738357543945312
+      }
+    },
+    "ordinary_socket_user_to_kernel_one_copy_assumption": {
+      "bytes_per_second": 12445736.0,
+      "Mbps": 99.565888,
+      "MB_per_second": 12.445736,
+      "MiB_per_second": 11.869178771972656
+    },
+    "GEM_DMA_payload_read_floor_assumption": {
+      "bytes_per_second": 6222868.0,
+      "Mbps": 49.782944,
+      "MB_per_second": 6.222868,
+      "MiB_per_second": 5.934589385986328
+    },
+    "warning": "Logical memory touches; cache residency/maintenance, AXI bursts and kernel paths unmeasured. Not actual DDR bus bandwidth."
+  },
+  "host_memory_logical_budget": {
+    "parser_bytearray_zero_initialization": {
+      "bytes_per_second": 6220800.0,
+      "Mbps": 49.7664,
+      "MB_per_second": 6.2208,
+      "MiB_per_second": 5.9326171875
+    },
+    "ordinary_socket_kernel_to_user_one_copy_assumption": {
+      "bytes_per_second": 12441600.0,
+      "Mbps": 99.5328,
+      "MB_per_second": 12.4416,
+      "MiB_per_second": 11.865234375
+    },
+    "parser_CRC_payload_scan": {
+      "bytes_per_second": 6220800.0,
+      "Mbps": 49.7664,
+      "MB_per_second": 6.2208,
+      "MiB_per_second": 5.9326171875
+    },
+    "ndarray_full_payload_copies": 0,
+    "optional_save_payload_read_floor": {
+      "bytes_per_second": 6220800.0,
+      "Mbps": 49.7664,
+      "MB_per_second": 6.2208,
+      "MiB_per_second": 5.9326171875
+    },
+    "raw_RGB_storage_bytes_for_duration": 3732480000.0,
+    "storage_excluded": [
+      "NPY headers",
+      "metadata files",
+      "filesystem overhead",
+      "optional PNG"
+    ]
+  },
+  "known_storage": {
+    "native_pool_buffers": 5,
+    "native_pool_bytes": 31104000,
+    "logical_ready_plus_sending_RGB_slots": 2,
+    "RGB_slot_bytes": 12441600,
+    "one_encoded_wire_bytes": 6222868,
+    "assumption": "Legacy continuous PYNQ five-buffer pool retained for rate comparison. The proposed single-credit adapter owns one native buffer; DMA FPS alone does not select an adapter or memory-pool model.",
+    "warning": "Not process RSS; temporary serialization, asyncio/kernel buffers and runtime allocations add memory."
+  },
+  "copy_model_assumptions": {
+    "full_payload_copies": "One owned BGR-to-RGB copy per sampled frame plus two serialization copies per delivered frame.",
+    "encoded_fps_equals_delivered_fps": true,
+    "lifecycle": "Current Sample.copy_rgb copies into an owned immutable array before sample.close releases/ACKs the native lease. encode_frame then copies to bytes, scans CRC, and copies into the envelope.",
+    "status": "Nominal inspected-source model; sender/source changes and failed or partial sends can alter actual copy rates. Recheck source hashes before applying to a later implementation."
+  },
+  "measurements": {
+    "board_CPU_percent": null,
+    "host_CPU_percent": null,
+    "board_RSS_bytes": null,
+    "host_RSS_bytes": null,
+    "actual_DDR_bandwidth_bytes_per_second": null,
+    "actual_packet_segmentation": null
+  },
+  "source_sha256": {
+    "src/hdmi_capture/sources.py": "5e8aab35bcfe03e9dedaa09e7bc5aed009d513603b72f01bc169bccefe1891cf",
+    "src/hdmi_capture/sender.py": "aab51d57cfacbd57fb646ceb0d53c89938e9739eeeb5966bb0bca50109d768f3",
+    "src/hdmi_capture/protocol.py": "f47e8bd7bac61cb4a7d40cb1c765c9b256f1bd7c4d809d10ab1ea5f88f93fde2",
+    "src/hdmi_capture/cli.py": "effe16e0e11e3e0201f0c9708488d98b0c27e890d41b2358be342c93c87fab10",
+    "hardware/capture.tcl": "82e59924880fa763ab86490ff218330ef3fba9908f91dea1ba63d721d171da36"
+  },
+  "limitations": [
+    "Current hardware adapters enforce640x480; other dimensions are budget exploration only.",
+    "Nonpacked DMA stride is hypothetical: pinned PYNQ allocation uses VideoMode.shape without automatically reserving row padding.",
+    "Default DMA FPS equals native input FPS, preserving continuous-capture accounting. A lower explicit DMA FPS assumes complete-frame selection before DMA; the calculator does not configure or prove that hardware behavior.",
+    "Proposed single-credit rates are not board qualification or measured DDR bandwidth; native HDMI can remain60Hz while nominal DMA and delivery are2Hz.",
+    "Sampled rate may exceed delivered rate under whole-frame drops.",
+    "Skipped PYNQ acquisitions still invalidate caches; maintenance cost is not measured.",
+    "CRC and copy touches can hit CPU caches; do not call the aggregate measured DDR throughput.",
+    "Saving/compression and application-retained frames can add copies, storage and memory."
+  ]
+}

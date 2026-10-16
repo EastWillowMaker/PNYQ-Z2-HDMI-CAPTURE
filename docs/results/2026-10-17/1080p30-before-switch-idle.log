@@ -1,0 +1,14 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-prepared-014$ sudo -n env XILINX_XRT=/usr PYTHONPATH=/tmp/hdmi-capture-clean-023/src /usr/local/share/pynq-venv/bin/python -c 'import json
+[?2004l[?2004h> from hdmi_capture.sources import LiteXCreditSource
+[?2004l[?2004h> from hdmi_capture.prepared import _attach_metadata, _hardware, _check_sdk_shutdown
+[?2004l[?2004h> receipt_path = "/tmp/hdmi-capture-prepared-014/prepared.json"
+[?2004l[?2004h> receipt = json.load(open(receipt_path))
+[?2004l[?2004h> source = LiteXCreditSource(receipt["artifacts"]["bitfile"]["path"], receipt["artifacts"]["manifest"]["path"])
+[?2004l[?2004h> _attach_metadata(source, receipt_path, empty=False)
+[?2004l[?2004h> _check_sdk_shutdown()
+[?2004l[?2004h> print(json.dumps(dict(event="known_vga_idle_verified", boot_id=receipt["boot_id"], hardware=_hardware(source, empty=False))))
+[?2004l[?2004h> '; printf "\nCONSOLE_DONE_e83cd28ba3f24308915272b07eca5710:%s\n" "$?"
+[?2004l{"event": "known_vga_idle_verified", "boot_id": "1dd70e40-85cc-4c9b-a2e2-03b9814e290f", "hardware": {"vdma_control": 86032, "vdma_status": 69633, "command": 2}}
+
+CONSOLE_DONE_e83cd28ba3f24308915272b07eca5710:0

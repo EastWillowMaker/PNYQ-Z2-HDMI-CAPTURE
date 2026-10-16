@@ -1,0 +1,8 @@
+
+[?2004l[1]+  Done                    cd /tmp/hdmi-capture-1080p30-001 && test ! -e synthetic-001.log && nohup env PYTHONPATH=src /usr/local/share/pynq-venv/bin/python -u -m hdmi_capture.sender --source synthetic --width 1920 --height 1080 --input-fps 30 --host :: --port 9040 --fps 5 --duration 25 --read-timeout 5 --send-timeout 5 > synthetic-001.log 2>&1 < /dev/null
+[?2004hxilinx@pynq:/tmp/hdmi-capture-1080p30-001$ cat /tmp/hdmi-capture-1080p30-001/synthetic-001.log; ps -eo pid,args | grep "[h]dmi_capture.sender.*9040" || true; printf "\nCONSOLE_DONE_a18fecaee73f4b9da58aa748f88992cf:%s\n" "$?"
+[?2004l{"listening": ["::", 9040, 0, 0], "source": "synthetic", "session_id": "efec9446-4ad0-4553-94f2-570927178e30"}
+{"session_id": "efec9446-4ad0-4553-94f2-570927178e30", "counters": {"acquired": 165, "startup_discarded": 0, "intentional_sampling_drops": 65, "network_backpressure_drops": 51, "client_discarded": 1, "transport_enqueued": 47, "source_errors": 0, "source_cleanup_errors": 0, "network_errors": 0, "source_skips": null, "source_overruns": null, "source_invalid_frames": null}, "dma_shutdown_safe": null}
+
+CONSOLE_DONE_a18fecaee73f4b9da58aa748f88992cf:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-1080p30-001$ 

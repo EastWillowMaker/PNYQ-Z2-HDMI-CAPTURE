@@ -1,5 +1,48 @@
 # Progress and handoff
 
+2026-10-17 — 1080p30 build iteration and board synthetic checks.
+
+The integrated profile, DMA, fixture and output-pattern changes are committed
+as `df5410d`. Host tests passed565/1skip; the skipped Migen/LiteX module passed
+all45tests in the pinned generator environment. The separate profile/HWH set
+passed42tests before the first build and44after the copied-clock metadata fix.
+Output simulation checked two full1080p frames and reset/release. See the
+[local checkpoint](results/2026-10-17/1080p30-local-checkpoint.md).
+
+Fresh builds001/002 stopped at BD validation and produced no bitstream. The
+first exposed missing/wrong clock and reset metadata plus the monitor's fixed
+VGA pixel-clock declaration. Commit `0d35411` corrects those declarations;
+`b097ae9` then corrects the shared asynchronous reset association. Failure
+records are retained in dated results. A new full build003 ran from
+immutable `artifacts/1080p30-source-003`, output
+`artifacts/1080p30-loop-003`, console
+`artifacts/1080p30-loop-003.console.log`. It also stopped at BD validation:
+the shared asynchronous reset was still inferred as synchronous to SerialClk
+at the pattern's pixel-clock reset input. No bitstream was produced. A minimal
+TX-only BD harness is being built to diagnose the inferred association before
+another full build. No critical-warning checks were waived.
+
+The board's known VGA image was independently checked against its existing
+receipt: RS0/Halted1, command2/gate disabled, matching boot/artifact state and
+no saved shutdown IPs. No PL reconfiguration has occurred. The source package
+is staged at `/tmp/hdmi-capture-1080p30-001/src`; its runtime is identical to
+the current revision. Two bounded synthetic senders ended normally and no
+sender remains. The15second full1080p network run delivered47frames at
+3.131661FPS/155.851493Mbps, zero protocol errors; the expected partial frame
+at the duration cutoff was reported and excluded. The GUI saved one full-size
+uncompressed BMP whose decoded RGB bytes matched the exact click-time frame.
+These are synthetic checks, not real HDMI results. See
+[measurements](results/2026-10-17/1080p30-synthetic.md).
+
+A normal-user HTTP server serves only `artifacts/deploy/1080p30-001` on the
+dedicated link-local address, port8766 (exec session83923); stop it after
+deployment, verifying process identity. Source archive SHA256 is
+`c6018008648921a2e99e0d5d603f6eb69b996ee13ea20a020f2c8bfa757c8ef5`.
+Board sudo remains passwordless; do not request authentication again. Physical
+OUT-to-IN cable change has not been requested yet: wait until the output design
+is ready. Keep the Hub/Micro-B connected. Real1080p/loop/timing/BMP/performance
+qualification remains pending.
+
 2026-10-16 — Next scope implementation in progress.
 
 The user confirmed 1080p RGB888 at a feasible progressive input timing,
