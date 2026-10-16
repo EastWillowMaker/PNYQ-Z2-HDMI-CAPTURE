@@ -1,5 +1,28 @@
 # Progress and handoff
 
+2026-10-16T21:38+08:00 — Normal019 passed; HDMI-loss020 running.
+The production v14 /3343dac sender and fresh clean-replay017 overlay delivered
+1,201 distinct exact RGB888 frames in 600.300346 seconds (2.000665 FPS).
+All pixel, metadata, received-window transport and accounting checks passed.
+Sender exit0, safe DMA shutdown, independent raw halt/gate-off, storage/hash,
+no new external abort, source exit0 and desktop restoration passed. Startup
+native skips and independent optical-to-native mapping remain unknown. The
+inherited post-cleanup UIO destructor warning is retained in the sender log.
+Results: results/2026-10-16/m1-017-normal-019*. A detailed independent report
+is being written; this sustained criterion does not complete full M1.
+
+The user explicitly confirmed readiness for physical loss020. The existing
+coordinator1626527 queued source02 on bounded root worker1615628 after019 passed
+and restored the desktop. Source180s/id2100000; user instructions: wait75s
+from VT switch, unplug only PYNQ HDMI IN for5s, reconnect; Hub/Micro-B stay
+connected. Await actual results and separate confirmation of the action.
+Do not mark a physical pass from observer EOF alone. Do not contend UART
+while the coordinator prepares/collects. Mode021/clean022 root chain is staged
+with exact script hashes and filesystem-only waiting (mode supervisor12297,
+900s from21:35); no mode marker/source has been sent. New PC mode worker
+requires a separate local PC credential and the old019 worker to finish;
+never replace or interrupt its live source. Full M1 remains incomplete.
+
 2026-10-16T21:24:08+08:00:USER HOME;019 FORMAL600s CAPTURE RUNNING.
 018expired withoutsource/preparation/client; NOT_RUN envelope+actualrootresult
 saved, no failedpixelrun. New019two-stagewizard completedboard+PCauth, sameboot

@@ -1,0 +1,102 @@
+{
+  "passed": true,
+  "full_m1_qualification": false,
+  "error": null,
+  "sender_exit": 0,
+  "dma_shutdown_safe": true,
+  "raw_halt_verified": true,
+  "storage_passed": true,
+  "prepare_exit": 0,
+  "sampler_exit": 0,
+  "sender_final_count": 1,
+  "sender_final": {
+    "session_id": "70d160fe-6a9f-46da-aedf-33d2de35f585",
+    "counters": {
+      "acquired": 1300,
+      "startup_discarded": 0,
+      "intentional_sampling_drops": 0,
+      "network_backpressure_drops": 97,
+      "client_discarded": 1,
+      "transport_enqueued": 1201,
+      "source_errors": 0,
+      "source_cleanup_errors": 0,
+      "network_errors": 0,
+      "source_skips": 37672,
+      "source_overruns": 0,
+      "source_invalid_frames": 0
+    },
+    "dma_shutdown_safe": true,
+    "source_integrity": {
+      "startup": {
+        "enabled": false,
+        "observed_frames": 485,
+        "selected_frames": 0,
+        "completed_frames": 484,
+        "dropped_frames": 485,
+        "invalid_frames": 1,
+        "snapshot_begin_ns": 74889945086376,
+        "snapshot_end_ns": 74889945306025,
+        "timestamp_clock": "board_monotonic",
+        "snapshot_atomic": false,
+        "sample_point": "before_first_credit_while_gate_disabled_dma_halted",
+        "counter_bits": 32,
+        "frontend_overflow_episodes": 0,
+        "native_vsync_edges": 486,
+        "overflow_units": "assertion_episodes_not_lost_frames",
+        "frontend_underflow_episodes": 0
+      },
+      "last": {
+        "enabled": true,
+        "observed_frames": 39490,
+        "selected_frames": 1301,
+        "completed_frames": 39489,
+        "dropped_frames": 38189,
+        "invalid_frames": 1,
+        "snapshot_begin_ns": 75540012206121,
+        "snapshot_end_ns": 75540012398755,
+        "timestamp_clock": "board_monotonic",
+        "snapshot_atomic": false,
+        "sample_point": "sequential_gpio_reads_during_credit_health_check",
+        "counter_bits": 32,
+        "frontend_overflow_episodes": 0,
+        "native_vsync_edges": 39491,
+        "overflow_units": "assertion_episodes_not_lost_frames",
+        "frontend_underflow_episodes": 0
+      },
+      "failure": null
+    },
+    "final_source_accounting": {
+      "identity": {
+        "credit_busy": true,
+        "credit_done": true,
+        "credit_failed": false,
+        "request_seen": 1,
+        "ack_seen": 0,
+        "source_sequence_fault": false,
+        "native_armed": true,
+        "selected_sof_id": 39487,
+        "selected_native_vsync_id": 39488,
+        "selected_completed": 1301,
+        "command_errors": 0,
+        "source_sequence_faults": 0,
+        "identity_snapshot_coherent": true
+      },
+      "native_edges_begin": 39487,
+      "native_edges_end": 39491,
+      "interval_seconds": 0.05,
+      "passed": true
+    }
+  },
+  "sender_errors": 0,
+  "post_diagnostic": {
+    "boot": "1dd70e40-85cc-4c9b-a2e2-03b9814e290f",
+    "control": 86032,
+    "status": 69633,
+    "command": 2,
+    "ext4_errors": "0",
+    "test_bytes": 16777216,
+    "test_sha256": "341aacac661ccb210720bedaa9ead5d668fe5ea41a73532fc147c71e34040df1"
+  },
+  "no_new_external_abort": true,
+  "finished_monotonic": 75548.439166281
+}
