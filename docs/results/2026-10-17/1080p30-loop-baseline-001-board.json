@@ -1,0 +1,188 @@
+[
+  {
+    "exit_code": 1,
+    "process_left_alive": false,
+    "pid": 2508,
+    "ended_monotonic": 91005.902541888
+  },
+  {
+    "event": "source_startup",
+    "timestamp_ns": 90938176099761,
+    "stage": "litex_artifact_verification"
+  },
+  {
+    "event": "source_startup",
+    "timestamp_ns": 90938721394978,
+    "stage": "pynq_import"
+  },
+  {
+    "event": "source_startup",
+    "timestamp_ns": 90938721871994,
+    "stage": "overlay_attach"
+  },
+  {
+    "event": "source_startup",
+    "timestamp_ns": 90944050072214,
+    "stage": "credit_source_ready",
+    "counters": {
+      "enabled": false,
+      "observed_frames": 2908,
+      "selected_frames": 0,
+      "completed_frames": 2908,
+      "dropped_frames": 2908,
+      "invalid_frames": 0,
+      "snapshot_begin_ns": 90944014526201,
+      "snapshot_end_ns": 90944014749364,
+      "timestamp_clock": "board_monotonic",
+      "snapshot_atomic": false,
+      "sample_point": "before_first_credit_while_gate_disabled_dma_halted",
+      "counter_bits": 32,
+      "frontend_overflow_episodes": 0,
+      "native_vsync_edges": 2909,
+      "overflow_units": "assertion_episodes_not_lost_frames",
+      "frontend_underflow_episodes": 0
+    }
+  },
+  {
+    "listening": [
+      "::",
+      9042,
+      0,
+      0
+    ],
+    "source": "hdmi",
+    "session_id": "4243ac91-d582-4062-8d69-d58dfede9ade"
+  },
+  {
+    "event": "source_cleanup",
+    "timestamp_ns": 91004266981638,
+    "stage": "dma_stop_status_before",
+    "control": 86032,
+    "status": 69633
+  },
+  {
+    "event": "source_cleanup",
+    "timestamp_ns": 91004267565305,
+    "stage": "dma_stop_status_after",
+    "control": 86032,
+    "status": 69633
+  },
+  {
+    "session_id": "4243ac91-d582-4062-8d69-d58dfede9ade",
+    "counters": {
+      "acquired": 159,
+      "startup_discarded": 0,
+      "intentional_sampling_drops": 0,
+      "network_backpressure_drops": 120,
+      "client_discarded": 1,
+      "transport_enqueued": 37,
+      "source_errors": 0,
+      "source_cleanup_errors": 1,
+      "network_errors": 0,
+      "source_skips": 1637,
+      "source_overruns": null,
+      "source_invalid_frames": 0
+    },
+    "dma_shutdown_safe": true,
+    "source_integrity": {
+      "startup": {
+        "enabled": false,
+        "observed_frames": 2908,
+        "selected_frames": 0,
+        "completed_frames": 2908,
+        "dropped_frames": 2908,
+        "invalid_frames": 0,
+        "snapshot_begin_ns": 90944014526201,
+        "snapshot_end_ns": 90944014749364,
+        "timestamp_clock": "board_monotonic",
+        "snapshot_atomic": false,
+        "sample_point": "before_first_credit_while_gate_disabled_dma_halted",
+        "counter_bits": 32,
+        "frontend_overflow_episodes": 0,
+        "native_vsync_edges": 2909,
+        "overflow_units": "assertion_episodes_not_lost_frames",
+        "frontend_underflow_episodes": 0
+      },
+      "last": {
+        "enabled": true,
+        "observed_frames": 4716,
+        "selected_frames": 160,
+        "completed_frames": 4715,
+        "dropped_frames": 4556,
+        "invalid_frames": 0,
+        "snapshot_begin_ns": 91004266471804,
+        "snapshot_end_ns": 91004266663662,
+        "timestamp_clock": "board_monotonic",
+        "snapshot_atomic": false,
+        "sample_point": "sequential_gpio_reads_during_credit_health_check",
+        "counter_bits": 32,
+        "frontend_overflow_episodes": 0,
+        "native_vsync_edges": 4716,
+        "overflow_units": "assertion_episodes_not_lost_frames",
+        "frontend_underflow_episodes": 0
+      },
+      "failure": {
+        "final_accounting_error": "Native source stopped during final accounting interval"
+      }
+    }
+  },
+  {
+    "event": "operator_profile",
+    "sources_file_sha256": "5e8aab35bcfe03e9dedaa09e7bc5aed009d513603b72f01bc169bccefe1891cf",
+    "total_cpu_seconds": 70.731986365,
+    "total_elapsed_seconds": 75.69507708700257,
+    "max_rss_kib": 99892,
+    "phases": {
+      "sample_copy_rgb": {
+        "count": 159,
+        "sum_seconds": 40.821017048932845,
+        "median_seconds": 0.25952319300267845,
+        "max_seconds": 0.28521750700019766
+      },
+      "encode_frame": {
+        "count": 37,
+        "sum_seconds": 4.2851889060402755,
+        "median_seconds": 0.11558587700710632,
+        "max_seconds": 0.12592707699513994
+      }
+    }
+  },
+  {
+    "event": "capture_child_started",
+    "pid": 2508,
+    "argv": [
+      "/usr/local/share/pynq-venv/bin/python",
+      "-u",
+      "-X",
+      "faulthandler",
+      "/tmp/hdmi-capture-1080p30-002/profile-sender.py",
+      "--source",
+      "litex-credit",
+      "--mode",
+      "1080p30",
+      "--bitfile",
+      "/tmp/hdmi-capture-1080p30-002/overlay/capture.bit",
+      "--manifest",
+      "/tmp/hdmi-capture-1080p30-002/overlay/build-manifest.json",
+      "--prepared-receipt",
+      "/tmp/hdmi-capture-1080p30-002/prepared.json",
+      "--host",
+      "::",
+      "--port",
+      "9042",
+      "--fps",
+      "5",
+      "--duration",
+      "60",
+      "--startup-diagnostics"
+    ],
+    "runtime": "/tmp/hdmi-capture-1080p30-001/src",
+    "started_monotonic": 90926.846594227
+  },
+  {
+    "exit_code": 1,
+    "process_left_alive": false,
+    "pid": 2508,
+    "ended_monotonic": 91005.902541888
+  }
+]

@@ -906,10 +906,11 @@ class LiteXCreditSource(LiteXSource):
         failure = None
         if self.native is not None and self.control.command & 1:
             try:
-                # Keep the source proof enabled for more than two 60 Hz periods;
+                # Keep the source proof enabled for more than two input periods;
                 # expose a missing final AXI SOF before disabling its watchdog.
                 initial = self.control.snapshot()["native_vsync_edges"]
-                deadline = time.monotonic() + 0.05
+                interval = 3 / self.mode_profile.refresh_hz
+                deadline = time.monotonic() + interval
                 while time.monotonic() < deadline:
                     self._healthy()
                     time.sleep(0.001)
@@ -919,7 +920,7 @@ class LiteXCreditSource(LiteXSource):
                 self.final_accounting = dict(identity=self._healthy(),
                     native_edges_begin=initial,
                     native_edges_end=self.integrity_previous["native_vsync_edges"],
-                    interval_seconds=0.05, passed=True)
+                    interval_seconds=interval, passed=True)
             except Exception as error:
                 failure = error
                 self.integrity_failure = dict(self.integrity_failure or {}, final_accounting_error=str(error))

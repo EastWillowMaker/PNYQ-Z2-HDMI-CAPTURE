@@ -776,13 +776,14 @@ def test_oneframe_dma_errors_are_never_cleared_before_inspection(error):
     assert registers.writes == []
 
 
-def credit_reader_fixture():
+def credit_reader_fixture(mode="vga"):
     from hdmi_capture.sources import LiteXCreditSource, OneFrameDMA
-    source = LiteXCreditSource('unused.bit', 'unused.json', capture_fps=60, timeout=.03)
+    source = LiteXCreditSource('unused.bit', 'unused.json', capture_mode=mode,
+                               capture_fps=60, timeout=.03)
     registers = CreditDMARegisters()
-    buffer = np.zeros((480, 640, 3), np.uint8).view(FakeCreditBuffer)
+    buffer = np.zeros((source.height, source.width, 3), np.uint8).view(FakeCreditBuffer)
     buffer.invalidations = 0
-    source.native = OneFrameDMA(registers, buffer)
+    source.native = OneFrameDMA(registers, buffer, width=source.width, height=source.height)
     source.hdmi = FakeHDMI()
     source.manifest = dict(bitstream_sha256='f' * 64)
     baseline = dict(enabled=False, selected_frames=0, invalid_frames=1,
@@ -1083,6 +1084,41 @@ def test_credit_close_checks_final_source_proof_then_halts_before_release_once()
     assert source.native is None and source.dma_shutdown_safe
     source.close()
     assert trace.count('free') == 1
+
+
+@pytest.mark.parametrize('mode,native_hz', [('vga', 60), ('vga', 59.94), ('1080p30', 30)])
+@pytest.mark.parametrize('phase', [0, .49, .99])
+@pytest.mark.parametrize('stopped', [False, True])
+def test_credit_close_observes_slow_input_and_rejects_stopped_source(
+        monkeypatch, mode, native_hz, phase, stopped):
+    import math
+    from hdmi_capture import sources as module
+    source, _ = credit_reader_fixture(mode)
+    source._started = True
+    clock = [phase / native_hz]
+    monkeypatch.setattr(module.time, 'monotonic', lambda: clock[0])
+    monkeypatch.setattr(module.time, 'sleep', lambda seconds: clock.__setitem__(0, clock[0] + seconds))
+    baseline = source.control.snapshot()
+    source.control.snapshot = lambda: dict(baseline, native_vsync_edges=
+        100 if stopped else 100 + math.floor(clock[0] * native_hz))
+    trace = []
+    source.control.enable = lambda enabled: setattr(source.control, 'command', int(enabled))
+    source.native.buffer.freebuffer = lambda: trace.append('free')
+    source.hdmi.frontend.stop = lambda: trace.append('frontend_stop')
+    source._stage = lambda name, details=None: trace.append(name)
+
+    if stopped:
+        with pytest.raises(SourceError, match='Native source stopped'):
+            source.close()
+        assert source.final_accounting is None
+    else:
+        source.close()
+        assert source.final_accounting['passed']
+        assert source.final_accounting['native_edges_end'] - source.final_accounting['native_edges_begin'] >= 2
+        assert source.final_accounting['interval_seconds'] > 2 / native_hz
+        assert clock[0] - phase / native_hz >= source.final_accounting['interval_seconds']
+    assert trace.index('dma_stop_status_after') < trace.index('frontend_stop') < trace.index('free')
+    assert source.native is None and source.dma_shutdown_safe
 
 
 @pytest.mark.parametrize('declared,s2mm,combined,accepted', [
