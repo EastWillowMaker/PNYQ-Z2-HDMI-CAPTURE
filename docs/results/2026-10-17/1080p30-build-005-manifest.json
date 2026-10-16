@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "pynq_commit": "93ddd21ab623883590a8c8b07f0b157b2855da4b",
+  "capture_enable_reset": 0,
+  "capture_control_width": 32,
+  "capture_control_reset": 0,
+  "capture_interface": "single_credit_parked_v1",
+  "gate_completion_policy": "next_sof_after_selected_output_drain_v1",
+  "vdma_completion_mode": "parked_frame_count_halt_v1",
+  "vdma_frame_counter_enabled": true,
+  "vdma_fsync_mode": "free_run",
+  "source_identity_bits": 32,
+  "source_identity_policy": "native_delta_one_per_accepted_sof_with_watchdog",
+  "receiver_reset_sync_sha256": "c2c7cd5254c6e9bda6a690f48418146bd9afdc78e574aaa400629454d768d604",
+  "source_health_sha256": "fbb9b2df3dfe837a7773ad62fdda5d3e027661560cbf281a51f086a49aa15456",
+  "capture_lock_sync_sha256": "6625f95d25be92b14f5dbfade504a89bf4ec1b980a161de604fc4dcf14f32866",
+  "source_health_counters_lifetime": "fpga_load",
+  "source_health_overruns_unit": "overflow_episodes",
+  "receiver_source_reset_policy": "shared_per_clock",
+  "gateware_sha256": "e1f4202e8077a917d7d3a7214b2b0b6266fa5a1e3ffb33e45dd9112e7fcbaad1",
+  "bitstream_sha256": "430722e2da9b9bb4f215f02f4b9d2e5a98ab102f4c2c4e7af4854f61387dc5f7",
+  "hwh_sha256": "22d33bf6d6119fa38ddad763c62f836aaaf9ac4bbfb4e31334db295393698986",
+  "capture_mode": "1080p30",
+  "geometry": [
+    1920,
+    1080
+  ],
+  "clock_hz": 142857132,
+  "pixel_clock_hz": 74250000,
+  "supported_pixel_clocks_hz": [
+    74250000
+  ],
+  "receiver_k_clk_range": 2,
+  "timing": {
+    "h_front_porch": 88,
+    "h_sync_width": 44,
+    "h_back_porch": 148,
+    "h_sync_positive": true,
+    "v_front_porch": 4,
+    "v_sync_width": 5,
+    "v_back_porch": 36,
+    "v_sync_positive": true
+  },
+  "edid_sha256": "14d8fd87b739e1973a715b56f25b5c52cf38e63f60d23822aabcd7b40e464719",
+  "hdmi_output_fixture": {
+    "enabled": true,
+    "mode": "1080p30",
+    "pattern_sha256": "d31038592db05943f6bc61b5f18d4a08de89bb258ca1ebb2da5f5997a95ccbf7",
+    "clock_sha256": "613f72a2178ef857bf25408c88ceedd405ef935a0c199c0208581b8a5c3c94a1",
+    "tcl_sha256": "78dfb4552b78c88565bdba11323ac3fb453fe095f9dd07408169d842acafc809",
+    "xdc_sha256": "31ccf6df3158ef7149314fddf9a49fe5b4e5a4fbb05b0209532a59dadf22b176",
+    "rgb2dvi_component_sha256": "5c9570474d198badded1ee06ba97e14057d7327081e2deae66b372a77343de8c",
+    "rgb2dvi_clocks_xdc_sha256": "550b0a5687e917c0ea55e96a82262196fe9e43a88311be0ce1e8ed6e92c1c14d"
+  },
+  "receiver_sync_base_sha256": "91eac3692b4412c73e7af09a9e145dd1260e3ce856e1f25d5ecacb409b8a02c4",
+  "receiver_component_sha256": "1058e2f1e1bc5f0b703c89b6eeffb6f53fc7c28fab451aab914f6d3524f1e356",
+  "tool_version": "2025.2",
+  "setup_slack_ns": 0.539,
+  "hold_slack_ns": 0.013,
+  "source_manifest_sha256": "8c93f696a16b05ff873dc2b6d67d458cca83e2134c38592d223578ee20d7cc40"
+}

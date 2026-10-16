@@ -11,9 +11,13 @@ internal bitstream in004 is not a deployable artifact and has not been loaded.
 An isolated routed-checkpoint probe removed exactly that false constraint;
 SerialClk then inherited the correct371.25MHz MMCM clock without that warning.
 Commit `7935b71` applies the staged-IP adaptation with a strict source anchor,
-configuration assertions and a bound XDC hash. Fresh full build005 is running
+configuration assertions and a bound XDC hash. Fresh full build005 completed
 from immutable `artifacts/1080p30-source-005` into `artifacts/1080p30-loop-005`
-(console in the sibling `.console.log`). No warnings are waived.
+(console in the sibling `.console.log`), exit0. The paired package passed
+strict checks: setup0.539ns/hold0.013ns, all56bus-skew paths MET, no critical
+CDC/DRC/run diagnostics or unconstrained internal endpoints. Artifacts were
+transferred and all three hashes verified on the board; no PL load yet. See
+[build005](results/2026-10-17/1080p30-build-005.md). No warnings are waived.
 
 Commit `4cff9ec` makes the held-lease checker explicitly profile-aware;20tests
 passed, including a full1080p held buffer and rejection of VGA geometry before
@@ -67,9 +71,10 @@ deployment, verifying process identity. New source archive SHA256 is
 The latest UART check reconfirmed passwordless sudo, the same boot ID and no
 sender or CPU benchmark process. Board time remains2022; use host dates and
 monotonic durations for evidence. Do not request authentication again. Physical
-OUT-to-IN cable change has not been requested yet: wait until the output design
-is ready. Keep the Hub/Micro-B connected. Real1080p/loop/timing/BMP/performance
-qualification remains pending.
+OUT-to-IN cable change was requested after the verified build005 export and
+awaits the user's actual confirmation. Keep the Hub/Micro-B connected.
+Do not start native HDMI configuration before the real source clock is stable.
+Real1080p/loop/BMP/performance qualification remains pending.
 
 2026-10-16 — Next scope implementation in progress.
 
