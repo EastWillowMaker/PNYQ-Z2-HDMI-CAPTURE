@@ -7,9 +7,13 @@ the parked buffer and its held identity remain unchanged. It then ACKs that
 lease and requires a second complete, exact analytic RGB pattern with new
 native/SOF identities and a different optical pattern ID.
 
-This check has host-side fake-board coverage only until a dated hardware result
-is linked here. It is not the ten-minute qualification or independent proof
-that an optical pattern ID equals a particular native VSYNC count.
+The [2026-10-16 lease015 hardware result](results/2026-10-16/m1-017-lease-015-report.md)
+passed on the real PYNQ-Z2 HDMI path: six held-A observations kept buffer hashes,
+raw DMA state and credit identity stable while native input advanced 119 edges;
+after ACK, B contained a different exact RGB pattern. Cooperative cleanup and
+post-halt/storage/source-restoration checks passed. This bounded observation
+does not complete the ten-minute qualification or independently map an optical
+pattern ID to a particular native VSYNC count.
 
 Run it during an authorized experiment with the supported stable direct-KMS
 pattern source already active. Keep the shared USB-C Hub and HDMI cable

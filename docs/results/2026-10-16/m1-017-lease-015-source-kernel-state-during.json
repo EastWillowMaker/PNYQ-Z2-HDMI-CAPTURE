@@ -1,0 +1,14 @@
+{
+  "sample_begin_monotonic": 301212.163495707,
+  "source_ready": {
+    "event": "kms_ready",
+    "connector_id": 446,
+    "crtc": 421,
+    "format": "XR24",
+    "clock_khz": 25200,
+    "width": 640,
+    "height": 480
+  },
+  "error": null,
+  "sample_end_monotonic": 301212.173655715
+}

@@ -1,5 +1,17 @@
 # Progress and handoff
 
+2026-10-16T08:54+08:00:015 HELD-CREDIT HIL PASS; FINAL NORMAL RUN PREPARING.
+ActualtrackedcheckerCLIexit0 andwrapperpassed:6Aobservations stableBGR/RGBhash,
+heldIDs/parkedVDMA while native325->444 (+119edges); ACK thenexactdifferentB
+optical1700078 vs1700070/native451 vs324. Dwell1s plus measuredoverhead; not
+independentoptical-to-nativeIDproof. Source02exit0/VTrestore; rawsafehalt/storage/
+no newexternalabort. Report m1-017-lease-015-report.md andevidence saved.
+No replyyet to physicalcableavailability; proceedingwithnonmanual600snormal016,
+source03planned720s. Supervisor/coordinatorbeingprepared beforeexecution. Board
+sudo-n-v preflight passed/sameboot/ext4errors0; no newauthenticationneedednow.
+Keepallcablesconnected. Mode/geometrygapcannotbeexercisedbyfixedcurrentworker;
+no binary/wrapperreplacementunderliveprivilegedworker. FullM1stillfalse.
+
 2026-10-16T08:49+08:00:014 REAL PREPARED SHORT PASS; COLLECTOR ERROR PRESERVED.
 41 exact/distinctRGB frames20.108463s/2.038942FPS, all opticalIDs matchKMS and
 accountingvalid. Freshreplay017pair/source3343dac through trackedprepare/receipt/

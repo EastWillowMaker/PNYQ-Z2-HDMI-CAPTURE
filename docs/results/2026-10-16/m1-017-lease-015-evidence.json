@@ -1,0 +1,19 @@
+{
+  "scope": "held_credit_observation",
+  "all_optical_ids_matched_independent_kms": true,
+  "physical_source_sequence_verified": false,
+  "full_m1_qualification": false,
+  "helper_sha256": "386c0bbd5a57c4ef6eb76e76c548b069e28f5136cde10c738488d9dac9b00783",
+  "sha256": {
+    "m1-017-lease-015-after-dmesg.log": "42d50857d3821c68bbe80c39b61da1db42d90021c9f4be993ba553d1cb4a2e4a",
+    "m1-017-lease-015-before-dmesg.log": "5d048dd61940ecd68ff11e9e00d4e192457a52ec226ab91053dccd1d13c6e38c",
+    "m1-017-lease-015-controller.json": "f4b4687ed9dddc88fa5134c96898a92ea7caaed878ae2ea5f3aa34024935cce3",
+    "m1-017-lease-015-prepared.json": "d7845eb15072e8feff06a2dfacbeebe59f973d832c4bf31e4d4a479a9efe9eed",
+    "m1-017-lease-015-report.md": "d7fd6d1a1026e84155e2c2774a5fd304ad637922c487b576dc6f06b2cd39e252",
+    "m1-017-lease-015-source-child-result.json": "e89df0eae5ec7db81135aed16463968955c578bcc4f2ec43172eff351f080c17",
+    "m1-017-lease-015-source-kernel-state-during.json": "090f3c6b19ffe4c30253e8a6bf1b8637e3fce47b4d2056944af7165dec823a34",
+    "m1-017-lease-015-source-restore.json": "8ab87a5389f87af50b0a5f05ba25665a8ffdcee70ded51f58ff0813b7e493b35",
+    "m1-017-lease-015-source-source.jsonl": "75484f25b805fdd821b0e99c85ff0b8ade8b96189edf9070ec6c14325905dc89",
+    "m1-017-lease-015.jsonl": "97095fec40b218bd730eec66c4b19af12eeac0982b218f32f326e240de37c6ca"
+  }
+}
