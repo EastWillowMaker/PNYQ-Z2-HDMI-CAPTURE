@@ -18,6 +18,11 @@ The number of source frames presented by the HDMI source per second.
 **Delivered frame rate**:
 The number of complete new source frames delivered to the PC per second.
 
+**Output loopback**:
+A test in which the board's HDMI output supplies a known image sequence to
+the same board's HDMI input through a physical cable.
+_Avoid_: Active bypass
+
 **RGB888**:
 A pixel representation with three eight-bit channels ordered red, green, blue.
 _Avoid_: RGB444 packed

@@ -3,6 +3,8 @@
 Date: 2026-10-16 (Asia/Taipei). The accepted fixed-mode M1 is complete; see
 [aggregate evidence and limits](results/2026-10-16/m1-completion.md). Earlier
 failures and per-run flags remain in dated records. M2–M4 remain deferred.
+The new 1080p, desktop viewer and output-loop scope is recorded below;
+these capabilities are not covered by the completed VGA qualification.
 Normative source: [complete user prompt](../PYNQ_Z2_LiteX_HDMI_Capture_Codex_Prompt.md),
 SHA256 `38b149ac12077729ded5e6183f715d06e281df6ea6ba70aa7124c5cb24a744ae`.
 The complete source remains applicable; this record indexes it rather than replacing it.
@@ -80,6 +82,62 @@ the M0→M1 path; implementation now proceeds. Actual source mode, RGB encoding,
 range and physical HDMI IN lock remain measurements, not inferred facts.
 Shared understanding: deliver real RGB frames to PC first, then qualify meaningful
 LiteX participation; web, bypass and LCD remain later milestones.
+
+## Next scope: first round accepted (2026-10-16)
+
+The user accepted all three questions in the next-scope interview. This records
+requirements, not implementation or hardware qualification.
+
+- N1: Capture real 1920×1080 progressive input as full-chroma RGB888 and
+  deliver at least one new complete frame per second to PC Python. Accept an
+  explicitly measured, feasible HDMI input refresh rate; 60 Hz is not required
+  for this first qualification. Record the actual timing separately from
+  delivered frame rate. Repeated frames cannot satisfy the delivery target.
+- N2: Configure the board user's sudo access as `NOPASSWD: ALL`. This grants
+  that account passwordless root access for all commands. Preserve its login
+  password and the PC sudo configuration. The scope was explicitly accepted;
+  the board rule is now installed and verified without cached authentication;
+  see [verification evidence](results/2026-10-16/board-sudo-verify.log).
+- N3: Test a changing, verifiable board-generated pattern through PYNQ-Z2
+  HDMI OUT cabled to the same board's HDMI IN, with captured frames delivered
+  over Ethernet to the PC. Use a feasible 1920×1080 progressive output timing.
+  Keep the PC HDMI source as an independent comparison. This is an output
+  loopback test, not active bypass. Request cable changes only when the test
+  is ready, and keep the shared USB-C Hub connected.
+
+The handoff also requests a simple host Python live viewer with a capture
+button, retaining the direct CLI and reusing the existing capture API. In the
+second interview round, the user required uncompressed saved images with
+bit-for-bit pixel fidelity; the proposed PNG default is therefore withdrawn.
+The user then accepted the revised Q5: save the latest complete received frame
+at button press as an uncompressed 24-bit BMP, without scaling or color
+conversion. Decode the saved BMP back to RGB888 and compare every byte with
+the received array. Pixel values must match exactly; the BMP file bytes are
+not the raw RGB888 stream because BMP has headers and pixel layout rules.
+Freeze the selected frame while saving. Preview scaling must not affect saved
+pixels; disable capture before the first frame or when disconnected.
+
+The user also accepted Q4 and Q6:
+
+- N4: Qualify 1080p for at least ten continuous minutes, with at least 600
+  complete new frames and an average delivered rate of at least one FPS.
+  Check each frame against the controlled pattern and source identity.
+  Corruption, mixed frames and transport errors fail qualification. Count
+  intentional source-frame skips separately. Record the longest delivery gap;
+  the average-rate requirement does not promise a frame in every one-second
+  interval.
+- N5: Completion requires qualified 1080p capture at the accepted rate, the
+  desktop viewer and BMP saving, board passwordless sudo, and a physical
+  output-loop test. Performance work must deliver separate capture, memory
+  copy and transport measurements, bottleneck analysis and verified results
+  of improvements. No higher FPS target is committed before measurement.
+
+Web, LCD and full active bypass remain deferred. Sustained 1080p acceptance,
+viewer save behavior and the performance completion boundary are now agreed.
+Preserve the qualified VGA path and its evidence. The user confirmed the final
+shared understanding after clarifying that the board login password remains
+unchanged and the PC sudo configuration must not be modified. Implementation
+of capture/viewer changes and hardware qualification remain in progress.
 
 ## Initial inventory (historical; later measurements supersede it)
 

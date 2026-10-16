@@ -1,0 +1,19 @@
+
+[?2004l[?2004hxilinx@pynq:/tmp/hdmi-capture-prepared-014$ sudo -n sh /tmp/codex-board-sudo-001.sh && sudo -k -n id -u && sudo -n -l; printf "\nCONSOLE_DONE_fdfd50620c7b4b4ea88bef4febca8be6:%s\n" "$?"
+[?2004l/etc/sudoers: parsed OK
+/etc/sudoers.d/README: parsed OK
+/etc/sudoers.d/.codex-xilinx-HoHpm3: parsed OK
+/etc/sudoers: parsed OK
+/etc/sudoers.d/99-codex-xilinx: parsed OK
+/etc/sudoers.d/README: parsed OK
+Installed /etc/sudoers.d/99-codex-xilinx; verify from the xilinx account with sudo -k -n id -u
+0
+Matching Defaults entries for xilinx on pynq:
+    mail_badpass, use_pty, env_keep=BOARD
+
+User xilinx may run the following commands on pynq:
+    (ALL : ALL) ALL
+    (ALL : ALL) NOPASSWD: ALL
+
+CONSOLE_DONE_fdfd50620c7b4b4ea88bef4febca8be6:0
+[?2004hxilinx@pynq:/tmp/hdmi-capture-prepared-014$ 
