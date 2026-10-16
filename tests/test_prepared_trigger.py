@@ -1,4 +1,5 @@
 import json
+import os
 from pathlib import Path
 import subprocess
 import shlex
@@ -47,7 +48,9 @@ def test_fresh_completed_source_triggers_one_normal_user_marker_command(source):
     argv, kwargs = source.state.calls[0]
     assert argv[:2] == ["/venv/python", "/repo/tools/board_console.py"]
     assert argv[2:4] == ["--command", trigger.marker_command("/tmp/capture-ready-new", "/tmp/sender-new.log")]
-    assert "sudo" not in argv and kwargs == dict(capture_output=True, text=True, timeout=50)
+    assert "sudo" not in argv and kwargs == dict(capture_output=True, text=True, timeout=110)
+    assert argv[argv.index("--timeout") + 1] == "100"
+    assert json.loads(source.log.read_text().splitlines()[0])["sender_timeout_seconds"] == 90
     assert evidence["presented"][-1]["frame_id"] == 2
     assert [json.loads(line)["event"] for line in source.log.read_text().splitlines()] == [
         "waiting_for_kms", "board_trigger_result"]
@@ -235,3 +238,107 @@ def test_uart_failure_is_not_retried(source):
         trigger.trigger(source.output, "/tmp/ready", source.log, board_sender_log="/tmp/sender.log", run=fail,
                         clock=lambda: source.state.now, sleep=advance)
     assert len(calls) == 1
+
+
+@pytest.fixture
+def accelerated_sender(tmp_path, monkeypatch):
+    marker, log = tmp_path / "ready", tmp_path / "sender.log"
+    count, client = tmp_path / "sleep-count", tmp_path / "client"
+    log.write_text('{"event": "waiting_for_source", "ready_file": "new"}\n')
+    fake_bin = tmp_path / "bin"
+    fake_bin.mkdir()
+    fake_sleep = fake_bin / "sleep"
+    fake_sleep.write_text('''#!/bin/sh
+count=0
+if test -f "$SLEEP_COUNT"; then read -r count < "$SLEEP_COUNT"; fi
+count=$((count + 1))
+printf '%s\\n' "$count" > "$SLEEP_COUNT"
+if test "$count" -eq "$LISTEN_AT"; then
+  printf '%s\\n' '{"listening": ["::", 9020], "session_id": "late-session"}' >> "$SENDER_LOG"
+fi
+if test "$count" -eq "$FAIL_AT"; then
+  printf '%s\\n' '{"event": "fatal_dma_shutdown_unverified", "dma_shutdown_safe": false}' >> "$SENDER_LOG"
+fi
+''')
+    fake_sleep.chmod(0o755)
+    monkeypatch.setenv("PATH", str(fake_bin) + ":" + os.environ["PATH"])
+    monkeypatch.setenv("SLEEP_COUNT", str(count))
+    monkeypatch.setenv("SENDER_LOG", str(log))
+    monkeypatch.setenv("LISTEN_AT", "250")
+    monkeypatch.setenv("FAIL_AT", "0")
+    def run(**kwargs):
+        command = trigger.marker_command(str(marker), str(log), **kwargs)
+        result = subprocess.run(["/bin/sh", "-c", command + " && touch -- " + shlex.quote(str(client))],
+                                capture_output=True, text=True, timeout=10)
+        return result
+    return SimpleNamespace(run=run, marker=marker, log=log, count=count, client=client)
+
+
+def test_sender_listening_after_fifty_logical_seconds_starts_client(accelerated_sender):
+    sender = accelerated_sender
+    result = sender.run()
+    assert result.returncode == 0
+    assert json.loads(result.stdout)["session_id"] == "late-session"
+    assert int(sender.count.read_text()) == 250 and sender.client.exists()
+
+
+@pytest.mark.parametrize("seconds,listen_at,expected_sleeps", [(90, 0, 450), (30, 250, 150)])
+def test_missing_or_later_sender_is_bounded_without_client(
+        accelerated_sender, monkeypatch, seconds, listen_at, expected_sleeps):
+    monkeypatch.setenv("LISTEN_AT", str(listen_at))
+    sender = accelerated_sender
+    result = sender.run(sender_timeout=seconds)
+    assert result.returncode != 0 and sender.marker.is_file() and not sender.client.exists()
+    assert int(sender.count.read_text()) == expected_sleeps
+
+
+def test_late_fatal_shutdown_rejects_before_listening_without_retry(accelerated_sender, monkeypatch):
+    monkeypatch.setenv("FAIL_AT", "200")
+    sender = accelerated_sender
+    result = sender.run()
+    assert result.returncode != 0 and not sender.client.exists()
+    assert int(sender.count.read_text()) == 200
+    assert '"listening"' not in sender.log.read_text()
+
+
+@pytest.mark.parametrize("seconds", [False, True, 0, -1, 121, 1.0, 1.5, float("nan"),
+                                     float("inf"), "90", None])
+def test_invalid_sender_timeout_prevents_logs_and_uart(source, seconds):
+    with pytest.raises(ValueError, match="integer"):
+        trigger.marker_command("/tmp/ready", "/tmp/sender.log", sender_timeout=seconds)
+    with pytest.raises(ValueError, match="integer"):
+        source.invoke(sender_timeout=seconds)
+    assert not source.log.exists() and source.state.calls == []
+    assert not source.log.with_name(source.log.name + ".uart.log").exists()
+
+
+@pytest.mark.parametrize("seconds,uart_timeout,process_timeout", [(1, "11", 21), (120, "130", 140)])
+def test_sender_timeout_propagates_independently_of_source_wait(
+        source, seconds, uart_timeout, process_timeout):
+    source.state.action = source.publish
+    source.invoke(timeout=.3, sender_timeout=seconds)
+    argv, kwargs = source.state.calls[0]
+    assert argv[argv.index("--timeout") + 1] == uart_timeout
+    assert kwargs["timeout"] == process_timeout
+    assert json.loads(source.log.read_text().splitlines()[0])["sender_timeout_seconds"] == seconds
+
+
+def test_cli_sender_and_source_timeouts_propagate_independently(monkeypatch, tmp_path):
+    observed = []
+    monkeypatch.setattr(trigger, "trigger", lambda *args, **kwargs: observed.append((args, kwargs)))
+    trigger.main(["--source-output", str(tmp_path / "source"), "--board-marker", "/tmp/ready",
+                  "--board-sender-log", "/tmp/sender.log", "--log", str(tmp_path / "trigger.jsonl"),
+                  "--timeout", "17", "--sender-timeout", "65"])
+    assert len(observed) == 1
+    assert observed[0][1]["timeout"] == 17 and observed[0][1]["sender_timeout"] == 65
+
+
+@pytest.mark.parametrize("seconds", ["0", "121", "1.5", "nan", "inf", "True"])
+def test_cli_invalid_sender_timeout_prevents_logs_and_uart(monkeypatch, tmp_path, seconds):
+    log = tmp_path / "trigger.jsonl"
+    monkeypatch.setattr(trigger, "trigger", lambda *args, **kwargs: pytest.fail("Trigger invoked"))
+    with pytest.raises(SystemExit) as error:
+        trigger.main(["--source-output", str(tmp_path / "source"), "--board-marker", "/tmp/ready",
+                      "--board-sender-log", "/tmp/sender.log", "--log", str(log),
+                      "--sender-timeout", seconds])
+    assert error.value.code == 2 and not log.exists()

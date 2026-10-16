@@ -92,7 +92,9 @@ def wait_source_ready(output, timeout=120, *, clock=time.monotonic, sleep=time.s
     raise TimeoutError("Timed out waiting for fresh completed KMS presentations")
 
 
-def marker_command(marker, sender_log):
+def marker_command(marker, sender_log, *, sender_timeout=90):
+    if type(sender_timeout) is not int or not 1 <= sender_timeout <= 120:
+        raise ValueError("Sender timeout must be an integer in [1, 120]")
     for path in (marker, sender_log):
         if not path.startswith("/") or any(ord(character) < 32 or ord(character) == 127 for character in path):
             raise ValueError("Board paths must be absolute paths without ASCII control characters")
@@ -100,21 +102,21 @@ def marker_command(marker, sender_log):
     log = shlex.quote(sender_log)
     waiting = shlex.quote('^{"event": "waiting_for_source",')
     listening = shlex.quote('^{"listening":')
-    errors = shlex.quote('^Traceback|^[[:alnum:]_.]*(Error|Exception):|^{"event": "fatal_dma_shutdown_unverified"')
+    errors = shlex.quote(r'^Traceback|^[[:alnum:]_.]*(Error|Exception):|^\{"event": "fatal_dma_shutdown_unverified"')
     return (f"( test ! -e {quoted} && test ! -L {quoted} && test -f {log} && test ! -L {log} "
             f"&& grep -q {waiting} {log} || exit 1; "
             f"if grep -q {listening} {log} || grep -Eq {errors} {log}; then exit 1; fi; "
             f"touch -- {quoted} || exit 1; capture_ready_attempt=0; "
-            'while test "$capture_ready_attempt" -lt 150; do '
+            f'while test "$capture_ready_attempt" -lt {math.ceil(sender_timeout / 0.2)}; do '
             f"if grep -Eq {errors} {log}; then exit 1; fi; "
             f"if grep -q {listening} {log}; then grep -m 1 {listening} {log}; exit 0; fi; "
             'capture_ready_attempt=$((capture_ready_attempt + 1)); sleep 0.2; done; exit 1 )')
 
 
 def trigger(output, marker, log, *, board_sender_log, uart_python=sys.executable,
-            board_console=ROOT / "tools/board_console.py", timeout=120,
+            board_console=ROOT / "tools/board_console.py", timeout=120, sender_timeout=90,
             clock=time.monotonic, sleep=time.sleep, run=subprocess.run):
-    command = marker_command(marker, board_sender_log)
+    command = marker_command(marker, board_sender_log, sender_timeout=sender_timeout)
     log = Path(log)
     uart_log = log.with_name(log.name + ".uart.log")
     if not _absent(log) or not _absent(uart_log):
@@ -127,10 +129,11 @@ def trigger(output, marker, log, *, board_sender_log, uart_python=sys.executable
         try:
             evidence = wait_source_ready(output, timeout, clock=clock, sleep=sleep,
                 on_waiting=lambda: record("waiting_for_kms", source_output=str(output),
-                                         board_marker=marker, board_sender_log=board_sender_log))
+                                         board_marker=marker, board_sender_log=board_sender_log,
+                                         sender_timeout_seconds=sender_timeout))
             argv = [str(uart_python), str(board_console), "--command", command,
-                    "--timeout", "40", "--log", str(uart_log)]
-            result = run(argv, capture_output=True, text=True, timeout=50)
+                    "--timeout", str(sender_timeout + 10), "--log", str(uart_log)]
+            result = run(argv, capture_output=True, text=True, timeout=sender_timeout + 20)
             record("board_trigger_result", returncode=result.returncode, **evidence)
             if result.returncode:
                 raise RuntimeError("Board marker command failed; inspect the UART log before retrying")
@@ -147,12 +150,14 @@ def main(argv=None):
     parser.add_argument("--board-sender-log", required=True)
     parser.add_argument("--log", type=Path, required=True)
     parser.add_argument("--timeout", type=float, default=120)
+    parser.add_argument("--sender-timeout", type=int, choices=range(1, 121), default=90,
+                        metavar="SECONDS", help="Sender listening wait in seconds (1..120; default: 90)")
     parser.add_argument("--uart-python", type=Path, default=Path(sys.executable))
     parser.add_argument("--board-console", type=Path, default=ROOT / "tools/board_console.py")
     args = parser.parse_args(argv)
     trigger(args.source_output, args.board_marker, args.log, board_sender_log=args.board_sender_log,
             uart_python=args.uart_python,
-            board_console=args.board_console, timeout=args.timeout)
+            board_console=args.board_console, timeout=args.timeout, sender_timeout=args.sender_timeout)
 
 
 if __name__ == "__main__":

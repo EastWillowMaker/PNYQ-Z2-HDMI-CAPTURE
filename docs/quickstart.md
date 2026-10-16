@@ -16,8 +16,10 @@ that pass from unfinished full M1 qualification. The tracked preparation,
 receipt and source-trigger workflow passed a
 [41-frame short hardware run](results/2026-10-16/m1-017-prepared-014-report.md);
 [held-credit observations](results/2026-10-16/m1-017-lease-015-report.md) also
-passed. Final long-run qualification and an isolated clean-checkout replay of
-the current documented startup sequence remain pending.
+passed. The current production runtime also passed [normal019](results/2026-10-16/m1-017-normal-019.md):
+1,201 exact frames over600.300346seconds with safe shutdown. Physical-loss020
+[did not complete its observation](results/2026-10-16/m1-017-hdmi-loss-020.md).
+An isolated clean-checkout replay and remaining fault/mode checks remain open.
 Legacy013 uses the separate `--source litex` adapter and has no exact
 DMA-associated source identities.
 
@@ -136,6 +138,6 @@ For a later sustained run, use [qualification.md](qualification.md): at least
 600seconds and600 distinct exact frames at1FPS or more, clean accounting,
 source/resource evidence and safe shutdown. A20-second smoke is not that
 criterion. [Source accounting](source-accounting.md) explains the held identity
-and parked-buffer contract. Physical interruption, mode/restart and the final
-tracked-flow qualification remain separate obligations; build timing and CDC
+and parked-buffer contract. Physical interruption, mode/restart and an isolated
+clean-checkout startup remain separate obligations; build timing and CDC
 limits remain in [build.md](build.md).

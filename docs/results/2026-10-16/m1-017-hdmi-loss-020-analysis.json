@@ -1,0 +1,30 @@
+{
+  "scope": "physical_action_confirmation_and_cleanup_classification",
+  "physical_action_confirmed": true,
+  "operator_statement": "Only PYNQ HDMI IN unplugged and reconnected for approximately5seconds; Hub/Micro-B unchanged",
+  "physical_test_passed": false,
+  "client_status": "not_started",
+  "controller_passed": false,
+  "source_final_accounting_failed": true,
+  "safe_hardware_cleanup_verified": true,
+  "source_cleanup_counter": 1,
+  "source_cleanup_counter_scope": "Sender.close counts any source.close exception; this traceback is the final accounting rethrow after gate disable, DMA halt, frontend stop, buffer free and dma_shutdown_safe=True",
+  "native_signal_fault": false,
+  "sources_sha256": "90798eb897756d199d4b9967e4bb2f405837e3f2f3805f04fd0ba4cb379e1727",
+  "code_revision": "3343dac618ada6099453415b5554c4185a544801",
+  "full_m1_qualification": false,
+  "evidence_sha256": {
+    "m1-017-hdmi-loss-020-after-dmesg.log": "761cf365f89194c2848d481a989aa1f1b0d505d7bd2c1b9959c6748c24a47677",
+    "m1-017-hdmi-loss-020-before-dmesg.log": "d49a3ba816ad08a3ef99cc732017ee46c5774c6004ae288c605cba639dc41855",
+    "m1-017-hdmi-loss-020-before.json": "a0977a3e154a3ef876b516b3fa2f3a61dc3b1d89d7a7b1f2710ef7c4aeb92d37",
+    "m1-017-hdmi-loss-020-child.json": "4e2a718ffd854e2a4207259cfbfd92ccb672e5d4ec22482fe3727603804d5010",
+    "m1-017-hdmi-loss-020-controller.json": "212e2aaea35e8e4a52b333cbea214117b73930ce01e7cd6a1a28b11fd079e94e",
+    "m1-017-hdmi-loss-020-prepare.log": "357c93420a8048eb53ebd3ae3b8d75fd742ae849a446c3614c803d127de9c453",
+    "m1-017-hdmi-loss-020-prepared-metadata.json": "d7845eb15072e8feff06a2dfacbeebe59f973d832c4bf31e4d4a479a9efe9eed",
+    "m1-017-hdmi-loss-020-resources.jsonl": "3be462e9e5018d09bd3fe08534117dcd98eee0184d86741b0c48fdeb22d66ba7",
+    "m1-017-hdmi-loss-020-result.json": "6eb536c4e3f087b19d60f671098a521d0d0138da52f7f988980d37907eac527b",
+    "m1-017-hdmi-loss-020-sender-020.log": "6d63c49a85331ba1d63fc187d1f58369eb030eaf535fd07ab8a5e2f66eb1c6ea",
+    "m1-017-hdmi-loss-020-supervisor.log": "1199343204aa704215c3a9107798982d46c7bbd5e1e27d2008e4eaa75754a172"
+  },
+  "host_monotonic": 347642.5395046
+}

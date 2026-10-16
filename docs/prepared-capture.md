@@ -59,7 +59,9 @@ pipeline before switching VT. Tracked startup passed 41 exact frames in the
 [short014 run](results/2026-10-16/m1-017-prepared-014-report.md), and
 [lease015](results/2026-10-16/m1-017-lease-015-report.md) passed held-buffer
 observations. The revised ordering below still needs an isolated clean-checkout
-replay; final 600-second qualification remains pending.
+replay. The same production ordering passed the
+[600-second normal019 run](results/2026-10-16/m1-017-normal-019.md);
+interruption and mode checks remain separate.
 
 Run016 correctly rejected a FIFO underflow latched during the KMS transition,
 before video-driver setup or any selected credit. Its
@@ -155,7 +157,7 @@ capture_uart_python=/path/to/serial-venv/bin/python
     --source-output artifacts/kms-prepared-001 \
     --board-marker /tmp/prepared-001.ready \
     --board-sender-log /tmp/prepared-001.sender.log \
-    --uart-python "$capture_uart_python" --timeout 120 \
+    --uart-python "$capture_uart_python" --timeout 120 --sender-timeout 90 \
     --log artifacts/prepared-001-trigger.jsonl && \
   PYTHONPATH=src:. .venv/bin/python tools/qualify_capture.py "$capture_board" \
     --duration 20 --min-frames 20 --min-fps 1 --hard-deadline 30 \
@@ -187,17 +189,23 @@ The helper trusts metadata from this checkout's source wrapper and fixture; it
 does not attest process identity or inspect framebuffer pixels.
 
 It then makes one normal-user UART call: create the fresh board marker and poll
-the fresh sender log for at most 30 seconds. A prior `listening` line, startup
-error or missing waiting event rejects that log. Only a new actual `listening`
+the fresh sender log for at most 90 seconds by default. `--sender-timeout`
+selects an integer from 1 through 120 seconds, independently of the source
+readiness `--timeout`. The chosen sender bound is recorded in
+`waiting_for_kms`. A prior `listening` line, startup error or missing waiting
+event rejects that log. Only a new actual `listening`
 JSON line makes the helper succeed and starts the client after `&&`; there are
 no TCP probes or failed-qualification retries. The UART log preserves that
 session line beside the trigger log as `prepared-001-trigger.jsonl.uart.log`.
 Marker and sender-log paths must be absolute and contain no ASCII control
 characters; printable shell metacharacters are quoted literally.
 
-That 30-second observation covers the new preparation and native sender startup.
-It is not a bound on a blocking native constructor. A timeout preserves failure
-evidence and does not kill or automatically retry the board process.
+That observation covers the new preparation and native sender startup. The
+UART command timeout is the sender bound plus 10 seconds, and the PC process
+wait adds another 10 seconds (100 and 110 seconds at the default bound).
+These observation limits do not bound a blocking native constructor. A timeout
+preserves failure evidence and does not kill or automatically retry the board
+process.
 
 If any stage fails, preserve its logs and inspect the board before another
 attempt. A helper timeout does not terminate a native startup or a DMA process.

@@ -1,5 +1,34 @@
 # Progress and handoff
 
+2026-10-16T21:47+08:00 — Sender-readiness fix verified locally.
+Trackedtrigger now defaults90s for combinedpreparation/native startup, with
+strict --sender-timeout integer1..120; UART/process bounds add10/20s. Source
+readiness timeout remains independent. No native kill or retry added. Real
+accelerated shell delayed50s regression failsbefore/passesafter; missing/late
+fatal guards pass. Literal ERE brace escape fixes an exposed fatal-log guard.
+Focused60pass; fullhost490pass/1optional skip. No capture/RTL change. Report
+results/2026-10-16/sender-readiness-wait.md. Mode021 PC wizard still requires
+initialEnter andlocalPCsudo aslastchecked; no mode source/result yet. Board
+mode waiter900s starts21:35, so verify remainingtimebefore a late retry.
+
+2026-10-16T21:46+08:00 — Loss020 failed observation; safe physical stop verified.
+User confirmed HDMI IN-only unplug/reconnect (~5s); Hub/Micro-B unchanged.
+The45s startup observer timed out before actual sender listening, so client
+never started. Original020controller/root failure preserved; source acquired60
+without consumer, then exit1/source fault. DMA safe/rawhalt/gateoff/storage/
+no new externalabort/VTrestore passed; noSIGBUS. Cleanup counter1 is the final
+source-proof error rethrown AFTER safe teardown, not a failed halt/free in
+this trace; separate hash-linked analysis and report retain that distinction.
+The old019source worker ended normally via stopfile after source02 exit/restore.
+Mode021root waiter12297 remains bounded900s from21:35. New mode host1642092
+waits for its PC-only root worker; Ptyxis window/wizard1642285 is at initial
+Enter prompt. User must pressEnter then enter PCsudo locally; no UART/board
+reauth required while waiter islive. Mode source120s with automatic nominal
+25200->25175kHz transition at75s. All cables stay connected. No current mode
+source at21:45. Test worker uses isolated binary and does not modify originals.
+Trackedtrigger readiness90s fix/regression is being tested in parallel; no
+new production capture behavior change. See latest result reports.
+
 2026-10-16T21:38+08:00 — Normal019 passed; HDMI-loss020 running.
 The production v14 /3343dac sender and fresh clean-replay017 overlay delivered
 1,201 distinct exact RGB888 frames in 600.300346 seconds (2.000665 FPS).
