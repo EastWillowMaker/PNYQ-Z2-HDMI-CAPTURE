@@ -1,0 +1,29 @@
+{
+  "pid": 13398,
+  "argv": [
+    "/usr/local/share/pynq-venv/bin/python",
+    "-u",
+    "-X",
+    "faulthandler",
+    "-m",
+    "hdmi_capture.sender",
+    "--source",
+    "litex-credit",
+    "--prepared-receipt",
+    "/tmp/hdmi-capture-prepared-014/prepared.json",
+    "--bitfile",
+    "/tmp/hdmi-capture-prepared-014/overlay/capture.bit",
+    "--manifest",
+    "/tmp/hdmi-capture-prepared-014/overlay/build-manifest.json",
+    "--host",
+    "::",
+    "--port",
+    "9028",
+    "--fps",
+    "2",
+    "--duration",
+    "80",
+    "--startup-diagnostics"
+  ],
+  "started_monotonic": 76481.582018491
+}

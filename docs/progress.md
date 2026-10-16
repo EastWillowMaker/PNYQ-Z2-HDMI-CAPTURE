@@ -1,5 +1,21 @@
 # Progress and handoff
 
+2026-10-16T21:53+08:00 — Mode021 exact-before/fail-stop/safe-halt evidence saved.
+47exactRGB frames; real advertised25200->25175nominalKMS timing transition.
+EOF46.923ms aftermodesetbegin, before1.578776sdriverack; client raced eventlog
+and reportsfailed. Rootalsofailed strictcleanup0 but actualsourcefault finalproof
+rethrownAFTERsafehalt/free (counter1), sameknownclassificationas020. One invalid
+sourceframe rejected/notdelivered; overrunattributionunknownafterfault. Sender
+exit1/noSIGBUS/rawCR0x15010/SR0x11001/command6gateoff/storage/kernelclean. Source
+exit0/VTrestore. Originalfailedverdictspreserved; analysisandreportlinkactualtime.
+No automaticrecovery or unsupportedgeometry hardwareclaim. Rootchain021->022
+endedwithoutstarting022; clean022NOT_RUN. Boardauthstandalone sudo-n-v passed
+21:51, so no newhumanpasswordrequiredyet. Cleanfullgitarchivead6c966 stagedas
+/tmp/hdmi-capture-clean-023 (archiveSHA583c5fcc4a953588a50baa4362ab3b2da717c59f97d49e5ddb0cd32481aecf70).
+New023literalpublicwait->prepare->CLI helperbeingprepared/reviewedbeforestart;
+no clean023DMA/source yet. ExistingPCworker1656056 readydeadline349638.048468968,
+source02reserved240s/id2300000, safeoldsource01terminal. KeepPCwindowopen/cables.
+
 2026-10-16T21:47+08:00 — Sender-readiness fix verified locally.
 Trackedtrigger now defaults90s for combinedpreparation/native startup, with
 strict --sender-timeout integer1..120; UART/process bounds add10/20s. Source

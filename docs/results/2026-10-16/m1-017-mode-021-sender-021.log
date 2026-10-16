@@ -1,0 +1,56 @@
+{"event": "source_startup", "timestamp_ns": 76492915019366, "stage": "litex_artifact_verification"}
+{"event": "source_startup", "timestamp_ns": 76493463264651, "stage": "pynq_import"}
+{"event": "source_startup", "timestamp_ns": 76493463760879, "stage": "overlay_attach"}
+{"event": "source_startup", "timestamp_ns": 76498653911782, "stage": "credit_source_ready", "counters": {"enabled": false, "observed_frames": 435, "selected_frames": 0, "completed_frames": 434, "dropped_frames": 435, "invalid_frames": 1, "snapshot_begin_ns": 76498646217364, "snapshot_end_ns": 76498646432354, "timestamp_clock": "board_monotonic", "snapshot_atomic": false, "sample_point": "before_first_credit_while_gate_disabled_dma_halted", "counter_bits": 32, "frontend_overflow_episodes": 0, "native_vsync_edges": 436, "overflow_units": "assertion_episodes_not_lost_frames", "frontend_underflow_episodes": 0}}
+{"listening": ["::", 9028, 0, 0], "source": "hdmi", "session_id": "0c0d5734-b266-44ef-9b28-5a328eda02e7"}
+{"event": "source_cleanup", "timestamp_ns": 76523165079167, "stage": "dma_stop_status_before", "control": 86032, "status": 69633}
+{"event": "source_cleanup", "timestamp_ns": 76523165660693, "stage": "dma_stop_status_after", "control": 86032, "status": 69633}
+{"session_id": "0c0d5734-b266-44ef-9b28-5a328eda02e7", "counters": {"acquired": 49, "startup_discarded": 0, "intentional_sampling_drops": 0, "network_backpressure_drops": 1, "client_discarded": 1, "transport_enqueued": 47, "source_errors": 1, "source_cleanup_errors": 1, "network_errors": 0, "source_skips": 1392, "source_overruns": null, "source_invalid_frames": 1}, "dma_shutdown_safe": true, "source_integrity": {"startup": {"enabled": false, "observed_frames": 435, "selected_frames": 0, "completed_frames": 434, "dropped_frames": 435, "invalid_frames": 1, "snapshot_begin_ns": 76498646217364, "snapshot_end_ns": 76498646432354, "timestamp_clock": "board_monotonic", "snapshot_atomic": false, "sample_point": "before_first_credit_while_gate_disabled_dma_halted", "counter_bits": 32, "frontend_overflow_episodes": 0, "native_vsync_edges": 436, "overflow_units": "assertion_episodes_not_lost_frames", "frontend_underflow_episodes": 0}, "last": {"enabled": true, "observed_frames": 1906, "selected_frames": 49, "completed_frames": 1904, "dropped_frames": 1857, "invalid_frames": 2, "snapshot_begin_ns": 76523164522398, "snapshot_end_ns": 76523164722373, "timestamp_clock": "board_monotonic", "snapshot_atomic": false, "sample_point": "sequential_gpio_reads_during_credit_health_check", "counter_bits": 32, "frontend_overflow_episodes": 0, "native_vsync_edges": 1906, "overflow_units": "assertion_episodes_not_lost_frames", "frontend_underflow_episodes": 0}, "failure": {"counter": "invalid_frames", "snapshot": {"enabled": true, "observed_frames": 1906, "selected_frames": 49, "completed_frames": 1904, "dropped_frames": 1857, "invalid_frames": 2, "snapshot_begin_ns": 76523164522398, "snapshot_end_ns": 76523164722373, "timestamp_clock": "board_monotonic", "snapshot_atomic": false, "sample_point": "sequential_gpio_reads_during_credit_health_check", "counter_bits": 32, "frontend_overflow_episodes": 0, "native_vsync_edges": 1906, "overflow_units": "assertion_episodes_not_lost_frames", "frontend_underflow_episodes": 0}, "final_accounting_error": "Credit integrity counter changed: invalid_frames"}}}
+Traceback (most recent call last):
+  File "/tmp/hdmi-capture-prepared-014/src/hdmi_capture/sender.py", line 159, in _serve_client
+    self._capture_task.result()
+  File "/tmp/hdmi-capture-prepared-014/src/hdmi_capture/sender.py", line 89, in _capture
+    sample = await asyncio.wait_for(self.source.read(), self.read_timeout)
+  File "/usr/lib/python3.10/asyncio/tasks.py", line 445, in wait_for
+    return fut.result()
+  File "/tmp/hdmi-capture-prepared-014/src/hdmi_capture/sources.py", line 762, in read
+    await self._wait(idle)
+  File "/tmp/hdmi-capture-prepared-014/src/hdmi_capture/sources.py", line 745, in _wait
+    value = predicate()
+  File "/tmp/hdmi-capture-prepared-014/src/hdmi_capture/sources.py", line 759, in idle
+    identity = self._healthy()
+  File "/tmp/hdmi-capture-prepared-014/src/hdmi_capture/sources.py", line 735, in _healthy
+    raise SourceError(f"Credit integrity counter changed: {name}")
+hdmi_capture.sources.SourceError: Credit integrity counter changed: invalid_frames
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/usr/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/tmp/hdmi-capture-prepared-014/src/hdmi_capture/sender.py", line 420, in <module>
+    main()
+  File "/tmp/hdmi-capture-prepared-014/src/hdmi_capture/sender.py", line 379, in main
+    asyncio.run(sender.run(args.host, args.port, args.duration))
+  File "/usr/lib/python3.10/asyncio/runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 646, in run_until_complete
+    return future.result()
+  File "/tmp/hdmi-capture-prepared-014/src/hdmi_capture/sender.py", line 221, in run
+    await self.close()
+  File "/tmp/hdmi-capture-prepared-014/src/hdmi_capture/sender.py", line 259, in close
+    self.source.close()
+  File "/tmp/hdmi-capture-prepared-014/src/hdmi_capture/sources.py", line 868, in close
+    raise failure
+  File "/tmp/hdmi-capture-prepared-014/src/hdmi_capture/sources.py", line 836, in close
+    self._healthy()
+  File "/tmp/hdmi-capture-prepared-014/src/hdmi_capture/sources.py", line 735, in _healthy
+    raise SourceError(f"Credit integrity counter changed: {name}")
+hdmi_capture.sources.SourceError: Credit integrity counter changed: invalid_frames
+Exception ignored in: <function UioController.__del__ at 0xb33e58e0>
+Traceback (most recent call last):
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/uio.py", line 79, in __del__
+  File "/usr/lib/python3.10/asyncio/events.py", line 656, in get_event_loop
+RuntimeError: There is no current event loop in thread 'MainThread'.
