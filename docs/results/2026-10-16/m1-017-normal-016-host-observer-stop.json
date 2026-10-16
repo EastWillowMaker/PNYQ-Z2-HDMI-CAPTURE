@@ -1,0 +1,1 @@
+{"pid": 1272172, "reason": "Readonly supervisor-result poll matched sentinel inside UART command echo; stop only host observer to inspect actual board failure", "native_processes_signalled": false, "source_processes_signalled": false}

@@ -1,0 +1,23 @@
+{
+  "full_m1_qualification": false,
+  "sha256": {
+    "m1-017-normal-016-before-dmesg.log": "63f7be9d6dd7287ec483d3032561090fe7920dcd22ed837df927053b67c07ac9",
+    "m1-017-normal-016-before.json": "be5badc242439323d091273e8bab2020ff348588539fd90e0874884b8a65f00e",
+    "m1-017-normal-016-child.json": "50270d5f8799ada50930f9c05d2c870e0210bec73f073f562ede421ec811bc8e",
+    "m1-017-normal-016-host-observer-stop.json": "bf8c79d8a18e8f4c090abc96c624cc84dc906099b85c15a9365f034c9b6aacdc",
+    "m1-017-normal-016-observer.json": "fbc96d70f10f11290de51da15336e5a44e744c9a3aa13828499a6abf0caa0908",
+    "m1-017-normal-016-pipeline.log": "0702fcadcf8f95d1f833d1d95d1ce79aba650144a08f8ed84f5dbaf2ade8cfba",
+    "m1-017-normal-016-prepared.json": "d7845eb15072e8feff06a2dfacbeebe59f973d832c4bf31e4d4a479a9efe9eed",
+    "m1-017-normal-016-resources.jsonl": "a844655da025f353c7c0a26de74d1aa87ad0e6258b7f4bc121299af14c89f7ed",
+    "m1-017-normal-016-result.json": "fae0b7093e9c814efe56d64260073fe03203c52c42872daae20b4c8ea8f6eb4b",
+    "m1-017-normal-016-sender-016.log": "c0156dc0ba849ac83f21e986fdd980e8c58cde2e5151ba7a839636b396b35941",
+    "m1-017-normal-016-source-child-result.json": "e89df0eae5ec7db81135aed16463968955c578bcc4f2ec43172eff351f080c17",
+    "m1-017-normal-016-source-kernel-state-during.json": "59038c287af31700dabbc56a3ef344ffd3ecfb3b87816258fc33dd4a0f7b2234",
+    "m1-017-normal-016-source-restore.json": "8ab87a5389f87af50b0a5f05ba25665a8ffdcee70ded51f58ff0813b7e493b35",
+    "m1-017-normal-016-source-source.jsonl": "0211720c207211a635d7268bb96fb3d549addf491d3b12c74bf4d874f22f50c2",
+    "m1-017-normal-016-startup-diagnostic.json": "40982a3ca07a7316536d38e51eaa5f25fcad60db6b8d10b1aa98f7ca53ae395f",
+    "m1-017-normal-016-supervisor.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "m1-017-normal-016-trigger.jsonl": "4da57281cc446f2b4311698215115c958f27bd4f33b6b47823198673c1f782b6",
+    "m1-017-normal-016-trigger.jsonl.uart.log": "ab0d8d3af7fdd05b9f0e9c332a71c92c38d3d9de7d3a1355d57463f4e7fd3ad5"
+  }
+}

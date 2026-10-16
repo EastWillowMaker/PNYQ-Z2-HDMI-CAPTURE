@@ -1,0 +1,53 @@
+{
+  "control": 65538,
+  "status": 65537,
+  "snapshot": {
+    "enabled": false,
+    "observed_frames": 12340,
+    "selected_frames": 0,
+    "completed_frames": 12336,
+    "dropped_frames": 12340,
+    "invalid_frames": 3,
+    "snapshot_begin_ns": 30477277114439,
+    "snapshot_end_ns": 30477277329652,
+    "timestamp_clock": "board_monotonic",
+    "snapshot_atomic": false,
+    "sample_point": "failed_prepare_016",
+    "counter_bits": 32,
+    "frontend_overflow_episodes": 0,
+    "native_vsync_edges": 12340,
+    "overflow_units": "assertion_episodes_not_lost_frames",
+    "frontend_underflow_episodes": 1
+  },
+  "identity": {
+    "credit_busy": false,
+    "credit_done": false,
+    "credit_failed": false,
+    "request_seen": 0,
+    "ack_seen": 0,
+    "source_sequence_fault": false,
+    "native_armed": true,
+    "selected_sof_id": 0,
+    "selected_native_vsync_id": 0,
+    "selected_completed": 0,
+    "command_errors": 0,
+    "source_sequence_faults": 0,
+    "identity_snapshot_coherent": false
+  },
+  "credit_banks": {
+    "capture_credit": [
+      64,
+      0
+    ],
+    "capture_completion": [
+      0,
+      0
+    ],
+    "capture_sequence": [
+      0,
+      0
+    ]
+  },
+  "ext4_errors": "0",
+  "test_sha256": "341aacac661ccb210720bedaa9ead5d668fe5ea41a73532fc147c71e34040df1"
+}

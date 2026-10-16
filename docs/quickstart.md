@@ -12,8 +12,12 @@ and use its successful single-credit bit/HWH/manifest pair. The normal017/v11
 run passed1,201 exact frames over600.368seconds with safe shutdown; the separate
 HDMI-loss run failed. [Current evidence](results/2026-10-16/capture-011-loss-012-report.md)
 and the [remaining audit](results/2026-10-16/m1-remaining-audit.md) distinguish
-that pass from unfinished full M1 qualification. The new tracked preparation,
-receipt and source-trigger workflow has host tests; its hardware run is pending.
+that pass from unfinished full M1 qualification. The tracked preparation,
+receipt and source-trigger workflow passed a
+[41-frame short hardware run](results/2026-10-16/m1-017-prepared-014-report.md);
+[held-credit observations](results/2026-10-16/m1-017-lease-015-report.md) also
+passed. Final long-run qualification and an isolated clean-checkout replay of
+the current documented startup sequence remain pending.
 Legacy013 uses the separate `--source litex` adapter and has no exact
 DMA-associated source identities.
 
@@ -65,10 +69,19 @@ identity and is evidence tooling, not a portable SSH substitute.
 
 Use the [prepared capture workflow](prepared-capture.md), which supplies the
 board and PC command blocks. Preparation asserts HPD without native frontend
-configuration, VTC reads, capture allocation or DMA start. A later receipt-checked
-sender waits for a fresh source-ready file. The PC trigger observes completed
-direct DRM/KMS presentations before signaling that file, then waits for the
-sender's actual TCP listening event before starting the client.
+configuration, VTC reads, capture allocation or DMA start. The queued board shell
+waits for a fresh source-ready file, then runs normal preparation again with the
+same receipt before starting the receipt-checked sender. The PC trigger observes
+completed direct DRM/KMS presentations before signaling that file, then waits
+for the sender's actual TCP listening event before starting the client.
+
+This ordering addresses the KMS transition in
+[failed run016](results/2026-10-16/m1-017-normal-016-startup-diagnostic.json):
+a latched FIFO underflow was correctly rejected before video setup or selected
+capture. Explicit preparation on the same steady source then passed
+[run017](results/2026-10-16/m1-017-warm-017-result.json), with 21 exact frames,
+safe DMA cleanup and storage checks. Keep that failure evidence; do not waive
+counters or automatically retry a failed preparation. The runtime is unchanged.
 
 This source runs outside GNOME composition and needs a temporary VT switch;
 see [the bounded KMS runner](kms-source.md). Keep this PC's shared USB-C Hub and

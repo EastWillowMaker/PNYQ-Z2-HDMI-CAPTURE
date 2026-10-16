@@ -37,9 +37,15 @@ programming. Preparation rejects saved shutdown-IP entries rather than letting
 the SDK access an unknown old register map. Resolve that state through separate
 verified recovery; this command does not clear PYNQ's configuration ledger.
 
-After `receiver_prepared` reports HPD1, start the HDMI source. Then run:
+After `receiver_prepared` reports HPD1, start the HDMI source and wait for stable
+supported output. Prepare again with the same receipt, without `--after-reset`,
+before starting the sender:
 
 ```bash
+sudo -n env XILINX_XRT=/usr PYTHONPATH=src \
+  /usr/local/share/pynq-venv/bin/python -m hdmi_capture.sender prepare \
+  --bitfile /path/to/capture.bit --manifest /path/to/build-manifest.json \
+  --receipt /path/to/prepared.json && \
 sudo -n env XILINX_XRT=/usr PYTHONPATH=src \
   /usr/local/share/pynq-venv/bin/python -m hdmi_capture.sender \
   --source litex-credit --prepared-receipt /path/to/prepared.json \
@@ -48,10 +54,22 @@ sudo -n env XILINX_XRT=/usr PYTHONPATH=src \
 ```
 
 A direct KMS source switches virtual terminals and hides the PC desktop. The
-following bounded sequence starts the board waiter first, then a PC trigger and
-client pipeline before switching VT. It uses tracked tools, but this complete
-sequence has host-test evidence only; a first-frame hardware run and the final
-600-second qualification through it remain pending.
+following sequence starts a board waiter first, then a PC trigger and client
+pipeline before switching VT. Tracked startup passed 41 exact frames in the
+[short014 run](results/2026-10-16/m1-017-prepared-014-report.md), and
+[lease015](results/2026-10-16/m1-017-lease-015-report.md) passed held-buffer
+observations. The revised ordering below still needs an isolated clean-checkout
+replay; final 600-second qualification remains pending.
+
+Run016 correctly rejected a FIFO underflow latched during the KMS transition,
+before video-driver setup or any selected credit. Its
+[startup diagnostic](results/2026-10-16/m1-017-normal-016-startup-diagnostic.json)
+is retained. On that same still-running stable source, explicit normal
+preparation followed by the production sender passed 21 exact frames in
+10.340019 seconds with safe cleanup/storage and no new external abort
+([run017 result](results/2026-10-16/m1-017-warm-017-result.json)). The v14 runtime
+was unchanged. The queued sequence therefore prepares after the readiness marker
+as well as before source startup. It does not waive counters or retry failures.
 
 There are two separate local authentication contexts. Enter the board password
 only in its UART terminal, and the PC password only in the PC terminal. The
@@ -72,17 +90,32 @@ capture_receipt=/tmp/prepared-001.json
 capture_marker=/tmp/prepared-001.ready
 capture_sender_log=/tmp/prepared-001.sender.log
 cd "$capture_repo"
-sudo -n env XILINX_XRT=/usr PYTHONPATH="$capture_repo/src" /usr/local/share/pynq-venv/bin/python \
+if sudo -n env XILINX_XRT=/usr PYTHONPATH="$capture_repo/src" /usr/local/share/pynq-venv/bin/python \
   -m hdmi_capture.sender prepare --bitfile "$capture_bit" \
-  --manifest "$capture_manifest" --receipt "$capture_receipt" --after-reset
-test ! -e "$capture_marker" && test ! -L "$capture_marker" && \
-test ! -e "$capture_sender_log" && test ! -L "$capture_sender_log" && \
-sudo -n env XILINX_XRT=/usr PYTHONPATH="$capture_repo/src" nohup /usr/local/share/pynq-venv/bin/python \
-  -m hdmi_capture.sender --source litex-credit --bitfile "$capture_bit" \
-  --manifest "$capture_manifest" --prepared-receipt "$capture_receipt" \
-  --wait-ready-file "$capture_marker" --ready-timeout 300 \
-  --host :: --port 9020 --fps 2 --duration 90 --startup-diagnostics \
-  >"$capture_sender_log" 2>&1 </dev/null &
+  --manifest "$capture_manifest" --receipt "$capture_receipt" --after-reset; then
+  test ! -e "$capture_marker" && test ! -L "$capture_marker" && \
+  test ! -e "$capture_sender_log" && test ! -L "$capture_sender_log" && \
+  sudo -n env XILINX_XRT=/usr PYTHONPATH="$capture_repo/src" nohup /bin/sh -c '
+    set -eu
+    "$1" -c "
+import json
+import sys
+from hdmi_capture.prepared import wait_ready_file
+print(json.dumps(dict(event=\"waiting_for_source\", ready_file=sys.argv[1], timeout_seconds=300)), flush=True)
+wait_ready_file(sys.argv[1], 300)
+" "$5"
+    "$1" -m hdmi_capture.sender prepare --bitfile "$2" \
+      --manifest "$3" --receipt "$4"
+    exec "$1" -u -X faulthandler -m hdmi_capture.sender \
+      --source litex-credit --bitfile "$2" --manifest "$3" \
+      --prepared-receipt "$4" --host :: --port 9020 --fps 2 \
+      --duration 90 --startup-diagnostics
+  ' prepared-capture /usr/local/share/pynq-venv/bin/python \
+    "$capture_bit" "$capture_manifest" "$capture_receipt" "$capture_marker" \
+    >"$capture_sender_log" 2>&1 </dev/null &
+else
+  echo 'Initial preparation failed; preserve its output and inspect the board' >&2
+fi
 ```
 
 The Python path above is the tested PYNQ3.0.1 virtual environment, not the board
@@ -96,11 +129,14 @@ The first use of `--after-reset` still requires the reset/no-active-DMA conditio
 described above; omit it for a normal subsequent preparation with a valid
 receipt. Confirm the sender log contains `waiting_for_source`, then exit the
 interactive UART program so the trigger can claim the serial port. While
-waiting, the sender performs filesystem checks only. The marker must be absent
+waiting, the shell's Python waiter performs filesystem checks only. The marker
+must be absent
 at startup and arrive as a regular file; files, directories and dangling
 symlinks already at that path are rejected. The timeout is finite, defaults to
-120 seconds, and cannot exceed 900 seconds. Receipt, boot and loaded-state
-checks run after arrival. No marker is removed automatically.
+120 seconds, and cannot exceed 900 seconds; this command selects 300 seconds.
+After arrival, normal preparation checks the existing receipt, boot and loaded
+state before downloading again. Only successful preparation reaches the sender;
+there is no second `--wait-ready-file` wait. No marker is removed automatically.
 
 On the PC, build the existing fixture, authenticate locally, and paste the whole
 block so the client pipeline is queued before VT changes. Set the board address
@@ -159,6 +195,10 @@ session line beside the trigger log as `prepared-001-trigger.jsonl.uart.log`.
 Marker and sender-log paths must be absolute and contain no ASCII control
 characters; printable shell metacharacters are quoted literally.
 
+That 30-second observation covers the new preparation and native sender startup.
+It is not a bound on a blocking native constructor. A timeout preserves failure
+evidence and does not kill or automatically retry the board process.
+
 If any stage fails, preserve its logs and inspect the board before another
 attempt. A helper timeout does not terminate a native startup or a DMA process.
 The source wrapper remains responsible for VT restoration, and the sender's
@@ -213,6 +253,7 @@ The existing sender route without `--prepared-receipt` retains its loading
 behavior and does not gain these preparation guards.
 
 Host tests exercise receipt validation, preparation/attach ordering, metadata
-races and rejected hardware states. They do not establish physical HDMI
-readiness, receiver timing, real DMA cleanup or board qualification. Board
-results must identify the exact source revision and record those checks.
+races and rejected hardware states. The linked014/015/017 results provide short
+hardware evidence for their recorded paths, not full M1 or a clean-checkout
+replay of this queued command. Board results must identify the exact source
+revision and record readiness, receiver, DMA and cleanup checks separately.

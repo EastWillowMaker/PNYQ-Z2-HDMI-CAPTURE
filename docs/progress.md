@@ -1,5 +1,24 @@
 # Progress and handoff
 
+2026-10-16T09:15:07+08:00:016 STARTUP FAIL;017 STEADY-SOURCE RESTART PASS;018 AWAITS PC.
+016 selected0/no client: KMS transitionlatched FIFOunderflow1; preparedguard
+correctlyrejected beforevideo. Independentfixedclock CR0x10002/SR0x10001/gateoff,
+SDhealthy. Originalsupervisorfailure/senderexit1 preserved; hostreadonlyobserver
+1272172 stoppedalone because echoedpendingtextmaskedterminalresult; no native/
+source signals. Separate017 normalprepare aftersourcewassteady +realCLI passed
+21exact/10.340019s/2.030944FPS, senderexit0/DMAhalt/storage/kernelpassed.
+Source03 completed720s/exit0/VTrestored; oldrootworker014 finishednormally.
+Updatedqueued docs waitfreshmarker->normalprepare->sender usingtrackedcommands;
+no runtimecode/counterwaiver/retryloop. Report normal-016-warm-017-report.md.
+018rootwaiter+hostcoordinator1279991 arelive; PC-onlywizard1280821 open. NewPCauth
+questionpending; no newsource/600sclient yet. Rootwaiter900s andhost850s start
+nearhostmonotonic302247.8 (~09:07), verifyactualremainingtimebeforeuserretry.
+Window PYNQ normal 018 - PC password only. Source018720s/strict600s unchanged;
+boardauthnotneededwhilewaiterexists. Keepallcablesconnected; no sourceconcurrency.
+ReadonlyDRMcachedinventoryfoundVGA60/59.94 only(clock25200/25175); no othergeometry.
+Currentfixture/worker cannotrequesttransition. FullM1false; mode/loss/manualgaps
+remain. No physicalHDMIavailabilityanswer received; do notunplug Hub/Micro-B.
+
 2026-10-16T08:54+08:00:015 HELD-CREDIT HIL PASS; FINAL NORMAL RUN PREPARING.
 ActualtrackedcheckerCLIexit0 andwrapperpassed:6Aobservations stableBGR/RGBhash,
 heldIDs/parkedVDMA while native325->444 (+119edges); ACK thenexactdifferentB

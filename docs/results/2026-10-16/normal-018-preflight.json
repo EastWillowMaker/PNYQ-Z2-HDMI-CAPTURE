@@ -1,0 +1,21 @@
+{
+  "scope": "root_waiter_live_waiting_PC_auth_NOT_RUN",
+  "host_controller_pid": 1279991,
+  "wizard_pid": 1280821,
+  "window_title": "PYNQ normal 018 - PC password only",
+  "source_duration_seconds": 720,
+  "criterion_seconds": 600,
+  "minimum_distinct_frames": 600,
+  "minimum_fps": 1,
+  "board_reprepare_after_fresh_kms": true,
+  "old_source03_exit": 0,
+  "old_source03_restored": true,
+  "old_worker_finished": true,
+  "full_m1_qualification": false,
+  "helper_sha256": {
+    "artifacts/deploy/normal-session-018.py": "bcd9fb72880db85a810d5810db8c1741d3602fd4d5cb12f1478a9eb329cbaeaa",
+    "artifacts/operator/coordinate-normal-018.py": "f45f748d9bb1ac0e5ab2457769d7a149ce03ab2fdacc2968d0447fd6d7fe219a",
+    "artifacts/operator/kms-source-session-018.py": "93a6befbde1ce3f8786a4381710030db137cc20e8b5e04417999c7a32e089bb3",
+    "artifacts/operator/run-normal-018.sh": "e52abba7478fbb7693f1eebdc3c908ee441306ceac3133a3ea8d3bc55276afea"
+  }
+}

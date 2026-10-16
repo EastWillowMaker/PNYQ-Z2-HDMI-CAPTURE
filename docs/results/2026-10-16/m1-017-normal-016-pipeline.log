@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/eastwillow/Documents/litex-hdmi-capture/tools/trigger_prepared_capture.py", line 159, in <module>
+    main()
+  File "/home/eastwillow/Documents/litex-hdmi-capture/tools/trigger_prepared_capture.py", line 153, in main
+    trigger(args.source_output, args.board_marker, args.log, board_sender_log=args.board_sender_log,
+  File "/home/eastwillow/Documents/litex-hdmi-capture/tools/trigger_prepared_capture.py", line 136, in trigger
+    raise RuntimeError("Board marker command failed; inspect the UART log before retrying")
+RuntimeError: Board marker command failed; inspect the UART log before retrying

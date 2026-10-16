@@ -1,0 +1,31 @@
+{
+  "scope": "read_only_cached_connector_metadata_no_modeset",
+  "connector_id": 446,
+  "device": "/dev/dri/card2",
+  "modes": [
+    {
+      "name": "640x480",
+      "clock_khz": 25200,
+      "width": 640,
+      "height": 480,
+      "htotal": 800,
+      "vtotal": 525,
+      "flags": 10
+    },
+    {
+      "name": "640x480",
+      "clock_khz": 25175,
+      "width": 640,
+      "height": 480,
+      "htotal": 800,
+      "vtotal": 525,
+      "flags": 10
+    }
+  ],
+  "edid_bytes": 256,
+  "edid_sha256": "3b01e13acc1664b49df3d35d945f1a96dfcc5a86544a1e05b260525a79de31f6",
+  "current_fixture_selects_first_near_60hz": true,
+  "mode_transition_hil": "NOT_RUN",
+  "alternative_geometry_advertised": false,
+  "full_m1_qualification": false
+}

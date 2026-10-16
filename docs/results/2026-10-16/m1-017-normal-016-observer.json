@@ -1,0 +1,20 @@
+{
+  "scope": "failed_startup_before_capture_not_a_long_criterion",
+  "client_started": false,
+  "delivered_frames": 0,
+  "full_m1_qualification": false,
+  "passed": false,
+  "reason": "Prepared guard rejected frontend_underflow_episodes=1 before video initialization",
+  "startup_underflow": 1,
+  "selected_frames": 0,
+  "selected_credit_completed": 0,
+  "independent_raw_halt_and_gate_off": true,
+  "original_sender_exit": 1,
+  "host_observer_stopped": true,
+  "native_or_source_processes_signalled": false,
+  "root_supervisor_result": "m1-017-normal-016-result.json",
+  "raw_diagnostic": "m1-017-normal-016-startup-diagnostic.json",
+  "source_result_pending": false,
+  "source_exit": 0,
+  "desktop_restored": true
+}

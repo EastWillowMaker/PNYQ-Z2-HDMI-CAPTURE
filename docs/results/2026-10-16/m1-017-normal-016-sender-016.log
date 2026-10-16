@@ -1,0 +1,32 @@
+{"event": "waiting_for_source", "ready_file": "/tmp/hdmi-capture-prepared-014/source-016.ready", "timeout_seconds": 300.0}
+{"event": "source_startup", "timestamp_ns": 30276118151447, "stage": "litex_artifact_verification"}
+{"event": "source_startup", "timestamp_ns": 30276673154320, "stage": "pynq_import"}
+{"event": "source_startup", "timestamp_ns": 30276673629397, "stage": "overlay_attach"}
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/usr/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/tmp/hdmi-capture-prepared-014/src/hdmi_capture/sender.py", line 420, in <module>
+    main()
+  File "/tmp/hdmi-capture-prepared-014/src/hdmi_capture/sender.py", line 379, in main
+    asyncio.run(sender.run(args.host, args.port, args.duration))
+  File "/usr/lib/python3.10/asyncio/runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 646, in run_until_complete
+    return future.result()
+  File "/tmp/hdmi-capture-prepared-014/src/hdmi_capture/sender.py", line 209, in run
+    address = await self.start(host, port)
+  File "/tmp/hdmi-capture-prepared-014/src/hdmi_capture/sender.py", line 192, in start
+    self.source.start()
+  File "/tmp/hdmi-capture-prepared-014/src/hdmi_capture/sources.py", line 661, in start
+    self.load_overlay()
+  File "/tmp/hdmi-capture-prepared-014/src/hdmi_capture/sources.py", line 634, in load_overlay
+    attach_prepared(self, self.prepared_receipt, video_drivers=download)
+  File "/tmp/hdmi-capture-prepared-014/src/hdmi_capture/prepared.py", line 174, in attach_prepared
+    _attach_metadata(source, receipt_path, empty=True)
+  File "/tmp/hdmi-capture-prepared-014/src/hdmi_capture/prepared.py", line 166, in _attach_metadata
+    _hardware(source, empty=empty)
+  File "/tmp/hdmi-capture-prepared-014/src/hdmi_capture/prepared.py", line 141, in _hardware
+    raise SourceError("Prepared capture requires empty credit and clean source faults")
+hdmi_capture.sources.SourceError: Prepared capture requires empty credit and clean source faults
