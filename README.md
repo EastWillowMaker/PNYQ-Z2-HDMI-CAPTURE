@@ -65,6 +65,13 @@ are refused. `capture`, `stats` and `benchmark` require `--count` or
 `--duration`; supplying both stops at the first limit. `stats` and `benchmark`
 save no frames and print the same measurement JSON.
 
+For uncompressed images, use `snapshot --output image.bmp` or
+`capture --output frames --count 10 --bmp`. These commands save 24-bit BMP
+images and JSON sidecars. Decoding each BMP to RGB888 preserves every received
+pixel byte; headers, BGR storage order and row padding differ from raw RGB.
+BMP output cannot be combined with `--png`. The optional
+[desktop viewer](docs/viewer.md) uses the same client and BMP writer.
+
 Reports include complete delivered frames, elapsed seconds, FPS, RGB payload
 goodput in Mbps, detected errors, frame ID gaps and final source metadata.
 Frame ID gaps are observations, not independently measured source drops;

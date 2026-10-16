@@ -23,6 +23,32 @@ def test_snapshot_roundtrip_and_metadata(tmp_path, capsys):
     assert json.loads(capsys.readouterr().out)["delivered_frames"] == 1
 
 
+def test_snapshot_bmp_preserves_pixels_and_metadata(tmp_path, capsys):
+    image = pytest.importorskip("PIL.Image")
+    output = tmp_path / "image.bmp"
+    with server([encode_frame(RGB, metadata())]) as port:
+        assert main(arguments("snapshot", port, "--output", output)) == 0
+    with image.open(output) as saved:
+        np.testing.assert_array_equal(np.asarray(saved.convert("RGB")), RGB)
+    details = json.loads(output.with_suffix(".json").read_text())
+    assert details["frame_metadata"] == metadata()
+    assert details["compression_code"] == 0
+    assert details["bits_per_pixel"] == 24
+    assert json.loads(capsys.readouterr().out)["delivered_frames"] == 1
+
+
+def test_capture_bmp_and_reject_png_combination(tmp_path, capsys):
+    output = tmp_path / "capture"
+    with server([encode_frame(RGB, metadata(i)) for i in range(2)]) as port:
+        assert main(arguments("capture", port, "--output", output, "--count", 2, "--bmp")) == 0
+    assert len(list(output.glob("*.bmp"))) == 2
+    assert not list(output.glob("*.npy"))
+    assert json.loads(capsys.readouterr().out)["delivered_frames"] == 2
+    with pytest.raises(SystemExit) as exc:
+        main(arguments("capture", 1, "--output", output, "--count", 1, "--bmp", "--png"))
+    assert exc.value.code == 2
+
+
 def test_snapshot_png_preserves_rgb_and_refuses_existing_sidecar(tmp_path, capsys):
     image = pytest.importorskip("PIL.Image")
     output = tmp_path / "image.npy"

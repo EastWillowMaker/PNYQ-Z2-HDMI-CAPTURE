@@ -10,6 +10,7 @@ from pathlib import Path
 import numpy as np
 
 from .client import CaptureClient
+from .images import save_bmp
 from .protocol import Frame, ProtocolError
 
 
@@ -36,9 +37,10 @@ def _parser() -> argparse.ArgumentParser:
         cmd.add_argument("--port", type=int, default=9020)
         cmd.add_argument("--timeout", type=_positive, default=5.0)
         if name == "snapshot":
-            cmd.add_argument("--output", type=Path, required=True, help="New .npy file")
+            cmd.add_argument("--output", type=Path, required=True, help="New .npy or uncompressed .bmp file")
         elif name == "capture":
             cmd.add_argument("--output", type=Path, required=True, help="New directory")
+            cmd.add_argument("--bmp", action="store_true", help="Save uncompressed BMP instead of NPY")
         if name in ("snapshot", "capture"):
             cmd.add_argument("--png", action="store_true", help="Also save lossless PNG")
         if name != "snapshot":
@@ -77,8 +79,11 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     if args.command != "snapshot" and args.count is None and args.duration is None:
         parser.error("provide --count or --duration to bound the run")
-    if args.command == "snapshot" and args.output.suffix != ".npy":
-        parser.error("snapshot --output must end in .npy")
+    if args.command == "snapshot" and args.output.suffix not in (".npy", ".bmp"):
+        parser.error("snapshot --output must end in .npy or .bmp")
+    bmp = getattr(args, "bmp", False) or (args.command == "snapshot" and args.output.suffix == ".bmp")
+    if bmp and getattr(args, "png", False):
+        parser.error("BMP output cannot be combined with --png")
     if getattr(args, "png", False):
         try:
             import PIL  # noqa: F401
@@ -93,7 +98,7 @@ def main(argv: list[str] | None = None) -> int:
         if args.command == "capture":
             args.output.mkdir(parents=True, exist_ok=False)
         elif args.command == "snapshot":
-            for suffix in (".npy", ".json", ".png"):
+            for suffix in (".npy", ".json", ".png", ".bmp"):
                 if args.output.with_suffix(suffix).exists():
                     raise FileExistsError(f"output already exists: {args.output.with_suffix(suffix)}")
         with CaptureClient(args.host, args.port, timeout=args.timeout) as client:
@@ -121,9 +126,15 @@ def main(argv: list[str] | None = None) -> int:
                 report["delivered_frames"] += 1
                 report["payload_bytes"] += frame.rgb.nbytes
                 if args.command == "snapshot":
-                    _save(frame, args.output, args.png)
+                    if bmp:
+                        save_bmp(frame, args.output)
+                    else:
+                        _save(frame, args.output, args.png)
                 elif args.command == "capture":
-                    _save(frame, args.output / f"frame-{report['delivered_frames']:06d}.npy", args.png)
+                    if bmp:
+                        save_bmp(frame, args.output / f"frame-{report['delivered_frames']:06d}.bmp")
+                    else:
+                        _save(frame, args.output / f"frame-{report['delivered_frames']:06d}.npy", args.png)
             else:
                 report["stop_reason"] = "count"
     except (OSError, EOFError, ProtocolError, ValueError, RuntimeError) as exc:
