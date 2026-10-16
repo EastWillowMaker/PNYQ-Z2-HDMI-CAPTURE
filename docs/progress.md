@@ -1,6 +1,30 @@
 # Progress and handoff
 
-2026-10-17 — 1080p30 build iteration and board synthetic checks.
+2026-10-17 — 1080p30 clock-constraint diagnosis and copy measurements.
+
+Commit `029c403` resolves the false synchronous reset associations using a
+minimal TX BD harness. Full build004 from that revision passed BD validation,
+synthesis and routing, but strict final export rejected repeated Timing38-249
+critical warnings: the serializer's packaged XDC incorrectly creates its serial
+clock from the pixel clock. Their actual branches share an MMCM parent. The
+internal bitstream in004 is not a deployable artifact and has not been loaded.
+An isolated routed-checkpoint probe removed exactly that false constraint;
+SerialClk then inherited the correct371.25MHz MMCM clock without that warning.
+Commit `7935b71` applies the staged-IP adaptation with a strict source anchor,
+configuration assertions and a bound XDC hash. Fresh full build005 is running
+from immutable `artifacts/1080p30-source-005` into `artifacts/1080p30-loop-005`
+(console in the sibling `.console.log`). No warnings are waived.
+
+Commit `4cff9ec` makes the held-lease checker explicitly profile-aware;20tests
+passed, including a full1080p held buffer and rejection of VGA geometry before
+ACK. Hardware lease observation remains pending. Board CPU-only measurements
+found an exact NumPy channel-copy improvement from269.953ms to100.198ms median
+on ordinary1080p arrays. Commit `0acd289` applies that change; a direct board
+measurement of the production method confirmed267.649ms→99.748ms median,
+2.68× faster with exact pixels and independent read-only output. Full host
+tests574pass/1optional skip; focused build/mode/HWH47pass. Native DMA and real
+HDMI measurements remain pending; see
+[copy measurements](results/2026-10-17/1080p30-copy-profile.md).
 
 The integrated profile, DMA, fixture and output-pattern changes are committed
 as `df5410d`. Host tests passed565/1skip; the skipped Migen/LiteX module passed
@@ -18,15 +42,16 @@ immutable `artifacts/1080p30-source-003`, output
 `artifacts/1080p30-loop-003`, console
 `artifacts/1080p30-loop-003.console.log`. It also stopped at BD validation:
 the shared asynchronous reset was still inferred as synchronous to SerialClk
-at the pattern's pixel-clock reset input. No bitstream was produced. A minimal
-TX-only BD harness is being built to diagnose the inferred association before
-another full build. No critical-warning checks were waived.
+at the pattern's pixel-clock reset input. No bitstream was produced. These
+failures preceded the reset fix and build004 described above. No
+critical-warning checks were waived.
 
 The board's known VGA image was independently checked against its existing
 receipt: RS0/Halted1, command2/gate disabled, matching boot/artifact state and
-no saved shutdown IPs. No PL reconfiguration has occurred. The source package
-is staged at `/tmp/hdmi-capture-1080p30-001/src`; its runtime is identical to
-the current revision. Two bounded synthetic senders ended normally and no
+no saved shutdown IPs. No PL reconfiguration has occurred. The original source
+package is staged at `/tmp/hdmi-capture-1080p30-001/src`; a newer verified
+`0acd289` runtime and held-lease tools are at `/tmp/hdmi-capture-1080p30-002`.
+Two bounded synthetic senders ended normally and no
 sender remains. The15second full1080p network run delivered47frames at
 3.131661FPS/155.851493Mbps, zero protocol errors; the expected partial frame
 at the duration cutoff was reported and excluded. The GUI saved one full-size
@@ -34,11 +59,14 @@ uncompressed BMP whose decoded RGB bytes matched the exact click-time frame.
 These are synthetic checks, not real HDMI results. See
 [measurements](results/2026-10-17/1080p30-synthetic.md).
 
-A normal-user HTTP server serves only `artifacts/deploy/1080p30-001` on the
-dedicated link-local address, port8766 (exec session83923); stop it after
-deployment, verifying process identity. Source archive SHA256 is
-`c6018008648921a2e99e0d5d603f6eb69b996ee13ea20a020f2c8bfa757c8ef5`.
-Board sudo remains passwordless; do not request authentication again. Physical
+The original HTTP server (exec session83923) ended. A new bounded normal-user
+server on the dedicated link-local address, port8766 (exec session80410), serves
+only `artifacts/deploy/1080p30-002` for at most1800seconds. Stop it after
+deployment, verifying process identity. New source archive SHA256 is
+`23b86f94231cc66c41d42db3042d3c141f60ed31ea51f0e3013a4d473c06fb2a`.
+The latest UART check reconfirmed passwordless sudo, the same boot ID and no
+sender or CPU benchmark process. Board time remains2022; use host dates and
+monotonic durations for evidence. Do not request authentication again. Physical
 OUT-to-IN cable change has not been requested yet: wait until the output design
 is ready. Keep the Hub/Micro-B connected. Real1080p/loop/timing/BMP/performance
 qualification remains pending.

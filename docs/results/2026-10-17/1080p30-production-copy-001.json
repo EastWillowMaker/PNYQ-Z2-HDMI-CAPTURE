@@ -1,0 +1,44 @@
+{
+  "source_revision": "0acd289",
+  "source_file_sha256": "04bad9a7a1ad56bf3bd483d022dec76e09e08adff23ea20311d2505c2ad015d7",
+  "iterations": 5,
+  "alternated_order": true,
+  "shape": [
+    1080,
+    1920,
+    3
+  ],
+  "rgb_bytes": 6220800,
+  "native_dma": false,
+  "network_io": false,
+  "cpu_seconds": 22.824706534,
+  "elapsed_seconds": 22.844652624000446,
+  "max_rss_kib": 67240,
+  "expected_rgb_sha256": "e9a97285ca7269a88a2fecacef59d5c394ac1334f3cac2b582b95edbd797caec",
+  "every_pixel_equal": true,
+  "independent_plain_array": true,
+  "c_contiguous": true,
+  "read_only": true,
+  "results": {
+    "previous": {
+      "samples_seconds": [
+        0.26764878700487316,
+        0.26994893500523176,
+        0.25509367299673613,
+        0.2699749590101419,
+        0.255928627011599
+      ],
+      "median_seconds": 0.26764878700487316
+    },
+    "production": {
+      "samples_seconds": [
+        0.10343876300612465,
+        0.09870054099883419,
+        0.09968206200574059,
+        0.10025243100244552,
+        0.09974771599809173
+      ],
+      "median_seconds": 0.09974771599809173
+    }
+  }
+}
