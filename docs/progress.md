@@ -1,5 +1,38 @@
 # Progress and handoff
 
+2026-10-16 — Next scope implementation in progress.
+
+The user confirmed 1080p RGB888 at a feasible progressive input timing,
+at least 600 new exact frames over ten minutes with average delivery >=1 FPS,
+uncompressed BMP saving in a Python desktop viewer, board passwordless sudo,
+and a same-board HDMI OUT-to-IN pattern loop. See requirements.md for the
+accepted boundaries; the VGA completion below remains historical evidence.
+
+Commit `337f9d8` records the scope and installs the board's explicitly approved
+`xilinx ALL=(ALL:ALL) NOPASSWD: ALL` rule. A separate UART verification with
+credential caching disabled returned UID 0 and `visudo -c` passed. The login
+password and host sudo policy were not modified. The board still has the same
+boot ID as the completed VGA run; a read-only process check found no capture
+sender. No new overlay has been loaded.
+
+Commit `276c702` adds the desktop viewer and shared uncompressed BMP writer,
+including CLI BMP capture. The focused host suite passed 93 tests, including
+1080p synthetic pixel equality, TCP capture and a Tk smoke test. The editable
+package was installed into the project `.venv`; `hdmi-capture-viewer --help`
+succeeded. The first no-build-isolation install failed because this venv lacks
+setuptools; normal isolated build with the explicit public PyPI index passed.
+See [viewer evidence](results/2026-10-16/desktop-viewer.md).
+
+Primary-source research selects 1080p30 at 74.25 MHz as the first candidate,
+not a hardware guarantee. Mode-aware build/runtime/fixture changes and an
+optional PL output pattern are in progress. Gateware for 1920x1080 was
+generated at `artifacts/1080p30-gate-001/litex_capture.v` with the pinned
+dependencies, using
+`artifacts/clean-replay-001/artifacts/gate-venv/bin/python`. Its RTL SHA256 is
+`e1f4202e8077a917d7d3a7214b2b0b6266fa5a1e3ffb33e45dd9112e7fcbaad1`.
+New-mode CAD, output-loop execution and sustained real 1080p capture remain
+unverified. Preserve `docs/results/2026-10-15/m1-recovery-scanout.log`.
+
 2026-10-16T22:21:40+08:00 — Accepted fixed-mode M1 complete.
 
 PC Python receives real HDMI IN RGB888 through the LiteX single-credit gate,

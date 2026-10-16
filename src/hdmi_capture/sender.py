@@ -11,6 +11,7 @@ import sys
 import time
 import uuid
 
+from .modes import CAPTURE_MODES, get_mode
 from .protocol import Frame, encode_frame
 from .sources import LiteXCreditSource, LiteXSource, PynqSource, SyntheticSource
 
@@ -63,6 +64,9 @@ class Sender:
                     source_fps=None if self.source.origin == "hdmi" else self.source.input_fps,
                     source_progressive=None if self.source.origin == "hdmi" else True,
                     counters=dict(self.counters))
+        capture_mode = getattr(self.source, "capture_mode_name", None)
+        if capture_mode is not None:
+            metadata["capture_mode"] = capture_mode
         if sample.extra_metadata is not None:
             metadata.update(sample.extra_metadata)
         return metadata
@@ -308,12 +312,15 @@ def main(argv=None, *, unsafe_hold=None):
         return prepare_main(argv[1:])
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", required=True, choices=("pynq", "synthetic", "litex", "litex-credit"))
+    parser.add_argument("--mode", choices=tuple(CAPTURE_MODES), default="vga",
+                        help="Expected LiteX input timing profile (default: vga)")
     parser.add_argument("--host", default="0.0.0.0")
     parser.add_argument("--port", type=int, default=9020)
     parser.add_argument("--fps", type=float, default=1)
-    parser.add_argument("--input-fps", type=float, default=60)
-    parser.add_argument("--width", type=int, default=640)
-    parser.add_argument("--height", type=int, default=480)
+    parser.add_argument("--input-fps", type=float,
+                        help="Expected hardware refresh or synthetic input rate")
+    parser.add_argument("--width", type=int, help="Synthetic width or expected hardware width")
+    parser.add_argument("--height", type=int, help="Synthetic height or expected hardware height")
     parser.add_argument("--bitfile", default="base.bit")
     parser.add_argument("--manifest", help="Required build-manifest.json for the LiteX source")
     parser.add_argument("--prepared-receipt", help="Attach a prepared litex-credit receiver without reloading")
@@ -337,9 +344,16 @@ def main(argv=None, *, unsafe_hold=None):
         parser.error("ready timeout must be finite and in (0, 900]")
     if args.duration is not None and (not math.isfinite(args.duration) or args.duration <= 0):
         parser.error("duration must be finite and positive")
+    mode = get_mode(args.mode)
     if args.source in ("pynq", "litex", "litex-credit"):
-        if (args.width, args.height, args.input_fps) != (640, 480, 60):
-            parser.error("Hardware sources require the configured 640x480p60 contract")
+        if args.source == "pynq" and mode.name != "vga":
+            parser.error("The baseline PYNQ source supports only --mode vga")
+        if ((args.width is not None and args.width != mode.width) or
+                (args.height is not None and args.height != mode.height)):
+            parser.error(f"Hardware dimensions must match --mode {mode.name}")
+        if (args.input_fps is not None and
+                not math.isclose(args.input_fps, mode.refresh_hz, rel_tol=0, abs_tol=0.01)):
+            parser.error(f"--input-fps must match the nominal --mode {mode.name} refresh")
         def progress(stage):
             details = stage if isinstance(stage, dict) else dict(stage=stage)
             cleanup = details["stage"].startswith(("dma_stop", "pool_free"))
@@ -349,7 +363,8 @@ def main(argv=None, *, unsafe_hold=None):
         if args.source in ("litex", "litex-credit"):
             if args.manifest is None or args.bitfile == "base.bit":
                 parser.error("LiteX source requires explicit --bitfile and --manifest")
-            options = dict(progress=progress if args.startup_diagnostics else None)
+            options = dict(capture_mode=mode.name,
+                           progress=progress if args.startup_diagnostics else None)
             if args.source == "litex-credit":
                 options.update(capture_fps=args.fps, timeout=args.read_timeout)
                 if args.prepared_receipt is not None:
@@ -366,7 +381,11 @@ def main(argv=None, *, unsafe_hold=None):
             source = PynqSource(args.bitfile,
                                 progress=progress if args.startup_diagnostics else None)
     else:
-        source = SyntheticSource(args.width, args.height, args.input_fps)
+        if mode.name != "vga":
+            parser.error("--mode applies only to hardware sources; set synthetic dimensions directly")
+        source = SyntheticSource(640 if args.width is None else args.width,
+                                 480 if args.height is None else args.height,
+                                 60 if args.input_fps is None else args.input_fps)
     sender = Sender(source, fps=args.fps, read_timeout=args.read_timeout,
                     send_timeout=args.send_timeout)
     previous_handlers = {}
@@ -394,12 +413,14 @@ def prepare_main(argv):
     parser.add_argument("--bitfile", required=True)
     parser.add_argument("--manifest", required=True)
     parser.add_argument("--receipt", required=True)
+    parser.add_argument("--mode", choices=tuple(CAPTURE_MODES), default="vga")
     parser.add_argument("--after-reset", action="store_true",
                         help="Assert board or PL reset and no active DMA; does not reset hardware")
     args = parser.parse_args(argv)
-    source = LiteXCreditSource(args.bitfile, args.manifest)
+    source = LiteXCreditSource(args.bitfile, args.manifest, capture_mode=args.mode)
     receipt = prepare(source, args.receipt, after_reset=args.after_reset)
-    print(json.dumps(dict(event="receiver_prepared", receipt=str(Path(args.receipt).resolve()),
+    print(json.dumps(dict(event="receiver_prepared", capture_mode=args.mode,
+                          receipt=str(Path(args.receipt).resolve()),
                           preparation=receipt["preparation"], input_mode_verified=False)), flush=True)
 
 
@@ -407,9 +428,10 @@ def control_main(argv):
     parser = argparse.ArgumentParser(description="Attach to the loaded LiteX capture gate")
     parser.add_argument("--bitfile", required=True)
     parser.add_argument("--manifest", required=True)
+    parser.add_argument("--mode", choices=tuple(CAPTURE_MODES), default="vga")
     parser.add_argument("--enable", type=int, choices=(0, 1))
     args = parser.parse_args(argv)
-    source = LiteXSource(args.bitfile, args.manifest)
+    source = LiteXSource(args.bitfile, args.manifest, capture_mode=args.mode)
     source.load_overlay(download=False)
     if args.enable is not None:
         source.control.enable(bool(args.enable))

@@ -1,17 +1,37 @@
 # PYNQ-Z2 video-only PS7 capture with a LiteX-generated stream gate.
 # Run through scripts/build_capture.py; no board access or existing-image writes.
-if {$argc != 4} {error "Expected vendor output gateware stage"}
-lassign $argv vendor output gateware stage
+if {$argc != 6} {error "Expected vendor output gateware stage mode hdmi_output"}
+lassign $argv vendor output gateware stage mode hdmi_output
+switch -- $mode {
+    vga {set receiver_k_clk_range 5}
+    1080p30 {set receiver_k_clk_range 2}
+    default {error "Unsupported capture mode: $mode"}
+}
+if {$hdmi_output ni {0 1}} {error "hdmi_output must be 0 or 1"}
+if {$hdmi_output && $mode ne "1080p30"} {
+    error "HDMI test output requires the 1080p30 capture mode"
+}
 create_project capture [file join $output vivado] -part xc7z020clg400-1
-set_property ip_repo_paths [list [file join $output rx_ip] [file join $output hls]] [current_project]
+set ip_repos [list [file join $output rx_ip] [file join $output hls]]
+if {$hdmi_output} {lappend ip_repos [file join $output tx_ip]}
+set_property ip_repo_paths $ip_repos [current_project]
 update_ip_catalog
-foreach vlnv {digilentinc.com:ip:dvi2rgb:1.7 xilinx.com:ip:v_vid_in_axi4s:5.0 xilinx.com:ip:v_tc:6.2 xilinx.com:ip:axi_vdma:6.3 xilinx.com:ip:axi_intc:4.1 xilinx.com:ip:processing_system7:5.5 xilinx.com:hls:pixel_pack:1.0 xilinx.com:hls:color_convert:1.0} {
+set required_ip {digilentinc.com:ip:dvi2rgb:1.7 xilinx.com:ip:v_vid_in_axi4s:5.0 xilinx.com:ip:v_tc:6.2 xilinx.com:ip:axi_vdma:6.3 xilinx.com:ip:axi_intc:4.1 xilinx.com:ip:processing_system7:5.5 xilinx.com:hls:pixel_pack:1.0 xilinx.com:hls:color_convert:1.0}
+if {$hdmi_output} {lappend required_ip digilentinc.com:ip:rgb2dvi:1.2}
+foreach vlnv $required_ip {
     if {[llength [get_ipdefs -all $vlnv]] != 1} {error "Missing or ambiguous IP: $vlnv"}
 }
 add_files $gateware
 add_files [file join $output capture_lock_sync.v]
 add_files [file join $output source_health.v]
 add_files [file join $output receiver_reset_sync.v]
+if {$hdmi_output} {
+    add_files -fileset constrs_1 [file join $output hdmi_tx.xdc]
+}
+if {$hdmi_output} {
+    add_files [file join $output tx hdmi_test_pattern.v]
+    add_files [file join $output tx hdmi_test_clock.v]
+}
 add_files -fileset constrs_1 [file join $output hdmi_rx.xdc]
 create_bd_design capture
 # Defines only the two upstream receiver procedures, then applies its exact
@@ -27,9 +47,13 @@ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_intc:4.1 system_interrupts
 set_property -dict [list CONFIG.C_KIND_OF_INTR {0xFFFFFFFF} CONFIG.C_ASYNC_INTR {0xFFFFFFFF} CONFIG.C_NUM_SYNC_FF {2}] [get_bd_cells system_interrupts]
 create_bd_cell -type hier video
 create_hier_cell_hdmi_in /video hdmi_in
-# VGA 640x480 at 25.2 MHz needs a 25x MMCM multiplier (VCO630 MHz).
-# The upstream base kClkRange=1 is for >=120 MHz, outside this mode.
-set_property CONFIG.kClkRange {5} [get_bd_cells video/hdmi_in/frontend/dvi2rgb_0]
+set video /video
+if {$hdmi_output} {
+    source [file join $output tx hdmi_output.tcl]
+}
+# Select the receiver PLL range for the selected input pixel clock. The
+# upstream base kClkRange=1 is for >=120 MHz and supports neither profile.
+set_property CONFIG.kClkRange $receiver_k_clk_range [get_bd_cells video/hdmi_in/frontend/dvi2rgb_0]
 create_bd_intf_port -mode Slave -vlnv digilentinc.com:interface:tmds_rtl:1.0 hdmi_in
 connect_bd_intf_net [get_bd_intf_ports hdmi_in] [get_bd_intf_pins video/hdmi_in/TMDS_in]
 create_bd_intf_port -mode Master -vlnv xilinx.com:interface:iic_rtl:1.0 hdmi_in_ddc

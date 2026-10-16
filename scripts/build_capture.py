@@ -7,16 +7,28 @@ import json
 import shutil
 from pathlib import Path
 import subprocess
-from build_edid import make_vga_edid, self_test
-from check_hls_drain import check as check_hls_drain
+import sys
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / 'src'))
+
+from build_edid import make_edid, self_test_mode
+from check_hls_drain import check as check_hls_drain
+from hdmi_capture.modes import CaptureMode, get_mode, mode_metadata
+
 PIN = '93ddd21ab623883590a8c8b07f0b157b2855da4b'
 
 def run(command, cwd=ROOT):
     subprocess.run(command, cwd=cwd, check=True)
 
-def prepare(vendor, output):
+
+def require_gateware_mode(metadata: dict[str, object], mode: CaptureMode) -> None:
+    if (metadata.get('width'), metadata.get('height'), metadata.get('clock_hz')) != (
+            mode.width, mode.height, mode.gateware_clock_hz):
+        raise ValueError(f'Gateware does not match capture mode {mode.name}')
+
+
+def prepare(vendor, output, mode, with_hdmi_output=False):
     actual = subprocess.check_output(['git', '-C', str(vendor), 'rev-parse', 'HEAD'], text=True).strip()
     if actual != PIN:
         raise RuntimeError(f'Expected PYNQ {PIN}, found {actual}')
@@ -31,6 +43,14 @@ def prepare(vendor, output):
     ip_root.mkdir()
     for name in ('dvi2rgb_v1_7', 'color_swap_1.1', 'if'):
         shutil.copytree(vendor / 'boards/ip' / name, ip_root / name)
+    if with_hdmi_output:
+        tx_ip = output / 'tx_ip'
+        tx_ip.mkdir()
+        shutil.copytree(vendor / 'boards/ip/rgb2dvi_v1_2', tx_ip / 'rgb2dvi_v1_2')
+        tx_source = output / 'tx'
+        tx_source.mkdir()
+        for name in ('hdmi_output.tcl', 'hdmi_test_pattern.v', 'hdmi_test_clock.v'):
+            shutil.copyfile(ROOT / 'hardware' / name, tx_source / name)
     component = ip_root / 'dvi2rgb_v1_7/component.xml'
     xml = component.read_text()
     anchor = '<spirit:enumeration spirit:text="&lt; 120 MHz">2</spirit:enumeration>'
@@ -38,14 +58,14 @@ def prepare(vendor, output):
         raise RuntimeError('Pinned dvi2rgb parameter-choice anchor changed')
     xml = xml.replace(anchor, anchor + '\n      <spirit:enumeration spirit:text="25-48 MHz (VGA)">5</spirit:enumeration>')
     # The original PixelClk interface lacks frequency metadata; Vivado assigns
-    # a misleading 100 MHz default. Declare the chosen VGA clock explicitly.
+    # a misleading 100 MHz default. Declare the selected input clock explicitly.
     clock_begin = xml.index('      <spirit:name>PixelClk</spirit:name>')
     clock_end = xml.index('    </spirit:busInterface>', clock_begin)
     if '<spirit:parameters>' in xml[clock_begin:clock_end]:
         raise RuntimeError('Pinned PixelClk clock metadata changed')
     frequency = ('      <spirit:parameters><spirit:parameter>'
                  '<spirit:name>FREQ_HZ</spirit:name>'
-                 '<spirit:value spirit:format="long">25200000</spirit:value>'
+                 f'<spirit:value spirit:format="long">{mode.pixel_clock_hz}</spirit:value>'
                  '</spirit:parameter></spirit:parameters>\n')
     xml = xml[:clock_end] + frequency + xml[clock_end:]
     component.write_text(xml)
@@ -92,9 +112,12 @@ def prepare(vendor, output):
             rtl = rtl.replace(old, new)
         path.write_text(rtl)
     source_edid = vendor / 'boards/ip/dvi2rgb_v1_7/src/720p_edid.data'
-    edid = make_vga_edid(source_edid)
-    (output / 'edid-check.json').write_text(json.dumps(self_test(source_edid), indent=2) + '\n')
-    (output / 'vga-edid.bin').write_bytes(edid)
+    edid = make_edid(source_edid, mode)
+    (output / 'edid-check.json').write_text(
+        json.dumps(self_test_mode(source_edid, mode), indent=2) + '\n')
+    (output / f'{mode.name}-edid.bin').write_bytes(edid)
+    (output / 'capture-mode.json').write_text(
+        json.dumps(mode_metadata(mode), indent=2) + '\n')
     # Retain the packaged file name so IP-XACT file-set references remain valid;
     # replace its content only in the isolated copy and record the new identity.
     (ip_root / 'dvi2rgb_v1_7/src/720p_edid.data').write_text(
@@ -115,9 +138,21 @@ def prepare(vendor, output):
     shutil.copyfile(vendor / 'LICENSE', output / 'PYNQ-LICENSE')
     xdc = (vendor / 'boards/Pynq-Z2/base/vivado/constraints/base.xdc').read_text()
     begin = xdc.index('## HDMI signals')
-    end = xdc.index('## HDMI TX', begin)
+    rx_end = xdc.index('## HDMI TX', begin)
+    tx_xdc = ''
+    if with_hdmi_output:
+        tx_begin = xdc.index('## HDMI TX', rx_end)
+        next_section = xdc.find('\n## ', tx_begin + len('## HDMI TX'))
+        tx_end = len(xdc) if next_section < 0 else next_section + 1
+        tx_xdc = xdc[tx_begin:tx_end]
+    rx_xdc = xdc[begin:rx_end]
+    pixel_period_ns = 1_000_000_000 / mode.pixel_clock_hz
+    half_pixel_period_ns = 500_000_000 / mode.pixel_clock_hz
     (output / 'hdmi_rx.xdc').write_text(
-        xdc[begin:end].replace('8.334', '39.682540').replace('4.167', '19.841270'))
+        rx_xdc.replace('8.334', f'{pixel_period_ns:.6f}')
+        .replace('4.167', f'{half_pixel_period_ns:.6f}'))
+    if with_hdmi_output:
+        (output / 'hdmi_tx.xdc').write_text(tx_xdc)
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
@@ -127,18 +162,26 @@ def main():
     p.add_argument('--vitis-run', default='vitis-run')
     p.add_argument('--stage', choices=['prepare', 'hls', 'project', 'bitstream'], default='project')
     p.add_argument('--gateware', type=Path)
+    p.add_argument('--mode', choices=('vga', '1080p30'), default='vga')
+    p.add_argument('--with-hdmi-output', action='store_true',
+                   help='Build the 1080p30 test-pattern HDMI output for loopback')
     args = p.parse_args()
+    mode = get_mode(args.mode)
+    if args.with_hdmi_output and mode.name != '1080p30':
+        p.error('--with-hdmi-output requires --mode 1080p30')
     if args.stage in ("project", "bitstream") and args.gateware is None:
         p.error("--gateware is required for project/bitstream stages")
     if args.gateware is not None:
         metadata = json.loads(args.gateware.with_suffix('.json').read_text())
         if metadata['rtl_sha256'] != hashlib.sha256(args.gateware.read_bytes()).hexdigest():
             p.error('Gateware provenance hash mismatch')
-        if (metadata['width'], metadata['height'], metadata['clock_hz']) != (640, 480, 142857132):
-            p.error('This integration requires 640x480 at 142857132 Hz')
+        try:
+            require_gateware_mode(metadata, mode)
+        except ValueError as exc:
+            p.error(str(exc))
     vendor, output = args.vendor.resolve(), args.output.resolve()
     output.mkdir(parents=True, exist_ok=False)
-    prepare(vendor, output)
+    prepare(vendor, output, mode, args.with_hdmi_output)
     if args.stage == 'prepare':
         return
     for ip in ('color_convert', 'pixel_pack'):
@@ -162,16 +205,30 @@ def main():
     gateware = output / 'litex_capture.v'
     shutil.copyfile(args.gateware.resolve(), gateware)
     shutil.copyfile(args.gateware.with_suffix('.json'), gateware.with_suffix('.json'))
-    (output / 'source-manifest.json').write_text(json.dumps({
+    source_manifest = {
         'pynq_commit': PIN, 'gateware_sha256': hashlib.sha256(gateware.read_bytes()).hexdigest(),
         'stage': args.stage, 'vivado': args.vivado, 'vitis_run': args.vitis_run,
         'source_health_sha256': hashlib.sha256((output / 'source_health.v').read_bytes()).hexdigest(),
         'capture_lock_sync_sha256': hashlib.sha256((output / 'capture_lock_sync.v').read_bytes()).hexdigest(),
         'receiver_reset_sync_sha256': hashlib.sha256((output / 'receiver_reset_sync.v').read_bytes()).hexdigest(),
-    }, indent=2) + '\n')
+        **mode_metadata(mode),
+        'hdmi_output_enabled': args.with_hdmi_output,
+    }
+    if args.with_hdmi_output:
+        source_manifest['hdmi_output_fixture'] = {
+            'mode': mode.name,
+            'pattern_sha256': hashlib.sha256((output / 'tx/hdmi_test_pattern.v').read_bytes()).hexdigest(),
+            'clock_sha256': hashlib.sha256((output / 'tx/hdmi_test_clock.v').read_bytes()).hexdigest(),
+            'tcl_sha256': hashlib.sha256((output / 'tx/hdmi_output.tcl').read_bytes()).hexdigest(),
+            'xdc_sha256': hashlib.sha256((output / 'hdmi_tx.xdc').read_bytes()).hexdigest(),
+            'rgb2dvi_component_sha256': hashlib.sha256(
+                (output / 'tx_ip/rgb2dvi_v1_2/component.xml').read_bytes()).hexdigest(),
+        }
+    (output / 'source-manifest.json').write_text(json.dumps(source_manifest, indent=2) + '\n')
     run([args.vivado, '-mode', 'batch', '-source', str(ROOT / 'hardware/capture.tcl'),
          '-log', str(output / 'vivado.log'), '-journal', str(output / 'vivado.jou'),
-         '-tclargs', str(vendor), str(output), str(gateware), args.stage], cwd=output)
+         '-tclargs', str(vendor), str(output), str(gateware), args.stage, mode.name,
+         str(int(args.with_hdmi_output))], cwd=output)
 
 if __name__ == '__main__':
     main()

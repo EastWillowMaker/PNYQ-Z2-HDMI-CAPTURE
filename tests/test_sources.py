@@ -36,10 +36,10 @@ class Buffer(np.ndarray):
 
 
 class FakeHDMI:
-    def __init__(self):
-        self.mode = SimpleNamespace(width=640, height=480, bits_per_pixel=24)
+    def __init__(self, width=640, height=480):
+        self.mode = SimpleNamespace(width=width, height=height, bits_per_pixel=24)
         self.frontend = SimpleNamespace(mode=self.mode)
-        self.buffer = np.zeros((480, 640, 3), dtype=np.uint8).view(Buffer)
+        self.buffer = np.zeros((height, width, 3), dtype=np.uint8).view(Buffer)
         self.buffer.freed = 0
         self.buffer[:] = [1, 2, 3]
         self.closed = False
@@ -123,19 +123,45 @@ def test_startup_stages_are_optional_and_ordered():
 def make_litex_artifacts(tmp_path):
     import hashlib
     import json
+    from hdmi_capture.modes import get_mode, mode_metadata
+    mode = get_mode("vga")
     bitfile = tmp_path / "capture.bit"
     hwh = tmp_path / "capture.hwh"
     bitfile.write_bytes(b"synthetic-bitstream-fixture")
     hwh.write_text('<ROOT><MODULE FULLNAME="/video/hdmi_in/frontend/dvi2rgb_0">'
-                   '<PARAMETERS><PARAMETER NAME="kClkRange" VALUE="5"/>'
+                   f'<PARAMETERS><PARAMETER NAME="kClkRange" VALUE="{mode.receiver_k_clk_range}"/>'
                    '</PARAMETERS></MODULE><MODULE FULLNAME="/video/capture_control">'
                    '<PARAMETERS><PARAMETER NAME="C_DOUT_DEFAULT" VALUE="0x00000000"/>'
                    '</PARAMETERS></MODULE></ROOT>')
     manifest = tmp_path / "build-manifest.json"
-    record = dict(schema_version=1, geometry=[640, 480], clock_hz=142857132,
-                  capture_enable_reset=0,
-                  pixel_clock_hz=25200000, supported_pixel_clocks_hz=[25175000, 25200000],
-                  receiver_k_clk_range=5, edid_sha256="f" * 64,
+    legacy_profile = mode_metadata(mode)
+    legacy_profile.pop("capture_mode")
+    legacy_profile.pop("timing")
+    record = dict(schema_version=1, **legacy_profile, capture_enable_reset=0,
+                  edid_sha256="f" * 64,
+                  pynq_commit="93ddd21ab623883590a8c8b07f0b157b2855da4b",
+                  bitstream_sha256=hashlib.sha256(bitfile.read_bytes()).hexdigest(),
+                  hwh_sha256=hashlib.sha256(hwh.read_bytes()).hexdigest())
+    manifest.write_text(json.dumps(record))
+    return bitfile, manifest
+
+
+def make_mode_litex_artifacts(tmp_path, mode_name):
+    import hashlib
+    import json
+    from hdmi_capture.modes import get_mode, mode_metadata
+    mode = get_mode(mode_name)
+    bitfile = tmp_path / "capture.bit"
+    hwh = bitfile.with_suffix(".hwh")
+    bitfile.write_bytes(b"synthetic-bitstream-fixture")
+    hwh.write_text('<ROOT><MODULE FULLNAME="/video/hdmi_in/frontend/dvi2rgb_0">'
+                   f'<PARAMETERS><PARAMETER NAME="kClkRange" VALUE="{mode.receiver_k_clk_range}"/>'
+                   '</PARAMETERS></MODULE><MODULE FULLNAME="/video/capture_control">'
+                   '<PARAMETERS><PARAMETER NAME="C_DOUT_DEFAULT" VALUE="0x00000000"/>'
+                   '</PARAMETERS></MODULE></ROOT>')
+    manifest = tmp_path / "build-manifest.json"
+    record = dict(schema_version=1, **mode_metadata(mode), capture_enable_reset=0,
+                  edid_sha256="f" * 64,
                   pynq_commit="93ddd21ab623883590a8c8b07f0b157b2855da4b",
                   bitstream_sha256=hashlib.sha256(bitfile.read_bytes()).hexdigest(),
                   hwh_sha256=hashlib.sha256(hwh.read_bytes()).hexdigest())
@@ -158,12 +184,84 @@ def test_litex_rejects_old_receiver_even_with_matching_hashes(tmp_path):
 
 
 def test_litex_manifest_hashes_fail_closed(tmp_path):
+    import json
     from hdmi_capture.sources import verify_litex_artifacts
     bitfile, manifest = make_litex_artifacts(tmp_path)
-    assert verify_litex_artifacts(bitfile, manifest)["geometry"] == [640, 480]
+    record = verify_litex_artifacts(bitfile, manifest)
+    assert record["geometry"] == [640, 480]
+    assert record["capture_mode"] == "vga"
+    assert "capture_mode" not in json.loads(manifest.read_text())
     bitfile.write_bytes(b"modified")
     with pytest.raises(SourceError, match="hash mismatch"):
         verify_litex_artifacts(bitfile, manifest)
+
+
+def test_litex_accepts_only_explicit_matching_1080p30_manifest(tmp_path):
+    from hdmi_capture.sources import verify_litex_artifacts
+    bitfile, manifest = make_mode_litex_artifacts(tmp_path, "1080p30")
+    record = verify_litex_artifacts(bitfile, manifest, expected_mode="1080p30")
+    assert record["capture_mode"] == "1080p30"
+    assert record["geometry"] == [1920, 1080]
+    assert record["pixel_clock_hz"] == 74_250_000
+    with pytest.raises(SourceError, match="does not match requested mode"):
+        verify_litex_artifacts(bitfile, manifest, expected_mode="vga")
+
+
+@pytest.mark.parametrize("field,value", [
+    ("geometry", [1920, 1081]),
+    ("pixel_clock_hz", 74_250_001),
+    ("receiver_k_clk_range", 5),
+    ("timing", {}),
+])
+def test_litex_1080p30_manifest_profile_fields_fail_closed(tmp_path, field, value):
+    import json
+    from hdmi_capture.sources import verify_litex_artifacts
+    bitfile, manifest = make_mode_litex_artifacts(tmp_path, "1080p30")
+    record = json.loads(manifest.read_text())
+    record[field] = value
+    manifest.write_text(json.dumps(record))
+    with pytest.raises(SourceError, match=f"manifest {field}"):
+        verify_litex_artifacts(bitfile, manifest, expected_mode="1080p30")
+
+
+def test_litex_1080p30_manifest_profile_fields_require_exact_json_types(tmp_path):
+    import json
+    from hdmi_capture.sources import verify_litex_artifacts
+    bitfile, manifest = make_mode_litex_artifacts(tmp_path, "1080p30")
+    record = json.loads(manifest.read_text())
+    record["timing"]["h_sync_positive"] = 1
+    manifest.write_text(json.dumps(record))
+    with pytest.raises(SourceError, match="manifest timing"):
+        verify_litex_artifacts(bitfile, manifest, expected_mode="1080p30")
+
+
+def test_litex_profile_conflict_is_rejected_before_overlay_or_allocation(tmp_path, monkeypatch):
+    import sys
+    from types import SimpleNamespace
+    from hdmi_capture.sources import LiteXCreditSource
+    bitfile, manifest = make_mode_litex_artifacts(tmp_path, "1080p30")
+    allocations = []
+    monkeypatch.setitem(sys.modules, "pynq", SimpleNamespace(
+        allocate=lambda **kwargs: allocations.append(kwargs)))
+    source = LiteXCreditSource(bitfile, manifest, capture_mode="vga")
+    with pytest.raises(SourceError, match="does not match requested mode"):
+        source.start()
+    assert allocations == []
+
+
+def test_litex_source_accepts_profile_geometry_and_rejects_shape_mismatch():
+    from hdmi_capture.sources import LiteXSource
+    source = LiteXSource("unused.bit", "unused.json", capture_mode="1080p30")
+    hdmi = FakeHDMI(1920, 1080)
+    source.hdmi, source.pixel_format = hdmi, "BGR"
+    sample = asyncio.run(PynqSource.read(source))
+    assert sample.pixels.shape == (1080, 1920, 3)
+    sample.close()
+    hdmi.buffer = np.zeros((480, 640, 3), dtype=np.uint8).view(Buffer)
+    hdmi.buffer.freed = 0
+    with pytest.raises(SourceError, match="shape"):
+        asyncio.run(PynqSource.read(source))
+    assert hdmi.buffer.freed == 1
 
 
 def test_litex_counter_control_discovery_and_snapshot():
@@ -580,7 +678,7 @@ class CreditDMARegisters:
 def test_oneframe_dma_start_irq_is_not_completion_and_stale_halt_rejected():
     from hdmi_capture.sources import OneFrameDMA
     registers = CreditDMARegisters()
-    dma = OneFrameDMA(registers, SimpleNamespace(physical_address=0x100000))
+    dma = OneFrameDMA(registers, SimpleNamespace(physical_address=0x100000, nbytes=640 * 480 * 3))
     dma.arm()
     registers.values[0x34] = 0x1000  # Frame-start IRQ, still running.
     assert dma.running_observed()
@@ -593,12 +691,49 @@ def test_oneframe_dma_start_irq_is_not_completion_and_stale_halt_rejected():
     assert all(registers.read(0xAC + 4 * i) == 0x100000 for i in range(4))
 
 
+def test_oneframe_dma_1080p30_programs_byte_stride_and_checks_full_buffer_span():
+    from hdmi_capture.sources import OneFrameDMA
+    width, height = 1920, 1080
+    frame_bytes = width * height * 3
+    maximum_start = 0xFFFFFFFF - frame_bytes + 1
+    aligned_start = maximum_start - maximum_start % 64
+    registers = CreditDMARegisters()
+    dma = OneFrameDMA(registers, SimpleNamespace(physical_address=aligned_start,
+                                                 nbytes=frame_bytes),
+                      width=width, height=height)
+    dma.arm()
+    assert aligned_start + frame_bytes - 1 <= 0xFFFFFFFF
+    assert registers.read(0xA8) == registers.read(0xA4) == width * 3 == 5760
+    assert registers.read(0xA0) == height
+    assert all(registers.read(0xAC + 4 * index) == aligned_start for index in range(4))
+    with pytest.raises(SourceError, match="full frame"):
+        OneFrameDMA(registers, SimpleNamespace(physical_address=aligned_start + 64,
+                                               nbytes=frame_bytes),
+                    width=width, height=height)
+    with pytest.raises(SourceError, match="aligned"):
+        OneFrameDMA(registers, SimpleNamespace(physical_address=aligned_start + 1,
+                                               nbytes=frame_bytes),
+                    width=width, height=height)
+
+
+def test_oneframe_dma_rejects_unsupported_geometry_and_short_buffer():
+    from hdmi_capture.sources import OneFrameDMA
+    registers = CreditDMARegisters()
+    with pytest.raises(SourceError, match="supported geometry"):
+        OneFrameDMA(registers, SimpleNamespace(physical_address=0x100000,
+                                               nbytes=1280 * 720 * 3),
+                    width=1280, height=720)
+    with pytest.raises(SourceError, match="full-size buffer"):
+        OneFrameDMA(registers, SimpleNamespace(physical_address=0x100000,
+                                               nbytes=640 * 480 * 3 - 1))
+
+
 @pytest.mark.parametrize('error', [0x10, 0x20, 0x40, 0x80, 0x100, 0x800, 0x4000, 0x8000])
 def test_oneframe_dma_errors_are_never_cleared_before_inspection(error):
     from hdmi_capture.sources import OneFrameDMA
     registers = CreditDMARegisters()
     registers.values[0x34] |= error
-    dma = OneFrameDMA(registers, SimpleNamespace(physical_address=0x100000))
+    dma = OneFrameDMA(registers, SimpleNamespace(physical_address=0x100000, nbytes=640 * 480 * 3))
     with pytest.raises(SourceError, match='Raw VDMA error'):
         dma.arm()
     assert registers.writes == []
@@ -794,15 +929,19 @@ def test_legacy_litex_adapter_rejects_credit_manifest_before_overlay_import(monk
     import hdmi_capture.sources as module
     bitfile, manifest = make_litex_artifacts(tmp_path)
     original = module.verify_litex_artifacts
-    def credit_record(*args):
-        return dict(original(*args), capture_interface='single_credit_parked_v1')
+    def credit_record(*args, **kwargs):
+        return dict(original(*args, **kwargs), capture_interface='single_credit_parked_v1')
     monkeypatch.setattr(module, 'verify_litex_artifacts', credit_record)
     source = module.LiteXSource(bitfile, manifest)
     with pytest.raises(SourceError, match='ABI does not match'):
         source.load_overlay()
 
 
-def test_credit_startup_baseline_precedes_enable_without_stock_dma_start(monkeypatch, tmp_path):
+@pytest.mark.parametrize("capture_mode,width,height", [
+    ("vga", 640, 480), ("1080p30", 1920, 1080),
+])
+def test_credit_startup_baseline_precedes_enable_without_stock_dma_start(
+        monkeypatch, tmp_path, capture_mode, width, height):
     import sys
     import hdmi_capture.sources as module
     bitfile = tmp_path / 'capture.bit'
@@ -815,7 +954,7 @@ def test_credit_startup_baseline_precedes_enable_without_stock_dma_start(monkeyp
                   source_health_sha256='a'*64, capture_control_width=32, capture_control_reset=0,
                   source_identity_bits=32, source_identity_policy='native_delta_one_per_accepted_sof_with_watchdog',
                   receiver_reset_sync_sha256='a'*64, capture_lock_sync_sha256='b'*64, gateware_sha256='c'*64)
-    monkeypatch.setattr(module, 'verify_litex_artifacts', lambda *args: record)
+    monkeypatch.setattr(module, 'verify_litex_artifacts', lambda *args, **kwargs: record)
     trace = []
     template, registers = credit_reader_fixture()
     control = template.control
@@ -828,23 +967,28 @@ def test_credit_startup_baseline_precedes_enable_without_stock_dma_start(monkeyp
                     frontend_overflow_episodes=0, frontend_underflow_episodes=0, native_vsync_edges=100)
     control.enable, control.snapshot = enable, snapshot
     monkeypatch.setattr(module, 'CreditControl', lambda *args: control)
-    hdmi = FakeHDMI()
+    hdmi = FakeHDMI(width, height)
     hdmi.start = lambda: pytest.fail('Stock DMA start must not be called')
     hdmi._vdma = SimpleNamespace(readchannel=SimpleNamespace(running=False, memory=object(), _mmio=registers), framecount=4)
     def allocate(**kwargs):
-        assert kwargs['shape'] == (480, 640, 3) and kwargs['cacheable'] is True
+        assert kwargs['shape'] == (height, width, 3) and kwargs['cacheable'] is True
         trace.append('allocate')
-        return template.native.buffer
+        buffer = np.zeros(kwargs['shape'], dtype=np.uint8).view(FakeCreditBuffer)
+        buffer.invalidations = 0
+        return buffer
     monkeypatch.setitem(sys.modules, 'pynq', SimpleNamespace(allocate=allocate, MMIO=object()))
     class Source(module.LiteXCreditSource):
         def load_overlay(self, download=True):
             self.hdmi, self.pixel_format, self.manifest = hdmi, 'BGR', record
             self.overlay = SimpleNamespace(ip_dict={'video/axi_vdma': {'parameters': {'C_ENABLE_DEBUG_INFO_15': '1'}}})
-    source = Source(bitfile, 'unused.json')
+    source = Source(bitfile, 'unused.json', capture_mode=capture_mode)
     source.start()
     assert trace == [('enable', False), ('baseline', 'before_first_credit_while_gate_disabled_dma_halted'),
                      'allocate', ('enable', True)]
     assert registers.writes == [] and source.integrity_baseline['invalid_frames'] == 1
+    assert source.native.width == width
+    assert source.native.height == height
+    assert source.native.stride == width * 3
 
 
 def test_credit_dma_halt_timeout_never_calls_vendor_close_or_frees_buffer():
@@ -875,7 +1019,7 @@ def test_oneframe_dma_stop_waits_until_halted():
                 registers.values[offset] |= 1
         return original(offset)
     registers.read = read
-    dma = OneFrameDMA(registers, SimpleNamespace(physical_address=0x100000))
+    dma = OneFrameDMA(registers, SimpleNamespace(physical_address=0x100000, nbytes=640 * 480 * 3))
     dma.stop(.03)
     assert reads >= 3 and registers.read(0x34) & 1
 

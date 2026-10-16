@@ -1,5 +1,48 @@
 # PYNQ-Z2 M1 build
 
+## Experimental 1080p30 build
+
+The qualified VGA build below remains the default. The new explicit
+`1080p30` profile targets 1920×1080 progressive at 74.25 MHz, with totals
+2200×1125 and receiver `kClkRange=2`. Its pixel timing is separate from the
+142.857132 MHz capture AXI clock. This profile has passed host tests and
+pattern simulation; CAD and real-board qualification are still pending.
+
+Generate matching gateware with the pinned environment, then build into a new
+directory. For the optional same-board output-loop fixture:
+
+```sh
+python -m gateware.generate --width 1920 --height 1080 \
+  --output artifacts/1080p30-gate-001/litex_capture.v
+python scripts/build_capture.py --mode 1080p30 --with-hdmi-output \
+  --output artifacts/1080p30-loop-001 \
+  --gateware artifacts/1080p30-gate-001/litex_capture.v \
+  --stage bitstream
+```
+
+Use the pinned generator environment and executable paths described below.
+Omit `--with-hdmi-output` for an RX-only build. The optional output uses a PL
+analytic pattern and independent PS FCLK0-derived clocks, with the pinned
+`rgb2dvi` serializer. It adds no output DMA or frame-buffer owner. It runs a
+fixed timing while locked, ignores output HPD/EDID, and is not active bypass.
+The generated pattern includes a changing optical frame ID and must match
+`tools/hdmi_pattern.py --mode 1080p30` byte for byte after RGB decoding.
+
+Build preparation writes a profile-specific EDID, RX clock constraints and
+`capture-mode.json`. The final manifest binds geometry, clock configuration,
+timing and paired bit/HWH hashes. Optional output source identities are also
+recorded. Keep each profile's artifacts separate; the runtime rejects a
+manifest that does not match the explicitly selected profile. Use `--mode
+1080p30` on both `hdmi_capture.sender prepare` and `hdmi_capture.sender
+--source litex-credit`, and on `tools/qualify_capture.py`. The baseline
+`--source pynq` adapter remains VGA-only.
+
+Runtime observations verify dimensions and 24-bit pixels, not the input pixel
+clock or refresh rate. Measure actual source cadence and disclose that limit
+in board results. Neither a mode declaration nor protocol acceptance proves
+1080p HDMI operation. See [primary-source research](research.md) for board
+electrical limits and the unresolved physical qualification.
+
 The build preserves Linux and Ethernet on the hard Zynq PS. It creates a
 video-only overlay: J10 HDMI RX → upstream 24-bit video frontend → generated
 LiteX capture gate → color converter → pixel packer → write-only AXI VDMA →

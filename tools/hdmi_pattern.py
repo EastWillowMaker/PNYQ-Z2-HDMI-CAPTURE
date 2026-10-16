@@ -9,15 +9,24 @@ import time
 
 import numpy as np
 
+try:
+    from hdmi_capture.modes import get_mode
+except ModuleNotFoundError as exc:
+    if exc.name != "hdmi_capture":
+        raise
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+    from hdmi_capture.modes import get_mode
+
 WIDTH, HEIGHT = 640, 480
 
 
-def pattern(frame_id: int) -> np.ndarray:
+def pattern(frame_id: int, mode: str = "vga") -> np.ndarray:
     """Return exact pixels, with a redundant 32-bit optical ID on every row."""
     if not 0 <= frame_id <= 0xFFFFFFFF:
         raise ValueError("frame_id must be an unsigned 32-bit integer")
-    y, x = np.indices((HEIGHT, WIDTH), dtype=np.uint32)
-    rgb = np.empty((HEIGHT, WIDTH, 3), dtype=np.uint8)
+    profile = get_mode(mode)
+    y, x = np.indices((profile.height, profile.width), dtype=np.uint32)
+    rgb = np.empty((profile.height, profile.width, 3), dtype=np.uint8)
     rgb[:, :, 0] = (x + 3 * y + (frame_id & 255)) % 256
     rgb[:, :, 1] = (5 * x + y + ((frame_id >> 8) & 255)) % 256
     rgb[:, :, 2] = (x ^ y ^ ((frame_id >> 16) & 255)) % 256
@@ -43,11 +52,13 @@ def pattern(frame_id: int) -> np.ndarray:
     return rgb
 
 
-def verify(rgb: np.ndarray, expected_id: int | None = None) -> dict:
+def verify(rgb: np.ndarray, expected_id: int | None = None, mode: str = "vga") -> dict:
     """Check all bytes against the analytic pattern; never learn a golden image."""
-    if not isinstance(rgb, np.ndarray) or rgb.shape != (HEIGHT, WIDTH, 3) \
+    profile = get_mode(mode)
+    expected_shape = (profile.height, profile.width, 3)
+    if not isinstance(rgb, np.ndarray) or rgb.shape != expected_shape \
             or rgb.dtype != np.uint8:
-        raise ValueError("capture must have shape (480, 640, 3) and dtype uint8")
+        raise ValueError(f"capture for {mode} must have shape {expected_shape} and dtype uint8")
     marker = rgb[:, :128, :]
     first = marker[:, :64, :]
     second = marker[:, 64:, :]
@@ -77,7 +88,7 @@ def verify(rgb: np.ndarray, expected_id: int | None = None) -> dict:
     if expected_id is None:
         report["error"] = "No valid marker row; provide --frame-id for full comparison"
         return report
-    reference = pattern(expected_id)
+    reference = pattern(expected_id, mode)
     delta = rgb != reference
     pixels = np.any(delta, axis=2)
     report.update(
@@ -114,7 +125,8 @@ def monitors(display) -> list[dict]:
     return result
 
 
-def display_pattern(index: int, frame_id: int, animate: bool, interval_ms: int):
+def display_pattern(index: int, frame_id: int, animate: bool, interval_ms: int,
+                    mode: str = "vga"):
     Gdk, GLib, Gtk, cairo = _gtk()
     display = Gdk.Display.get_default()
     if display is None:
@@ -123,11 +135,14 @@ def display_pattern(index: int, frame_id: int, animate: bool, interval_ms: int):
     if not 0 <= index < len(available):
         raise ValueError("Monitor index is not present; run list-monitors")
     selected = available[index]
-    if (selected["width"], selected["height"], selected["scale"]) != (640, 480, 1):
-        raise ValueError("Selected monitor must already be 640x480 with scale 1")
+    profile = get_mode(mode)
+    size = (profile.width, profile.height)
+    if (selected["width"], selected["height"], selected["scale"]) != (*size, 1):
+        raise ValueError(f"Selected monitor must already be {profile.width}x{profile.height} "
+                         "with scale 1")
     window = Gtk.Window(title="HDMI RGB888 fixture — Escape to close")
     window.set_decorated(False)
-    window.set_default_size(WIDTH, HEIGHT)
+    window.set_default_size(profile.width, profile.height)
     window.move(selected["x"], selected["y"])
     window.fullscreen_on_monitor(window.get_screen(), index)
     area = Gtk.DrawingArea()
@@ -137,13 +152,14 @@ def display_pattern(index: int, frame_id: int, animate: bool, interval_ms: int):
 
     def draw(widget, context):
         monitor = display.get_monitor_at_window(window.get_window())
-        if (widget.get_allocated_width(), widget.get_allocated_height()) != (WIDTH, HEIGHT) \
+        if (widget.get_allocated_width(), widget.get_allocated_height()) != size \
                 or monitor != display.get_monitor(index) or monitor.get_scale_factor() != 1:
             context.set_source_rgb(0, 0, 0)
             context.paint()
             if state["ready"] or time.monotonic() >= state["deadline"]:
                 state["error"] = (
-                    "Compositor did not place an exact 640x480 window on selected monitor: "
+                    f"Compositor did not place an exact {profile.width}x{profile.height} window "
+                    "on selected monitor: "
                     f"allocation={widget.get_allocated_width()}x{widget.get_allocated_height()}, "
                     f"monitor={monitor.get_model()}, scale={monitor.get_scale_factor()}")
                 GLib.idle_add(Gtk.main_quit)
@@ -151,12 +167,13 @@ def display_pattern(index: int, frame_id: int, animate: bool, interval_ms: int):
         if not state["ready"]:
             state["ready"] = True
             print(f"Fixture ready: monitor-index={index}, frame-id={state['id']}", flush=True)
-        rgb = pattern(state["id"])
+        rgb = pattern(state["id"], mode)
         # Cairo RGB24 is native endian 0x00RRGGBB, with one storage byte unused.
         words = (rgb[:, :, 0].astype(np.uint32) << 16) \
             | (rgb[:, :, 1].astype(np.uint32) << 8) | rgb[:, :, 2].astype(np.uint32)
         surface = cairo.ImageSurface.create_for_data(words, cairo.FORMAT_RGB24,
-                                                     WIDTH, HEIGHT, WIDTH * 4)
+                                                     profile.width, profile.height,
+                                                     profile.width * 4)
         context.set_source_surface(surface, 0, 0)
         context.get_source().set_filter(cairo.FILTER_NEAREST)
         context.paint()
@@ -178,7 +195,8 @@ def display_pattern(index: int, frame_id: int, animate: bool, interval_ms: int):
         if state["ready"]:
             return False
         if time.monotonic() >= state["deadline"]:
-            state["error"] = "Compositor did not settle the selected 640x480 window within 2 seconds"
+            state["error"] = (f"Compositor did not settle the selected {profile.width}x"
+                               f"{profile.height} window within 2 seconds")
             Gtk.main_quit()
             return False
         area.queue_draw()
@@ -199,22 +217,25 @@ def main(argv=None) -> int:
     start = commands.add_parser("start")
     start.add_argument("--monitor-index", type=int, required=True)
     start.add_argument("--frame-id", type=int, default=1)
+    start.add_argument("--mode", choices=("vga", "1080p30"), default="vga")
     start.add_argument("--animate", action="store_true")
     start.add_argument("--interval-ms", type=int, default=17)
     generate = commands.add_parser("generate")
     generate.add_argument("--frame-id", type=int, required=True)
+    generate.add_argument("--mode", choices=("vga", "1080p30"), default="vga")
     generate.add_argument("--output", type=Path, required=True)
     validate = commands.add_parser("verify")
     validate.add_argument("capture", type=Path)
     validate.add_argument("--frame-id", type=int)
+    validate.add_argument("--mode", choices=("vga", "1080p30"), default="vga")
     args = parser.parse_args(argv)
     try:
         if args.command == "generate":
-            rgb = pattern(args.frame_id)
+            rgb = pattern(args.frame_id, args.mode)
             with args.output.open("xb") as handle:
                 np.save(handle, rgb, allow_pickle=False)
         elif args.command == "verify":
-            report = verify(np.load(args.capture, allow_pickle=False), args.frame_id)
+            report = verify(np.load(args.capture, allow_pickle=False), args.frame_id, args.mode)
             print(json.dumps(report, indent=2))
             return 0 if report["exact_match"] else 1
         elif args.command == "list-monitors":
@@ -224,10 +245,11 @@ def main(argv=None) -> int:
                 raise ValueError("No graphical display available")
             print(json.dumps(monitors(display), indent=2))
         else:
-            pattern(args.frame_id)  # Validate before opening any window.
+            pattern(args.frame_id, args.mode)  # Validate before opening any window.
             if args.interval_ms < 1:
                 raise ValueError("interval-ms must be positive")
-            display_pattern(args.monitor_index, args.frame_id, args.animate, args.interval_ms)
+            display_pattern(args.monitor_index, args.frame_id, args.animate,
+                            args.interval_ms, args.mode)
     except (ValueError, OSError, ImportError, EOFError) as exc:
         print(str(exc), file=sys.stderr)
         return 2

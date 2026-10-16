@@ -64,7 +64,9 @@ def _check_sdk_shutdown():
 
 
 def _artifacts(source):
-    record = verify_litex_artifacts(source.bitfile, source.manifest_path)
+    record = verify_litex_artifacts(
+        source.bitfile, source.manifest_path,
+        expected_mode=getattr(source, "capture_mode_name", "vga"))
     if record.get("capture_interface") != CREDIT_ABI or "source_health_sha256" not in record:
         raise SourceError("Prepared capture requires the single-credit artifact")
     bitfile = Path(source.bitfile).resolve()

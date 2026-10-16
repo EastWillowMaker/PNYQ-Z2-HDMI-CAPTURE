@@ -8,14 +8,15 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 from build_capture import PIN, ROOT
-from build_edid import validate_vga_edid
+from build_edid import validate_mode_edid
+from hdmi_capture.modes import CaptureMode, get_mode, mode_metadata
 
 
 def sha256(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def require_vga_receiver(hwh):
+def require_receiver_mode(hwh: ET.Element, mode: CaptureMode) -> None:
     receivers = [m for m in hwh.findall('.//MODULE')
                  if m.attrib.get('FULLNAME') == '/video/hdmi_in/frontend/dvi2rgb_0']
     if len(receivers) != 1:
@@ -25,8 +26,72 @@ def require_vga_receiver(hwh):
               if p.attrib.get('NAME') == 'kClkRange']
     # Unrelated optional HWH parameters may omit VALUE. The required clock
     # range must occur exactly once and carry the target value.
-    if ranges != ['5']:
-        raise RuntimeError('Receiver clock range is not configured for VGA pixel clocks')
+    if ranges != [str(mode.receiver_k_clk_range)]:
+        raise RuntimeError(
+            f'Receiver clock range is not configured for capture mode {mode.name}')
+
+
+def require_vga_receiver(hwh: ET.Element) -> None:
+    """Keep the legacy VGA validation entry point for existing callers."""
+    require_receiver_mode(hwh, get_mode('vga'))
+
+
+def require_gateware_mode(gate: dict[str, object], mode: CaptureMode) -> None:
+    if (gate.get('width'), gate.get('height'), gate.get('clock_hz')) != (
+            mode.width, mode.height, mode.gateware_clock_hz):
+        raise RuntimeError(f'Gateware geometry or clock does not match mode {mode.name}')
+
+
+def read_capture_mode(output: Path) -> CaptureMode:
+    """Read selected build mode, accepting a missing mode file as legacy VGA."""
+    path = output / 'capture-mode.json'
+    if not path.exists():
+        return get_mode('vga')
+    record = json.loads(path.read_text())
+    try:
+        mode = get_mode(record['capture_mode'])
+    except (KeyError, TypeError) as exc:
+        raise RuntimeError('Capture mode metadata is missing its profile name') from exc
+    if record != mode_metadata(mode):
+        raise RuntimeError(f'Capture mode metadata does not match profile {mode.name}')
+    return mode
+
+
+def read_hdmi_output_fixture(output: Path, mode: CaptureMode) -> dict[str, object]:
+    """Return verified fixture identity from the sources used for this build."""
+    source_manifest_path = output / 'source-manifest.json'
+    if not source_manifest_path.exists():
+        return {'enabled': False}
+    source_manifest = json.loads(source_manifest_path.read_text())
+    for key, value in mode_metadata(mode).items():
+        if key in source_manifest and source_manifest[key] != value:
+            raise RuntimeError(f'Source manifest {key} does not match capture mode {mode.name}')
+    enabled = source_manifest.get('hdmi_output_enabled', False)
+    if type(enabled) is not bool:
+        raise RuntimeError('HDMI output build option must be a boolean')
+    if not enabled:
+        if 'hdmi_output_fixture' in source_manifest:
+            raise RuntimeError('Disabled HDMI output must not name a test fixture')
+        return {'enabled': False}
+    if mode.name != '1080p30':
+        raise RuntimeError('HDMI test output is supported only for 1080p30')
+    fixture = source_manifest.get('hdmi_output_fixture')
+    if not isinstance(fixture, dict) or fixture.get('mode') != mode.name:
+        raise RuntimeError('HDMI output fixture does not match capture mode')
+    paths = {
+        'pattern_sha256': output / 'tx/hdmi_test_pattern.v',
+        'clock_sha256': output / 'tx/hdmi_test_clock.v',
+        'tcl_sha256': output / 'tx/hdmi_output.tcl',
+        'xdc_sha256': output / 'hdmi_tx.xdc',
+        'rgb2dvi_component_sha256': output / 'tx_ip/rgb2dvi_v1_2/component.xml',
+    }
+    expected = {'mode': mode.name}
+    for key, path in paths.items():
+        value = sha256(path)
+        if fixture.get(key) != value:
+            raise RuntimeError(f'HDMI output fixture hash does not match {key}')
+        expected[key] = value
+    return {'enabled': True, **expected}
 
 
 def require_credit_configuration(hwh):
@@ -74,20 +139,22 @@ def main():
     gate = json.loads(args.gateware.with_suffix('.json').read_text())
     if sha256(args.gateware) != gate['rtl_sha256']:
         raise RuntimeError('Gateware provenance hash mismatch')
-    if (gate['width'], gate['height'], gate['clock_hz']) != (640, 480, 142857132):
-        raise RuntimeError('This integration requires 640x480 at 142857132 Hz')
+    mode = read_capture_mode(args.output)
+    require_gateware_mode(gate, mode)
     if gate.get('capture_interface') != 'single_credit_parked_v1':
         raise RuntimeError('This build requires single-credit gateware')
     if gate.get('gate_completion_policy') != 'next_sof_after_selected_output_drain_v1':
         raise RuntimeError('This build requires next-SOF frame-closure proof')
     hwh = ET.parse(args.output / 'capture.hwh').getroot()
-    require_vga_receiver(hwh)
+    require_receiver_mode(hwh, mode)
     require_credit_configuration(hwh)
-    edid = (args.output / 'vga-edid.bin').read_bytes()
-    validate_vga_edid(edid)
+    edid_path = args.output / f'{mode.name}-edid.bin'
+    edid = edid_path.read_bytes()
+    validate_mode_edid(edid, mode)
     rom = args.output / 'rx_ip/dvi2rgb_v1_7/src/720p_edid.data'
     if edid != bytes(int(line, 2) for line in rom.read_text().split()):
         raise RuntimeError('Packaged EDID ROM does not match its manifest')
+    hdmi_output_fixture = read_hdmi_output_fixture(args.output, mode)
     result = {
         'schema_version': 1, 'pynq_commit': PIN,
         'capture_enable_reset': 0,
@@ -109,15 +176,16 @@ def main():
         'gateware_sha256': sha256(args.gateware),
         'bitstream_sha256': sha256(args.output / 'capture.bit'),
         'hwh_sha256': sha256(args.output / 'capture.hwh'),
-        'geometry': [gate['width'], gate['height']],
-        'clock_hz': gate['clock_hz'], 'pixel_clock_hz': 25200000,
-        'supported_pixel_clocks_hz': [25175000, 25200000],
-        'edid_sha256': sha256(args.output / 'vga-edid.bin'),
-        'receiver_k_clk_range': 5,
+        **mode_metadata(mode),
+        'edid_sha256': sha256(edid_path),
+        'hdmi_output_fixture': hdmi_output_fixture,
         'receiver_sync_base_sha256': sha256(args.output / 'rx_ip/dvi2rgb_v1_7/src/SyncBase.vhd'),
         'receiver_component_sha256': sha256(args.output / 'rx_ip/dvi2rgb_v1_7/component.xml'), 'tool_version': args.tool_version,
         'setup_slack_ns': args.setup_slack_ns, 'hold_slack_ns': args.hold_slack_ns,
     }
+    source_manifest = args.output / 'source-manifest.json'
+    if source_manifest.exists():
+        result['source_manifest_sha256'] = sha256(source_manifest)
     with (args.output / 'build-manifest.json').open('x') as f:
         json.dump(result, f, indent=2)
         f.write('\n')

@@ -94,3 +94,156 @@ Host-visible EDID contains4K although the paired FPGA artifact was built for
 VGA. Actual source scaling, bridge behavior and EDID changes remain unverified.
 The inactive desktop user's DRM access returns EACCES while VT3 is active;
 a connector-property query is prepared for after normal VT restoration.
+
+## 2026-10-16: 1080p capture and same-board loop feasibility
+
+This review uses the locally pinned PYNQ v3.0.1 source at commit
+`93ddd21ab623883590a8c8b07f0b157b2855da4b`, plus the current capture build
+sources and its clean implementation report. No 1080p bitstream was built or
+loaded, and no 1080p signal was measured on the board. The timing below is a
+feasible first candidate, not a qualification result.
+
+The recommended first mode is **1920×1080 progressive at 30 Hz**, using the
+standard 2200×1125 total timing and 74.25 MHz pixel clock. Derive it from the
+pinned PYNQ 1080p60 mode by keeping its porch positions and halving the pixel
+clock: 88 front-porch pixels, 44 horizontal-sync pixels, 148 back-porch
+pixels; 4 front-porch lines, 5 vertical-sync lines, 36 back-porch lines. The
+same source lists 1920×1080 at 148.5 MHz/60 Hz. This calculation gives exactly
+30 Hz because 74.25 MHz / (2200 × 1125) = 30. The source-derived timing is
+standard, but 1080p30 is not an existing mode in the pinned output driver; it
+needs a new mode entry or explicit VTC/clock programming.
+
+| Mode | Pixel clock and approximate TMDS rate per data lane | Assessment |
+| --- | --- | --- |
+| 1080p30 | 74.25 MHz; 742.5 Mbit/s | Recommended candidate. It uses the same pixel clock as the PYNQ 720p60 mode, while keeping the requested 1080-line image. The PYNQ-Z2 differential pins are documented as officially supported only through 720p, so the actual 1080p30 input and output still need cable/device testing. |
+| 1080p60 | 148.5 MHz; 1.485 Gbit/s | Present in PYNQ's software timing table, and its video documentation says the 142 MHz one-pixel-per-clock stream pipeline can accommodate active video once blanking is counted. However, PYNQ and TUL warn that the board does not meet the official HDMI 1080p electrical specification; some devices may work. Do not make 60 Hz the initial acceptance timing. |
+
+The PYNQ video-library documentation says the Z1/Z2 DVI front end can reach
+1080p in its design, but the differential pins are officially rated only up to
+720p because of their speed rating. The Z2 overlay documentation separately
+warns that 1080p is outside the board's official HDMI specification, although
+some connected devices may work. Together these sources support trying 1080p30
+at the 720p60 pixel clock; they do not establish a guaranteed 1080p30 mode or
+connector compatibility. Sources: [pinned PYNQ video guidance](https://github.com/Xilinx/PYNQ/blob/93ddd21ab623883590a8c8b07f0b157b2855da4b/docs/source/pynq_libraries/video.rst), [pinned PYNQ-Z2 overlay guidance](https://github.com/Xilinx/PYNQ/blob/93ddd21ab623883590a8c8b07f0b157b2855da4b/docs/source/pynq_overlays/pynqz2/pynqz2_base_overlay.rst), and the [TUL reference manual, pages 15–16](https://dpoauwgwqsy2x.cloudfront.net/Download/PYNQ_Z2_User_Manual_v1.1.pdf).
+
+For receive clocking, the pinned Digilent `dvi2rgb` RTL generates a 5× serial
+clock and its clocking entity uses `kClkRange` as both the multiplier/divider
+selector. At 74.25 MHz, range 2 gives a 742.5 MHz MMCM VCO and the desired
+74.25 MHz pixel clock plus 371.25 MHz serial clock. That is within the RTL's
+stated 600–1200 MHz VCO range. The current VGA build uses range 5 at 25.2 MHz,
+sets an input-clock constraint for 25.2 MHz, and advertises only VGA through its
+EDID. The new mode therefore needs a matching range-2 receiver configuration,
+74.25 MHz input-clock constraint, 1080p30 EDID, and revised static geometry
+checks. The upstream package's supported range-2 choice already exists; the
+local package extension for range 5 was specific to VGA. The [pinned receiver
+Tcl](https://github.com/Xilinx/PYNQ/blob/93ddd21ab623883590a8c8b07f0b157b2855da4b/boards/Pynq-Z2/base/base.tcl), [clocking RTL](https://github.com/Xilinx/PYNQ/blob/93ddd21ab623883590a8c8b07f0b157b2855da4b/boards/ip/dvi2rgb_v1_7/src/TMDS_Clocking.vhd), and [current build clock contract](build.md#corrected-vga-clock-and-edid-contract) document these facts.
+
+The stock PYNQ design has separate HDMI input and output ports and separate
+package pins. Its [pinned constraints](https://github.com/Xilinx/PYNQ/blob/93ddd21ab623883590a8c8b07f0b157b2855da4b/boards/Pynq-Z2/base/vivado/constraints/base.xdc) place RX clock/data on N18/P19, V20/W20, T20/U20, and N20/P20, with input HPD on T19 and DDC on U14/U15. TX uses L16/L17, K17/K18, K19/J19, and J18/H18, with its HPD signal on R19. These sets do not overlap, and PYNQ's base design includes both directions. This establishes a feasible pin assignment for a J9 HDMI OUT → J10 HDMI IN cable loop, subject to confirming the physical board revision and routing the correct HDMI XDC ports.
+
+The TX clock is separate from the recovered RX clock. The pinned output
+hierarchy uses `axi_dynclk`, `v_tc`, `v_axi4s_vid_out`, and `rgb2dvi`; its
+dynamic clock reference comes from PS FCLK0 at 100 MHz. FCLK1 at 142.857 MHz
+clocks the AXI video stream, while the generated TX pixel clock drives VTC and
+the RGB-to-TMDS serializer. The stock output setting disables the serializer's
+internal clock generator and supplies its 5× clock from `axi_dynclk`. The
+PYNQ software clock search calculates a target of five times the pixel rate; a
+direct evaluation of its pinned 100 MHz reference-clock search finds about
+74.2857 MHz pixel clock for the 74.25 MHz target (about 0.048% high). This is a
+software calculation, not an MMCM run or physical measurement. The pinned
+[1080p mode table](https://github.com/Xilinx/PYNQ/blob/93ddd21ab623883590a8c8b07f0b157b2855da4b/pynq/lib/_pynq/_video/video_modes.h) contains a 1080p60 entry only, so the base `HDMIOutFrontend` cannot select the 30 Hz candidate without a mode-table/driver change or direct clock/VTC control.
+
+The custom capture overlay originally had **no HDMI output path**. The optional
+`--with-hdmi-output` path now adds a fixed 1080p30 source without connecting a
+second DMA or AXI video stream. It drives the pinned `rgb2dvi` video input
+directly from PL counters and pattern logic. This avoids DDR read traffic and
+does not take ownership of the capture VDMA. The normal capture overlay still
+has no TX path unless that option is selected.
+
+The source uses 1920×1080 active pixels within 2200×1125 totals. Its frame ID
+increments at the frame boundary, and the marker, color bars, ramps, and
+analytic RGB values match the host fixture in `tools/hdmi_pattern.py`. The
+fixture simulation compares two complete frames, including all active pixels,
+sync positions, and blanking, then reasserts reset mid-frame and checks that
+the next active pixel restarts at the frame origin. The test is
+`python -m pytest -q tests/test_hdmi_output.py`; it passed in Icarus Verilog.
+This verifies the pattern RTL against the host formula, but does not simulate
+the clocking primitives, TMDS serializer, or board signals.
+
+The optional output clock takes the existing PS FCLK0 100 MHz reference and
+does not use the recovered RX clock or the FCLK1 AXI-video/DMA clock. Its
+`MMCME2_ADV` settings use a 37.125 multiplier and divide-by-5 input path:
+100 MHz × 37.125 / 5 = 742.5 MHz VCO. The MMCM output divided by 2 is
+371.25 MHz; `BUFIO` drives the serializer's 5× clock and `BUFR` divided by 5
+provides 74.25 MHz pixels. The 37.125 setting is an allowed 1/8 fractional
+multiplier step according to AMD's [Clocking Wizard guide, PG065](https://docs.amd.com/r/en-US/pg065-clk-wiz/Configuring-Output-Clocks).
+The topology follows the pinned PYNQ `axi_dynclk` use of a high-speed clock
+for `rgb2dvi` plus a /5 pixel clock. The arithmetic and RTL structure are
+source-checked; Vivado clock placement, routing, timing closure, and board
+clock behavior still require the combined implementation build and hardware.
+
+The pinned `rgb2dvi` input expects bytes in RBG order: bits 23:16 are red,
+7:0 are green, and 15:8 are blue. The pattern therefore feeds `{R,B,G}` to
+the IP; the simulation reorders these bytes before comparing with the RGB888
+host fixture. The IP receives pixel clock, 5× serial clock, active-video,
+HSync, and VSync directly. See the pinned
+[`rgb2dvi.vhd`](https://github.com/Xilinx/PYNQ/blob/93ddd21ab623883590a8c8b07f0b157b2855da4b/boards/ip/rgb2dvi_v1_2/src/rgb2dvi.vhd)
+and [`axi_dynclk.vhd`](https://github.com/Xilinx/PYNQ/blob/93ddd21ab623883590a8c8b07f0b157b2855da4b/boards/ip/axi_dynclk_v1_0/src/axi_dynclk.vhd).
+
+The fixed transmitter does not read DDC/EDID or gate output on HPD; it keeps
+sending 1080p30 when no monitor is connected. Its R19 `hdmi_out_hpd[0]` port is
+left as an unused constrained input because the TUL manual describes the pin
+as inverted HPD input, while the pinned upstream base Tcl declares and drives
+it as an output. The schematic labels the net `HDMI_TX_HPDN`; this direction
+conflict is unresolved, so this test path does not drive R19. The schematic
+shows TX 5 V supplied from `VCC5V0` through fuse PS1, rather than by a PL GPIO.
+These connector facts are in the [TUL schematic, sheet 6](https://dpoauwgwqsy2x.cloudfront.net/Download/TUL_PYNQ_Schematic_R12.pdf)
+and [TUL reference manual, pp. 15–16](https://dpoauwgwqsy2x.cloudfront.net/Download/PYNQ_Z2_User_Manual_v1.1.pdf).
+
+The pinned RX and TX constraints use disjoint package pins, so the build can
+include both HDMI connectors in one design. This makes a short board-side
+OUT→IN loop a practical test of the receiver and transmitter together, but
+does not qualify 1080p electrical margin: the PYNQ-Z2 documentation rates the
+HDMI pins officially only through 720p, and no 1080p30 cable loop has been
+measured. Full Vivado DRC, routed timing/CDC review, and board testing remain
+required. The loop also needs a source or sink that accepts the fixed timing;
+the transmitter does not negotiate a mode.
+
+The 1080p30 raw RGB888 payload is 6,220,800 bytes per frame, or 186.624 MB/s
+if every input frame is written. At 1080p60 it is 373.248 MB/s. These values
+exclude memory padding, intermediate 32-bit pixels, output reads, CPU copies,
+and Ethernet. A DDR-backed HDMI output adds another full-frame read at its
+refresh rate. The 1 FPS host-delivery goal only sets roughly 49.77 Mbit/s of
+RGB888 application payload; it does not reduce the rate at which the input
+receiver and VDMA must accept pixels. Measure input/DDR copy, output-loop and
+network costs separately.
+
+The latest clean VGA build used 6,690/53,200 LUTs, 15,938/106,400 registers,
+7.5/140 BRAM tiles, 9/220 DSPs, and one of four MMCMs. Adding the stock TX
+clock generator would add another MMCM and output serializers; the existing
+logic counts leave apparent LUT/BRAM/DSP headroom. This utilization does not
+predict final placement, clock routing, I/O timing, resource interaction, or
+1080p closure. The replay report retained five input and two output external
+delay gaps even for VGA. See [clean build 017](results/2026-10-16/credit-017-clean-replay.md).
+
+Minimum next implementation steps are to add an explicit 1080p30 build profile
+for the receiver, EDID, constraints, gateware dimensions, HWH manifest, sender,
+and host frame parser; then integrate the output hierarchy and a known changing
+pattern source. Run block-design validation, synthesis, routed timing/CDC/DRC,
+and report the external I/O constraint gaps before programming a board. Only
+then run a short same-board OUT→IN test and compare its embedded frame IDs and
+pixels. The 1080p sustained 10-minute acceptance remains separate. The current
+source statically rejects dimensions other than 640×480 and uses a 25.2 MHz
+RX constraint, so changing the HDMI timing alone cannot produce a supported
+capture.
+
+Sources inspected locally and pinned above: `hardware/capture.tcl`,
+`scripts/build_capture.py`, `gateware/dependencies.json`, the PYNQ v3.0.1
+checkout, and `artifacts/clean-replay-017-20261016-0308` implementation output.
+The local dependency versions are Migen 0.9.2 at
+`e19524c963a8342952840983047557707fbe0b6a` and LiteX 2026.8 at
+`b2759f69bcae8be0357fb2ee5eebe216365d1f00`. No RX/TX 1080p IP build,
+board output-loop execution, 1080p input test, EDID interoperability test,
+or 1080p DDR/network performance measurement has been performed. The physical
+board revision, input/output connector margin at 74.25 MHz, and 1080p30
+compatibility with the chosen loop cable and source remain unverified.

@@ -6,16 +6,19 @@ from tools.hdmi_pattern import pattern
 from tools.qualify_capture import _accounting_errors, parser, run
 
 
-def setup_run(tmp_path, frames, *, require_litex=True, legacy=False):
+def setup_run(tmp_path, frames, *, require_litex=True, legacy=False, mode="vga",
+              intervals=None):
     now = [0.0]
     args = parser().parse_args(["unused", "--duration", "3", "--min-frames", "3",
                               "--hard-deadline", "6", "--log", str(tmp_path / "frames.jsonl"),
+                              "--mode", mode,
                               *([] if require_litex else ["--no-require-litex"]),
                               *(["--legacy-delivered-image-criterion"] if legacy else [])])
 
     class Client:
         def __init__(self, *a, **k):
             self.frames = iter(frames)
+            self.intervals = iter(intervals or [1] * len(frames))
 
         def __enter__(self):
             return self
@@ -24,7 +27,7 @@ def setup_run(tmp_path, frames, *, require_litex=True, legacy=False):
             pass
 
         def read(self, **kwargs):
-            now[0] += 1
+            now[0] += next(self.intervals, 1)
             try:
                 return next(self.frames)
             except StopIteration:
@@ -33,12 +36,13 @@ def setup_run(tmp_path, frames, *, require_litex=True, legacy=False):
     return args, Client, lambda: now[0]
 
 
-def frame(i, *, optical=None, origin="hdmi", baseline=False):
+def frame(i, *, optical=None, origin="hdmi", baseline=False, mode="vga"):
     health = dict(snapshot_atomic=False, frontend_overflow_episodes=0,
                   frontend_underflow_episodes=0,
                   native_vsync_edges=i+100, invalid_frames=0,
                   overflow_units="assertion_episodes_not_lost_frames")
-    return Frame(pattern(i if optical is None else optical), dict(
+    return Frame(pattern(i if optical is None else optical, mode), dict(
+        **({"capture_mode": mode} if mode != "vga" else {}),
         frame_id=i, session_id="fixture", source_origin=origin, baseline_only=baseline,
         acquisition_id=i+1, source_sequence=100+i, frame_source_id=i,
         source_sequence_domain="native_vsync_edge_counter", source_sequence_bits=32,
@@ -80,10 +84,57 @@ def test_requires_both_window_and_distinct_exact_frames(tmp_path):
     assert report["source_accounting_validated_frames"] == 3
     assert report["host_clock"] == "host_monotonic"
     assert report["host_start_monotonic_seconds"] == 0
+    assert report["configuration"]["expected_mode"] == "vga"
+    assert report["longest_interframe_gap_seconds"] == 1
+    assert "capture_mode" not in report["first_metadata"]
     entries = [json.loads(line) for line in args.log.read_text().splitlines()]
     assert len(entries) == 3
     assert all(entry["verification"]["exact_match"] for entry in entries)
     assert [entry["host_received_monotonic_seconds"] for entry in entries] == [1, 2, 3]
+    assert [entry["interframe_gap_seconds"] for entry in entries] == [None, 1, 1]
+
+
+def test_1080p30_requires_explicit_profile_and_records_delivery_gap(tmp_path):
+    args, factory, clock = setup_run(
+        tmp_path, [frame(i, mode="1080p30") for i in range(3)], mode="1080p30",
+        intervals=[0.5, 1.25, 2.0])
+    args.min_fps = 0.5
+    report = run(args, client_factory=factory, clock=clock)
+    assert report["passed"]
+    assert report["configuration"]["expected_mode"] == "1080p30"
+    assert report["configuration"]["expected_width"] == 1920
+    assert report["configuration"]["expected_height"] == 1080
+    assert report["first_metadata"]["capture_mode"] == "1080p30"
+    assert report["metadata_failures"] == 0
+    assert report["longest_interframe_gap_seconds"] == 2.0
+    entries = [json.loads(line) for line in args.log.read_text().splitlines()]
+    assert [entry["verification"]["exact_match"] for entry in entries] == [True] * 3
+    assert [entry["interframe_gap_seconds"] for entry in entries] == [None, 1.25, 2.0]
+
+
+def test_1080p30_qualifier_rejects_vga_frame(tmp_path):
+    args, factory, clock = setup_run(tmp_path, [frame(0)], mode="1080p30")
+    report = run(args, client_factory=factory, clock=clock)
+    assert not report["passed"]
+    assert report["pixel_failures"] == 1
+
+
+@pytest.mark.parametrize("capture_mode", ["vga", None])
+def test_1080p30_requires_matching_capture_mode_metadata(tmp_path, capture_mode):
+    sample = frame(0, mode="1080p30")
+    if capture_mode is None:
+        sample.metadata.pop("capture_mode")
+    else:
+        sample.metadata["capture_mode"] = capture_mode
+    args, factory, clock = setup_run(tmp_path, [sample], mode="1080p30")
+    report = run(args, client_factory=factory, clock=clock)
+    assert not report["passed"]
+    assert report["metadata_failures"] == 1
+    assert report["pixel_failures"] == 0
+    assert report["stop_reason"] == "metadata_rejection"
+    entry = json.loads(args.log.read_text())
+    assert entry["verification"]["exact_match"]
+    assert any("capture_mode" in error for error in entry["metadata_errors"])
 
 
 def test_legacy_013_delivered_images_do_not_claim_full_m1(tmp_path):

@@ -11,6 +11,8 @@ from dataclasses import dataclass
 
 import numpy as np
 
+from .modes import CAPTURE_MODES, get_mode, mode_metadata
+
 
 class SourceError(RuntimeError):
     """Source stopped, lost lock, or changed to an unsupported mode."""
@@ -157,8 +159,10 @@ class PynqSource:
         self.dma_shutdown_safe = True
 
     def _check_mode(self, mode):
-        if (mode.width, mode.height, mode.bits_per_pixel) != (640, 480, 24):
-            raise SourceError("Capture accepts only 640x480 with 24-bit DMA pixels")
+        expected = (self.width, self.height, 24)
+        if (mode.width, mode.height, mode.bits_per_pixel) != expected:
+            raise SourceError(
+                f"Capture accepts only {self.width}x{self.height} with 24-bit DMA pixels")
 
     def _stage(self, name, details=None):
         if self.progress is not None:
@@ -203,7 +207,7 @@ class PynqSource:
         timestamp = time.monotonic_ns()
         try:
             self._check_mode(self.hdmi.frontend.mode)
-            if pixels.dtype != np.uint8 or pixels.shape != (480, 640, 3):
+            if pixels.dtype != np.uint8 or pixels.shape != (self.height, self.width, 3):
                 raise SourceError("Unexpected DMA frame shape or dtype")
         except BaseException:
             self._release(pixels)
@@ -241,22 +245,41 @@ class PynqSource:
             self.dma_shutdown_safe = True
 
 
-def verify_litex_artifacts(bitfile, manifest):
+def verify_litex_artifacts(bitfile, manifest, *, expected_mode="vga"):
     """Reject stale or unrelated artifact pairs before loading any hardware."""
     bitfile, manifest = Path(bitfile).resolve(), Path(manifest).resolve()
     record = json.loads(manifest.read_text())
-    if record.get("schema_version") != 1 or record.get("geometry") != [640, 480]:
-        raise SourceError("LiteX manifest must declare schema1 and geometry640x480")
+    if not isinstance(record, dict):
+        raise SourceError("LiteX manifest must be a JSON object")
+    if type(record.get("schema_version")) is not int or record["schema_version"] != 1:
+        raise SourceError("LiteX manifest must declare schema1")
+    try:
+        requested_mode = get_mode(expected_mode)
+        manifest_mode = get_mode(record.get("capture_mode", "vga"))
+    except (TypeError, ValueError) as error:
+        raise SourceError(f"Unsupported LiteX capture mode: {error}") from error
+    if manifest_mode.name != requested_mode.name:
+        raise SourceError(
+            f"LiteX manifest mode {manifest_mode.name} does not match requested mode "
+            f"{requested_mode.name}")
+    expected_profile = mode_metadata(manifest_mode)
+    if "capture_mode" not in record:
+        if manifest_mode.name != "vga":
+            raise SourceError("Legacy LiteX manifests are accepted only for VGA")
+        expected_profile.pop("capture_mode")
+        expected_profile.pop("timing")
+    for key, expected in expected_profile.items():
+        actual = record.get(key)
+        if not _profile_value_matches(actual, expected):
+            raise SourceError(
+                f"LiteX manifest {key} does not match capture mode {manifest_mode.name}")
+    # Normalize legacy VGA manifests in memory; the receipt still hashes the
+    # original manifest bytes and remains compatible with existing receipts.
+    record.setdefault("capture_mode", manifest_mode.name)
     if record.get("pynq_commit") != "93ddd21ab623883590a8c8b07f0b157b2855da4b":
         raise SourceError("LiteX manifest does not use the pinned PYNQ receiver")
-    if record.get("clock_hz") != 142857132:
-        raise SourceError("LiteX manifest clock does not match the capture design")
     if type(record.get("capture_enable_reset")) is not int or record["capture_enable_reset"] != 0:
         raise SourceError("LiteX manifest must declare capture enable reset0")
-    if (record.get("pixel_clock_hz") != 25200000 or
-            record.get("supported_pixel_clocks_hz") != [25175000, 25200000] or
-            record.get("receiver_k_clk_range") != 5):
-        raise SourceError("LiteX manifest must declare the corrected VGA receiver configuration")
     edid_hash = record.get("edid_sha256")
     if (not isinstance(edid_hash, str) or len(edid_hash) != 64 or
             any(c not in "0123456789abcdef" for c in edid_hash)):
@@ -282,8 +305,8 @@ def verify_litex_artifacts(bitfile, manifest):
         raise SourceError("HWH must contain the expected single DVI receiver")
     parameters = {parameter.attrib.get("NAME"): parameter.attrib.get("VALUE")
                   for parameter in receivers[0].findall("./PARAMETERS/PARAMETER")}
-    if parameters.get("kClkRange") != "5":
-        raise SourceError("HWH DVI receiver clock range is not configured for VGA")
+    if parameters.get("kClkRange") != str(manifest_mode.receiver_k_clk_range):
+        raise SourceError("HWH DVI receiver clock range does not match the capture mode")
     controls = [module for module in root.findall(".//MODULE")
                 if module.attrib.get("FULLNAME") == "/video/capture_control"]
     if len(controls) != 1:
@@ -310,6 +333,20 @@ def verify_litex_artifacts(bitfile, manifest):
             if actual != [expected]:
                 raise SourceError(f"Credit HWH requires {name}={expected}")
     return record
+
+
+def _profile_value_matches(actual, expected):
+    if type(actual) is not type(expected):
+        return False
+    if isinstance(expected, dict):
+        return (actual.keys() == expected.keys() and
+                all(_profile_value_matches(actual[key], value)
+                    for key, value in expected.items()))
+    if isinstance(expected, list):
+        return (len(actual) == len(expected) and
+                all(_profile_value_matches(actual_value, expected_value)
+                    for actual_value, expected_value in zip(actual, expected)))
+    return actual == expected
 
 
 class LiteXControl:
@@ -371,8 +408,11 @@ class LiteXSource(PynqSource):
 
     baseline_only = False
 
-    def __init__(self, bitfile, manifest, *, progress=None):
+    def __init__(self, bitfile, manifest, *, capture_mode="vga", progress=None):
         super().__init__(bitfile, progress=progress)
+        self.mode_profile = get_mode(capture_mode)
+        self.capture_mode_name = self.mode_profile.name
+        self.width, self.height = self.mode_profile.width, self.mode_profile.height
         self.manifest_path = manifest
         self.control = None
         self.integrity_baseline = None
@@ -381,7 +421,8 @@ class LiteXSource(PynqSource):
 
     def load_overlay(self, download=True, *, video_drivers=True):
         self._stage("litex_artifact_verification")
-        self.manifest = verify_litex_artifacts(self.bitfile, self.manifest_path)
+        self.manifest = verify_litex_artifacts(
+            self.bitfile, self.manifest_path, expected_mode=self.capture_mode_name)
         if self.manifest.get("capture_interface") != getattr(self, "capture_interface", None):
             raise SourceError("Capture artifact ABI does not match the explicit source adapter")
         self._stage("pynq_import")
@@ -482,12 +523,28 @@ class OneFrameDMA:
 
     CONTROL = 0x15011
 
-    def __init__(self, mmio, buffer, frame_stores=4):
+    def __init__(self, mmio, buffer, frame_stores=4, *, width=640, height=480):
+        address = getattr(buffer, "physical_address", None)
+        stride = width * 3 if type(width) is int and width > 0 else 0
+        frame_bytes = stride * height if type(height) is int and height > 0 else 0
+        supported_geometry = {(mode.width, mode.height) for mode in CAPTURE_MODES.values()}
+        buffer_bytes = getattr(buffer, "nbytes", None)
         if (type(frame_stores) is not int or frame_stores != 4 or
-                not 0 <= buffer.physical_address <= 0xFFFFFFFF - 921599 or
-                buffer.physical_address % 64):
-            raise SourceError("DMA requires four stores and an aligned 32-bit buffer address")
+                type(width) is not int or type(height) is not int or
+                (width, height) not in supported_geometry or
+                stride % 64 or frame_bytes <= 0 or
+                not isinstance(address, (int, np.integer)) or isinstance(address, bool) or
+                not isinstance(buffer_bytes, (int, np.integer)) or isinstance(buffer_bytes, bool) or
+                buffer_bytes < frame_bytes or
+                not 0 <= address <= 0xFFFFFFFF - (frame_bytes - 1) or
+                address % 64):
+            raise SourceError(
+                "DMA requires a supported geometry, a full-size buffer, four stores, "
+                "a 64-byte-aligned stride, and a full frame within the aligned 32-bit "
+                "buffer address space")
+        address = int(address)
         self.mmio, self.buffer, self.frame_stores = mmio, buffer, frame_stores
+        self.width, self.height, self.stride = width, height, stride
         self.seen_running = False
 
     def status(self):
@@ -507,15 +564,16 @@ class OneFrameDMA:
         self.mmio.write(0x30, self.CONTROL)
         for slot in range(self.frame_stores):
             self.mmio.write(0xAC + 4 * slot, self.buffer.physical_address)
-        self.mmio.write(0xA8, 1920)
-        self.mmio.write(0xA4, 1920)
-        self.mmio.write(0xA0, 480)
+        self.mmio.write(0xA8, self.stride)
+        self.mmio.write(0xA4, self.stride)
+        self.mmio.write(0xA0, self.height)
         if (self.mmio.read(0x30) & 0xFFFFFF7F) != self.CONTROL:
             raise SourceError("VDMA single-frame control readback mismatch")
         if self.mmio.read(0x28) & (0x1F << 8):
             raise SourceError("VDMA parked reference is not store0")
-        for offset, expected in ((0xAC, self.buffer.physical_address), (0xA8, 1920),
-                                 (0xA4, 1920), (0xA0, 480)):
+        for offset, expected in ((0xAC, self.buffer.physical_address),
+                                 (0xA8, self.stride), (0xA4, self.stride),
+                                 (0xA0, self.height)):
             if self.mmio.read(offset) != expected:
                 raise SourceError("VDMA address/geometry readback mismatch")
         if any(self.mmio.read(0xAC + 4 * slot) != self.buffer.physical_address
@@ -609,9 +667,9 @@ class LiteXCreditSource(LiteXSource):
     paces_capture = True
     capture_interface = CREDIT_ABI
 
-    def __init__(self, bitfile, manifest, *, capture_fps=2, progress=None, timeout=3,
-                 prepared_receipt=None):
-        super().__init__(bitfile, manifest, progress=progress)
+    def __init__(self, bitfile, manifest, *, capture_mode="vga", capture_fps=2,
+                 progress=None, timeout=3, prepared_receipt=None):
+        super().__init__(bitfile, manifest, capture_mode=capture_mode, progress=progress)
         if not math.isfinite(capture_fps) or not 0 < capture_fps <= 60:
             raise ValueError("Credit capture FPS must be in(0,60]")
         if not math.isfinite(timeout) or timeout <= 0:
@@ -634,7 +692,8 @@ class LiteXCreditSource(LiteXSource):
         attach_prepared(self, self.prepared_receipt, video_drivers=download)
 
     def start(self):
-        record = verify_litex_artifacts(self.bitfile, self.manifest_path)
+        record = verify_litex_artifacts(
+            self.bitfile, self.manifest_path, expected_mode=self.capture_mode_name)
         if (record.get("capture_interface") != CREDIT_ABI or
                 record.get("vdma_completion_mode") != "parked_frame_count_halt_v1" or
                 record.get("vdma_frame_counter_enabled") is not True or
@@ -696,9 +755,22 @@ class LiteXCreditSource(LiteXSource):
             if baseline["frontend_overflow_episodes"] != 0 or baseline["frontend_underflow_episodes"] != 0:
                 raise SourceError("Startup frontend loss is not clean")
             self.integrity_baseline = self.integrity_previous = baseline
-            buffer = pynq.allocate(shape=(480, 640, 3), dtype=np.uint8,
+            buffer = pynq.allocate(shape=(self.height, self.width, 3), dtype=np.uint8,
                                    target=channel.memory, cacheable=True)
-            self.native = OneFrameDMA(channel._mmio, buffer, self.hdmi._vdma.framecount)
+            try:
+                native = OneFrameDMA(channel._mmio, buffer, self.hdmi._vdma.framecount,
+                                     width=self.width, height=self.height)
+            except BaseException as error:
+                try:
+                    buffer.freebuffer()
+                except BaseException as cleanup_error:
+                    self.integrity_failure = dict(
+                        setup_error=str(error), buffer_release_error=str(cleanup_error))
+                    raise SourceError(
+                        f"Cannot release unarmed frame buffer after DMA setup failed: "
+                        f"{cleanup_error}") from error
+                raise
+            self.native = native
             self.native.status()
             self.control.enable(True)
             self._stage("credit_source_ready", dict(counters=baseline))
@@ -804,6 +876,7 @@ class LiteXCreditSource(LiteXSource):
         metadata = dict(frame_source_id=sof_id, source_sequence_domain="native_vsync_edge_counter",
                         source_sequence_bits=32, source_sequence_policy="reject_wrap_or_reset",
                         source_accounting=accounting, capture_implementation="litex_single_credit_gate",
+                        capture_mode=self.capture_mode_name,
                         capture_artifact_sha256=self.manifest["bitstream_sha256"], capture_enable_reset=0,
                         litex_counters=self.integrity_previous, litex_startup_counters=self.integrity_baseline,
                         source_health_provenance={name: self.manifest.get(name) for name in

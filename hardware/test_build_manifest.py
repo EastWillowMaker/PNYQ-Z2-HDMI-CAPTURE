@@ -6,7 +6,12 @@ import xml.etree.ElementTree as ET
 import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
-from build_manifest import require_credit_configuration, require_vga_receiver
+from build_manifest import (
+    require_credit_configuration,
+    require_receiver_mode,
+    require_vga_receiver,
+)
+from hdmi_capture.modes import get_mode
 
 
 def hwh(parameters):
@@ -17,6 +22,14 @@ def hwh(parameters):
 def test_optional_parameter_without_value_does_not_reject_valid_receiver():
     require_vga_receiver(hwh('<PARAMETER NAME="unrelated"/>'
                             '<PARAMETER NAME="kClkRange" VALUE="5"/>'))
+
+
+def test_1080p30_receiver_requires_and_accepts_clock_range_two():
+    require_receiver_mode(hwh('<PARAMETER NAME="kClkRange" VALUE="2"/>'),
+                          get_mode('1080p30'))
+    with pytest.raises(RuntimeError):
+        require_receiver_mode(hwh('<PARAMETER NAME="kClkRange" VALUE="5"/>'),
+                              get_mode('1080p30'))
 
 
 @pytest.mark.parametrize('parameters', [

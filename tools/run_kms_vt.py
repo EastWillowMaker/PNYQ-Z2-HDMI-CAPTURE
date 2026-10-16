@@ -56,6 +56,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--duration', type=int, default=10)
     parser.add_argument('--frame-id', type=int, default=400000)
+    parser.add_argument('--mode', choices=['vga', '1080p30'], default='vga')
     parser.add_argument('--card', choices=['/dev/dri/card2'], default='/dev/dri/card2')
     parser.add_argument('--connector', choices=['DP-2'], default='DP-2')
     parser.add_argument('--output', type=Path, required=True, help='New evidence directory under artifacts')
@@ -85,7 +86,8 @@ def main():
         time.sleep(2)
         with (output / 'source.jsonl').open('x') as events:
             try:
-                result = subprocess.run([str(BINARY), '--direct', args.card, args.connector,
+                result = subprocess.run([str(BINARY), '--mode', args.mode, '--direct',
+                                         args.card, args.connector,
                                          str(args.frame_id), str(args.duration)],
                                         stdout=events, stderr=subprocess.STDOUT,
                                         timeout=args.duration + 35)
@@ -119,6 +121,7 @@ def main():
     output.mkdir(exist_ok=False)
     (output / 'original.json').write_text(json.dumps({'vt': int(original_vt),
                                                        'card': args.card, 'connector': args.connector,
+                                                       'mode': args.mode,
                                                        'duration': args.duration, 'vendor': vendor}) + '\n')
     child = None
     restored = False
@@ -131,7 +134,7 @@ def main():
     try:
         command = ['/usr/bin/openvt', '-c', str(args.vt), '-s', '-w', '--', '/usr/bin/python3',
                    str(Path(__file__).resolve()), '--child', '--vt', str(args.vt), '--duration', str(args.duration),
-                   '--frame-id', str(args.frame_id), '--card', args.card,
+                   '--frame-id', str(args.frame_id), '--mode', args.mode, '--card', args.card,
                    '--connector', args.connector, '--output', str(output)]
         child = subprocess.Popen(command, start_new_session=True)
         threading.Thread(target=record_kernel_state, args=(output,),

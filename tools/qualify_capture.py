@@ -12,6 +12,7 @@ import time
 import numpy as np
 
 from hdmi_capture import CaptureClient
+from hdmi_capture.modes import get_mode
 try:
     from .hdmi_pattern import verify
 except ImportError:
@@ -35,6 +36,8 @@ def parser():
     result.add_argument("--min-frames", type=int, default=600,
                         help="Minimum exact, distinct optical frames")
     result.add_argument("--min-fps", type=positive, default=1)
+    result.add_argument("--mode", choices=("vga", "1080p30"), default="vga",
+                        help="Expected source profile for full-image verification")
     result.add_argument("--hard-deadline", type=positive, default=660,
                         help="Maximum run duration in seconds")
     result.add_argument("--require-litex", action=argparse.BooleanOptionalAction, default=True)
@@ -233,6 +236,7 @@ def run(args, *, client_factory=CaptureClient, clock=time.monotonic):
         raise ValueError("min-frames must be positive; hard-deadline must cover duration")
     if args.legacy_delivered_image_criterion and not args.require_litex:
         raise ValueError("legacy image criterion requires --require-litex")
+    mode = get_mode(getattr(args, "mode", "vga"))
     accounting_required = args.require_litex and not args.legacy_delivered_image_criterion
     summary_path = args.summary or args.log.with_suffix(".summary.json")
     if summary_path == args.log:
@@ -240,11 +244,24 @@ def run(args, *, client_factory=CaptureClient, clock=time.monotonic):
     summary = dict(configuration=dict(host=args.host, port=args.port, timeout=args.timeout,
                    minimum_duration_seconds=args.duration, minimum_distinct_frames=args.min_frames,
                    minimum_fps=args.min_fps, hard_deadline_seconds=args.hard_deadline,
+                   expected_mode=mode.name, expected_width=mode.width,
+                   expected_height=mode.height, expected_pixel_clock_hz=mode.pixel_clock_hz,
+                   expected_refresh_hz=mode.refresh_hz,
+                   expected_h_total=mode.h_total, expected_v_total=mode.v_total,
+                   expected_h_front_porch=mode.h_front_porch,
+                   expected_h_sync_width=mode.h_sync_width,
+                   expected_h_back_porch=mode.h_back_porch,
+                   expected_h_sync_positive=mode.h_sync_positive,
+                   expected_v_front_porch=mode.v_front_porch,
+                   expected_v_sync_width=mode.v_sync_width,
+                   expected_v_back_porch=mode.v_back_porch,
+                   expected_v_sync_positive=mode.v_sync_positive,
                    require_litex=args.require_litex,
                    legacy_delivered_image_criterion=args.legacy_delivered_image_criterion),
                    delivered_frames=0, exact_frames=0, pixel_failures=0, mixed_frames=0,
                    repeated_optical_frames=0, distinct_exact_optical_frames=0,
                    metadata_failures=0, transport_errors=0, storage_errors=0, payload_bytes=0,
+                   longest_interframe_gap_seconds=None,
                    transport_frame_id_gaps=0, stop_reason=None, error=None,
                    physical_source_sequence_verified=False,
                    full_m1_qualification=False,
@@ -262,6 +279,7 @@ def run(args, *, client_factory=CaptureClient, clock=time.monotonic):
     previous_id = None
     previous_vsync = None
     previous_accounting = None
+    previous_received_at = None
     first = last = None
     started = clock()
     summary.update(host_start_monotonic_seconds=started, host_clock="host_monotonic")
@@ -285,6 +303,14 @@ def run(args, *, client_factory=CaptureClient, clock=time.monotonic):
                             break
                         raise
                     now = clock()
+                    interframe_gap = (None if previous_received_at is None
+                                      else now - previous_received_at)
+                    if interframe_gap is not None:
+                        current_max = summary["longest_interframe_gap_seconds"]
+                        summary["longest_interframe_gap_seconds"] = (
+                            interframe_gap if current_max is None
+                            else max(current_max, interframe_gap))
+                    previous_received_at = now
                     summary["delivered_frames"] += 1
                     summary["payload_bytes"] += frame.rgb.nbytes
                     meta = frame.metadata
@@ -300,6 +326,14 @@ def run(args, *, client_factory=CaptureClient, clock=time.monotonic):
                     reasons = []
                     if meta.get("source_origin") != "hdmi":
                         reasons.append("source is not real HDMI")
+                    if "capture_mode" not in meta:
+                        if mode.name != "vga":
+                            reasons.append(
+                                f"capture_mode metadata is required for {mode.name}")
+                    elif meta["capture_mode"] != mode.name:
+                        reasons.append(
+                            f"capture_mode metadata {meta['capture_mode']!r} does not match "
+                            f"expected {mode.name}")
                     implementation = ("litex_video_gate" if args.legacy_delivered_image_criterion
                                       else "litex_single_credit_gate")
                     if args.require_litex and (meta.get("baseline_only") is not False or
@@ -331,7 +365,7 @@ def run(args, *, client_factory=CaptureClient, clock=time.monotonic):
                                 "frontend_underflow_episodes")
                     summary["metadata_failures"] += bool(reasons)
                     try:
-                        checked = verify(frame.rgb)
+                        checked = verify(frame.rgb, mode=mode.name)
                     except ValueError as error:
                         checked = dict(exact_match=False, mixed_optical_ids=False,
                                        expected_id=None, error=str(error))
@@ -348,7 +382,8 @@ def run(args, *, client_factory=CaptureClient, clock=time.monotonic):
                         summary["pixel_failures"] += 1
                     log.write(json.dumps(dict(event="frame", index=summary["delivered_frames"],
                               host_elapsed_seconds=now-started,
-                              host_received_monotonic_seconds=now, metadata=meta,
+                              host_received_monotonic_seconds=now,
+                              interframe_gap_seconds=interframe_gap, metadata=meta,
                               metadata_errors=reasons, verification=checked)) + "\n")
                     log.flush()
                     if args.save_endpoints and summary["delivered_frames"] == 1:

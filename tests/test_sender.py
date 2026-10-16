@@ -309,6 +309,69 @@ def test_cli_safe_failure_does_not_hold(monkeypatch):
         module.main(["--source", "pynq"], unsafe_hold=hold)
 
 
+@pytest.mark.parametrize("mode,extra_args,width,height", [
+    ("vga", [], 640, 480),
+    ("1080p30", ["--width", "1920", "--height", "1080", "--input-fps", "30"],
+     1920, 1080),
+])
+def test_cli_passes_selected_mode_to_litex_source(monkeypatch, mode, extra_args, width, height):
+    from hdmi_capture import sender
+    calls, constructed = [], []
+
+    def make_source(bitfile, manifest, **kwargs):
+        constructed.append((bitfile, manifest, kwargs))
+        return SyntheticSource(width, height, 60 if mode == "vga" else 30)
+
+    async def run(self, *args):
+        calls.append(self.source)
+
+    monkeypatch.setattr(sender, "LiteXCreditSource", make_source)
+    monkeypatch.setattr(sender.Sender, "run", run)
+    args = ["--source", "litex-credit", "--bitfile", "capture.bit",
+            "--manifest", "manifest.json"]
+    if mode != "vga":
+        args += ["--mode", mode]
+    sender.main(args + extra_args)
+    assert constructed[0][2]["capture_mode"] == mode
+    assert calls and calls[0].width == width and calls[0].height == height
+
+
+@pytest.mark.parametrize("extra_args", [
+    ["--width", "640"], ["--height", "480"], ["--input-fps", "60"],
+])
+def test_cli_rejects_hardware_geometry_or_fps_conflict_before_source(monkeypatch, extra_args):
+    from hdmi_capture import sender
+    constructed = []
+    monkeypatch.setattr(sender, "LiteXCreditSource",
+                        lambda *args, **kwargs: constructed.append((args, kwargs)))
+    with pytest.raises(SystemExit):
+        sender.main(["--source", "litex-credit", "--mode", "1080p30",
+                     "--bitfile", "capture.bit", "--manifest", "manifest.json",
+                     *extra_args])
+    assert constructed == []
+
+
+def test_cli_rejects_1080p30_for_baseline_pynq_before_source(monkeypatch, capsys):
+    from hdmi_capture import sender
+    constructed = []
+    monkeypatch.setattr(sender, "PynqSource",
+                        lambda *args, **kwargs: constructed.append((args, kwargs)))
+    with pytest.raises(SystemExit):
+        sender.main(["--source", "pynq", "--mode", "1080p30"])
+    assert constructed == []
+    assert "PYNQ source supports only --mode vga" in capsys.readouterr().err
+
+
+def test_1080p30_sender_metadata_uses_rgb_byte_stride():
+    import numpy as np
+    from hdmi_capture.sources import LiteXSource, Sample
+    source = LiteXSource("unused.bit", "unused.json", capture_mode="1080p30")
+    pixels = np.zeros((source.height, source.width, 3), dtype=np.uint8)
+    metadata = Sender(source)._metadata(Sample(pixels, 1, sequence=1), 1)
+    assert (metadata["width"], metadata["height"], metadata["stride"]) == (1920, 1080, 5760)
+    assert metadata["capture_mode"] == "1080p30"
+
+
 def test_integrity_failure_never_becomes_ready_and_reports_baseline(capsys):
     import json
     import numpy as np

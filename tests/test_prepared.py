@@ -50,7 +50,7 @@ def receiver(tmp_path, monkeypatch):
     state = dict(bitfile_name=str(bitfile), bitfile_hash=hashlib.sha1(bitfile.read_bytes()).hexdigest(),
                  timestamp="download-1", active_name="device0")
     environment = dict(boot="boot-1", fpga="operating")
-    monkeypatch.setattr(prepared, "verify_litex_artifacts", lambda *args: dict(capture_interface=CREDIT_ABI, source_health_sha256="health"))
+    monkeypatch.setattr(prepared, "verify_litex_artifacts", lambda *args, **kwargs: dict(capture_interface=CREDIT_ABI, source_health_sha256="health"))
     monkeypatch.setattr(prepared, "_boot_id", lambda: environment["boot"])
     monkeypatch.setattr(prepared, "_fpga_state", lambda: environment["fpga"])
     monkeypatch.setattr(prepared, "_raw_state", lambda: copy.deepcopy(state))
@@ -75,6 +75,19 @@ def initial_prepare(receiver):
     receipt = prepared.prepare(receiver.source, receiver.receipt, after_reset=True)
     receiver.events.clear()
     return receipt
+
+
+def test_prepared_artifact_check_uses_selected_mode(receiver, monkeypatch):
+    calls = []
+    def verify(*args, **kwargs):
+        calls.append(kwargs)
+        return dict(capture_interface=CREDIT_ABI, source_health_sha256="health")
+    monkeypatch.setattr(prepared, "verify_litex_artifacts", verify)
+    source = SimpleNamespace(bitfile=receiver.source.bitfile,
+                              manifest_path=receiver.source.manifest_path,
+                              capture_mode_name="1080p30")
+    prepared._artifacts(source)
+    assert calls == [{"expected_mode": "1080p30"}]
 
 
 def test_prepare_loads_before_gpio_and_publishes_receipt(receiver):
@@ -461,7 +474,7 @@ def test_gpio_only_overlay_load_never_constructs_video(monkeypatch, tmp_path):
                                          parameters=dict(C_INCLUDE_S2MM="1", C_INCLUDE_MM2S="0"))
     overlay = SimpleNamespace(ip_dict=descriptions, is_loaded=lambda: True)
     calls = []
-    monkeypatch.setattr(sources, "verify_litex_artifacts", lambda *args: dict(capture_interface=CREDIT_ABI))
+    monkeypatch.setattr(sources, "verify_litex_artifacts", lambda *args, **kwargs: dict(capture_interface=CREDIT_ABI))
     def load(path, *, download):
         calls.append(download)
         return overlay
@@ -474,15 +487,21 @@ def test_gpio_only_overlay_load_never_constructs_video(monkeypatch, tmp_path):
 
 def test_prepare_cli_passes_explicit_reset_assertion(monkeypatch, capsys):
     from hdmi_capture import sender
-    calls = []
+    calls, selected_modes = [], []
+    def make_source(bitfile, manifest, *, capture_mode):
+        selected_modes.append(capture_mode)
+        return SimpleNamespace(bitfile=bitfile, manifest_path=manifest)
     def prepare(source, path, *, after_reset):
         calls.append((source.bitfile, source.manifest_path, path, after_reset))
         return dict(preparation=dict(hpd=1))
+    monkeypatch.setattr(sender, "LiteXCreditSource", make_source)
     monkeypatch.setattr(prepared, "prepare", prepare)
     sender.main(["prepare", "--bitfile", "capture.bit", "--manifest", "manifest.json",
-                 "--receipt", "prepared.json", "--after-reset"])
+                 "--receipt", "prepared.json", "--after-reset", "--mode", "1080p30"])
     assert calls == [("capture.bit", "manifest.json", "prepared.json", True)]
-    assert json.loads(capsys.readouterr().out)["input_mode_verified"] is False
+    report = json.loads(capsys.readouterr().out)
+    assert selected_modes == ["1080p30"]
+    assert report["capture_mode"] == "1080p30" and report["input_mode_verified"] is False
 
 
 def test_capture_cli_passes_prepared_receipt_without_loading(monkeypatch):

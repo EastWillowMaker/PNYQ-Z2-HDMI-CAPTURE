@@ -4,7 +4,10 @@ import importlib.util
 import copy
 import io
 import json
+import os
 from pathlib import Path
+import subprocess
+import sys
 
 import numpy as np
 import pytest
@@ -25,6 +28,21 @@ def test_exact_full_image(frame_id):
     assert report["expected_id"] == frame_id
     assert report["valid_marker_rows"] == 480
     assert report["expected_id_source"] == "majority_valid_optical_rows"
+
+
+@pytest.mark.parametrize("frame_id", [0, 0x12345678, 0xFFFFFFFF])
+def test_exact_1080p30_full_image(frame_id):
+    rgb = fixture.pattern(frame_id, "1080p30")
+    report = fixture.verify(rgb, mode="1080p30")
+    assert rgb.shape == (1080, 1920, 3)
+    assert report["exact_match"]
+    assert report["expected_id"] == frame_id
+    assert report["valid_marker_rows"] == 1080
+
+
+def test_1080p30_verification_rejects_vga_geometry():
+    with pytest.raises(ValueError, match="1080p30.*shape"):
+        fixture.verify(fixture.pattern(1), mode="1080p30")
 
 
 def test_body_corruption_fails_even_with_all_markers_intact():
@@ -99,6 +117,28 @@ def test_cli_generate_verify_and_existing_output(tmp_path, capsys):
     rgb[100, 200, 0] ^= 1
     np.save(path, rgb, allow_pickle=False)
     assert fixture.main(["verify", str(path), "--frame-id", "77"]) == 1
+
+
+def test_cli_1080p30_generate_verify(tmp_path):
+    path = tmp_path / "source-1080p30.npy"
+    assert fixture.main(["generate", "--mode", "1080p30", "--frame-id", "77",
+                         "--output", str(path)]) == 0
+    assert fixture.main(["verify", str(path), "--mode", "1080p30",
+                         "--frame-id", "77"]) == 0
+
+
+def test_script_works_without_an_installed_hdmi_capture_package(tmp_path):
+    path = tmp_path / "source.npy"
+    script = Path(__file__).parents[1] / "tools" / "hdmi_pattern.py"
+    env = dict(os.environ, PYTHONPATH="")
+    generated = subprocess.run([sys.executable, str(script), "generate", "--mode",
+                                "1080p30", "--frame-id", "91", "--output", str(path)],
+                               env=env, capture_output=True, text=True)
+    assert generated.returncode == 0, generated.stderr
+    checked = subprocess.run([sys.executable, str(script), "verify", str(path),
+                              "--mode", "1080p30", "--frame-id", "91"],
+                             env=env, capture_output=True, text=True)
+    assert checked.returncode == 0, checked.stderr
 
 
 @pytest.mark.parametrize("frame_id", [-1, 0x100000000])
