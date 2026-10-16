@@ -1,12 +1,15 @@
 # PYNQ-Z2 M1 build
 
-## Experimental 1080p30 build
+## 1080p30 build
 
 The qualified VGA build below remains the default. The new explicit
 `1080p30` profile targets 1920×1080 progressive at 74.25 MHz, with totals
 2200×1125 and receiver `kClkRange=2`. Its pixel timing is separate from the
-142.857132 MHz capture AXI clock. This profile has passed host tests and
-pattern simulation; CAD and real-board qualification are still pending.
+142.857132 MHz capture AXI clock. The [fresh build005](results/2026-10-17/1080p30-build-005.md)
+passed CAD and strict timing/CDC/DRC checks. Real J9→J10 short captures,
+held-buffer ownership and GUI BMP saving also passed; see
+[loop measurements](results/2026-10-17/1080p30-loop-performance.md).
+The ten-minute production test is in progress; see [current status](progress.md).
 
 Generate matching gateware with the pinned environment, then build into a new
 directory. For the optional same-board output-loop fixture:
@@ -41,7 +44,8 @@ Runtime observations verify dimensions and 24-bit pixels, not the input pixel
 clock or refresh rate. Measure actual source cadence and disclose that limit
 in board results. Neither a mode declaration nor protocol acceptance proves
 1080p HDMI operation. See [primary-source research](research.md) for board
-electrical limits and the unresolved physical qualification.
+electrical limits and [output-loop operation](output-loop.md) for the verified
+fixture's preparation and clock-readiness ordering.
 
 For fast clock/reset metadata diagnosis, prepare a fresh staged output and run
 the reduced TX block-design check. It creates no bitstream and does not access

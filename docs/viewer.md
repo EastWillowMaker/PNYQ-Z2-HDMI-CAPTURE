@@ -30,3 +30,8 @@ may be scaled to fit the window; the saved image remains at the received size.
 The Save button stays disabled before the first frame and while disconnected.
 Closing stops capture within a bounded wait. If a save is in progress, the
 window stays open until the BMP and metadata sidecar finish writing.
+
+The [real1080p HDMI save check](results/2026-10-17/1080p30-gui-hdmi-001.md)
+invoked the actual button and verified every decoded RGB byte against the
+selected frame and independent source pattern. To supply the board-generated
+J9→J10 test image, follow [output-loop preparation](output-loop.md).

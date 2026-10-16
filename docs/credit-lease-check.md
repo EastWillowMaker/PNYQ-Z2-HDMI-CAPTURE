@@ -7,12 +7,14 @@ the parked buffer and its held identity remain unchanged. It then ACKs that
 lease and requires a second complete, exact analytic RGB pattern with new
 native/SOF identities and a different optical pattern ID.
 
-The checker defaults to the qualified VGA profile. For the experimental
+The checker defaults to the qualified VGA profile. For the
 1080p30 build, pass `--mode 1080p30` and use that profile's artifacts and
 prepared receipt. It checks the 1080×1920×3 buffer, 5760-byte stride and every
 RGB pixel against the selected pattern. An unexpected profile or geometry
-fails the observation. The new profile has host-test coverage; its held-buffer
-hardware observation is still pending.
+fails the observation. The [1080p30 hardware observation](results/2026-10-17/1080p30-lease-001.jsonl)
+passed: A remained stable through188native edges, a second leased read was
+rejected before arm, and B was a different exact pattern after ACK. The same
+session verified20more full images for component timing and ended with DMA safe.
 
 The [2026-10-16 lease015 hardware result](results/2026-10-16/m1-017-lease-015-report.md)
 passed on the real PYNQ-Z2 HDMI path: six held-A observations kept buffer hashes,

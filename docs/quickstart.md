@@ -1,10 +1,14 @@
 # First PC frame from the PYNQ-Z2
 
+This walkthrough uses the qualified VGA default. For the explicit1920×1080p30
+profile and board HDMI OUT→IN fixture, use [output-loop capture](output-loop.md).
+
 Use a PYNQ-Z2 running the tested PYNQ 3.0.1 image, its normal Linux account,
 working Ethernet, and local sudo authentication. Connect the HDMI source to J10
-HDMI **input**. The custom receiver supports only progressive 640×480 at
-25.175 or 25.2 MHz (approximately 60 Hz). It advertises only VGA in EDID; do not
-force another resolution. Loading this overlay changes the active FPGA design.
+HDMI **input**. The default receiver profile supports progressive 640×480 at
+25.175 or 25.2 MHz (approximately 60 Hz). This profile advertises only VGA in
+EDID; do not force another resolution without its matching profile/artifacts.
+Loading this overlay changes the active FPGA design.
 Keep any existing board bitstream/HWH and stop other capture/DMA applications.
 
 Build from a clean checkout using [the pinned build recipe](build.md#reproduce)

@@ -8,6 +8,12 @@ base-overlay baseline; `litex` is the older custom-overlay adapter. The explicit
 commands below retain their source labels; unit tests alone do not establish
 a physical capture result.
 
+For1920×1080p30, select `--mode 1080p30` on preparation and the `litex-credit`
+sender, with that profile's verified bit/HWH/manifest. Follow
+[output-loop capture](output-loop.md) for live-clock checks before native startup
+and [measured results](results/2026-10-17/1080p30-loop-performance.md). The
+`pynq` base-overlay adapter remains VGA-only; it does not select the new mode.
+
 ## Run
 
 Install the repository in a local environment using the main README. On the
@@ -130,9 +136,10 @@ pipeline; source exceptions propagate after cleanup.
 
 The distinct `--source litex` requires an explicit custom bitstream and generated
 build manifest. It verifies matching bitstream/HWH SHA256, schema, pinned PYNQ
-receiver commit, 640x480 geometry, and 142857132Hz clock before loading. It uses
-the manifest's 25.2MHz preferred/25.175MHz supported pixel clocks and
-`receiver_k_clk_range=5`; it also verifies the HWH receiver module's `kClkRange=5`
+receiver commit, selected-profile geometry, and142857132Hz clock before loading.
+The VGA default uses25.2MHz preferred/25.175MHz supported pixel clocks and
+`receiver_k_clk_range=5`; the explicit1080p30 profile uses74.25MHz and range2.
+It also verifies the HWH receiver module's matching `kClkRange`
 before loading, because this receiver has no AXI control registers and may not
 appear in `ip_dict`. Older range1 or incomplete manifests are rejected. The EDID
 hash records build provenance; it is not an independent runtime readback of the
@@ -468,7 +475,7 @@ tests cover partial native-start failure and safe failures that should propagate
 normally. This is a tested control-flow safeguard, not proof that the unresolved
 kernel panic is fixed or that actual hardware shutdown now succeeds.
 
-## Single-credit source (hardware validation pending)
+## Single-credit source
 
 New manifests declaring `single_credit_parked_v1` require explicit
 `--source litex-credit --fps 2`; old `--source litex` rejects them. Legacy `013`
@@ -476,8 +483,14 @@ remains a distinct circular-DMA baseline. New capture allocates one native BO,
 parks all store addresses on it, grants one frame, waits for error-free
 automatic halt and next-SOF geometry closure, copies RGB, then ACKs its lease.
 No new credit is granted before release; slow TCP consumes independent copies.
-The complete ABI, source IDs, sampling counts, and pending hardware assumptions
+The complete ABI, source IDs, sampling counts, and remaining hardware assumptions
 are in [source accounting](source-accounting.md).
+
+The fixed VGA path has [completed M1 evidence](results/2026-10-16/m1-completion.md).
+The1080p30 loop has separate [held-buffer and component evidence](results/2026-10-17/1080p30-loop-performance.md).
+Final close observes three selected-profile input periods while retaining the
+two-edge requirement and health checks, then disables capture and halts DMA
+before freeing the buffer. This avoids a50ms window falsely rejecting30Hz input.
 
 The credit reader uses a bounded raw HALTED poll before frontend close or native
 free. A timeout/MMIO failure retains the allocation and invokes the same
