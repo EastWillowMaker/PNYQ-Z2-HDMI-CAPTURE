@@ -63,10 +63,10 @@ uncompressed BMP whose decoded RGB bytes matched the exact click-time frame.
 These are synthetic checks, not real HDMI results. See
 [measurements](results/2026-10-17/1080p30-synthetic.md).
 
-The original HTTP server (exec session83923) ended. A new bounded normal-user
-server on the dedicated link-local address, port8766 (exec session80410), serves
-only `artifacts/deploy/1080p30-002` for at most1800seconds. Stop it after
-deployment, verifying process identity. New source archive SHA256 is
+Both temporary HTTP servers are stopped. The second server (exec session80410)
+served only `artifacts/deploy/1080p30-002`; after all transfers, its exact argv
+and normal-user ownership were checked before SIGTERM. No sender is running.
+New source archive SHA256 is
 `23b86f94231cc66c41d42db3042d3c141f60ed31ea51f0e3013a4d473c06fb2a`.
 The latest UART check reconfirmed passwordless sudo, the same boot ID and no
 sender or CPU benchmark process. Board time remains2022; use host dates and
