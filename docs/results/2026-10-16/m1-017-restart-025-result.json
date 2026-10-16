@@ -1,0 +1,173 @@
+{
+  "passed": true,
+  "scope": "explicit_normal_restart_after_loss024",
+  "full_m1_qualification": false,
+  "error": null,
+  "sender_exit": 0,
+  "dma_shutdown_safe": true,
+  "raw_halt_verified": true,
+  "storage_passed": true,
+  "initial_prepare_exit": 0,
+  "sampler_exit": 0,
+  "sender_final_count": 1,
+  "sender_final": {
+    "session_id": "e3349ef1-e1e2-4202-ad7d-07506ee4e00b",
+    "counters": {
+      "acquired": 90,
+      "startup_discarded": 0,
+      "intentional_sampling_drops": 0,
+      "network_backpressure_drops": 67,
+      "client_discarded": 1,
+      "transport_enqueued": 21,
+      "source_errors": 0,
+      "source_cleanup_errors": 0,
+      "network_errors": 0,
+      "source_skips": 2582,
+      "source_overruns": 0,
+      "source_invalid_frames": 0
+    },
+    "dma_shutdown_safe": true,
+    "source_integrity": {
+      "startup": {
+        "enabled": false,
+        "observed_frames": 292,
+        "selected_frames": 0,
+        "completed_frames": 291,
+        "dropped_frames": 292,
+        "invalid_frames": 1,
+        "snapshot_begin_ns": 78026662380164,
+        "snapshot_end_ns": 78026662593197,
+        "timestamp_clock": "board_monotonic",
+        "snapshot_atomic": false,
+        "sample_point": "before_first_credit_while_gate_disabled_dma_halted",
+        "counter_bits": 32,
+        "frontend_overflow_episodes": 0,
+        "native_vsync_edges": 293,
+        "overflow_units": "assertion_episodes_not_lost_frames",
+        "frontend_underflow_episodes": 0
+      },
+      "last": {
+        "enabled": true,
+        "observed_frames": 2997,
+        "selected_frames": 91,
+        "completed_frames": 2995,
+        "dropped_frames": 2906,
+        "invalid_frames": 1,
+        "snapshot_begin_ns": 78071730878441,
+        "snapshot_end_ns": 78071731068804,
+        "timestamp_clock": "board_monotonic",
+        "snapshot_atomic": false,
+        "sample_point": "sequential_gpio_reads_during_credit_health_check",
+        "counter_bits": 32,
+        "frontend_overflow_episodes": 0,
+        "native_vsync_edges": 2997,
+        "overflow_units": "assertion_episodes_not_lost_frames",
+        "frontend_underflow_episodes": 0
+      },
+      "failure": null
+    },
+    "final_source_accounting": {
+      "identity": {
+        "credit_busy": true,
+        "credit_done": true,
+        "credit_failed": false,
+        "request_seen": 1,
+        "ack_seen": 0,
+        "source_sequence_fault": false,
+        "native_armed": true,
+        "selected_sof_id": 2994,
+        "selected_native_vsync_id": 2995,
+        "selected_completed": 91,
+        "command_errors": 0,
+        "source_sequence_faults": 0,
+        "identity_snapshot_coherent": true
+      },
+      "native_edges_begin": 2994,
+      "native_edges_end": 2997,
+      "interval_seconds": 0.05,
+      "passed": true
+    }
+  },
+  "sender_errors": 0,
+  "post_diagnostic": {
+    "boot": "1dd70e40-85cc-4c9b-a2e2-03b9814e290f",
+    "control": 86032,
+    "status": 69633,
+    "command": 2,
+    "ext4_errors": "0",
+    "test_bytes": 16777216,
+    "test_sha256": "341aacac661ccb210720bedaa9ead5d668fe5ea41a73532fc147c71e34040df1"
+  },
+  "final_receipt": {
+    "schema_version": 1,
+    "boot_id": "1dd70e40-85cc-4c9b-a2e2-03b9814e290f",
+    "artifacts": {
+      "bitfile": {
+        "path": "/tmp/hdmi-capture-prepared-014/overlay/capture.bit",
+        "sha256": "ae3a65d77b1662fedef9ffbc62dd9484cdd8a155af136596da3e6b695fb6846e"
+      },
+      "hwh": {
+        "path": "/tmp/hdmi-capture-prepared-014/overlay/capture.hwh",
+        "sha256": "3bfbbf124960ec932a4a53bb4fcb4a5969b89b9a96d6329143bdfc8442eef9a6"
+      },
+      "manifest": {
+        "path": "/tmp/hdmi-capture-prepared-014/overlay/build-manifest.json",
+        "sha256": "4dc7867f34b7bfdbf782c9cde078669b5fb2d2c1ec1930187f6f646592541227"
+      }
+    },
+    "pynq_state": {
+      "bitfile_name": "/tmp/hdmi-capture-prepared-014/overlay/capture.bit",
+      "bitfile_hash": "f434eb6ca82b6b9d3452733223c56f6c2f13c61b",
+      "timestamp": "2022/10/22 8:28:44 +556791",
+      "active_name": "Pynq-Z2"
+    },
+    "preparation": {
+      "hpd": 1,
+      "vdma_control": 65538,
+      "vdma_status": 65537,
+      "command": 0
+    }
+  },
+  "final_receipt_sha256": "d7845eb15072e8feff06a2dfacbeebe59f973d832c4bf31e4d4a479a9efe9eed",
+  "receipt_identity_preserved": true,
+  "kernel_delta": {
+    "verified": true,
+    "continuity_proven": true,
+    "overlap_lines": 178,
+    "new_lines": [
+      "[77987.182776] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(15752), ret: 0",
+      "[77987.182894] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(15752)",
+      "[77987.183494] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(15752), ret: 0",
+      "[78001.099859] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(16292), ret: 0",
+      "[78001.099977] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(16292)",
+      "[78001.100571] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(16292), ret: 0",
+      "[78007.477721] fpga_manager fpga0: writing capture.bin to Xilinx Zynq FPGA Manager",
+      "[78007.560174] [drm] skip kind 29(AIE_RESOURCES) return code: -22",
+      "[78007.560221] [drm] skip kind 8(IP_LAYOUT) return code: -22",
+      "[78007.560236] [drm] skip kind 9(DEBUG_IP_LAYOUT) return code: -22",
+      "[78007.560248] [drm] skip kind 25(AIE_METADATA) return code: -22",
+      "[78007.560259] [drm] skip kind 7(CONNECTIVITY) return code: -22",
+      "[78007.560269] [drm] found kind 6(MEM_TOPOLOGY)",
+      "[78007.560379] [drm] Memory 0 is not reserved in device tree. Will allocate memory from CMA",
+      "[78007.560425] [drm] zocl_xclbin_read_axlf e61e64a8-49b0-0497-4e89-7d3233c27b88 ret: 0",
+      "[78007.587971] [drm] bitstream e61e64a8-49b0-0497-4e89-7d3233c27b88 locked, ref=1",
+      "[78007.588026] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_add_context: Client pid(16292) add context Domain(0) CU(0xffffffff) shared(true)",
+      "[78007.588111] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_del_context: Client pid(16292) del context Domain(0) CU(0xffffffff)",
+      "[78007.588137] [drm] bitstream e61e64a8-49b0-0497-4e89-7d3233c27b88 unlocked, ref=0",
+      "[78009.940509] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(16292)",
+      "[78021.593438] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(16335), ret: 0",
+      "[78021.593559] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(16335)",
+      "[78021.594173] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(16335), ret: 0",
+      "[78073.018000] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(16335)"
+    ],
+    "new_line_count": 24,
+    "new_external_abort_lines": [],
+    "before_abort_count": 0,
+    "after_abort_count": 0,
+    "before_sha256": "5060933ff3afb0cc876fdc20d61e3772ca9d5c6f77aafa07b4d4bdd711b4106d",
+    "after_sha256": "e1e3f098932bf67945207c918299d2881101b4d9fecc5a9815cd8aff227d8f07"
+  },
+  "no_new_external_abort": true,
+  "normal_production_prepare_verified": true,
+  "finished_monotonic": 78079.44222222
+}

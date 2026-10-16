@@ -1,8 +1,15 @@
 # Single-credit capture accounting
 
-Status: implementation authorized; hardware validation pending. Legacy build013
-and the M0 PYNQ source remain separate evidence and retain unknown DMA-associated
-source IDs. This design must not reinterpret their GPIO registers as the new ABI.
+Status: build017 single-credit ownership was observed on hardware in
+[lease015](results/2026-10-16/m1-017-lease-015-report.md), with sustained
+accounting in[normal019](results/2026-10-16/m1-017-normal-019.md) and safe physical
+loss/restart024/025. See[the aggregate scope](results/2026-10-16/m1-completion.md).
+Startup native skips and independent absolute optical/native mapping remain
+unknown. Legacy013 and M0 retain their separate unknown source-ID evidence;
+their GPIO registers must not be interpreted as this ABI.
+
+The design rationale and legacy-driver comparison below retain their original
+context; the linked current records establish hardware scope.
 
 ## Why the existing PYNQ reader cannot supply exact IDs
 

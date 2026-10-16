@@ -1,0 +1,44 @@
+{
+  "pid": 16335,
+  "argv": [
+    "/usr/local/share/pynq-venv/bin/python",
+    "-u",
+    "-X",
+    "faulthandler",
+    "-m",
+    "hdmi_capture.sender",
+    "--source",
+    "litex-credit",
+    "--bitfile",
+    "/tmp/hdmi-capture-prepared-014/overlay/capture.bit",
+    "--manifest",
+    "/tmp/hdmi-capture-prepared-014/overlay/build-manifest.json",
+    "--prepared-receipt",
+    "/tmp/hdmi-capture-prepared-014/prepared.json",
+    "--host",
+    "::",
+    "--port",
+    "9032",
+    "--fps",
+    "2",
+    "--duration",
+    "45",
+    "--startup-diagnostics"
+  ],
+  "pythonpath": "/tmp/hdmi-capture-clean-023/src",
+  "modules": {
+    "sender": {
+      "path": "/tmp/hdmi-capture-clean-023/src/hdmi_capture/sender.py",
+      "sha256": "8790276c947e85d3a1755097faa2b09811d8f00c906d2a48dfd1a98ebe60059e"
+    },
+    "sources": {
+      "path": "/tmp/hdmi-capture-clean-023/src/hdmi_capture/sources.py",
+      "sha256": "90798eb897756d199d4b9967e4bb2f405837e3f2f3805f04fd0ba4cb379e1727"
+    },
+    "prepared": {
+      "path": "/tmp/hdmi-capture-clean-023/src/hdmi_capture/prepared.py",
+      "sha256": "059b321abb9dc4c455cc50f750523870eeacb098c4dabfafc993ebdd6c1b09ce"
+    }
+  },
+  "started_monotonic": 78009.952155948
+}

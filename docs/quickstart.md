@@ -7,21 +7,14 @@ HDMI **input**. The custom receiver supports only progressive 640×480 at
 force another resolution. Loading this overlay changes the active FPGA design.
 Keep any existing board bitstream/HWH and stop other capture/DMA applications.
 
-Build from a clean checkout using [the pinned bootstrap/build recipe](build.md#reproduce)
-and use its successful single-credit bit/HWH/manifest pair. The normal017/v11
-run passed1,201 exact frames over600.368seconds with safe shutdown; the separate
-HDMI-loss run failed. [Current evidence](results/2026-10-16/capture-011-loss-012-report.md)
-and the [remaining audit](results/2026-10-16/m1-remaining-audit.md) distinguish
-that pass from unfinished full M1 qualification. The tracked preparation,
-receipt and source-trigger workflow passed a
-[41-frame short hardware run](results/2026-10-16/m1-017-prepared-014-report.md);
-[held-credit observations](results/2026-10-16/m1-017-lease-015-report.md) also
-passed. The current production runtime also passed [normal019](results/2026-10-16/m1-017-normal-019.md):
-1,201 exact frames over600.300346seconds with safe shutdown. Physical-loss020
-[did not complete its observation](results/2026-10-16/m1-017-hdmi-loss-020.md).
-An isolated clean-checkout replay and remaining fault/mode checks remain open.
-Legacy013 uses the separate `--source litex` adapter and has no exact
-DMA-associated source identities.
+Build from a clean checkout using [the pinned build recipe](build.md#reproduce)
+and its successful single-credit bit/HWH/manifest pair. The accepted fixed-mode
+[M1 is verified](results/2026-10-16/m1-completion.md): normal019 passed1,201exact
+frames over600.300346s; clean023 replayed the public workflow from an isolated
+source export; physical024 and restart025 verified interruption and recovery.
+Source faults require explicit preparation/restart. Existing per-run false flags
+and failed attempts remain in their dated reports. Legacy013's `--source litex`
+adapter is separate; use `--source litex-credit` for the current path.
 
 ## Host setup and read-only doctor
 
@@ -138,6 +131,6 @@ For a later sustained run, use [qualification.md](qualification.md): at least
 600seconds and600 distinct exact frames at1FPS or more, clean accounting,
 source/resource evidence and safe shutdown. A20-second smoke is not that
 criterion. [Source accounting](source-accounting.md) explains the held identity
-and parked-buffer contract. Physical interruption, mode/restart and an isolated
-clean-checkout startup remain separate obligations; build timing and CDC
+and parked-buffer contract. The [aggregate report](results/2026-10-16/m1-completion.md) links the separate
+interruption, mode/restart and clean-source checks; build timing and CDC
 limits remain in [build.md](build.md).

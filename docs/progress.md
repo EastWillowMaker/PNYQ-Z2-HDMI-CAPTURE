@@ -1,5 +1,57 @@
 # Progress and handoff
 
+2026-10-16T22:21:40+08:00 — Accepted fixed-mode M1 complete.
+
+PC Python receives real HDMI IN RGB888 through the LiteX single-credit gate,
+parked VDMA/PS DDR and PS Ethernet. Normal019 passed1,201distinct exact frames
+in600.300346s at2.000665FPS, zero pixel/metadata/transport errors and safe stop.
+Held-buffer015, clean-source public workflow023, user-confirmed physical loss024
+and explicit restart025 close the separate ownership/reproduction/fault gates.
+025passed21exact/10.109394s, new session/source IDs, zero normal source/cleanup/
+network errors, DMA halt/storage/kernel checks and sourceexit0/VTrestoration.
+No new authentication was needed for the final restart. The root024→025 chain
+passed. A final read-only check found no active board capture sender and ext4
+errors0; the bounded PC worker ended normally via stopfile after source exit.
+
+Read[the completion report](results/2026-10-16/m1-completion.md) and its aggregate
+JSON before the historical checkpoints below. Per-run fullM1false flags and
+failed original observers remain unchanged; aggregate scope is fixed VGA near60Hz,
+not arbitrary HDMI. Runtime3343dac; clean source exportad6c966; fresh clean017
+paired artifacts/build replay. Host tests490pass/1optional skip, focused60pass.
+No production capture code changed after that runtime; host readiness90s and
+fatal-log guard were verified separately and exercised by clean023.
+
+Use quickstart.md and prepared-capture.md, with a live supported source before
+native configuration, fresh paths, normal preparation/restart and litex-credit.
+The documented source is240s to budget90s readiness+90s sender+cleanup. No
+capturing service is left running; start an authorized sender for a new session.
+Do not reload unknown/active DMA or force-kill native resources. Unknown startup
+native skips/absolute optical-native mapping, unknown source format/range,
+unsupported-geometry hardware NOT_RUN, VTC startup clock requirement, ignored
+post-safe-cleanup UIO warning and timing/CDC/external-I/O limits remain explicit.
+Web, bypass and LCD C are later milestones; do not start them as follow-on work
+without their own agreed scope. No push/PR or external capture upload was made.
+The unrelated untracked m1-recovery-scanout.log remains untouched.
+
+2026-10-16T22:14:52+08:00 — Confirmed loss024 passed; explicit restart025 running.
+User confirmed HDMIIN-only5s unplug/reconnect, Hub/MicroB unchanged.101exact
+frames then boundaryEOF102.938s; no partial transport/pixel/metadata failure.
+RootexpectedfailstopTrue/exit1; exact knownfinalproofcleanup1 recordedafter
+safehalt/free, rawCR0x15010/SR0x11001/command2gateoff/storage/kernel/noSIGBUSpass.
+Source03continued240s/exit0/VTrestored; separate verified.json passes physical
+scope while originalpending-humancontroller remainsunchanged. No native signal.
+
+Initial025hostprereq observer1676747 mistook verifiedsudo ancestors ofexisting
+worker forcompeting sources, beforeanysource04/proof/marker/nativework. Stopped
+ONLYthisverifiednormal-userobserver(emptychildren) andsavedNOT_RUN evidence.
+Immutable025b helper now validates exactrootworker+2sudoancestor PID/start/argv/
+UID/ancestry; otherDRMsourcesstillreject. Actual025bPID1678254queuedsource04
+180s/id2500000 beforedeadline; no newPCauth or rootworker edit. Root025already
+stagedbyfixedchain, normalprepare-afterfreshKMS/9032/sender45s/client10s. Await
+actualroot/client/source/VT finalresults; don'tstage live025 files. Existing
+worker1656056deadline349638; aftersource04actualexit/restore, use stopfile toend
+idleworker normally. FullM1 notyetmarkedcomplete; finalaudit isunderway.
+
 2026-10-16T22:06+08:00 — Clean023 public workflow/restart independently verified.
 41exactRGB frames/20.309945s/2.018715FPS; completegitexportad6c966, cleanmodule
 paths/hashes/publicwait->prepare->exec andcleanpublictrigger90/qualifier20.

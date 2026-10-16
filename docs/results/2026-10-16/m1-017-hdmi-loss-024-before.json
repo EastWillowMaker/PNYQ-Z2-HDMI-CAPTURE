@@ -1,0 +1,58 @@
+{
+  "current": {
+    "boot": "1dd70e40-85cc-4c9b-a2e2-03b9814e290f",
+    "control": 86032,
+    "status": 69633,
+    "command": 2,
+    "ext4_errors": "0",
+    "test_bytes": 16777216,
+    "test_sha256": "341aacac661ccb210720bedaa9ead5d668fe5ea41a73532fc147c71e34040df1"
+  },
+  "modules": {
+    "sender": {
+      "path": "/tmp/hdmi-capture-clean-023/src/hdmi_capture/sender.py",
+      "sha256": "8790276c947e85d3a1755097faa2b09811d8f00c906d2a48dfd1a98ebe60059e",
+      "source_revision": "3343dac"
+    },
+    "sources": {
+      "path": "/tmp/hdmi-capture-clean-023/src/hdmi_capture/sources.py",
+      "sha256": "90798eb897756d199d4b9967e4bb2f405837e3f2f3805f04fd0ba4cb379e1727",
+      "source_revision": "3343dac"
+    },
+    "prepared": {
+      "path": "/tmp/hdmi-capture-clean-023/src/hdmi_capture/prepared.py",
+      "sha256": "059b321abb9dc4c455cc50f750523870eeacb098c4dabfafc993ebdd6c1b09ce",
+      "source_revision": "3343dac"
+    }
+  },
+  "receipt": {
+    "schema_version": 1,
+    "boot_id": "1dd70e40-85cc-4c9b-a2e2-03b9814e290f",
+    "artifacts": {
+      "bitfile": {
+        "path": "/tmp/hdmi-capture-prepared-014/overlay/capture.bit",
+        "sha256": "ae3a65d77b1662fedef9ffbc62dd9484cdd8a155af136596da3e6b695fb6846e"
+      },
+      "hwh": {
+        "path": "/tmp/hdmi-capture-prepared-014/overlay/capture.hwh",
+        "sha256": "3bfbbf124960ec932a4a53bb4fcb4a5969b89b9a96d6329143bdfc8442eef9a6"
+      },
+      "manifest": {
+        "path": "/tmp/hdmi-capture-prepared-014/overlay/build-manifest.json",
+        "sha256": "4dc7867f34b7bfdbf782c9cde078669b5fb2d2c1ec1930187f6f646592541227"
+      }
+    },
+    "pynq_state": {
+      "bitfile_name": "/tmp/hdmi-capture-prepared-014/overlay/capture.bit",
+      "bitfile_hash": "f434eb6ca82b6b9d3452733223c56f6c2f13c61b",
+      "timestamp": "2022/10/22 8:28:44 +556791",
+      "active_name": "Pynq-Z2"
+    },
+    "preparation": {
+      "hpd": 1,
+      "vdma_control": 65538,
+      "vdma_status": 65537,
+      "command": 0
+    }
+  }
+}

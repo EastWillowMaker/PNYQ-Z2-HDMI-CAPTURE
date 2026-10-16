@@ -58,10 +58,11 @@ following sequence starts a board waiter first, then a PC trigger and client
 pipeline before switching VT. Tracked startup passed 41 exact frames in the
 [short014 run](results/2026-10-16/m1-017-prepared-014-report.md), and
 [lease015](results/2026-10-16/m1-017-lease-015-report.md) passed held-buffer
-observations. The revised ordering below still needs an isolated clean-checkout
-replay. The same production ordering passed the
-[600-second normal019 run](results/2026-10-16/m1-017-normal-019.md);
-interruption and mode checks remain separate.
+observations. [Clean023](results/2026-10-16/m1-017-clean-023.md) replayed the
+public ordering from an isolated source export. The same acquisition runtime
+passed [normal019](results/2026-10-16/m1-017-normal-019.md) for600seconds;
+[the completion report](results/2026-10-16/m1-completion.md) links the separate
+interruption, mode and restart checks.
 
 Run016 correctly rejected a FIFO underflow latched during the KMS transition,
 before video-driver setup or any selected credit. Its
@@ -171,7 +172,7 @@ for capture_attempt in $(seq 1 50); do
   sleep 0.1
 done
 if grep -q '^{"event": "waiting_for_kms",' artifacts/prepared-001-trigger.jsonl; then
-  sudo -n /usr/bin/python3 tools/run_kms_vt.py --duration 180 --frame-id 1500000 \
+  sudo -n /usr/bin/python3 tools/run_kms_vt.py --duration 240 --frame-id 1500000 \
     --output artifacts/kms-prepared-001
 else
   echo 'Trigger did not enter its fresh-output wait; inspect the pipeline log'
@@ -179,7 +180,9 @@ fi
 wait "$capture_pipeline_pid"
 ```
 
-The source directory must not exist when the trigger begins. Its
+The240-second source leaves time for the90-second sender readiness bound,
+90-second sender run and cooperative cleanup. The source directory must not
+exist when the trigger begins. Its
 `waiting_for_kms` event confirms that fresh-path check completed before the KMS
 command creates the directory. The trigger reads metadata only and requires
 XR24, 640x480, 25200 kHz, two increasing completed presentations from this wait,
@@ -250,6 +253,9 @@ construction and hardware checks. PYNQ's `is_loaded()` alone is insufficient:
 Overlay construction changes its in-memory bitfile name. PYNQ's state loader
 also recomputes the saved hash, so this path reads the persisted JSON directly.
 
+Repeated preparations can produce identical receipt content. The receipt matches
+configuration; it is not a unique preparation-epoch token.
+
 These checks require exclusive ownership of PL configuration and capture.
 Do not run another sender, notebook or configuration tool concurrently.
 The receipt is a software ledger tied to this command's successful download,
@@ -261,7 +267,9 @@ The existing sender route without `--prepared-receipt` retains its loading
 behavior and does not gain these preparation guards.
 
 Host tests exercise receipt validation, preparation/attach ordering, metadata
-races and rejected hardware states. The linked014/015/017 results provide short
-hardware evidence for their recorded paths, not full M1 or a clean-checkout
-replay of this queued command. Board results must identify the exact source
+races and rejected hardware states. The linked014/015/017 results remain short
+hardware evidence. Clean023
+replayed the queued public workflow from an isolated source export; normal019
+and the separate fault/restart evidence complete the accepted fixed-mode M1
+scope in the aggregate report. Board results must identify the exact source
 revision and record readiness, receiver, DMA and cleanup checks separately.

@@ -3,35 +3,25 @@
 PC Python receives real PYNQ-Z2 HDMI input through a LiteX capture gate,
 VDMA/PS DDR and onboard PS Ethernet as complete raw RGB888 NumPy arrays.
 
-Legacy013 passed the 640×480p60 delivered-image criterion: **1,201 distinct exact frames in
-600.506 seconds, 2.000 FPS, 14.745 Mbps**, with zero pixel, mixed, repeat,
-metadata or transport errors. LiteX gate control, client pause/reconnect and
-explicit restart after a 60→59.94 Hz mode change were also exercised.
-Physical HDMI cable removal/reinsertion remains pending.
+The accepted640×480 progressive near60Hz M1 is verified: **1,201 distinct exact
+frames in600.300346seconds,2.000665FPS**, with zero pixel, mixed/repeated-frame,
+metadata or transport errors. Held-buffer ownership, clean-source first frame,
+physical HDMI interruption, explicit restart and a supported timing change have
+separate hardware evidence. DMA shutdown, storage and desktop restoration pass.
 
-Build017 with the direct DRM/KMS source passed the strict ten-minute image and
-single-credit accounting criteria: **1201/1201 exact frames in600.155seconds,
-2.001FPS**, with zero pixel, mixed, repeat, metadata or transport failures.
-See the [KMS capture report](docs/results/2026-10-15/m1-017-kms-001-report.md).
+Read the [M1 completion report](docs/results/2026-10-16/m1-completion.md) for
+exact versions, evidence and limits. Source faults fail-stop and require explicit
+preparation/restart. Arbitrary modes, automatic recovery and missing-clock native
+startup are not qualified. Startup native skips and independent absolute
+optical/native-ID mapping remain unknown. PYNQ's ignored post-cleanup UIO warning
+and build timing/CDC/external-I/O limits remain disclosed. Browser, bypass and
+LCD are later milestones.
 
-M1 remains incomplete: board SD/EXT4 I/O errors prevented the normal shutdown
-command; the sender later reported SIGBUS, so safe DMA shutdown is unverified.
-Further board tests require recovery. Interruption/physical recovery validation
-also remains outstanding. The earlier desktop-source failures are retained in
-[the diagnosis](docs/results/2026-10-15/frame-difference-diagnosis.md).
-
-See the [qualification report](docs/results/2026-10-15/m1-qualification.md)
-for raw evidence, startup invalid attribution, resource use, timing and limits.
-VDMA physical sequence/drop attribution is incomplete; earlier M0 failures and
-PYNQ cleanup warnings remain disclosed. Web, bypass and LCD are deferred.
-
-For a source outside GNOME composition, see the experimental
-[direct DRM/KMS source](docs/kms-source.md). Its direct-VT source and600-second real PYNQ pixel criterion passed;
-board shutdown remains unresolved;
-the failed DRM-lease prototype must not be treated as a safe desktop path.
-
-Start with the [clean-checkout-to-first-frame guide](docs/quickstart.md),
-[build guide](docs/build.md), and [current progress](docs/progress.md).
+Start with [quickstart](docs/quickstart.md), [prepared capture](docs/prepared-capture.md),
+[build](docs/build.md), and [progress](docs/progress.md). The supported source
+uses [direct DRM/KMS outside desktop composition](docs/kms-source.md).
+The [earlier frame-difference diagnosis](docs/results/2026-10-15/frame-difference-diagnosis.md)
+and failed SD/native runs remain in dated evidence; they are not current status.
 
 ## Install and receive a frame
 

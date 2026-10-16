@@ -1,8 +1,8 @@
 # Requirements and decision record
 
-Date: 2026-10-15 (Asia/Taipei). Status: legacy013 delivered-image/reconnect/mode
-evidence retained; build017 single-credit capture passed an11-frame smoke with
-source accounting. Ten-minute and physical cable qualification remain incomplete.
+Date: 2026-10-16 (Asia/Taipei). The accepted fixed-mode M1 is complete; see
+[aggregate evidence and limits](results/2026-10-16/m1-completion.md). Earlier
+failures and per-run flags remain in dated records. M2–M4 remain deferred.
 Normative source: [complete user prompt](../PYNQ_Z2_LiteX_HDMI_Capture_Codex_Prompt.md),
 SHA256 `38b149ac12077729ded5e6183f715d06e281df6ea6ba70aa7124c5cb24a744ae`.
 The complete source remains applicable; this record indexes it rather than replacing it.
@@ -11,24 +11,24 @@ The complete source remains applicable; this record indexes it rather than repla
 
 | ID | Requirement | Source | Implementation / evidence |
 | --- | --- | --- | --- |
-| C1 | PC Python receives complete real HDMI input frames over Ethernet; first priority | §§1,4 | M1 1,201/1,201 exact distinct frames over 600.506s, [evidence](results/2026-10-15/m1-qualification.md) |
-| C2 | PYNQ-Z2 and meaningful LiteX capture logic; no unrelated LED/import substitution | §§1,3 | 17 gateware tests pass; build013 timing/CDC/DRC reviewed; real gate disable/resume verified |
-| C3 | Main capture retains RGB 4:4:4; no chroma subsampling or lossy codec | §§1,5 | Implemented and locally tested; physical M0 evidence available |
-| C4 | Host array uint8 `(height,width,3)`, R/G/B, three bytes/pixel; explicit internal format conversion | §5 | Installable API/CLI and dtype/shape tests pass |
-| C5 | No silent scaling, gamma, range or YCbCr conversion; unknown source range stays unknown | §5 | Source XR24/GLES RGB8; exact ramp comparison passes; metadata retains unknown HDMI range |
-| C6 | Single-source complete frames, safe buffer ownership/cache handling; no stale frame passed as new | §5 | Bounded pool tests and M1 600s exact frames pass; actual DMA halt-before-free recorded |
-| C7 | Bound buffers and protocol sizes; partial IO, CRC, EOF, timeout, reconnect and mode changes handled | §§5,6 | Bounded parser/socket negatives pass; physical client reconnect and mode fail-stop/restart verified |
-| C8 | HDMI cannot be stopped by network backpressure; whole-frame loss policy and separate counters required | §5 | P4 accepted; bounded ready slot and immutable sending frame; real drop counters |
-| C9 | Frame IDs/timestamps with actual clock domain and sample point; counts for skips/overrun/invalid/delivered | §§5,6 | Clock/sample metadata implemented; M0 hardware loss unknown; M1 PL snapshot not per-buffer association |
-| C10 | Installable library/CLI: connect/read/close, snapshot, capture, stats; raw/.npy plus optional PNG | §6 | Implemented and locally tested; physical M0 evidence available |
+| C1 | PC Python receives complete real HDMI input frames over Ethernet; first priority | §§1,4 | Normal019:1,201exact/600.300346s/2.000665FPS; [aggregate](results/2026-10-16/m1-completion.md) |
+| C2 | PYNQ-Z2 and meaningful LiteX capture logic; no unrelated LED/import substitution | §§1,3 | Clean017 HLS/RTL/CAD replay and matching hardware pair; held credit015/normal019 verify active capture logic |
+| C3 | Main capture retains RGB 4:4:4; no chroma subsampling or lossy codec | §§1,5 | Strict per-byte RGB ramps/markers on the real path019; raw TCP with no lossy codec |
+| C4 | Host array uint8 `(height,width,3)`, R/G/B, three bytes/pixel; explicit internal format conversion | §5 | API tests and clean023/restart025 endpoint arrays: uint8 `(480,640,3)` exact RGB |
+| C5 | No silent scaling, gamma, range or YCbCr conversion; unknown source range stays unknown | §5 | Direct XR24 KMS fixture and exact RGB comparisons; source format/range metadata remains unknown |
+| C6 | Single-source complete frames, safe buffer ownership/cache handling; no stale frame passed as new | §5 | Held parked-buffer/identity015, sustained019 and safe loss/restart024/025; absolute optical/native mapping remains unmeasured |
+| C7 | Bound buffers and protocol sizes; partial IO, CRC, EOF, timeout, reconnect and mode changes handled | §§5,6 | Bounded parser/socket negatives; retained physical reconnect010, timing021, confirmed loss024 and restart025 |
+| C8 | HDMI cannot be stopped by network backpressure; whole-frame loss policy and separate counters required | §5 | Bounded ready slot and leased sending frame;015/019 verify ownership and separate post-client whole-frame drops |
+| C9 | Frame IDs/timestamps with actual clock domain and sample point; counts for skips/overrun/invalid/delivered | §§5,6 | Selected native/SOF credit identities and received-window equation019; startup native skips unknown, global snapshots non-atomic |
+| C10 | Installable library/CLI: connect/read/close, snapshot, capture, stats; raw/.npy plus optional PNG | §6 | Installable API/CLI and clean023 public workflow; raw endpoint arrays independently rechecked |
 | C11 | Separate transport, synthetic, HDMI→DDR and end-to-end measurements; CPU/memory/copies/DDR budget | §7 | Transport/synthetic/HDMI measurements separated; script budget and sustained resource samples recorded |
-| C12 | Synthetic patterns, protocol negatives, ownership, RTL adapter/reset/backpressure, API/CLI tests | §8 | 195 software tests plus17 gateware tests pass; physical cable removal pending |
-| C13 | Real source, controlled patterns, sustained capture, source reconnect, client reconnect, mode change | §8 | 195 software tests plus17 gateware tests pass; physical cable removal pending |
-| C14 | Distinguish static/unit/simulation/synthesis/timing/bitstream/on-board evidence; reproducible versions/IP/constraints/DRC | §§8,9 | Pinned source/HLS build; build013 paired bit/HWH and runtime IRQ parser verified |
+| C12 | Synthetic patterns, protocol negatives, ownership, RTL adapter/reset/backpressure, API/CLI tests | §8 | 490host passes/1optional skip; pinned gateware/drain simulations and separate hardware records |
+| C13 | Real source, controlled patterns, sustained capture, source reconnect, client reconnect, mode change | §8 | Controlled real source019, client reconnect010, timing021, user-confirmed physical024 and explicit restart025 |
+| C14 | Distinguish static/unit/simulation/synthesis/timing/bitstream/on-board evidence; reproducible versions/IP/constraints/DRC | §§8,9 | Pinned dependencies/IP/constraints, fresh clean017 replay and exact paired hardware hashes; retained warnings/gaps disclosed |
 | C15 | Later browser preview, active bypass, then LCD C first; no delay to capture | §§1,4 | Deferred M2/M3/M4 |
 | C16 | Reuse completed-frame consumers; preview JPEG cannot replace RGB main path; LCD conversion isolated | §4 | Deferred |
 | C17 | Preserve dirty work; no SD/boot/global package/network changes without confirmation; authorize disruptive overlay loads | §9 | Observed; temporary overlay/network operations explicitly authorized |
-| C18 | No automatic commit/push/PR; no captured images/secrets/private code uploaded | §9 | Observed; temporary overlay/network operations explicitly authorized |
+| C18 | No automatic commit/push/PR; no captured images/secrets/private code uploaded | §9 | User explicitly requested incremental local commits; no push/PR or external frame/secret upload |
 
 M0 may use existing PYNQ overlay as baseline-only; M1 requires reproducible LiteX
 capture integration and real end-to-end validation. M2 browser endpoint location,

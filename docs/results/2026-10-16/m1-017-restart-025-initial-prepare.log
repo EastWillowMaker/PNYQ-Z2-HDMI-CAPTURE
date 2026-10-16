@@ -1,0 +1,1 @@
+{"event": "receiver_prepared", "receipt": "/tmp/hdmi-capture-prepared-014/prepared.json", "preparation": {"hpd": 1, "vdma_control": 65538, "vdma_status": 65537, "command": 0}, "input_mode_verified": false}

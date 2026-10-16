@@ -1,9 +1,12 @@
 # Board capture and sender
 
-`pynq` selects the M0 base-overlay baseline; `litex` selects the paired custom
-overlay and capture gate used in the [M1 physical qualification](results/2026-10-15/m1-qualification.md).
-The explicit `synthetic` source tests transport; it never substitutes for HDMI.
-Unit tests alone do not establish a physical capture result.
+`litex-credit` selects the current single-credit path, with
+[fixed-mode M1 evidence](results/2026-10-16/m1-completion.md). Follow the
+[prepared workflow](prepared-capture.md) for that source. `pynq` selects the M0
+base-overlay baseline; `litex` is the older custom-overlay adapter. The explicit
+`synthetic` source tests transport and does not substitute for HDMI. Historical
+commands below retain their source labels; unit tests alone do not establish
+a physical capture result.
 
 ## Run
 

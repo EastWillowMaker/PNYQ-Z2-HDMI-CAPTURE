@@ -1,3 +1,11 @@
+Current resolution, after the historical audits below: the accepted fixed-mode
+M1 gates are closed in[m1-completion.md](m1-completion.md) and the
+[final bounded audit](m1-final-evidence-audit.md). Normal019, held-buffer015,
+clean-source023, confirmed physical024 and explicit restart025 provide separate
+proofs; mode021 retains its actual fail-stop evidence and original failed
+observer flags. The dated tables below describe what remained at their own
+checkpoints and are not the current task list.
+
 # M1 completion audit
 
 Current-state addendum — 2026-10-16, HEAD `a4613f0`.

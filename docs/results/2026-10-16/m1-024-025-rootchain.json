@@ -1,0 +1,484 @@
+{
+  "passed": true,
+  "steps": [
+    {
+      "name": "loss-session-024.py",
+      "exit_code": 0,
+      "result": {
+        "passed": true,
+        "scope": "intentional_hdmi_loss_fail_stop_only",
+        "full_m1_qualification": false,
+        "error": null,
+        "clean023_derived_verification": {
+          "proof": {
+            "scope": "independently_verified_clean_source_public_recipe_and_restart_smoke",
+            "passed": true,
+            "full_m1_qualification": false,
+            "root_checks_verified": true,
+            "kernel_delta_verified": true,
+            "source_exit": 0,
+            "desktop_restored": true,
+            "new_session_verified": true,
+            "optical_ids_in_new_presentations": true,
+            "root_result_sha256": "54fd7cf1335beef44136d6d6aa6749d7de68a0327a04d663107fd2dd96563927",
+            "controller_sha256": "3e49a38fdc52bf3695f7d58243aa19fc853da447d890cb6c0e0af0b3f45d0ccb",
+            "before_dmesg_sha256": "0c72a771b26f5091f56376a403bb27b5151d2e2b6c267784b5aa316e5a350da2",
+            "after_dmesg_sha256": "58c7baff6cfa910200edf0d7e2365ee1b697b7cd5876a10c26810bd4b6a3c54a",
+            "original_root_passed": false,
+            "original_controller_passed": false,
+            "original_observer_failure": "historical external abort rolled out of dmesg; count equality failed",
+            "kernel_overlap_lines": 161,
+            "kernel_new_lines": 41,
+            "external_abort_counts": [
+              1,
+              0
+            ],
+            "endpoint_checks": {
+              "first": {
+                "path": "artifacts/captures/m1-017-clean-023/first.npy",
+                "sha256": "eb00b6e524acd870cf5b4fae45e5b981020ada97f155a276ca215f391f82a2c4",
+                "shape": [
+                  480,
+                  640,
+                  3
+                ],
+                "dtype": "uint8",
+                "verification": {
+                  "expected_id": 2300163,
+                  "expected_id_source": "majority_valid_optical_rows",
+                  "valid_marker_rows": 480,
+                  "invalid_marker_rows": [],
+                  "optical_ids": {
+                    "2300163": 480
+                  },
+                  "mixed_optical_ids": false,
+                  "exact_match": true,
+                  "mismatched_pixels": 0,
+                  "mismatched_bytes": 0,
+                  "mismatched_bytes_by_channel": [
+                    0,
+                    0,
+                    0
+                  ],
+                  "mismatched_rows": [],
+                  "first_mismatch_y_x": null,
+                  "max_absolute_error": 0
+                }
+              },
+              "last": {
+                "path": "artifacts/captures/m1-017-clean-023/last.npy",
+                "sha256": "430cd91498907fe4e1742598e8ec00581cf8fb0e9405f0addd4e01d94bc9c33b",
+                "shape": [
+                  480,
+                  640,
+                  3
+                ],
+                "dtype": "uint8",
+                "verification": {
+                  "expected_id": 2300238,
+                  "expected_id_source": "majority_valid_optical_rows",
+                  "valid_marker_rows": 480,
+                  "invalid_marker_rows": [],
+                  "optical_ids": {
+                    "2300238": 480
+                  },
+                  "mixed_optical_ids": false,
+                  "exact_match": true,
+                  "mismatched_pixels": 0,
+                  "mismatched_bytes": 0,
+                  "mismatched_bytes_by_channel": [
+                    0,
+                    0,
+                    0
+                  ],
+                  "mismatched_rows": [],
+                  "first_mismatch_y_x": null,
+                  "max_absolute_error": 0
+                }
+              }
+            },
+            "clean_source_revision": "ad6c9660ae4029e8906a1f7331d79a5370cba06e",
+            "new_session": "2f44705a-5644-48dc-8e32-56483c7e4008",
+            "delivered_frames": 41,
+            "exact_frames": 41,
+            "elapsed_seconds": 20.309944856038783,
+            "distinct_exact_fps": 2.0187154761185586,
+            "source_pipeline": "complete isolated git export; public wait_ready_file -> normal prepare -> production sender; clean public trigger -> clean qualifier; existing host dependencies and identical paired bitstream reused"
+          },
+          "original_root_passed": false,
+          "kernel_delta": {
+            "verified": true,
+            "continuity_proven": true,
+            "overlap_lines": 161,
+            "new_lines": [
+              "[76928.459567] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(14067), ret: 0",
+              "[76928.459697] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(14067)",
+              "[76928.460394] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(14067), ret: 0",
+              "[76943.096825] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(14098), ret: 0",
+              "[76943.096945] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(14098)",
+              "[76943.097566] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(14098), ret: 0",
+              "[76949.980691] fpga_manager fpga0: writing capture.bin to Xilinx Zynq FPGA Manager",
+              "[76950.693670] [drm] skip kind 29(AIE_RESOURCES) return code: -22",
+              "[76950.693721] [drm] skip kind 8(IP_LAYOUT) return code: -22",
+              "[76950.693736] [drm] skip kind 9(DEBUG_IP_LAYOUT) return code: -22",
+              "[76950.693748] [drm] skip kind 25(AIE_METADATA) return code: -22",
+              "[76950.693760] [drm] skip kind 7(CONNECTIVITY) return code: -22",
+              "[76950.693771] [drm] found kind 6(MEM_TOPOLOGY)",
+              "[76950.693893] [drm] Memory 0 is not reserved in device tree. Will allocate memory from CMA",
+              "[76950.693944] [drm] zocl_xclbin_read_axlf 793e0b49-632c-29d9-be5f-533341b5fc20 ret: 0",
+              "[76950.729168] [drm] bitstream 793e0b49-632c-29d9-be5f-533341b5fc20 locked, ref=1",
+              "[76950.729227] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_add_context: Client pid(14098) add context Domain(0) CU(0xffffffff) shared(true)",
+              "[76950.729322] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_del_context: Client pid(14098) del context Domain(0) CU(0xffffffff)",
+              "[76950.729350] [drm] bitstream 793e0b49-632c-29d9-be5f-533341b5fc20 unlocked, ref=0",
+              "[76953.160290] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(14098)",
+              "[76976.016185] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(14192), ret: 0",
+              "[76976.016307] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(14192)",
+              "[76976.017118] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(14192), ret: 0",
+              "[76982.973119] fpga_manager fpga0: writing capture.bin to Xilinx Zynq FPGA Manager",
+              "[76983.057814] [drm] skip kind 29(AIE_RESOURCES) return code: -22",
+              "[76983.057865] [drm] skip kind 8(IP_LAYOUT) return code: -22",
+              "[76983.057881] [drm] skip kind 9(DEBUG_IP_LAYOUT) return code: -22",
+              "[76983.057893] [drm] skip kind 25(AIE_METADATA) return code: -22",
+              "[76983.057904] [drm] skip kind 7(CONNECTIVITY) return code: -22",
+              "[76983.057915] [drm] found kind 6(MEM_TOPOLOGY)",
+              "[76983.058039] [drm] Memory 0 is not reserved in device tree. Will allocate memory from CMA",
+              "[76983.058097] [drm] zocl_xclbin_read_axlf 6d6f6d62-61d4-225e-112f-42ebdfe76a71 ret: 0",
+              "[76983.089239] [drm] bitstream 6d6f6d62-61d4-225e-112f-42ebdfe76a71 locked, ref=1",
+              "[76983.089298] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_add_context: Client pid(14192) add context Domain(0) CU(0xffffffff) shared(true)",
+              "[76983.089391] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_del_context: Client pid(14192) del context Domain(0) CU(0xffffffff)",
+              "[76983.089418] [drm] bitstream 6d6f6d62-61d4-225e-112f-42ebdfe76a71 unlocked, ref=0",
+              "[76985.551796] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(14192)",
+              "[76998.115640] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(14159), ret: 0",
+              "[76998.115754] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(14159)",
+              "[76998.116353] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(14159), ret: 0",
+              "[77094.807402] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(14159)"
+            ],
+            "new_line_count": 41,
+            "new_external_abort_lines": [],
+            "before_abort_count": 1,
+            "after_abort_count": 0,
+            "before_sha256": "0c72a771b26f5091f56376a403bb27b5151d2e2b6c267784b5aa316e5a350da2",
+            "after_sha256": "58c7baff6cfa910200edf0d7e2365ee1b697b7cd5876a10c26810bd4b6a3c54a"
+          }
+        },
+        "prepare_exit": 0,
+        "sender_exit": 1,
+        "sampler_exit": 0,
+        "sender_final": {
+          "session_id": "c5a2bdd4-665e-4321-9f13-78c83843209c",
+          "counters": {
+            "acquired": 103,
+            "startup_discarded": 0,
+            "intentional_sampling_drops": 0,
+            "network_backpressure_drops": 0,
+            "client_discarded": 1,
+            "transport_enqueued": 101,
+            "source_errors": 1,
+            "source_cleanup_errors": 1,
+            "network_errors": 0,
+            "source_skips": 2959,
+            "source_overruns": null,
+            "source_invalid_frames": 0
+          },
+          "dma_shutdown_safe": true,
+          "source_integrity": {
+            "startup": {
+              "enabled": false,
+              "observed_frames": 357,
+              "selected_frames": 0,
+              "completed_frames": 356,
+              "dropped_frames": 357,
+              "invalid_frames": 1,
+              "snapshot_begin_ns": 77556447264138,
+              "snapshot_end_ns": 77556447482840,
+              "timestamp_clock": "board_monotonic",
+              "snapshot_atomic": false,
+              "sample_point": "before_first_credit_while_gate_disabled_dma_halted",
+              "counter_bits": 32,
+              "frontend_overflow_episodes": 0,
+              "native_vsync_edges": 358,
+              "overflow_units": "assertion_episodes_not_lost_frames",
+              "frontend_underflow_episodes": 0
+            },
+            "last": {
+              "enabled": true,
+              "observed_frames": 3423,
+              "selected_frames": 103,
+              "completed_frames": 3421,
+              "dropped_frames": 3320,
+              "invalid_frames": 1,
+              "snapshot_begin_ns": 77607540316960,
+              "snapshot_end_ns": 77607540526997,
+              "timestamp_clock": "board_monotonic",
+              "snapshot_atomic": false,
+              "sample_point": "sequential_gpio_reads_during_credit_health_check",
+              "counter_bits": 32,
+              "frontend_overflow_episodes": 0,
+              "native_vsync_edges": 3423,
+              "overflow_units": "assertion_episodes_not_lost_frames",
+              "frontend_underflow_episodes": 0
+            },
+            "failure": {
+              "error": "Single-credit command/source-sequence fault",
+              "snapshot": {
+                "enabled": true,
+                "observed_frames": 3423,
+                "selected_frames": 103,
+                "completed_frames": 3421,
+                "dropped_frames": 3320,
+                "invalid_frames": 1,
+                "snapshot_begin_ns": 77607540316960,
+                "snapshot_end_ns": 77607540526997,
+                "timestamp_clock": "board_monotonic",
+                "snapshot_atomic": false,
+                "sample_point": "sequential_gpio_reads_during_credit_health_check",
+                "counter_bits": 32,
+                "frontend_overflow_episodes": 0,
+                "native_vsync_edges": 3423,
+                "overflow_units": "assertion_episodes_not_lost_frames",
+                "frontend_underflow_episodes": 0
+              },
+              "final_accounting_error": "Single-credit command/source-sequence fault"
+            }
+          }
+        },
+        "dma_shutdown_safe": true,
+        "post_diagnostic": {
+          "boot": "1dd70e40-85cc-4c9b-a2e2-03b9814e290f",
+          "control": 86032,
+          "status": 69633,
+          "command": 2,
+          "ext4_errors": "0",
+          "test_bytes": 16777216,
+          "test_sha256": "341aacac661ccb210720bedaa9ead5d668fe5ea41a73532fc147c71e34040df1"
+        },
+        "raw_halt_verified": true,
+        "storage_passed": true,
+        "kernel_delta": {
+          "verified": true,
+          "continuity_proven": true,
+          "overlap_lines": 181,
+          "new_lines": [
+            "[77530.825746] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(15581), ret: 0",
+            "[77530.825864] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(15581)",
+            "[77530.826465] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(15581), ret: 0",
+            "[77537.270622] fpga_manager fpga0: writing capture.bin to Xilinx Zynq FPGA Manager",
+            "[77537.355465] [drm] skip kind 29(AIE_RESOURCES) return code: -22",
+            "[77537.355514] [drm] skip kind 8(IP_LAYOUT) return code: -22",
+            "[77537.355528] [drm] skip kind 9(DEBUG_IP_LAYOUT) return code: -22",
+            "[77537.355540] [drm] skip kind 25(AIE_METADATA) return code: -22",
+            "[77537.355551] [drm] skip kind 7(CONNECTIVITY) return code: -22",
+            "[77537.355562] [drm] found kind 6(MEM_TOPOLOGY)",
+            "[77537.355675] [drm] Memory 0 is not reserved in device tree. Will allocate memory from CMA",
+            "[77537.355724] [drm] zocl_xclbin_read_axlf f765a43b-1bb8-eeb4-838c-5a66e59bbde6 ret: 0",
+            "[77537.382260] [drm] bitstream f765a43b-1bb8-eeb4-838c-5a66e59bbde6 locked, ref=1",
+            "[77537.382314] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_add_context: Client pid(15581) add context Domain(0) CU(0xffffffff) shared(true)",
+            "[77537.382402] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_del_context: Client pid(15581) del context Domain(0) CU(0xffffffff)",
+            "[77537.382428] [drm] bitstream f765a43b-1bb8-eeb4-838c-5a66e59bbde6 unlocked, ref=0",
+            "[77539.704312] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(15581)",
+            "[77551.396562] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(15623), ret: 0",
+            "[77551.396784] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(15623)",
+            "[77551.397397] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(15623), ret: 0",
+            "[77609.151702] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(15623)"
+          ],
+          "new_line_count": 21,
+          "new_external_abort_lines": [],
+          "before_abort_count": 0,
+          "after_abort_count": 0,
+          "before_sha256": "48f45f32dccd2fc870ad799c58ad3856018ad495e35541136b56901035b75589",
+          "after_sha256": "9609696e4b3599286fe503c90e402efbc6c4df29a75a59787ba4a3a11089d53d"
+        },
+        "no_new_external_abort": true,
+        "expected_fail_stop": true,
+        "source_final_proof_failed": true,
+        "known_final_proof_case": true,
+        "no_sigbus": true,
+        "buffer_release_code_provenance": {
+          "path": "/tmp/hdmi-capture-clean-023/src/hdmi_capture/sources.py",
+          "sha256": "90798eb897756d199d4b9967e4bb2f405837e3f2f3805f04fd0ba4cb379e1727",
+          "revision": "3343dac",
+          "safe_flag_set_after_free": true
+        },
+        "finished_monotonic": 77614.322217412
+      }
+    },
+    {
+      "name": "restart-session-025.py",
+      "exit_code": 0,
+      "result": {
+        "passed": true,
+        "scope": "explicit_normal_restart_after_loss024",
+        "full_m1_qualification": false,
+        "error": null,
+        "sender_exit": 0,
+        "dma_shutdown_safe": true,
+        "raw_halt_verified": true,
+        "storage_passed": true,
+        "initial_prepare_exit": 0,
+        "sampler_exit": 0,
+        "sender_final_count": 1,
+        "sender_final": {
+          "session_id": "e3349ef1-e1e2-4202-ad7d-07506ee4e00b",
+          "counters": {
+            "acquired": 90,
+            "startup_discarded": 0,
+            "intentional_sampling_drops": 0,
+            "network_backpressure_drops": 67,
+            "client_discarded": 1,
+            "transport_enqueued": 21,
+            "source_errors": 0,
+            "source_cleanup_errors": 0,
+            "network_errors": 0,
+            "source_skips": 2582,
+            "source_overruns": 0,
+            "source_invalid_frames": 0
+          },
+          "dma_shutdown_safe": true,
+          "source_integrity": {
+            "startup": {
+              "enabled": false,
+              "observed_frames": 292,
+              "selected_frames": 0,
+              "completed_frames": 291,
+              "dropped_frames": 292,
+              "invalid_frames": 1,
+              "snapshot_begin_ns": 78026662380164,
+              "snapshot_end_ns": 78026662593197,
+              "timestamp_clock": "board_monotonic",
+              "snapshot_atomic": false,
+              "sample_point": "before_first_credit_while_gate_disabled_dma_halted",
+              "counter_bits": 32,
+              "frontend_overflow_episodes": 0,
+              "native_vsync_edges": 293,
+              "overflow_units": "assertion_episodes_not_lost_frames",
+              "frontend_underflow_episodes": 0
+            },
+            "last": {
+              "enabled": true,
+              "observed_frames": 2997,
+              "selected_frames": 91,
+              "completed_frames": 2995,
+              "dropped_frames": 2906,
+              "invalid_frames": 1,
+              "snapshot_begin_ns": 78071730878441,
+              "snapshot_end_ns": 78071731068804,
+              "timestamp_clock": "board_monotonic",
+              "snapshot_atomic": false,
+              "sample_point": "sequential_gpio_reads_during_credit_health_check",
+              "counter_bits": 32,
+              "frontend_overflow_episodes": 0,
+              "native_vsync_edges": 2997,
+              "overflow_units": "assertion_episodes_not_lost_frames",
+              "frontend_underflow_episodes": 0
+            },
+            "failure": null
+          },
+          "final_source_accounting": {
+            "identity": {
+              "credit_busy": true,
+              "credit_done": true,
+              "credit_failed": false,
+              "request_seen": 1,
+              "ack_seen": 0,
+              "source_sequence_fault": false,
+              "native_armed": true,
+              "selected_sof_id": 2994,
+              "selected_native_vsync_id": 2995,
+              "selected_completed": 91,
+              "command_errors": 0,
+              "source_sequence_faults": 0,
+              "identity_snapshot_coherent": true
+            },
+            "native_edges_begin": 2994,
+            "native_edges_end": 2997,
+            "interval_seconds": 0.05,
+            "passed": true
+          }
+        },
+        "sender_errors": 0,
+        "post_diagnostic": {
+          "boot": "1dd70e40-85cc-4c9b-a2e2-03b9814e290f",
+          "control": 86032,
+          "status": 69633,
+          "command": 2,
+          "ext4_errors": "0",
+          "test_bytes": 16777216,
+          "test_sha256": "341aacac661ccb210720bedaa9ead5d668fe5ea41a73532fc147c71e34040df1"
+        },
+        "final_receipt": {
+          "schema_version": 1,
+          "boot_id": "1dd70e40-85cc-4c9b-a2e2-03b9814e290f",
+          "artifacts": {
+            "bitfile": {
+              "path": "/tmp/hdmi-capture-prepared-014/overlay/capture.bit",
+              "sha256": "ae3a65d77b1662fedef9ffbc62dd9484cdd8a155af136596da3e6b695fb6846e"
+            },
+            "hwh": {
+              "path": "/tmp/hdmi-capture-prepared-014/overlay/capture.hwh",
+              "sha256": "3bfbbf124960ec932a4a53bb4fcb4a5969b89b9a96d6329143bdfc8442eef9a6"
+            },
+            "manifest": {
+              "path": "/tmp/hdmi-capture-prepared-014/overlay/build-manifest.json",
+              "sha256": "4dc7867f34b7bfdbf782c9cde078669b5fb2d2c1ec1930187f6f646592541227"
+            }
+          },
+          "pynq_state": {
+            "bitfile_name": "/tmp/hdmi-capture-prepared-014/overlay/capture.bit",
+            "bitfile_hash": "f434eb6ca82b6b9d3452733223c56f6c2f13c61b",
+            "timestamp": "2022/10/22 8:28:44 +556791",
+            "active_name": "Pynq-Z2"
+          },
+          "preparation": {
+            "hpd": 1,
+            "vdma_control": 65538,
+            "vdma_status": 65537,
+            "command": 0
+          }
+        },
+        "final_receipt_sha256": "d7845eb15072e8feff06a2dfacbeebe59f973d832c4bf31e4d4a479a9efe9eed",
+        "receipt_identity_preserved": true,
+        "kernel_delta": {
+          "verified": true,
+          "continuity_proven": true,
+          "overlap_lines": 178,
+          "new_lines": [
+            "[77987.182776] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(15752), ret: 0",
+            "[77987.182894] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(15752)",
+            "[77987.183494] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(15752), ret: 0",
+            "[78001.099859] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(16292), ret: 0",
+            "[78001.099977] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(16292)",
+            "[78001.100571] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(16292), ret: 0",
+            "[78007.477721] fpga_manager fpga0: writing capture.bin to Xilinx Zynq FPGA Manager",
+            "[78007.560174] [drm] skip kind 29(AIE_RESOURCES) return code: -22",
+            "[78007.560221] [drm] skip kind 8(IP_LAYOUT) return code: -22",
+            "[78007.560236] [drm] skip kind 9(DEBUG_IP_LAYOUT) return code: -22",
+            "[78007.560248] [drm] skip kind 25(AIE_METADATA) return code: -22",
+            "[78007.560259] [drm] skip kind 7(CONNECTIVITY) return code: -22",
+            "[78007.560269] [drm] found kind 6(MEM_TOPOLOGY)",
+            "[78007.560379] [drm] Memory 0 is not reserved in device tree. Will allocate memory from CMA",
+            "[78007.560425] [drm] zocl_xclbin_read_axlf e61e64a8-49b0-0497-4e89-7d3233c27b88 ret: 0",
+            "[78007.587971] [drm] bitstream e61e64a8-49b0-0497-4e89-7d3233c27b88 locked, ref=1",
+            "[78007.588026] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_add_context: Client pid(16292) add context Domain(0) CU(0xffffffff) shared(true)",
+            "[78007.588111] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_del_context: Client pid(16292) del context Domain(0) CU(0xffffffff)",
+            "[78007.588137] [drm] bitstream e61e64a8-49b0-0497-4e89-7d3233c27b88 unlocked, ref=0",
+            "[78009.940509] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(16292)",
+            "[78021.593438] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(16335), ret: 0",
+            "[78021.593559] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(16335)",
+            "[78021.594173] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(16335), ret: 0",
+            "[78073.018000] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(16335)"
+          ],
+          "new_line_count": 24,
+          "new_external_abort_lines": [],
+          "before_abort_count": 0,
+          "after_abort_count": 0,
+          "before_sha256": "5060933ff3afb0cc876fdc20d61e3772ca9d5c6f77aafa07b4d4bdd711b4106d",
+          "after_sha256": "e1e3f098932bf67945207c918299d2881101b4d9fecc5a9815cd8aff227d8f07"
+        },
+        "no_new_external_abort": true,
+        "normal_production_prepare_verified": true,
+        "finished_monotonic": 78079.44222222
+      }
+    }
+  ],
+  "full_m1_qualification": false
+}

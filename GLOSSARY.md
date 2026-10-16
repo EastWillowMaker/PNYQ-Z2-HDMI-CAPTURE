@@ -39,9 +39,16 @@ A receiver ready for a source to establish its HDMI signal, with capture stopped
 Preparation alone does not establish a valid input mode or a captured frame.
 
 **Preparation receipt**:
-A record identifying one receiver preparation within the current board boot.
-It records software-managed configuration history, not independent hardware identity.
+A record of the receiver's prepared configuration within the current board boot.
+It is not an independent hardware identity or a unique capture epoch.
 
 **Credit lease**:
 Exclusive ownership of one completed capture whose pixels and source identity
 remain stable until the consumer releases it.
+
+**Fail-stop**:
+Ending acquisition and reporting an input or integrity fault instead of
+continuing to deliver frames.
+
+**Safe shutdown**:
+A stopped capture whose hardware cannot write into memory released by its owner.

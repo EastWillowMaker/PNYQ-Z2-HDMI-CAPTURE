@@ -1,0 +1,10 @@
+{
+  "board_boot_id": "1dd70e40-85cc-4c9b-a2e2-03b9814e290f",
+  "board_ext4_errors": 0,
+  "active_board_capture_pids": [],
+  "board_rootchain_passed": true,
+  "pc_source_worker_finished": true,
+  "desktop_restored": true,
+  "http_transfer_server_stopped": true,
+  "read_only_final_uart_evidence_sha256": "f7fe73ea2bcc60c53309dd71e697b18b8122764f26fc1571e98f937c7e074358"
+}

@@ -1,0 +1,31 @@
+{
+  "scope": "host_only_prerequisite_observer_not_run",
+  "stopped_host_pid": 1676747,
+  "host_had_no_children": true,
+  "source04_not_queued": true,
+  "no_native_process_signaled": true,
+  "reason": "Verified sudo ancestors were mistaken for a competing source",
+  "validated_sudo_ancestors": [
+    {
+      "pid": 1656055,
+      "start_ticks": 34817286,
+      "argv": [
+        "sudo",
+        "/usr/bin/python3",
+        "/home/eastwillow/Documents/litex-hdmi-capture/artifacts/mode-transition-020/kms-source-session-021.py"
+      ],
+      "uid": 0
+    },
+    {
+      "pid": 1655983,
+      "start_ticks": 34816557,
+      "argv": [
+        "sudo",
+        "/usr/bin/python3",
+        "/home/eastwillow/Documents/litex-hdmi-capture/artifacts/mode-transition-020/kms-source-session-021.py"
+      ],
+      "uid": 0
+    }
+  ],
+  "host_monotonic": 349344.213295486
+}

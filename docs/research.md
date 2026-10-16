@@ -1,6 +1,8 @@
 # Initial research
 
-Date: 2026-10-15 Asia/Taipei. Evidence level: static inspection unless stated.
+Initial research: 2026-10-15 Asia/Taipei, static unless stated. Current on-board
+M1 results and source/build scopes are in the[2026-10-16 completion report](results/2026-10-16/m1-completion.md).
+The initial findings and skill versions below remain historical records.
 
 ## Loaded skills
 

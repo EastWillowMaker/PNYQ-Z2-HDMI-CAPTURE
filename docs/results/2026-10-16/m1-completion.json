@@ -1,0 +1,86 @@
+{
+  "scope": "Accepted fixed-mode M1: real PYNQ-Z2 LiteX HDMI IN to PC Python over PS Ethernet",
+  "completed_at": "2026-10-16T22:19:22+08:00",
+  "full_m1_qualification": true,
+  "broader_hdmi_support_qualified": false,
+  "width": 640,
+  "height": 480,
+  "pixel_format": "RGB888",
+  "array_dtype": "uint8",
+  "array_shape": [
+    480,
+    640,
+    3
+  ],
+  "accepted_input_refresh": "Progressive near60Hz, unencrypted8-bit RGB",
+  "runtime_revision": "3343dac618ada6099453415b5554c4185a544801",
+  "clean_source_export_revision": "ad6c9660ae4029e8906a1f7331d79a5370cba06e",
+  "sustained": {
+    "exact_distinct_frames": 1201,
+    "seconds": 600.3003456579754,
+    "fps": 2.000665181499457,
+    "pixel_failures": 0,
+    "metadata_failures": 0,
+    "transport_errors": 0
+  },
+  "required_evidence": {
+    "sustained_capture": "m1-017-normal-019-controller.json",
+    "buffer_lease": "m1-017-lease-015-controller.json",
+    "clean_source_startup": "m1-017-clean-023-verified.json",
+    "physical_loss": "m1-017-hdmi-loss-024-verified.json",
+    "explicit_restart": "m1-017-restart-025-controller.json",
+    "mode_change": "m1-017-mode-021-analysis.json",
+    "build_replay": "credit-017-clean-replay.md",
+    "client_reconnect": "reconnect-010-report.md"
+  },
+  "evidence_sha256": {
+    "m1-017-normal-019-controller.json": "3a719b7bbd5c9682069519161fd8488c1223a7cbf363c9ecdb256623e8ecdeda",
+    "m1-017-lease-015-controller.json": "f4b4687ed9dddc88fa5134c96898a92ea7caaed878ae2ea5f3aa34024935cce3",
+    "m1-017-clean-023-verified.json": "52710f09663dbcf3c0fa766c273baf7c264a838cbd9d591eced4c32f99b4494d",
+    "m1-017-hdmi-loss-024-verified.json": "0a8c7dd4837fbbe72ae6ba8e5758e4bc3906deebb238b9ff6fa72fa5978971a4",
+    "m1-017-restart-025-controller.json": "6f7a4f544ab6b6153235d024fefbb467dad985b70b565cbb698baceecfb760a0",
+    "m1-017-mode-021-analysis.json": "3eb8350598196a82681ac2c22e654db3d68eeb51b3789e0015b0f6ef9ae83d63",
+    "credit-017-clean-replay.md": "bfc614e061376e746badc6b5be94637e4c9ce63535716691a381c3a2a5ddcc3a",
+    "reconnect-010-report.md": "88d5f2b9b1ce0c8a1e1ceb78d4d1b3cb97682f9edd72d49d7f3026289a60c2f9"
+  },
+  "normal_sender_safe_stop": true,
+  "physical_hdmi_loss_confirmed": true,
+  "physical_hdmi_loss_safe_stop": true,
+  "explicit_supported_source_restart": true,
+  "clean_source_public_recipe_verified": true,
+  "owned_buffer_hardware_observed": true,
+  "input_timing_change_safe_stop_observed": true,
+  "source_origin": "real_hdmi",
+  "physical_source_sequence_verified": false,
+  "native_startup_skips": null,
+  "source_color_format": "unknown",
+  "source_quantization_range": "unknown",
+  "automatic_source_recovery": false,
+  "unsupported_geometry_hardware": "NOT_RUN; source advertises VGA only",
+  "native_startup_requires_live_pixel_clock": true,
+  "remaining_limits": [
+    "No independent absolute optical-ID/native-counter association or startup-native-loss measurement",
+    "Nominal CRTC timing is not an independent wire-clock measurement",
+    "Receipt is a software configuration ledger; it cannot attest arbitrary PL reconfiguration",
+    "Native VTC startup needs the source pixel clock; no arbitrary missing-clock startup guarantee",
+    "Ignored post-safe-cleanup PYNQ UIO destructor event-loop warning remains",
+    "Retained routed timing/CDC warnings and external-I/O constraint gaps remain in the build report"
+  ],
+  "deferred": [
+    "M2 browser",
+    "M3 active bypass",
+    "M4 LCD C"
+  ],
+  "local_tests": {
+    "host_passed": 490,
+    "host_skipped": 1,
+    "focused_readiness_passed": 60,
+    "hosted_ci_claimed": false
+  },
+  "final_state": {
+    "capture_sender_active": false,
+    "board_ext4_errors": 0,
+    "pc_source_worker_finished": true,
+    "desktop_restored": true
+  }
+}

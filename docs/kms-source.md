@@ -9,13 +9,13 @@ involved. The PC receiver still compares every RGB888 byte strictly.
 
 ## Current validation and important limitation
 
-On2026-10-16, the new-SD run011 passed1,201 exact distinct frames over600.368s,
-with sender exit0, verified DMA halt, unchanged storage checks and VT return.
-The subsequent HDMI-only loss012 killed the sender during native VTC mode
-access. A separate fixed-clock recovery confirmed DMA halted; the runtime fix
-has local regression coverage and awaits physical retest. See the
-[011/012 report](results/2026-10-16/capture-011-loss-012-report.md).
-The earlier SD failure below remains a separate failed run.
+Current fixed-mode M1 is verified in [the completion report](results/2026-10-16/m1-completion.md):
+normal019 passed1,201exact frames/600.300346s with safe shutdown; physical024
+verified HDMI-only interruption and restart025 restored new exact captures.
+The [011/012](results/2026-10-16/capture-011-loss-012-report.md) and earlier SD
+failures below are preserved history. Runtime health uses fixed-clock checks;
+native startup still requires input pixel clock. No arbitrary missing-clock
+startup or automatic recovery guarantee is made.
 
 The direct-VT source smoke test **passed** on2026-10-15: actualVT3,
 640x480 progressive60Hz (25200kHz pixel clock), XR24,37 completed page flips
@@ -23,8 +23,7 @@ in the10-second run, exit0, and verified return toVT2. The compiled source also
 matches all921600 reference bytes for five IDs; four invalid-ID cases fail
 before display access. These9 tests pass locally. This proved the source and normal return. The subsequent720-second run also
 passed the600-second PYNQ pixel/accounting criterion (1201/1201 exact frames),
-but board storage errors and SIGBUS left DMA shutdown unverified; fullM1 remains
-incomplete. See the [capture report](results/2026-10-15/m1-017-kms-001-report.md).
+but board storage errors and SIGBUS left DMA shutdown unverified; that historical run did not establish fullM1. See the [capture report](results/2026-10-15/m1-017-kms-001-report.md).
 Evidence: [probe002](results/2026-10-15/kms-vt-probe-002.json).
 
 The first VT attempt failed DRM-master acquisition because openvt choseVT1 and

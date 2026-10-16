@@ -1,20 +1,19 @@
 # Sustained HDMI qualification
 
-Latest hardware evidence: build017/v11 on the new SD passed the normal
-600-second criterion and safe shutdown in
-[run011](results/2026-10-16/capture-011-loss-012-report.md).
-HDMI-only interruption012 failed with native SIGBUS. Its runtime fix requires
-physical retesting; full M1 remains incomplete. The
-[remaining audit](results/2026-10-16/m1-remaining-audit.md) tracks the separate
-startup, interruption, mode-change and ownership evidence still needed.
+The [fixed-mode M1 completion report](results/2026-10-16/m1-completion.md)
+combines normal019's600s criterion with held-buffer015, clean-source023,
+physical024, restart025 and timing021 evidence. Failed capture012 and observation attempts020/021
+retain their original verdicts in dated reports. A pixel criterion alone
+still does not establish all M1 obligations.
 
 Run only after the external optical pattern and authorized board sender are
 already running. This tool neither changes the source nor loads an overlay.
 Its `passed` and CLI exit status describe the sustained delivered-image
 criterion, with source-accounting checks required in the default LiteX mode.
 `criterion_passed` is an explicit alias;
-`full_m1_qualification=false` and `unmet_m1_requirements` retain the separate
-source-accounting and other qualification obligations. A successful pixel run
+`full_m1_qualification=false` and `unmet_m1_requirements` are conservative
+per-run fields; this tool does not discover external hardware evidence. Use
+the aggregate report to reconcile the separate qualification obligations. A successful pixel run
 alone must not be reported as full M1 completion.
 
 It compares every received pixel against `tools/hdmi_pattern.py` using the

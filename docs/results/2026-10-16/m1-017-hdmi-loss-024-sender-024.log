@@ -1,0 +1,52 @@
+{"event": "source_startup", "timestamp_ns": 77550820775845, "stage": "litex_artifact_verification"}
+{"event": "source_startup", "timestamp_ns": 77551355718884, "stage": "pynq_import"}
+{"event": "source_startup", "timestamp_ns": 77551356183426, "stage": "overlay_attach"}
+{"event": "source_startup", "timestamp_ns": 77556455085929, "stage": "credit_source_ready", "counters": {"enabled": false, "observed_frames": 357, "selected_frames": 0, "completed_frames": 356, "dropped_frames": 357, "invalid_frames": 1, "snapshot_begin_ns": 77556447264138, "snapshot_end_ns": 77556447482840, "timestamp_clock": "board_monotonic", "snapshot_atomic": false, "sample_point": "before_first_credit_while_gate_disabled_dma_halted", "counter_bits": 32, "frontend_overflow_episodes": 0, "native_vsync_edges": 358, "overflow_units": "assertion_episodes_not_lost_frames", "frontend_underflow_episodes": 0}}
+{"listening": ["::", 9031, 0, 0], "source": "hdmi", "session_id": "c5a2bdd4-665e-4321-9f13-78c83843209c"}
+{"event": "source_cleanup", "timestamp_ns": 77607540887508, "stage": "dma_stop_status_before", "control": 86032, "status": 69633}
+{"event": "source_cleanup", "timestamp_ns": 77607541471717, "stage": "dma_stop_status_after", "control": 86032, "status": 69633}
+{"session_id": "c5a2bdd4-665e-4321-9f13-78c83843209c", "counters": {"acquired": 103, "startup_discarded": 0, "intentional_sampling_drops": 0, "network_backpressure_drops": 0, "client_discarded": 1, "transport_enqueued": 101, "source_errors": 1, "source_cleanup_errors": 1, "network_errors": 0, "source_skips": 2959, "source_overruns": null, "source_invalid_frames": 0}, "dma_shutdown_safe": true, "source_integrity": {"startup": {"enabled": false, "observed_frames": 357, "selected_frames": 0, "completed_frames": 356, "dropped_frames": 357, "invalid_frames": 1, "snapshot_begin_ns": 77556447264138, "snapshot_end_ns": 77556447482840, "timestamp_clock": "board_monotonic", "snapshot_atomic": false, "sample_point": "before_first_credit_while_gate_disabled_dma_halted", "counter_bits": 32, "frontend_overflow_episodes": 0, "native_vsync_edges": 358, "overflow_units": "assertion_episodes_not_lost_frames", "frontend_underflow_episodes": 0}, "last": {"enabled": true, "observed_frames": 3423, "selected_frames": 103, "completed_frames": 3421, "dropped_frames": 3320, "invalid_frames": 1, "snapshot_begin_ns": 77607540316960, "snapshot_end_ns": 77607540526997, "timestamp_clock": "board_monotonic", "snapshot_atomic": false, "sample_point": "sequential_gpio_reads_during_credit_health_check", "counter_bits": 32, "frontend_overflow_episodes": 0, "native_vsync_edges": 3423, "overflow_units": "assertion_episodes_not_lost_frames", "frontend_underflow_episodes": 0}, "failure": {"error": "Single-credit command/source-sequence fault", "snapshot": {"enabled": true, "observed_frames": 3423, "selected_frames": 103, "completed_frames": 3421, "dropped_frames": 3320, "invalid_frames": 1, "snapshot_begin_ns": 77607540316960, "snapshot_end_ns": 77607540526997, "timestamp_clock": "board_monotonic", "snapshot_atomic": false, "sample_point": "sequential_gpio_reads_during_credit_health_check", "counter_bits": 32, "frontend_overflow_episodes": 0, "native_vsync_edges": 3423, "overflow_units": "assertion_episodes_not_lost_frames", "frontend_underflow_episodes": 0}, "final_accounting_error": "Single-credit command/source-sequence fault"}}}
+Traceback (most recent call last):
+  File "/tmp/hdmi-capture-clean-023/src/hdmi_capture/sender.py", line 159, in _serve_client
+    self._capture_task.result()
+  File "/tmp/hdmi-capture-clean-023/src/hdmi_capture/sender.py", line 112, in _capture
+    sample.close()
+  File "/tmp/hdmi-capture-clean-023/src/hdmi_capture/sources.py", line 42, in close
+    release()
+  File "/tmp/hdmi-capture-clean-023/src/hdmi_capture/sources.py", line 821, in _release_credit
+    raise SourceError("Completed identity changed before lease release")
+hdmi_capture.sources.SourceError: Completed identity changed before lease release
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/usr/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/tmp/hdmi-capture-clean-023/src/hdmi_capture/sender.py", line 420, in <module>
+    main()
+  File "/tmp/hdmi-capture-clean-023/src/hdmi_capture/sender.py", line 379, in main
+    asyncio.run(sender.run(args.host, args.port, args.duration))
+  File "/usr/lib/python3.10/asyncio/runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 646, in run_until_complete
+    return future.result()
+  File "/tmp/hdmi-capture-clean-023/src/hdmi_capture/sender.py", line 221, in run
+    await self.close()
+  File "/tmp/hdmi-capture-clean-023/src/hdmi_capture/sender.py", line 259, in close
+    self.source.close()
+  File "/tmp/hdmi-capture-clean-023/src/hdmi_capture/sources.py", line 868, in close
+    raise failure
+  File "/tmp/hdmi-capture-clean-023/src/hdmi_capture/sources.py", line 836, in close
+    self._healthy()
+  File "/tmp/hdmi-capture-clean-023/src/hdmi_capture/sources.py", line 729, in _healthy
+    self._check_identity(identity)
+  File "/tmp/hdmi-capture-clean-023/src/hdmi_capture/sources.py", line 713, in _check_identity
+    raise SourceError("Single-credit command/source-sequence fault")
+hdmi_capture.sources.SourceError: Single-credit command/source-sequence fault
+Exception ignored in: <function UioController.__del__ at 0xb34058e0>
+Traceback (most recent call last):
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/uio.py", line 79, in __del__
+  File "/usr/lib/python3.10/asyncio/events.py", line 656, in get_event_loop
+RuntimeError: There is no current event loop in thread 'MainThread'.
