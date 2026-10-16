@@ -1,5 +1,20 @@
 # Progress and handoff
 
+2026-10-16T21:24:08+08:00:USER HOME;019 FORMAL600s CAPTURE RUNNING.
+018expired withoutsource/preparation/client; NOT_RUN envelope+actualrootresult
+saved, no failedpixelrun. New019two-stagewizard completedboard+PCauth, sameboot
+1dd70e40/ext4count0; nooldcaptureprocess found. FreshKMS source720s/frame2000000,
+rootpreparesAFTERvalidatedKMSflips then unchangedv14/3343dac sender650s/port9026.
+Strict600s/min600/>=1FPS/hard660 client islive PID1616141, coordinator1614239.
+Atfirstcheck74exactframes/metadatapassed; notyetlongpass. Results m1-017-normal-019
+areLIVE; do notstage/commitunfinishedframeJSONL orclaimcompletebeforefinalresult.
+PCrootworker1615628 deadline348038.537233211 (hostmonotonic), max6runs/30min;
+keepwindow/cablesconnected. Boardrootpostchecks don'tneedfurtherauthforcurrentrun.
+Newhelper019addsinitialstoragegate/preparation-child timeoutreporting; production
+packageunchanged. Modeprototype delegatedseparateignoredoutput only, no current
+fixture/wrapper/rootworker modification orhardwareexecution. PhysicalHDMI-only
+loss/restart/mode tests stillopen. No UARTwhilehosttrigger/nativeauthownsit.
+
 2026-10-16T09:15:07+08:00:016 STARTUP FAIL;017 STEADY-SOURCE RESTART PASS;018 AWAITS PC.
 016 selected0/no client: KMS transitionlatched FIFOunderflow1; preparedguard
 correctlyrejected beforevideo. Independentfixedclock CR0x10002/SR0x10001/gateoff,

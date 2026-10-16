@@ -1,0 +1,21 @@
+{
+  "created": "2026-10-16T21:20:22.200574+08:00",
+  "scope": "waiting_after_board_authentication_NOT_YET_QUALIFIED",
+  "board_boot_id": "1dd70e40-85cc-4c9b-a2e2-03b9814e290f",
+  "ext4_errors": 0,
+  "board_capture_processes_absent_at_preflight": true,
+  "source_package_revision": "3343dac618ada6099453415b5554c4185a544801",
+  "source_duration_seconds": 720,
+  "sender_duration_seconds": 650,
+  "criterion_seconds": 600,
+  "min_distinct_frames": 600,
+  "min_fps": 1,
+  "board_prepare_after_source_ready": true,
+  "full_m1_qualification": false,
+  "helper_sha256": {
+    "artifacts/deploy/normal-session-019.py": "5a73b9dd0bf45f5e4caaf71ee55e7bf3cc32786c8ec857ad1d05f1383f69281c",
+    "artifacts/operator/coordinate-normal-019.py": "c024cd2bbf8d03a579d8754acc2a5275676015cdc6ee9971be5fe0ba00368d98",
+    "artifacts/operator/kms-source-session-019.py": "996fc21293f71bee7a9914d50c0993e52564f0571fd9137e7281b1d1365e5511",
+    "artifacts/operator/run-normal-019.sh": "d8ece13ebd0b267e3eb7e718e84929f4e0ea6cec043b0eafe26fd23d69c25ff2"
+  }
+}

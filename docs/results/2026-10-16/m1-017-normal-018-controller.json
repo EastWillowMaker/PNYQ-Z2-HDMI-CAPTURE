@@ -1,0 +1,11 @@
+{
+  "scope": "strict_normal_600_second_delivered_image_qualification",
+  "full_m1_qualification": false,
+  "hil_qualification_pending": true,
+  "passed": false,
+  "error": "TimeoutError: Timed out waiting for fresh completed KMS presentations",
+  "source_exit": null,
+  "desktop_restored": null,
+  "client_status": "not_started",
+  "client_still_live": false
+}

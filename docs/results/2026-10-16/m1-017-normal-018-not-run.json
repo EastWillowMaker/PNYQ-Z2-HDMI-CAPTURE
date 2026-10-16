@@ -1,0 +1,10 @@
+{
+  "scope": "NOT_RUN_expired_wait_for_local_authentication",
+  "source_started": false,
+  "client_started": false,
+  "board_prepare_started": false,
+  "old_controller_sha256": "3a14195fd21f3ec75f843f3d2f5329ac21daeee95415283526ca7949f1bcb8f7",
+  "actual_board_result": "TimeoutError: Fresh KMS marker did not arrive; no preparation or sender started",
+  "source_output_exists": false,
+  "full_m1_qualification": false
+}

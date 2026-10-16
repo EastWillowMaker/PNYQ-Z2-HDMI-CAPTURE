@@ -1,0 +1,11 @@
+{
+  "passed": false,
+  "full_m1_qualification": false,
+  "error": "TimeoutError: Fresh KMS marker did not arrive; no preparation or sender started",
+  "sender_exit": null,
+  "dma_shutdown_safe": false,
+  "raw_halt_verified": false,
+  "storage_passed": false,
+  "child_left_alive": false,
+  "finished_monotonic": 31754.986954726
+}
