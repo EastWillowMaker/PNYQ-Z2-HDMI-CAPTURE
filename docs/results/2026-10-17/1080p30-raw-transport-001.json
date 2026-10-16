@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "repeated_cached_payload": true,
+  "native_dma": false,
+  "production_protocol": false,
+  "frames": 127,
+  "payload_bytes": 790041600,
+  "elapsed_seconds": 10.04079910897417,
+  "payload_mbps": 629.4651184038801,
+  "every_payload_sha256_verified": "e9a97285ca7269a88a2fecacef59d5c394ac1334f3cac2b582b95edbd797caec"
+}

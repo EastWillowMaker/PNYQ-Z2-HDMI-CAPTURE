@@ -1,0 +1,39 @@
+{
+  "passed": true,
+  "source_origin": "hdmi",
+  "frame_id": 10,
+  "shape": [
+    1080,
+    1920,
+    3
+  ],
+  "rgb_bytes": 6220800,
+  "sha256_rgb": "bc1653e4bc4345c7b36b634eb6df10a313de5382a2d7064c8e64e608da40ab2b",
+  "sha256_expected": "bc1653e4bc4345c7b36b634eb6df10a313de5382a2d7064c8e64e608da40ab2b",
+  "bmp_bits_per_pixel": 24,
+  "bmp_compression_code": 0,
+  "actual_button_invoked": true,
+  "file_dialog_automated": true,
+  "real_hdmi_test": true,
+  "pattern_verification": {
+    "expected_id": 1766,
+    "expected_id_source": "majority_valid_optical_rows",
+    "valid_marker_rows": 1080,
+    "invalid_marker_rows": [],
+    "optical_ids": {
+      "1766": 1080
+    },
+    "mixed_optical_ids": false,
+    "exact_match": true,
+    "mismatched_pixels": 0,
+    "mismatched_bytes": 0,
+    "mismatched_bytes_by_channel": [
+      0,
+      0,
+      0
+    ],
+    "mismatched_rows": [],
+    "first_mismatch_y_x": null,
+    "max_absolute_error": 0
+  }
+}

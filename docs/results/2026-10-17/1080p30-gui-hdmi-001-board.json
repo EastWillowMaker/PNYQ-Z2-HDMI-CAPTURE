@@ -1,0 +1,148 @@
+[
+  {
+    "exit_code": 0,
+    "process_left_alive": false,
+    "pid": 4074,
+    "ended_monotonic": 91942.403128012
+  },
+  {
+    "event": "source_startup",
+    "timestamp_ns": 91905266200880,
+    "stage": "litex_artifact_verification"
+  },
+  {
+    "event": "source_startup",
+    "timestamp_ns": 91905800675285,
+    "stage": "pynq_import"
+  },
+  {
+    "event": "source_startup",
+    "timestamp_ns": 91905801140805,
+    "stage": "overlay_attach"
+  },
+  {
+    "event": "source_startup",
+    "timestamp_ns": 91910991641111,
+    "stage": "credit_source_ready",
+    "counters": {
+      "enabled": false,
+      "observed_frames": 1201,
+      "selected_frames": 0,
+      "completed_frames": 1201,
+      "dropped_frames": 1201,
+      "invalid_frames": 0,
+      "snapshot_begin_ns": 91910972461825,
+      "snapshot_end_ns": 91910972681407,
+      "timestamp_clock": "board_monotonic",
+      "snapshot_atomic": false,
+      "sample_point": "before_first_credit_while_gate_disabled_dma_halted",
+      "counter_bits": 32,
+      "frontend_overflow_episodes": 0,
+      "native_vsync_edges": 1202,
+      "overflow_units": "assertion_episodes_not_lost_frames",
+      "frontend_underflow_episodes": 0
+    }
+  },
+  {
+    "listening": [
+      "::",
+      9043,
+      0,
+      0
+    ],
+    "source": "hdmi",
+    "session_id": "b62b6459-369e-4749-a537-7b31dd89b4b2"
+  },
+  {
+    "event": "source_cleanup",
+    "timestamp_ns": 91941100075159,
+    "stage": "dma_stop_status_before",
+    "control": 86032,
+    "status": 69633
+  },
+  {
+    "event": "source_cleanup",
+    "timestamp_ns": 91941100648716,
+    "stage": "dma_stop_status_after",
+    "control": 86032,
+    "status": 69633
+  },
+  {
+    "session_id": "b62b6459-369e-4749-a537-7b31dd89b4b2",
+    "counters": {
+      "acquired": 60,
+      "startup_discarded": 0,
+      "intentional_sampling_drops": 0,
+      "network_backpressure_drops": 54,
+      "client_discarded": 1,
+      "transport_enqueued": 4,
+      "source_errors": 0,
+      "source_cleanup_errors": 0,
+      "network_errors": 0,
+      "source_skips": 826,
+      "source_overruns": 0,
+      "source_invalid_frames": 0
+    },
+    "dma_shutdown_safe": true,
+    "source_integrity": {
+      "startup": {
+        "enabled": false,
+        "observed_frames": 1201,
+        "selected_frames": 0,
+        "completed_frames": 1201,
+        "dropped_frames": 1201,
+        "invalid_frames": 0,
+        "snapshot_begin_ns": 91910972461825,
+        "snapshot_end_ns": 91910972681407,
+        "timestamp_clock": "board_monotonic",
+        "snapshot_atomic": false,
+        "sample_point": "before_first_credit_while_gate_disabled_dma_halted",
+        "counter_bits": 32,
+        "frontend_overflow_episodes": 0,
+        "native_vsync_edges": 1202,
+        "overflow_units": "assertion_episodes_not_lost_frames",
+        "frontend_underflow_episodes": 0
+      },
+      "last": {
+        "enabled": true,
+        "observed_frames": 2105,
+        "selected_frames": 60,
+        "completed_frames": 2104,
+        "dropped_frames": 2045,
+        "invalid_frames": 0,
+        "snapshot_begin_ns": 91941099552999,
+        "snapshot_end_ns": 91941099736063,
+        "timestamp_clock": "board_monotonic",
+        "snapshot_atomic": false,
+        "sample_point": "sequential_gpio_reads_during_credit_health_check",
+        "counter_bits": 32,
+        "frontend_overflow_episodes": 0,
+        "native_vsync_edges": 2105,
+        "overflow_units": "assertion_episodes_not_lost_frames",
+        "frontend_underflow_episodes": 0
+      },
+      "failure": null
+    },
+    "final_source_accounting": {
+      "identity": {
+        "credit_busy": false,
+        "credit_done": false,
+        "credit_failed": false,
+        "request_seen": 0,
+        "ack_seen": 0,
+        "source_sequence_fault": false,
+        "native_armed": true,
+        "selected_sof_id": 2087,
+        "selected_native_vsync_id": 2088,
+        "selected_completed": 60,
+        "command_errors": 0,
+        "source_sequence_faults": 0,
+        "identity_snapshot_coherent": false
+      },
+      "native_edges_begin": 2102,
+      "native_edges_end": 2105,
+      "interval_seconds": 0.1,
+      "passed": true
+    }
+  }
+]

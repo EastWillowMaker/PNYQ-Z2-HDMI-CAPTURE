@@ -1,5 +1,48 @@
 # Progress and handoff
 
+2026-10-17 — Real1080p loop bring-up; final-accounting fix under verification.
+
+The user confirmed J9OUT→J10IN cabling with “Done”. The guarded switch loaded
+build005 after verifying the old image idle, then prepared it without native
+video drivers. Fixed-clock observation measured150VSYNC edges/5.011851seconds
+(about29.93Hz), clean geometry/FIFO counters and halted DMA. A first real capture
+with the old copy implementation passed37distinct exact1080p RGB888 frames in
+20.084306seconds,1.842234FPS, zero pixel/metadata/transport errors.
+
+That board run nevertheless exited1: the fixed50ms final proof could observe
+only one30Hz edge and reported a cleanup error after safe DMA halt/free. The
+original failed result is retained. Commit `cfd30d3` scales the proof to three
+input periods, keeping the two-edge requirement and halt-before-free order.
+Deterministic red/green coverage includes30/60/59.94Hz phases and stopped input;
+focused252pass, fullhost592pass/1optional Migen/LiteX skip. The new runtime is
+verified at `/tmp/hdmi-capture-1080p30-003/src`; the unchanged overlay and current
+receipt remain under `/tmp/hdmi-capture-1080p30-002`. See
+[bring-up and original failure](results/2026-10-17/1080p30-loop-bringup-001.md).
+
+Board verification of the fix passed: optimized001 delivered50exact frames in
+20.157482seconds,2.480469FPS, then exited0/DMA safe/zero source-cleanup-network
+errors. Held-lease001 passed stable A through188native edges, rejected another
+read before arm and received a different exact B after ACK. Its component
+extension verified20more images: median DMA arm→observed halt42.207ms,
+read57.604ms, copy99.009ms. Raw cached TCP passed629.465Mbps with every payload
+hash checked. See [performance](results/2026-10-17/1080p30-loop-performance.md).
+[Real GUI/BMP](results/2026-10-17/1080p30-gui-hdmi-001.md) passed the actual Save
+button and every decoded RGB byte; its bounded sender ended0/safe/zero errors.
+
+The uninstrumented600-second qualification is running on port9044, senderPID4315
+with650-second bounded duration, source `cfd30d3`, exec20131 for the host pipeline.
+The exact child argv was checked before starting read-only resource sampler4443.
+The first52seconds passed104exact frames at about2FPS. Final criterion, safe
+shutdown and post-storage/kernel checks remain pending. Logs use fresh
+`artifacts/operator/1080p-sustained-001-*`; board logs/receipt remain in002,
+runtime is003. Never restart or signal native work merely on observer timeout.
+The transfer server63088 was
+stopped after checking exact argv/UID (PID2122742), sessionexit15; no task HTTP
+server remains. Do not use the old “no PL load” or physical-wait statements below
+as current state.
+
+Preserved earlier1080p CAD/deployment checkpoint:
+
 2026-10-17 — 1080p30 clock-constraint diagnosis and copy measurements.
 
 Commit `029c403` resolves the false synchronous reset associations using a
