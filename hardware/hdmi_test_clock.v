@@ -4,20 +4,20 @@ module hdmi_test_clock (
     (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 ref_clk_100 CLK",
        X_INTERFACE_PARAMETER = "XIL_INTERFACENAME ref_clk_100, FREQ_HZ 100000000" *)
     input  wire ref_clk_100,
-    // This resets only the MMCM primitive; serializer_reset resets the clock
+    // This resets only the MMCM primitive; tx_reset resets the clock
     // consumers after lock and owns their pixel/serial clock association.
     (* X_INTERFACE_IGNORE = "true" *)
     input  wire resetn,
     (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 pixel_clk CLK",
-       X_INTERFACE_PARAMETER = "XIL_INTERFACENAME pixel_clk, FREQ_HZ 74250000, ASSOCIATED_ASYNC_RESET serializer_reset" *)
+       X_INTERFACE_PARAMETER = "XIL_INTERFACENAME pixel_clk, FREQ_HZ 74250000, ASSOCIATED_ASYNC_RESET tx_reset" *)
     output wire pixel_clk,
     (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 serial_clk CLK",
-       X_INTERFACE_PARAMETER = "XIL_INTERFACENAME serial_clk, FREQ_HZ 371250000, ASSOCIATED_ASYNC_RESET serializer_reset" *)
+       X_INTERFACE_PARAMETER = "XIL_INTERFACENAME serial_clk, FREQ_HZ 371250000, ASSOCIATED_ASYNC_RESET tx_reset" *)
     output wire serial_clk,
     output wire locked,
-    (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 serializer_reset RST",
-       X_INTERFACE_PARAMETER = "XIL_INTERFACENAME serializer_reset, POLARITY ACTIVE_HIGH" *)
-    output wire serializer_reset
+    (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 tx_reset RST",
+       X_INTERFACE_PARAMETER = "XIL_INTERFACENAME tx_reset, POLARITY ACTIVE_HIGH" *)
+    output wire tx_reset
 );
     // 100 MHz * 37.125 / 5 = 742.5 MHz VCO.  CLKOUT0 / 2 is
     // 371.25 MHz; the BUFR then divides it by five for 74.25 MHz pixels.
@@ -77,7 +77,7 @@ module hdmi_test_clock (
         .O(mmcm_fb)
     );
 
-    // OSERDESE2 requires a local I/O clock and a matching /5 CLKDIV clock.
+    // Use the local I/O clock and a matching /5 CLKDIV clock for OSERDESE2.
     BUFIO serial_buffer (
         .I(mmcm_clk),
         .O(serial_clk)
@@ -95,5 +95,5 @@ module hdmi_test_clock (
 
     assign locked = mmcm_locked;
     // Assert reset when PS clock reset is active or the MMCM loses lock.
-    assign serializer_reset = ~(resetn & mmcm_locked);
+    assign tx_reset = ~(resetn & mmcm_locked);
 endmodule

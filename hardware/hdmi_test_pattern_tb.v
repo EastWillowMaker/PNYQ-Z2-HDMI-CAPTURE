@@ -2,7 +2,7 @@
 
 module bench;
     reg pixel_clk = 1'b0;
-    reg arst = 1'b1;
+    reg async_reset = 1'b1;
     wire [23:0] vid_pData;
     wire vid_pVDE;
     wire vid_pHSync;
@@ -21,7 +21,7 @@ module bench;
 
     hdmi_test_pattern dut (
         .pixel_clk(pixel_clk),
-        .arst(arst),
+        .async_reset(async_reset),
         .vid_pData(vid_pData),
         .vid_pVDE(vid_pVDE),
         .vid_pHSync(vid_pHSync),
@@ -36,7 +36,7 @@ module bench;
             $fatal(1, "cannot open output image stream");
 
         repeat (4) @(negedge pixel_clk);
-        arst = 1'b0;
+        async_reset = 1'b0;
         @(posedge vid_pVDE);
 
         for (frame = 0; frame < 2; frame = frame + 1) begin
@@ -72,12 +72,12 @@ module bench;
         // the two-stage synchronous release starts a fresh frame.
         repeat (10) @(posedge pixel_clk);
         @(negedge pixel_clk);
-        arst = 1'b1;
+        async_reset = 1'b1;
         #0.1;
         if (vid_pVDE !== 1'b0)
             $fatal(1, "active video remained enabled during reset assertion");
         repeat (4) @(negedge pixel_clk);
-        arst = 1'b0;
+        async_reset = 1'b0;
         @(posedge vid_pVDE);
         #0.1;
         if (vid_pData !== 24'hffffff)

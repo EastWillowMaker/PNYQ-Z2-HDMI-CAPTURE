@@ -43,6 +43,22 @@ in board results. Neither a mode declaration nor protocol acceptance proves
 1080p HDMI operation. See [primary-source research](research.md) for board
 electrical limits and the unresolved physical qualification.
 
+For fast clock/reset metadata diagnosis, prepare a fresh staged output and run
+the reduced TX block-design check. It creates no bitstream and does not access
+the board:
+
+```sh
+python scripts/build_capture.py --mode 1080p30 --with-hdmi-output \
+  --output artifacts/tx-check-inputs-001 --stage prepare
+vivado -mode batch -source hardware/check_hdmi_output_bd.tcl \
+  -log artifacts/tx-check-001.log -journal artifacts/tx-check-001.jou \
+  -tclargs artifacts/tx-check-inputs-001 artifacts/tx-check-project-001
+```
+
+It requires `HDMI_OUTPUT_BD_CRITICAL_COUNT 0` and `HDMI_OUTPUT_BD_PASS`. The
+check exercises actual Vivado inference with the staged serializer IP. It does
+not replace combined block-design, synthesis, routing or on-board validation.
+
 The build preserves Linux and Ethernet on the hard Zynq PS. It creates a
 video-only overlay: J10 HDMI RX → upstream 24-bit video frontend → generated
 LiteX capture gate → color converter → pixel packer → write-only AXI VDMA →

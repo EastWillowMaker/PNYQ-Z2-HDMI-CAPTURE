@@ -10,7 +10,11 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
 
 from build_capture import main as build_capture_main
-from build_capture import copy_capture_sources
+from build_capture import (
+    adapt_rgb2dvi_async_reset_metadata,
+    copy_capture_sources,
+    copy_hdmi_output_sources,
+)
 from build_capture import require_gateware_mode as require_build_gateware_mode
 from build_edid import make_edid, make_vga_edid, self_test_mode, validate_mode_edid
 from build_manifest import (
@@ -136,6 +140,59 @@ def test_prepared_capture_sources_declare_selected_pixel_clock(
         ROOT / 'hardware/capture_lock_sync.v').read_bytes()
     assert (output / 'receiver_reset_sync.v').read_bytes() == (
         ROOT / 'hardware/receiver_reset_sync.v').read_bytes()
+
+
+def test_prepared_hdmi_ip_marks_serial_clock_reset_async_without_editing_rtl(tmp_path):
+    vendor_ip = tmp_path / 'vendor/boards/ip/rgb2dvi_v1_2'
+    component = vendor_ip / 'component.xml'
+    component.parent.mkdir(parents=True)
+    original_xml = (
+        '<spirit:component>\n'
+        '  <spirit:busInterface>\n'
+        '      <spirit:name>SerialClk</spirit:name>\n'
+        '      <spirit:parameters>\n'
+        '        <spirit:parameter>\n'
+        '          <spirit:name>ASSOCIATED_RESET</spirit:name>\n'
+        '          <spirit:value spirit:id="BUSIFPARAM_VALUE.SERIALCLK.ASSOCIATED_RESET">'
+        'aRst:aRst_n:pRst:pRst_n</spirit:value>\n'
+        '        </spirit:parameter>\n'
+        '      </spirit:parameters>\n'
+        '  </spirit:busInterface>\n'
+        '</spirit:component>\n')
+    component.write_text(original_xml)
+    original_rtl = b'entity rgb2dvi is\n  port (aRst : in std_logic);\nend;\n'
+    vendor_rtl = vendor_ip / 'src/rgb2dvi.vhd'
+    vendor_rtl.parent.mkdir()
+    vendor_rtl.write_bytes(original_rtl)
+
+    output = tmp_path / 'output'
+    output.mkdir()
+    copy_hdmi_output_sources(tmp_path / 'vendor', output)
+
+    staged_ip = output / 'tx_ip/rgb2dvi_v1_2'
+    staged_xml = (staged_ip / 'component.xml').read_text()
+    assert 'ASSOCIATED_ASYNC_RESET' in staged_xml
+    assert 'BUSIFPARAM_VALUE.SERIALCLK.ASSOCIATED_ASYNC_RESET' in staged_xml
+    assert 'aRst:aRst_n:pRst:pRst_n</spirit:value>' in staged_xml
+    assert (staged_ip / 'src/rgb2dvi.vhd').read_bytes() == original_rtl
+    assert staged_xml == original_xml.replace(
+        '<spirit:name>ASSOCIATED_RESET</spirit:name>\n'
+        '          <spirit:value spirit:id="BUSIFPARAM_VALUE.SERIALCLK.ASSOCIATED_RESET">',
+        '<spirit:name>ASSOCIATED_ASYNC_RESET</spirit:name>\n'
+        '          <spirit:value spirit:id="BUSIFPARAM_VALUE.SERIALCLK.ASSOCIATED_ASYNC_RESET">',
+    )
+
+
+def test_async_reset_metadata_adaptation_fails_closed_on_changed_xml(tmp_path):
+    component = tmp_path / 'component.xml'
+    original = ('<spirit:component><spirit:busInterface>\n'
+                '      <spirit:name>SerialClk</spirit:name>'
+                '</spirit:busInterface></spirit:component>')
+    component.write_text(original)
+
+    with pytest.raises(RuntimeError, match='reset metadata anchor changed'):
+        adapt_rgb2dvi_async_reset_metadata(component)
+    assert component.read_text() == original
 
 
 def test_hdmi_output_flag_rejects_vga_before_creating_build_directory(monkeypatch, tmp_path):

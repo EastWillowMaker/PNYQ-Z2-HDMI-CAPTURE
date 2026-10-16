@@ -260,3 +260,18 @@ HDMI pins officially only through 720p, and no 1080p30 cable loop has been
 measured. Full Vivado DRC, routed timing/CDC review, and board testing remain
 required. The loop also needs a source or sink that accepts the fixed timing;
 the transmitter does not negotiate a mode.
+
+An isolated Vivado block-design check exposed reset metadata mismatches before
+the full overlay build. Vivado inferred synchronous reset associations from
+the original `serializer_reset` and `arst` port names. The pinned `rgb2dvi`
+component XML also marks `aRst` as synchronous to `SerialClk`, while its RTL
+uses an asynchronous reset input and an internal reset bridge. The fixture
+now uses names that avoid the false synchronous associations, and the build
+normalizes that single metadata field in its staged `rgb2dvi` component copy.
+The reusable [HDMI output block-design check](../hardware/check_hdmi_output_bd.tcl)
+passed with zero critical warnings on the isolated TX clock, pattern, and
+serializer design. Its log is
+[`hdmi-output-bd-check-001.console.log`](../artifacts/operator/hdmi-output-bd-check-001.console.log).
+Vivado still reports noncritical direct-video-interface connection warnings.
+This check does not cover the combined RX/TX design, synthesis, routing,
+timing closure, DRC, or board operation.

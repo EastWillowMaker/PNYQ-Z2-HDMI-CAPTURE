@@ -19,6 +19,14 @@ from hdmi_capture.modes import CaptureMode, get_mode, mode_metadata
 PIN = '93ddd21ab623883590a8c8b07f0b157b2855da4b'
 _VGA_PIXEL_CLOCK_METADATA = (
     b'X_INTERFACE_PARAMETER = "FREQ_HZ 25200000, ASSOCIATED_RESET pixel_reset"')
+_RGB2DVI_SYNC_RESET_PARAMETER = (
+    '          <spirit:name>ASSOCIATED_RESET</spirit:name>\n'
+    '          <spirit:value spirit:id="BUSIFPARAM_VALUE.SERIALCLK.ASSOCIATED_RESET">'
+    'aRst:aRst_n:pRst:pRst_n</spirit:value>')
+_RGB2DVI_ASYNC_RESET_PARAMETER = (
+    '          <spirit:name>ASSOCIATED_ASYNC_RESET</spirit:name>\n'
+    '          <spirit:value spirit:id="BUSIFPARAM_VALUE.SERIALCLK.ASSOCIATED_ASYNC_RESET">'
+    'aRst:aRst_n:pRst:pRst_n</spirit:value>')
 
 def run(command, cwd=ROOT):
     subprocess.run(command, cwd=cwd, check=True)
@@ -49,6 +57,36 @@ def copy_capture_sources(output: Path, mode: CaptureMode) -> None:
         raise RuntimeError('source_health.v pixel clock metadata does not match capture mode')
 
 
+def adapt_rgb2dvi_async_reset_metadata(component: Path) -> None:
+    """Mark the pinned serializer reset as asynchronous in its clock metadata."""
+    xml = component.read_text()
+    serial_clock_interface = (
+        '<spirit:busInterface>\n'
+        '      <spirit:name>SerialClk</spirit:name>')
+    if xml.count(serial_clock_interface) != 1:
+        raise RuntimeError('Pinned rgb2dvi SerialClk interface anchor changed')
+    begin = xml.index(serial_clock_interface)
+    end = xml.index('</spirit:busInterface>', begin)
+    interface = xml[begin:end]
+    if interface.count(_RGB2DVI_SYNC_RESET_PARAMETER) != 1:
+        raise RuntimeError('Pinned rgb2dvi SerialClk reset metadata anchor changed')
+    interface = interface.replace(
+        _RGB2DVI_SYNC_RESET_PARAMETER, _RGB2DVI_ASYNC_RESET_PARAMETER, 1)
+    component.write_text(xml[:begin] + interface + xml[end:])
+
+
+def copy_hdmi_output_sources(vendor: Path, output: Path) -> None:
+    """Stage the test-output IP and RTL, correcting only copied IP metadata."""
+    tx_ip = output / 'tx_ip'
+    tx_ip.mkdir()
+    shutil.copytree(vendor / 'boards/ip/rgb2dvi_v1_2', tx_ip / 'rgb2dvi_v1_2')
+    adapt_rgb2dvi_async_reset_metadata(tx_ip / 'rgb2dvi_v1_2/component.xml')
+    tx_source = output / 'tx'
+    tx_source.mkdir()
+    for name in ('hdmi_output.tcl', 'hdmi_test_pattern.v', 'hdmi_test_clock.v'):
+        shutil.copyfile(ROOT / 'hardware' / name, tx_source / name)
+
+
 def prepare(vendor, output, mode, with_hdmi_output=False):
     actual = subprocess.check_output(['git', '-C', str(vendor), 'rev-parse', 'HEAD'], text=True).strip()
     if actual != PIN:
@@ -64,13 +102,7 @@ def prepare(vendor, output, mode, with_hdmi_output=False):
     for name in ('dvi2rgb_v1_7', 'color_swap_1.1', 'if'):
         shutil.copytree(vendor / 'boards/ip' / name, ip_root / name)
     if with_hdmi_output:
-        tx_ip = output / 'tx_ip'
-        tx_ip.mkdir()
-        shutil.copytree(vendor / 'boards/ip/rgb2dvi_v1_2', tx_ip / 'rgb2dvi_v1_2')
-        tx_source = output / 'tx'
-        tx_source.mkdir()
-        for name in ('hdmi_output.tcl', 'hdmi_test_pattern.v', 'hdmi_test_clock.v'):
-            shutil.copyfile(ROOT / 'hardware' / name, tx_source / name)
+        copy_hdmi_output_sources(vendor, output)
     component = ip_root / 'dvi2rgb_v1_7/component.xml'
     xml = component.read_text()
     anchor = '<spirit:enumeration spirit:text="&lt; 120 MHz">2</spirit:enumeration>'

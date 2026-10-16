@@ -39,8 +39,8 @@ connect_bd_net [get_bd_pins hdmi_test_clock/pixel_clk] \
     [get_bd_pins hdmi_out_tx/PixelClk]
 connect_bd_net [get_bd_pins hdmi_test_clock/serial_clk] \
     [get_bd_pins hdmi_out_tx/SerialClk]
-connect_bd_net [get_bd_pins hdmi_test_clock/serializer_reset] \
-    [get_bd_pins hdmi_test_pattern/arst] \
+connect_bd_net [get_bd_pins hdmi_test_clock/tx_reset] \
+    [get_bd_pins hdmi_test_pattern/async_reset] \
     [get_bd_pins hdmi_out_tx/aRst]
 connect_bd_net [get_bd_pins hdmi_test_pattern/vid_pData] \
     [get_bd_pins hdmi_out_tx/vid_pData]

@@ -2,11 +2,11 @@
 // vid_pData uses the pinned rgb2dvi IP's documented RBG byte order.
 module hdmi_test_pattern (
     (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 pixel_clk CLK",
-       X_INTERFACE_PARAMETER = "XIL_INTERFACENAME pixel_clk, FREQ_HZ 74250000, ASSOCIATED_ASYNC_RESET arst" *)
+       X_INTERFACE_PARAMETER = "XIL_INTERFACENAME pixel_clk, FREQ_HZ 74250000, ASSOCIATED_ASYNC_RESET async_reset" *)
     input  wire        pixel_clk,
-    (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 arst RST",
-       X_INTERFACE_PARAMETER = "XIL_INTERFACENAME arst, POLARITY ACTIVE_HIGH" *)
-    input  wire        arst,
+    (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 async_reset RST",
+       X_INTERFACE_PARAMETER = "XIL_INTERFACENAME async_reset, POLARITY ACTIVE_HIGH" *)
+    input  wire        async_reset,
     output reg  [23:0] vid_pData,
     output reg         vid_pVDE,
     output reg         vid_pHSync,
@@ -28,8 +28,8 @@ module hdmi_test_pattern (
     wire pixel_reset = reset_pipe[1];
 
     // Asynchronous assertion with two pixel-clock stages before release.
-    always @(posedge pixel_clk or posedge arst) begin
-        if (arst)
+    always @(posedge pixel_clk or posedge async_reset) begin
+        if (async_reset)
             reset_pipe <= 2'b11;
         else
             reset_pipe <= {reset_pipe[0], 1'b0};
@@ -56,7 +56,7 @@ module hdmi_test_pattern (
     always @* begin
         vid_pHSync = (h_count >= 12'd2008) && (h_count < 12'd2052);
         vid_pVSync = (v_count >= 11'd1084) && (v_count < 11'd1089);
-        vid_pVDE = !arst && !pixel_reset &&
+        vid_pVDE = !async_reset && !pixel_reset &&
                    (h_count < 12'd1920) && (v_count < 11'd1080);
         vid_pData = 24'd0;
 
