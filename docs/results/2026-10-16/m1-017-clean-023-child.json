@@ -1,0 +1,30 @@
+{
+  "pid": 14159,
+  "argv": [
+    "/bin/sh",
+    "-c",
+    "\n    set -eu\n    \"$1\" -c \"\nimport json\nimport sys\nfrom hdmi_capture.prepared import wait_ready_file\nprint(json.dumps(dict(event=\\\"waiting_for_source\\\", ready_file=sys.argv[1], timeout_seconds=300)), flush=True)\nwait_ready_file(sys.argv[1], 300)\n\" \"$5\"\n    \"$1\" -m hdmi_capture.sender prepare --bitfile \"$2\" \\\n      --manifest \"$3\" --receipt \"$4\"\n    exec \"$1\" -u -X faulthandler -m hdmi_capture.sender \\\n      --source litex-credit --bitfile \"$2\" --manifest \"$3\" \\\n      --prepared-receipt \"$4\" --host :: --port 9030 --fps 2 \\\n      --duration 90 --startup-diagnostics\n",
+    "prepared-capture",
+    "/usr/local/share/pynq-venv/bin/python",
+    "/tmp/hdmi-capture-prepared-014/overlay/capture.bit",
+    "/tmp/hdmi-capture-prepared-014/overlay/build-manifest.json",
+    "/tmp/hdmi-capture-prepared-014/prepared.json",
+    "/tmp/hdmi-capture-prepared-014/clean-023.ready"
+  ],
+  "pythonpath": "/tmp/hdmi-capture-clean-023/src",
+  "modules": {
+    "sender": {
+      "path": "/tmp/hdmi-capture-clean-023/src/hdmi_capture/sender.py",
+      "sha256": "8790276c947e85d3a1755097faa2b09811d8f00c906d2a48dfd1a98ebe60059e"
+    },
+    "sources": {
+      "path": "/tmp/hdmi-capture-clean-023/src/hdmi_capture/sources.py",
+      "sha256": "90798eb897756d199d4b9967e4bb2f405837e3f2f3805f04fd0ba4cb379e1727"
+    },
+    "prepared": {
+      "path": "/tmp/hdmi-capture-clean-023/src/hdmi_capture/prepared.py",
+      "sha256": "059b321abb9dc4c455cc50f750523870eeacb098c4dabfafc993ebdd6c1b09ce"
+    }
+  },
+  "started_monotonic": 76953.147659129
+}

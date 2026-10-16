@@ -1,0 +1,95 @@
+{
+  "scope": "independently_verified_clean_source_public_recipe_and_restart_smoke",
+  "passed": true,
+  "full_m1_qualification": false,
+  "root_checks_verified": true,
+  "kernel_delta_verified": true,
+  "source_exit": 0,
+  "desktop_restored": true,
+  "new_session_verified": true,
+  "optical_ids_in_new_presentations": true,
+  "root_result_sha256": "54fd7cf1335beef44136d6d6aa6749d7de68a0327a04d663107fd2dd96563927",
+  "controller_sha256": "3e49a38fdc52bf3695f7d58243aa19fc853da447d890cb6c0e0af0b3f45d0ccb",
+  "before_dmesg_sha256": "0c72a771b26f5091f56376a403bb27b5151d2e2b6c267784b5aa316e5a350da2",
+  "after_dmesg_sha256": "58c7baff6cfa910200edf0d7e2365ee1b697b7cd5876a10c26810bd4b6a3c54a",
+  "original_root_passed": false,
+  "original_controller_passed": false,
+  "original_observer_failure": "historical external abort rolled out of dmesg; count equality failed",
+  "kernel_overlap_lines": 161,
+  "kernel_new_lines": 41,
+  "external_abort_counts": [
+    1,
+    0
+  ],
+  "endpoint_checks": {
+    "first": {
+      "path": "artifacts/captures/m1-017-clean-023/first.npy",
+      "sha256": "eb00b6e524acd870cf5b4fae45e5b981020ada97f155a276ca215f391f82a2c4",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "verification": {
+        "expected_id": 2300163,
+        "expected_id_source": "majority_valid_optical_rows",
+        "valid_marker_rows": 480,
+        "invalid_marker_rows": [],
+        "optical_ids": {
+          "2300163": 480
+        },
+        "mixed_optical_ids": false,
+        "exact_match": true,
+        "mismatched_pixels": 0,
+        "mismatched_bytes": 0,
+        "mismatched_bytes_by_channel": [
+          0,
+          0,
+          0
+        ],
+        "mismatched_rows": [],
+        "first_mismatch_y_x": null,
+        "max_absolute_error": 0
+      }
+    },
+    "last": {
+      "path": "artifacts/captures/m1-017-clean-023/last.npy",
+      "sha256": "430cd91498907fe4e1742598e8ec00581cf8fb0e9405f0addd4e01d94bc9c33b",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "dtype": "uint8",
+      "verification": {
+        "expected_id": 2300238,
+        "expected_id_source": "majority_valid_optical_rows",
+        "valid_marker_rows": 480,
+        "invalid_marker_rows": [],
+        "optical_ids": {
+          "2300238": 480
+        },
+        "mixed_optical_ids": false,
+        "exact_match": true,
+        "mismatched_pixels": 0,
+        "mismatched_bytes": 0,
+        "mismatched_bytes_by_channel": [
+          0,
+          0,
+          0
+        ],
+        "mismatched_rows": [],
+        "first_mismatch_y_x": null,
+        "max_absolute_error": 0
+      }
+    }
+  },
+  "clean_source_revision": "ad6c9660ae4029e8906a1f7331d79a5370cba06e",
+  "new_session": "2f44705a-5644-48dc-8e32-56483c7e4008",
+  "delivered_frames": 41,
+  "exact_frames": 41,
+  "elapsed_seconds": 20.309944856038783,
+  "distinct_exact_fps": 2.0187154761185586,
+  "source_pipeline": "complete isolated git export; public wait_ready_file -> normal prepare -> production sender; clean public trigger -> clean qualifier; existing host dependencies and identical paired bitstream reused"
+}

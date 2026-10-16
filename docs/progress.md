@@ -1,5 +1,26 @@
 # Progress and handoff
 
+2026-10-16T22:06+08:00 — Clean023 public workflow/restart independently verified.
+41exactRGB frames/20.309945s/2.018715FPS; completegitexportad6c966, cleanmodule
+paths/hashes/publicwait->prepare->exec andcleanpublictrigger90/qualifier20.
+Newsession/opticalIDs/endpointNPYverified. Actualsenderexit0/zeroerrors/rawhalt/
+storage/source240exit0/VTrestore. Originalroot/controllerfalsekept: historical
+kernelabort rolledout1->0; exact161lineoverlap/41newlinesprove no newabort.
+Separate m1-017-clean-023-verified.json passes boundedstartup/restartscope with
+hashes oforiginalresults. FullM1stillfalse. No newPython/XRT/CADbuildclaim.
+
+Physical024rootchain+optionalrestart025stagedwhileboardauthvalid, exacthashes;
+initialfilesystemwaitonly. Userexplicitlyready; source03isrunning240/id2400000,
+receiverready~52s and3exactframesby53.483s, beforemanual100scue. User instructed
+HDMIIN-only unplug5s after100s fromVTswitch; Hub/MicroBunchanged. Awaitactual
+sourceerror/client/root/desktop andhumanconfirmation, don'tstage live024files.
+Host024parsed diagnostics+boundaryEOF nowpreserveallframeevidence; partialEOF
+rejects. No changes toSDK/runtime or liveworker. ExistingPCworker021rejects
+continuationaftersourceexit1; do notqueue04if03failed. Optional025rootwaiter
+startsONLYafter024safeexpectedstop andneedsnewPCone-runworker/localPCauthif
+03failed. That concretePC-onlyhelperisbeingprepared; no newboardauthrequired
+foralreadylaunchedrootchain. PCworker021deadline349638 (~22:17), nevereditlive.
+
 2026-10-16T21:53+08:00 — Mode021 exact-before/fail-stop/safe-halt evidence saved.
 47exactRGB frames; real advertised25200->25175nominalKMS timing transition.
 EOF46.923ms aftermodesetbegin, before1.578776sdriverack; client raced eventlog

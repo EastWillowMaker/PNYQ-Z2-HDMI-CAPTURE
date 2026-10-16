@@ -1,0 +1,202 @@
+[29513.074175] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_del_context: Client pid(10663) del context Domain(0) CU(0xffffffff)
+[29513.074203] [drm] bitstream f6b0b907-6050-6522-95c7-4a727423cffb unlocked, ref=0
+[29515.467443] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(10663)
+[29541.560457] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(10717), ret: 0
+[29541.560574] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(10717)
+[29541.561190] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(10717), ret: 0
+[29638.198018] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(10717)
+[29655.089176] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(11133), ret: 0
+[29655.089293] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(11133)
+[29655.089906] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(11133), ret: 0
+[29659.258261] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(11133)
+[29804.479290] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(11403), ret: 0
+[29804.479409] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(11403)
+[29804.480022] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(11403), ret: 0
+[29811.754864] fpga_manager fpga0: writing capture.bin to Xilinx Zynq FPGA Manager
+[29811.838323] [drm] skip kind 29(AIE_RESOURCES) return code: -22
+[29811.838370] [drm] skip kind 8(IP_LAYOUT) return code: -22
+[29811.838384] [drm] skip kind 9(DEBUG_IP_LAYOUT) return code: -22
+[29811.838395] [drm] skip kind 25(AIE_METADATA) return code: -22
+[29811.838406] [drm] skip kind 7(CONNECTIVITY) return code: -22
+[29811.838416] [drm] found kind 6(MEM_TOPOLOGY)
+[29811.838530] [drm] Memory 0 is not reserved in device tree. Will allocate memory from CMA
+[29811.838579] [drm] zocl_xclbin_read_axlf b47b2ae3-9a84-9a6b-0112-c96f4afd73ee ret: 0
+[29811.866068] [drm] bitstream b47b2ae3-9a84-9a6b-0112-c96f4afd73ee locked, ref=1
+[29811.866122] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_add_context: Client pid(11403) add context Domain(0) CU(0xffffffff) shared(true)
+[29811.866212] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_del_context: Client pid(11403) del context Domain(0) CU(0xffffffff)
+[29811.866237] [drm] bitstream b47b2ae3-9a84-9a6b-0112-c96f4afd73ee unlocked, ref=0
+[29814.219546] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(11403)
+[29833.433996] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(11485), ret: 0
+[29833.434114] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(11485)
+[29833.434727] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(11485), ret: 0
+[29842.773981] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(11485)
+[29858.520345] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(11545), ret: 0
+[29858.520460] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(11545)
+[29858.521065] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(11545), ret: 0
+[29862.590621] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(11545)
+[30236.506643] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(12148), ret: 0
+[30236.506760] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(12148)
+[30236.507367] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(12148), ret: 0
+[30243.208020] fpga_manager fpga0: writing capture.bin to Xilinx Zynq FPGA Manager
+[30243.288088] [drm] skip kind 29(AIE_RESOURCES) return code: -22
+[30243.288134] [drm] skip kind 8(IP_LAYOUT) return code: -22
+[30243.288148] [drm] skip kind 9(DEBUG_IP_LAYOUT) return code: -22
+[30243.288161] [drm] skip kind 25(AIE_METADATA) return code: -22
+[30243.288172] [drm] skip kind 7(CONNECTIVITY) return code: -22
+[30243.288183] [drm] found kind 6(MEM_TOPOLOGY)
+[30243.288298] [drm] Memory 0 is not reserved in device tree. Will allocate memory from CMA
+[30243.288349] [drm] zocl_xclbin_read_axlf bcfe2fa5-c0a5-1c07-e4d1-d9d16bef65d3 ret: 0
+[30243.314478] [drm] bitstream bcfe2fa5-c0a5-1c07-e4d1-d9d16bef65d3 locked, ref=1
+[30243.314533] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_add_context: Client pid(12148) add context Domain(0) CU(0xffffffff) shared(true)
+[30243.314624] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_del_context: Client pid(12148) del context Domain(0) CU(0xffffffff)
+[30243.314653] [drm] bitstream bcfe2fa5-c0a5-1c07-e4d1-d9d16bef65d3 unlocked, ref=0
+[30245.724195] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(12148)
+[30276.713223] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(12217), ret: 0
+[30276.713343] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(12217)
+[30276.713967] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(12217), ret: 0
+[30281.681732] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(12217)
+[30475.235232] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(12744), ret: 0
+[30475.235353] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(12744)
+[30475.236727] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(12744), ret: 0
+[30479.274371] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(12744)
+[30684.325447] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(13058), ret: 0
+[30684.325570] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(13058)
+[30684.326411] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(13058), ret: 0
+[30691.225513] fpga_manager fpga0: writing capture.bin to Xilinx Zynq FPGA Manager
+[30691.306253] [drm] skip kind 29(AIE_RESOURCES) return code: -22
+[30691.306300] [drm] skip kind 8(IP_LAYOUT) return code: -22
+[30691.306314] [drm] skip kind 9(DEBUG_IP_LAYOUT) return code: -22
+[30691.306326] [drm] skip kind 25(AIE_METADATA) return code: -22
+[30691.306337] [drm] skip kind 7(CONNECTIVITY) return code: -22
+[30691.306348] [drm] found kind 6(MEM_TOPOLOGY)
+[30691.306461] [drm] Memory 0 is not reserved in device tree. Will allocate memory from CMA
+[30691.306509] [drm] zocl_xclbin_read_axlf 6da98354-cd48-7ddd-8fa9-4f82a80a7e0c ret: 0
+[30691.332411] [drm] bitstream 6da98354-cd48-7ddd-8fa9-4f82a80a7e0c locked, ref=1
+[30691.332463] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_add_context: Client pid(13058) add context Domain(0) CU(0xffffffff) shared(true)
+[30691.332554] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_del_context: Client pid(13058) del context Domain(0) CU(0xffffffff)
+[30691.332582] [drm] bitstream 6da98354-cd48-7ddd-8fa9-4f82a80a7e0c unlocked, ref=0
+[30693.741822] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(13058)
+[30717.310467] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(13134), ret: 0
+[30717.310583] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(13134)
+[30717.311180] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(13134), ret: 0
+[30758.968352] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(13134)
+[30762.234205] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(13110), ret: 0
+[30762.234327] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(13110)
+[30762.234951] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(13110), ret: 0
+[30766.280493] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(13110)
+[74861.949565] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(10912), ret: 0
+[74861.949681] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(10912)
+[74861.950343] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(10912), ret: 0
+[74868.776766] fpga_manager fpga0: writing capture.bin to Xilinx Zynq FPGA Manager
+[74868.864692] [drm] skip kind 29(AIE_RESOURCES) return code: -22
+[74868.864740] [drm] skip kind 8(IP_LAYOUT) return code: -22
+[74868.864754] [drm] skip kind 9(DEBUG_IP_LAYOUT) return code: -22
+[74868.864766] [drm] skip kind 25(AIE_METADATA) return code: -22
+[74868.864777] [drm] skip kind 7(CONNECTIVITY) return code: -22
+[74868.864788] [drm] found kind 6(MEM_TOPOLOGY)
+[74868.864897] [drm] Memory 0 is not reserved in device tree. Will allocate memory from CMA
+[74868.864943] [drm] zocl_xclbin_read_axlf 9f488b04-9152-16b1-124f-e79704fe6235 ret: 0
+[74868.891409] [drm] bitstream 9f488b04-9152-16b1-124f-e79704fe6235 locked, ref=1
+[74868.891466] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_add_context: Client pid(10912) add context Domain(0) CU(0xffffffff) shared(true)
+[74868.891577] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_del_context: Client pid(10912) del context Domain(0) CU(0xffffffff)
+[74868.891606] [drm] bitstream 9f488b04-9152-16b1-124f-e79704fe6235 unlocked, ref=0
+[74871.309794] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(10912)
+[74884.707243] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(10957), ret: 0
+[74884.707361] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(10957)
+[74884.707977] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(10957), ret: 0
+[75541.409591] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(10957)
+[75545.732930] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(10756), ret: 0
+[75545.733107] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(10756)
+[75545.733926] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(10756), ret: 0
+[75549.774743] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(10756)
+[75819.741154] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(12393), ret: 0
+[75819.741270] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(12393)
+[75819.741868] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(12393), ret: 0
+[75826.141604] fpga_manager fpga0: writing capture.bin to Xilinx Zynq FPGA Manager
+[75826.225204] [drm] skip kind 29(AIE_RESOURCES) return code: -22
+[75826.225249] [drm] skip kind 8(IP_LAYOUT) return code: -22
+[75826.225264] [drm] skip kind 9(DEBUG_IP_LAYOUT) return code: -22
+[75826.225277] [drm] skip kind 25(AIE_METADATA) return code: -22
+[75826.225287] [drm] skip kind 7(CONNECTIVITY) return code: -22
+[75826.225298] [drm] found kind 6(MEM_TOPOLOGY)
+[75826.225409] [drm] Memory 0 is not reserved in device tree. Will allocate memory from CMA
+[75826.225457] [drm] zocl_xclbin_read_axlf 00a3b1a9-d390-5ef7-2c5b-7e982a4fd23b ret: 0
+[75826.252936] [drm] bitstream 00a3b1a9-d390-5ef7-2c5b-7e982a4fd23b locked, ref=1
+[75826.252993] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_add_context: Client pid(12393) add context Domain(0) CU(0xffffffff) shared(true)
+[75826.253088] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_del_context: Client pid(12393) del context Domain(0) CU(0xffffffff)
+[75826.253116] [drm] bitstream 00a3b1a9-d390-5ef7-2c5b-7e982a4fd23b unlocked, ref=0
+[75828.598852] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(12393)
+[75841.145351] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(12435), ret: 0
+[75841.145472] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(12435)
+[75841.146088] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(12435), ret: 0
+[75877.904238] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(12435)
+[75881.612534] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(11698), ret: 0
+[75881.612667] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(11698)
+[75881.613401] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(11698), ret: 0
+[75885.651948] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(11698)
+[76471.884834] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(13372), ret: 0
+[76471.884954] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(13372)
+[76471.885564] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(13372), ret: 0
+[76478.330847] fpga_manager fpga0: writing capture.bin to Xilinx Zynq FPGA Manager
+[76478.412469] [drm] skip kind 29(AIE_RESOURCES) return code: -22
+[76478.412516] [drm] skip kind 8(IP_LAYOUT) return code: -22
+[76478.412531] [drm] skip kind 9(DEBUG_IP_LAYOUT) return code: -22
+[76478.412543] [drm] skip kind 25(AIE_METADATA) return code: -22
+[76478.412554] [drm] skip kind 7(CONNECTIVITY) return code: -22
+[76478.412565] [drm] found kind 6(MEM_TOPOLOGY)
+[76478.412678] [drm] Memory 0 is not reserved in device tree. Will allocate memory from CMA
+[76478.412725] [drm] zocl_xclbin_read_axlf 04035a30-6154-405e-15ad-b5113373a3b7 ret: 0
+[76478.437523] [drm] bitstream 04035a30-6154-405e-15ad-b5113373a3b7 locked, ref=1
+[76478.437577] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_add_context: Client pid(13372) add context Domain(0) CU(0xffffffff) shared(true)
+[76478.437667] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_del_context: Client pid(13372) del context Domain(0) CU(0xffffffff)
+[76478.437694] [drm] bitstream 04035a30-6154-405e-15ad-b5113373a3b7 unlocked, ref=0
+[76480.775776] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(13372)
+[76493.504369] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(13398), ret: 0
+[76493.504489] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(13398)
+[76493.505101] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(13398), ret: 0
+[76524.783684] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(13398)
+[76528.811604] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(12297), ret: 0
+[76528.811725] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(12297)
+[76528.812341] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(12297), ret: 0
+[76532.871560] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(12297)
+[76928.459567] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(14067), ret: 0
+[76928.459697] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(14067)
+[76928.460394] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(14067), ret: 0
+[76943.096825] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(14098), ret: 0
+[76943.096945] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(14098)
+[76943.097566] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(14098), ret: 0
+[76949.980691] fpga_manager fpga0: writing capture.bin to Xilinx Zynq FPGA Manager
+[76950.693670] [drm] skip kind 29(AIE_RESOURCES) return code: -22
+[76950.693721] [drm] skip kind 8(IP_LAYOUT) return code: -22
+[76950.693736] [drm] skip kind 9(DEBUG_IP_LAYOUT) return code: -22
+[76950.693748] [drm] skip kind 25(AIE_METADATA) return code: -22
+[76950.693760] [drm] skip kind 7(CONNECTIVITY) return code: -22
+[76950.693771] [drm] found kind 6(MEM_TOPOLOGY)
+[76950.693893] [drm] Memory 0 is not reserved in device tree. Will allocate memory from CMA
+[76950.693944] [drm] zocl_xclbin_read_axlf 793e0b49-632c-29d9-be5f-533341b5fc20 ret: 0
+[76950.729168] [drm] bitstream 793e0b49-632c-29d9-be5f-533341b5fc20 locked, ref=1
+[76950.729227] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_add_context: Client pid(14098) add context Domain(0) CU(0xffffffff) shared(true)
+[76950.729322] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_del_context: Client pid(14098) del context Domain(0) CU(0xffffffff)
+[76950.729350] [drm] bitstream 793e0b49-632c-29d9-be5f-533341b5fc20 unlocked, ref=0
+[76953.160290] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(14098)
+[76976.016185] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(14192), ret: 0
+[76976.016307] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(14192)
+[76976.017118] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(14192), ret: 0
+[76982.973119] fpga_manager fpga0: writing capture.bin to Xilinx Zynq FPGA Manager
+[76983.057814] [drm] skip kind 29(AIE_RESOURCES) return code: -22
+[76983.057865] [drm] skip kind 8(IP_LAYOUT) return code: -22
+[76983.057881] [drm] skip kind 9(DEBUG_IP_LAYOUT) return code: -22
+[76983.057893] [drm] skip kind 25(AIE_METADATA) return code: -22
+[76983.057904] [drm] skip kind 7(CONNECTIVITY) return code: -22
+[76983.057915] [drm] found kind 6(MEM_TOPOLOGY)
+[76983.058039] [drm] Memory 0 is not reserved in device tree. Will allocate memory from CMA
+[76983.058097] [drm] zocl_xclbin_read_axlf 6d6f6d62-61d4-225e-112f-42ebdfe76a71 ret: 0
+[76983.089239] [drm] bitstream 6d6f6d62-61d4-225e-112f-42ebdfe76a71 locked, ref=1
+[76983.089298] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_add_context: Client pid(14192) add context Domain(0) CU(0xffffffff) shared(true)
+[76983.089391] zocl-drm axi:zyxclmm_drm:  ffffffffc112dc10 kds_del_context: Client pid(14192) del context Domain(0) CU(0xffffffff)
+[76983.089418] [drm] bitstream 6d6f6d62-61d4-225e-112f-42ebdfe76a71 unlocked, ref=0
+[76985.551796] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(14192)
+[76998.115640] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(14159), ret: 0
+[76998.115754] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(14159)
+[76998.116353] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(14159), ret: 0
+[77094.807402] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(14159)
