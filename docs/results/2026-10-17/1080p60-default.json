@@ -1,0 +1,45 @@
+{
+  "source_revision": "062ce935cc36363c32d7d6b8a82adb99dca22cb9",
+  "mode": "1080p60",
+  "geometry": [
+    1920,
+    1080
+  ],
+  "refresh_hz": 60,
+  "pixel_clock_hz": 148500000,
+  "receiver_k_clk_range": 1,
+  "edid": {
+    "sha256": "3eb2453cf0034be9bdd9242de9744eaf6eb4077c1c18c32c4dc12082204d09fe",
+    "extension_count": 0,
+    "preferred_refresh_hz": 60,
+    "edid_decode_conformity": "PASS"
+  },
+  "host_tests": {
+    "passed": 623,
+    "skipped": 1,
+    "skip_reason": "optional Migen simulation dependency"
+  },
+  "cad": {
+    "qualified": false,
+    "exit_code": 1,
+    "setup_slack_ns": 0.226,
+    "hold_slack_ns": 0.016,
+    "minimum_period_slack_ns": -0.32,
+    "minimum_period_failing_endpoints": 14,
+    "required_minimum_period_ns": 1.667,
+    "actual_period_ns": 1.347,
+    "clock": "CLK_OUT_5x_hdmi_clk",
+    "example_pin": "ISERDESE2/CLK",
+    "message": "Timing 38-282",
+    "candidate_bitstream_generated": true,
+    "paired_package_published": false
+  },
+  "deployed": false,
+  "physical_1080p60_test_performed": false,
+  "evidence": {
+    "timing": "artifacts/1080p60-rx-001/timing.rpt",
+    "console": "artifacts/1080p60-rx-001.resume002-console.log",
+    "result": "artifacts/1080p60-rx-001.resume002-result.json",
+    "edid_decode": "artifacts/1080p60-rx-001/edid-decode.log"
+  }
+}

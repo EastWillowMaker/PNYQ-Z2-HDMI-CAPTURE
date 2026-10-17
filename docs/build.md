@@ -2,6 +2,10 @@
 
 ## 1080p60 external-input build
 
+The [first routed build](results/2026-10-17/1080p60-default.md) failed 14
+deserializer minimum-period checks (−0.320 ns) and was not deployed. EDID
+validation passed; hardware timing qualification did not.
+
 The PC launcher's external scenario defaults to `1080p60`: 1920×1080
 progressive at 60 Hz, 148.5 MHz pixel clock, totals 2200×1125, positive sync,
 and receiver `kClkRange=1`. Its EDID advertises only that detailed timing in
