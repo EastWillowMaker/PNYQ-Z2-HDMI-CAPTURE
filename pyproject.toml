@@ -12,6 +12,7 @@ dependencies = ["numpy>=1.24,<3"]
 [project.optional-dependencies]
 png = ["Pillow>=10,<13"]
 gui = ["Pillow>=10,<13"]
+serial = ["pyserial>=3.5,<4"]
 test = ["pytest>=8,<10"]
 
 [project.scripts]

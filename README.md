@@ -46,7 +46,9 @@ python3 -m venv .venv
 package installation is required. Dependencies have bounded compatible ranges;
 the tested installed versions should be retained alongside each result.
 
-First exercise the synthetic path in one terminal:
+To view HDMI input, use one of the [two GUI scenarios](#use-the-desktop-gui)
+below. The following optional synthetic test generates a pattern; it cannot
+show your PC desktop. Run it in one terminal:
 
 ```sh
 .venv/bin/python -m hdmi_capture.sender --source synthetic --host 127.0.0.1 --port 9020 --fps 1
@@ -105,6 +107,105 @@ timeout or invalid framing closes the connection; reconnect explicitly to
 start a fresh read scope. RGB bytes receive no scaling or color conversion.
 Board and host monotonic clocks cannot be subtracted as one-way latency.
 See [protocol](docs/protocol.md) for wire bounds and validity rules.
+
+## Use the desktop GUI
+
+Run both launchers on your **PC**, from this repository. They start real HDMI
+capture on the PYNQ-Z2 and open the viewer on your PC. The synthetic localhost
+commands above only generate a test pattern; they do not capture your desktop.
+
+Install once in the PC virtual environment (Python must include Tk support):
+
+```sh
+.venv/bin/python -m pip install --index-url https://pypi.org/simple -e '.[gui,serial]'
+```
+
+Connect the powered PYNQ-Z2 to your PC with **Ethernet** and a **Micro-B USB
+data cable** for its serial console. Keep the shared USB-C Hub connected.
+The board must already have the capture software and paired image files
+installed; see [one-time board setup](docs/quickstart.md) and
+[local-loop image setup](docs/output-loop.md). The launchers find the existing
+board deployment and prepare it for each run.
+
+### 1. PYNQ-Z2 Local Loop
+
+Connect **PYNQ HDMI OUT (J9) → HDMI IN (J10)**. This shows the board's changing
+1080p30 test pattern, with a capture target of 2 FPS.
+
+In the first PC terminal:
+
+```sh
+.venv/bin/python Start-PYNQ-Z2-Captrue.py --scenario loop
+```
+
+Follow the serial login steps below. When it says **Capture is ready**, leave
+that terminal open and run this in a second PC terminal:
+
+```sh
+.venv/bin/python Start-Host-PC-Capture.py
+```
+
+### 2. Capture External HDMI Signal
+
+Connect **PC HDMI output → PYNQ HDMI IN (J10)** and disconnect the J9-to-J10
+loop cable. To see your desktop, enable the PYNQ-connected HDMI display in your
+PC display settings at **640×480 near 60 Hz**. Select **Mirror**, or select
+**Extend** and move the content onto that HDMI display. The external scenario
+uses the qualified VGA receiver profile; external 1080p30 remains unqualified.
+
+In the first PC terminal:
+
+```sh
+.venv/bin/python Start-PYNQ-Z2-Captrue.py --scenario external
+```
+
+Follow the serial login steps below. After the launcher prepares the receiver,
+it pauses so you can enable the HDMI display and confirm that the output is
+stable. The launcher checks and attaches to that prepared receiver without
+reloading it again. When it says **Capture is ready**, run this in a second PC
+terminal:
+
+```sh
+.venv/bin/python Start-Host-PC-Capture.py
+```
+
+### Connect and log in through Miniterm
+
+The board launcher opens **Miniterm** at 115200 baud. If several serial devices
+are attached, select the PYNQ UART port (not JTAG).
+
+1. Press **Enter** to display the board prompt.
+2. If asked, enter your board username and password in Miniterm.
+3. At the board shell prompt, run `sudo -v` and enter the board password if asked.
+4. Press **Ctrl+]** to leave Miniterm and let the launcher continue.
+5. Accept or enter the board's Ethernet address when prompted. The viewer
+   remembers this address and the matching port automatically.
+
+The existing board login password and PC settings are preserved. No passwords
+are stored. On Linux, if the serial port reports permission denied, ask your
+administrator to grant your account access to that device. Close other serial
+terminals before running the launcher.
+
+### Save and stop
+
+Select **Save frame…** in the viewer to save a full-resolution, uncompressed
+24-bit BMP and its JSON metadata sidecar. Decoding the BMP to RGB888 preserves
+every received pixel byte; preview scaling does not affect the saved image.
+Choose a new filename because existing files are not overwritten.
+
+To stop, press **Ctrl+C once in the first PC terminal** and wait for
+**Board capture stopped**. Closing the viewer only disconnects it. For a new
+session or a different scenario, run the board launcher again before opening
+the viewer. Source faults require explicit restart; the launchers do not retry
+or force-kill capture.
+
+If the board was just power-cycled and has no valid preparation receipt, add
+`--after-reset` to the board launcher **only before any capture has started**.
+This flag asserts an actual board/PL reset; it does not perform one. An unknown
+or failed DMA state needs the [recovery procedure](docs/prepared-capture.md).
+Advanced connection overrides are listed by each script's `--help`.
+See the [viewer guide](docs/viewer.md) for reconnect behavior and
+[external-source evidence](docs/kms-source.md) for exact-pixel test limits.
 
 ## Existing Ethernet evidence
 
