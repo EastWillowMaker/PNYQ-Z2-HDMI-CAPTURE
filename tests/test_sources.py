@@ -1236,3 +1236,14 @@ def test_credit_input_clock_loss_never_reads_native_vtc(phase):
         assert source.control.command & 1 == 0 and freed == [1]
 
     asyncio.run(run())
+
+
+def test_litex_1080p60_requires_matching_148500khz_artifacts(tmp_path):
+    from hdmi_capture.sources import verify_litex_artifacts
+    bitfile, manifest = make_mode_litex_artifacts(tmp_path, "1080p60")
+    record = verify_litex_artifacts(bitfile, manifest, expected_mode="1080p60")
+    assert record["pixel_clock_hz"] == 148_500_000
+    assert record["receiver_k_clk_range"] == 1
+    assert record["geometry"] == [1920, 1080]
+    with pytest.raises(SourceError, match="does not match requested mode"):
+        verify_litex_artifacts(bitfile, manifest, expected_mode="1080p30")

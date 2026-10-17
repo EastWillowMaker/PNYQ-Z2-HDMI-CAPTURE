@@ -102,6 +102,7 @@ def test_1080p30_edid_rejects_unsupported_or_different_timing(tmp_path, change):
 @pytest.mark.parametrize('mode_name,geometry,clock_hz,valid', [
     ('vga', (640, 480), 142_857_132, True),
     ('1080p30', (1920, 1080), 142_857_132, True),
+    ('1080p60', (1920, 1080), 142_857_132, True),
     ('vga', (1920, 1080), 142_857_132, False),
     ('1080p30', (1920, 1080), 100_000_000, False),
 ])
@@ -123,6 +124,7 @@ def test_gateware_mode_checks_allow_only_matching_geometry_and_clock(
 @pytest.mark.parametrize('mode_name,pixel_clock_hz', [
     ('vga', 25_200_000),
     ('1080p30', 74_250_000),
+    ('1080p60', 148_500_000),
 ])
 def test_prepared_capture_sources_declare_selected_pixel_clock(
         tmp_path, mode_name, pixel_clock_hz):
@@ -301,3 +303,21 @@ def test_output_fixture_is_rejected_for_vga_mode(tmp_path):
 
     with pytest.raises(RuntimeError, match='only for 1080p30'):
         read_hdmi_output_fixture(tmp_path, get_mode('vga'))
+
+
+def test_1080p60_edid_advertises_only_full_hd_at_60_hz(tmp_path):
+    source = source_edid(tmp_path)
+    mode = get_mode('1080p60')
+    output = make_edid(source, mode)
+    assert output[54:72].hex() == '023a801871382d40582c450000000000001e'
+    assert output[35:38] == bytes(3)
+    assert output[38:54] == b'\x01\x01' * 8
+    assert output[126] == 0
+    assert len(output) == 128 and sum(output) % 256 == 0
+    assert validate_mode_edid(output, mode)['fps'] == 60
+    assert self_test_mode(source, mode)['pixel_clock_hz'] == 148_500_000
+    require_receiver_mode(receiver_hwh(1), mode)
+    with pytest.raises(RuntimeError):
+        require_receiver_mode(receiver_hwh(2), mode)
+    with pytest.raises(ValueError):
+        validate_mode_edid(make_edid(source, get_mode('1080p30')), mode)

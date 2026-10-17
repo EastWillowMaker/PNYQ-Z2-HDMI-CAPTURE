@@ -52,13 +52,13 @@ def test_1080p30_profile_has_verified_positive_sync_timing():
 
 
 def test_mode_registry_is_immutable_and_rejects_unknown_profiles():
-    assert tuple(CAPTURE_MODES) == ('vga', '1080p30')
+    assert tuple(CAPTURE_MODES) == ('vga', '1080p30', '1080p60')
     with pytest.raises(TypeError):
         CAPTURE_MODES['other'] = get_mode('vga')
     with pytest.raises(FrozenInstanceError):
         get_mode('vga').width = 1920
     with pytest.raises(ValueError, match='Unsupported capture mode'):
-        get_mode('1080p60')
+        get_mode('720p60')
 
 
 def test_manifest_mode_fields_have_stable_names():
@@ -71,3 +71,13 @@ def test_manifest_mode_fields_have_stable_names():
         'receiver_k_clk_range': 2,
         'timing': get_mode('1080p30').timing,
     }
+
+
+def test_1080p60_profile_matches_full_hd_input_clock_and_receiver_range():
+    mode = get_mode('1080p60')
+    assert (mode.width, mode.height) == (1920, 1080)
+    assert (mode.pixel_clock_hz, mode.receiver_k_clk_range) == (148_500_000, 1)
+    assert mode.refresh_hz == 60
+    assert (mode.h_total, mode.v_total) == (2200, 1125)
+    assert mode.timing == get_mode('1080p30').timing
+    assert mode.supported_pixel_clocks_hz == (148_500_000,)

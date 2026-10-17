@@ -126,7 +126,7 @@ def validate_mode_edid(data: bytes, mode: CaptureMode) -> dict[str, int | float]
 
 
 def _monitor_name(mode: CaptureMode) -> bytes:
-    label = b'LiteX VGA' if mode.name == 'vga' else b'HDMI 1080p30'
+    label = b'LiteX VGA' if mode.name == 'vga' else f'HDMI {mode.name}'.encode('ascii')
     return b'\x00\x00\x00\xfc\x00' + (label + b'\n').ljust(13, b' ')
 
 
@@ -205,7 +205,7 @@ if __name__ == '__main__':
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('source', type=Path)
     p.add_argument('--output', type=Path)
-    p.add_argument('--mode', choices=('vga', '1080p30'), default='vga')
+    p.add_argument('--mode', choices=('vga', '1080p30', '1080p60'), default='vga')
     args = p.parse_args()
     mode = get_mode(args.mode)
     print(json.dumps(self_test_mode(args.source, mode)))

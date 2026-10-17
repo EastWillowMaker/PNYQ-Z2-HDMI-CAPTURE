@@ -25,7 +25,7 @@ def discover(extra_root=None):
                 if not bit.is_file() or not bit.with_suffix('.hwh').is_file():
                     continue
                 mode = data.get('capture_mode', 'vga')
-                if mode not in ('vga', '1080p30'):
+                if mode not in ('vga', '1080p30', '1080p60'):
                     continue
                 profiles.append(dict(mode=mode, bitfile=str(bit), manifest=str(manifest),
                                      loop=data.get('hdmi_output_fixture', {}).get('enabled') is True))

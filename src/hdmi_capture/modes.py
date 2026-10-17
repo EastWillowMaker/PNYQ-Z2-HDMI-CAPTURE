@@ -98,6 +98,23 @@ _PROFILES = {
         receiver_k_clk_range=2,
         supported_pixel_clocks_hz=(74_250_000,),
     ),
+    "1080p60": CaptureMode(
+        name="1080p60",
+        width=1920,
+        height=1080,
+        pixel_clock_hz=148_500_000,
+        gateware_clock_hz=142_857_132,
+        h_front_porch=88,
+        h_sync_width=44,
+        h_back_porch=148,
+        h_sync_positive=True,
+        v_front_porch=4,
+        v_sync_width=5,
+        v_back_porch=36,
+        v_sync_positive=True,
+        receiver_k_clk_range=1,
+        supported_pixel_clocks_hz=(148_500_000,),
+    ),
 }
 
 CAPTURE_MODES: Mapping[str, CaptureMode] = MappingProxyType(_PROFILES)

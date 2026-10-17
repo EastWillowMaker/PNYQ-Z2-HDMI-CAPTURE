@@ -1,5 +1,33 @@
 # PYNQ-Z2 M1 build
 
+## 1080p60 external-input build
+
+The PC launcher's external scenario defaults to `1080p60`: 1920×1080
+progressive at 60 Hz, 148.5 MHz pixel clock, totals 2200×1125, positive sync,
+and receiver `kClkRange=1`. Its EDID advertises only that detailed timing in
+8-bit RGB. Install this profile's paired bitfile, HWH and manifest on the board;
+the launcher refuses to substitute a VGA or 1080p30 image.
+
+Using the pinned generator environment and vendor tools described below:
+
+```sh
+python -m gateware.generate --width 1920 --height 1080 \
+  --output artifacts/1080p60-gate-001/litex_capture.v
+python scripts/build_capture.py --mode 1080p60 \
+  --output artifacts/1080p60-rx-001 \
+  --gateware artifacts/1080p60-gate-001/litex_capture.v \
+  --stage bitstream
+```
+
+This is an RX-only profile. The local-loop output fixture remains 1080p30.
+The requested input cadence is separate from the 2 FPS capture target.
+The new profile requires its own CAD and physical evidence; previous VGA and
+1080p30 results do not qualify it. PYNQ documents the pipeline's ability to
+process 1080p60 after blanking intervals, and separately notes that PYNQ-Z2
+1080p operation does not meet the official HDMI electrical specification:
+[video pipeline](https://github.com/Xilinx/PYNQ/blob/93ddd21ab623883590a8c8b07f0b157b2855da4b/docs/source/pynq_libraries/video.rst),
+[board limitations](https://pynq.readthedocs.io/en/latest/pynq_overlays/pynqz2/pynqz2_base_overlay.html).
+
 ## 1080p30 build
 
 The qualified VGA build below remains the default. The new explicit

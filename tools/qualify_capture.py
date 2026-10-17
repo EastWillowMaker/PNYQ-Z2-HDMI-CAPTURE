@@ -36,7 +36,7 @@ def parser():
     result.add_argument("--min-frames", type=int, default=600,
                         help="Minimum exact, distinct optical frames")
     result.add_argument("--min-fps", type=positive, default=1)
-    result.add_argument("--mode", choices=("vga", "1080p30"), default="vga",
+    result.add_argument("--mode", choices=("vga", "1080p30", "1080p60"), default="vga",
                         help="Expected source profile for full-image verification")
     result.add_argument("--hard-deadline", type=positive, default=660,
                         help="Maximum run duration in seconds")

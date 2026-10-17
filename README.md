@@ -149,9 +149,11 @@ that terminal open and run this in a second PC terminal:
 
 Connect **PC HDMI output → PYNQ HDMI IN (J10)** and disconnect the J9-to-J10
 loop cable. To see your desktop, enable the PYNQ-connected HDMI display in your
-PC display settings at **640×480 near 60 Hz**. Select **Mirror**, or select
+PC display settings at **1920×1080 at 60 Hz**. Select **Mirror**, or select
 **Extend** and move the content onto that HDMI display. The external scenario
-uses the qualified VGA receiver profile; external 1080p30 remains unqualified.
+defaults to a matching `1080p60` receiver image and single-mode EDID.
+The HDMI signal runs at 60 Hz; the capture target remains 2 FPS.
+Use `--external-mode vga` only when you want the earlier 640×480 profile.
 
 In the first PC terminal:
 

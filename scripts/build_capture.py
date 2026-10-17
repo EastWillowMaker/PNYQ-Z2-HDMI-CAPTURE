@@ -229,7 +229,7 @@ def main():
     p.add_argument('--vitis-run', default='vitis-run')
     p.add_argument('--stage', choices=['prepare', 'hls', 'project', 'bitstream'], default='project')
     p.add_argument('--gateware', type=Path)
-    p.add_argument('--mode', choices=('vga', '1080p30'), default='vga')
+    p.add_argument('--mode', choices=('vga', '1080p30', '1080p60'), default='vga')
     p.add_argument('--with-hdmi-output', action='store_true',
                    help='Build the 1080p30 test-pattern HDMI output for loopback')
     args = p.parse_args()

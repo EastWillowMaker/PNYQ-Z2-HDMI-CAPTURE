@@ -138,8 +138,8 @@ def response(text):
     raise RuntimeError('The board did not return its setup information.')
 
 
-def select_profile(discovery, scenario):
-    mode = '1080p30' if scenario == 'loop' else 'vga'
+def select_profile(discovery, scenario, external_mode='1080p60'):
+    mode = '1080p30' if scenario == 'loop' else external_mode
     candidates = [p for p in discovery['profiles'] if p['mode'] == mode and
                   (scenario != 'loop' or p['loop'])]
     if not candidates:
@@ -187,6 +187,8 @@ def port_number(value):
 def board_main(argv=None):
     parser = argparse.ArgumentParser(description='Run on the PC: connect by USB serial and start PYNQ-Z2 capture.')
     parser.add_argument('--scenario', choices=('loop', 'external'))
+    parser.add_argument('--external-mode', choices=('1080p60', '1080p30', 'vga'), default='1080p60',
+                        help='External HDMI timing and EDID (default: 1920x1080 at 60 Hz)')
     parser.add_argument('--serial-port', help='USB UART device or COM port; otherwise select from detected ports')
     parser.add_argument('--no-terminal', action='store_true', help='Use an already logged-in board shell with valid sudo')
     parser.add_argument('--board-root', help='Board checkout/deployment directory (normally detected)')
@@ -223,7 +225,7 @@ def board_main(argv=None):
         if not info['runtimes'] and not args.runtime:
             raise RuntimeError('Board capture software is not installed. Complete docs/quickstart.md first.')
         runtime = args.runtime or info['runtimes'][-1]
-        profile = select_profile(info, scenario)
+        profile = select_profile(info, scenario, args.external_mode)
         receipt = info['state'] + '/' + profile['mode'] + '-prepared.json'
         common = ['sudo', '-n', 'env', 'XILINX_XRT=/usr', 'PYTHONPATH=' + runtime,
                   BOARD_PYTHON, '-u', '-X', 'faulthandler', remote,
@@ -235,7 +237,9 @@ def board_main(argv=None):
         common[common.index('--previous') + 1] = json.dumps([prepared['receipt']])
         common[common.index('--receipt') + 1] = prepared['receipt']
         if scenario == 'external':
-            print('On the PC, enable the HDMI display at 640×480 near 60 Hz.')
+            from .modes import get_mode
+            mode = get_mode(profile['mode'])
+            print(f'On the PC, enable the HDMI display at {mode.width}×{mode.height} near {mode.refresh_hz:g} Hz.')
             print('Choose Mirror for your desktop, or Extend and move content onto that display.')
             input('When the HDMI output is stable, press Enter: ')
         settings = load_settings()

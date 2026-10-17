@@ -5,6 +5,7 @@ lassign $argv vendor output gateware stage mode hdmi_output
 switch -- $mode {
     vga {set receiver_k_clk_range 5}
     1080p30 {set receiver_k_clk_range 2}
+    1080p60 {set receiver_k_clk_range 1}
     default {error "Unsupported capture mode: $mode"}
 }
 if {$hdmi_output ni {0 1}} {error "hdmi_output must be 0 or 1"}
@@ -57,7 +58,7 @@ if {$hdmi_output} {
     }
 }
 # Select the receiver PLL range for the selected input pixel clock. The
-# upstream base kClkRange=1 is for >=120 MHz and supports neither profile.
+# upstream base kClkRange=1 is for >=120 MHz, including 1080p60.
 set_property CONFIG.kClkRange $receiver_k_clk_range [get_bd_cells video/hdmi_in/frontend/dvi2rgb_0]
 create_bd_intf_port -mode Slave -vlnv digilentinc.com:interface:tmds_rtl:1.0 hdmi_in
 connect_bd_intf_net [get_bd_intf_ports hdmi_in] [get_bd_intf_pins video/hdmi_in/TMDS_in]
