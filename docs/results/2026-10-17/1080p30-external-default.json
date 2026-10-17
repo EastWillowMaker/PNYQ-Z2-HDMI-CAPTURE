@@ -1,0 +1,126 @@
+{
+  "source_revision": "f3b4e2066c5b8d062e5570f13866f69cd8b04755",
+  "default_external_mode": "1080p30",
+  "capture_target_fps": 2,
+  "host_tests": {
+    "passed": 623,
+    "skipped": 1
+  },
+  "pc_scanout": {
+    "connector": "DP-2",
+    "connector_id": 446,
+    "connection": 1,
+    "encoder_id": 445,
+    "properties": {
+      "DPMS": 0,
+      "link-status": 0,
+      "Broadcast RGB": 0,
+      "underscan": 0,
+      "max bpc": 16,
+      "Colorspace": 0,
+      "HDR_OUTPUT_METADATA": 0
+    },
+    "active": true,
+    "crtc_id": 417,
+    "fb_id": 497,
+    "width": 1920,
+    "height": 1080,
+    "mode": {
+      "name": "1920x1080",
+      "pixel_clock_khz": 74250,
+      "hdisplay": 1920,
+      "vdisplay": 1080,
+      "htotal": 2200,
+      "vtotal": 1125,
+      "flags": 5
+    },
+    "framebuffer": {
+      "width": 1920,
+      "height": 1080,
+      "format": "XR30",
+      "modifier": 144115188348910340
+    },
+    "crtc_fb_unchanged_during_sample": true
+  },
+  "gui": {
+    "frame_count": 3,
+    "shape": [
+      1080,
+      1920,
+      3
+    ],
+    "source_origin": "hdmi",
+    "capture_mode": "1080p30",
+    "error": null
+  },
+  "input_observations": [
+    {
+      "event": "input_observation",
+      "measured_vsync_hz": 29.9588605226891,
+      "invalid_frames": 0,
+      "frontend_overflow_episodes": 0,
+      "frontend_underflow_episodes": 0
+    },
+    {
+      "event": "input_observation",
+      "measured_vsync_hz": 29.888976381007552,
+      "invalid_frames": 0,
+      "frontend_overflow_episodes": 0,
+      "frontend_underflow_episodes": 0
+    },
+    {
+      "event": "input_observation",
+      "measured_vsync_hz": 30.885941030395383,
+      "invalid_frames": 0,
+      "frontend_overflow_episodes": 0,
+      "frontend_underflow_episodes": 0
+    },
+    {
+      "event": "input_observation",
+      "measured_vsync_hz": 29.89074597569529,
+      "invalid_frames": 0,
+      "frontend_overflow_episodes": 0,
+      "frontend_underflow_episodes": 0
+    },
+    {
+      "event": "input_observation",
+      "measured_vsync_hz": 29.899014225713767,
+      "invalid_frames": 0,
+      "frontend_overflow_episodes": 0,
+      "frontend_underflow_episodes": 0
+    }
+  ],
+  "sender_exit_code": 0,
+  "dma_stop": {
+    "event": "source_cleanup",
+    "timestamp_ns": 161667900557498,
+    "stage": "dma_stop_status_after",
+    "control": 86032,
+    "status": 69633
+  },
+  "postcheck": {
+    "vdma_control": 86032,
+    "vdma_status": 69633,
+    "command": 0,
+    "selected_frames": 60,
+    "invalid_frames": 0,
+    "frontend_overflow_episodes": 0,
+    "frontend_underflow_episodes": 0
+  },
+  "image_sha256": {
+    "capture.bit": "430722e2da9b9bb4f215f02f4b9d2e5a98ab102f4c2c4e7af4854f61387dc5f7",
+    "capture.hwh": "22d33bf6d6119fa38ddad763c62f836aaaf9ac4bbfb4e31334db295393698986",
+    "build-manifest.json": "74142e636fd1bd0c5e71378c6c229ab12d6f468c487f33769cb4e3d93ed39034"
+  },
+  "evidence": {
+    "board_serial_log": "artifacts/launcher/4c5710dc64ec41a1bf9e01a9d42be4a7.log",
+    "scanout": "artifacts/operator/1080p30-external-scanout-002.jsonl",
+    "gui": "artifacts/operator/1080p30-external-gui-result.json",
+    "postcheck": "artifacts/operator/1080p30-external-postcheck-001.log"
+  },
+  "limits": [
+    "Short external-desktop smoke; not a new ten-minute qualification",
+    "No independent comparison against original PC framebuffer pixel values",
+    "Serial login reused an authenticated shell; source-ready confirmation was automated"
+  ]
+}

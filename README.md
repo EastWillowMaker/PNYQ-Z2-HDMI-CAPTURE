@@ -153,6 +153,8 @@ PC display settings at **1920×1080 at 30 Hz**. Select **Mirror**, or select
 **Extend** and move the content onto that HDMI display. The external scenario
 defaults to a matching `1080p30` receiver image and single-mode EDID.
 The HDMI signal runs at 30 Hz; the capture target remains 2 FPS.
+The [external PC desktop and GUI check](docs/results/2026-10-17/1080p30-external-default.md)
+passed with this default.
 Use `--external-mode vga` for the earlier 640×480 near 60 Hz profile.
 
 In the first PC terminal:
