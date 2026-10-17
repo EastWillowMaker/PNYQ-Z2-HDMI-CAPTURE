@@ -138,7 +138,7 @@ def response(text):
     raise RuntimeError('The board did not return its setup information.')
 
 
-def select_profile(discovery, scenario, external_mode='1080p60'):
+def select_profile(discovery, scenario, external_mode='1080p30'):
     mode = '1080p30' if scenario == 'loop' else external_mode
     candidates = [p for p in discovery['profiles'] if p['mode'] == mode and
                   (scenario != 'loop' or p['loop'])]
@@ -187,8 +187,8 @@ def port_number(value):
 def board_main(argv=None):
     parser = argparse.ArgumentParser(description='Run on the PC: connect by USB serial and start PYNQ-Z2 capture.')
     parser.add_argument('--scenario', choices=('loop', 'external'))
-    parser.add_argument('--external-mode', choices=('1080p60', '1080p30', 'vga'), default='1080p60',
-                        help='External HDMI timing and EDID (default: 1920x1080 at 60 Hz)')
+    parser.add_argument('--external-mode', choices=('1080p30', 'vga', '1080p60'), default='1080p30',
+                        help='External HDMI timing and EDID (default: 1920x1080 at 30 Hz)')
     parser.add_argument('--serial-port', help='USB UART device or COM port; otherwise select from detected ports')
     parser.add_argument('--no-terminal', action='store_true', help='Use an already logged-in board shell with valid sudo')
     parser.add_argument('--board-root', help='Board checkout/deployment directory (normally detected)')

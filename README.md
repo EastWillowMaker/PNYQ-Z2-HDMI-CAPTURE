@@ -149,26 +149,16 @@ that terminal open and run this in a second PC terminal:
 
 Connect **PC HDMI output → PYNQ HDMI IN (J10)** and disconnect the J9-to-J10
 loop cable. To see your desktop, enable the PYNQ-connected HDMI display in your
-PC display settings at **1920×1080 at 60 Hz**. Select **Mirror**, or select
+PC display settings at **1920×1080 at 30 Hz**. Select **Mirror**, or select
 **Extend** and move the content onto that HDMI display. The external scenario
-defaults to a matching `1080p60` receiver image and single-mode EDID.
-The HDMI signal runs at 60 Hz; the capture target remains 2 FPS.
-The current PYNQ-Z2 1080p60 build failed the deserializer minimum-period
-checks and was not deployed; see the [build result](docs/results/2026-10-17/1080p60-default.md).
-Use `--external-mode vga` for the verified 640×480 workflow until a matching
-1080p60 image is available.
+defaults to a matching `1080p30` receiver image and single-mode EDID.
+The HDMI signal runs at 30 Hz; the capture target remains 2 FPS.
+Use `--external-mode vga` for the earlier 640×480 near 60 Hz profile.
 
 In the first PC terminal:
 
 ```sh
 .venv/bin/python Start-PYNQ-Z2-Captrue.py --scenario external
-```
-
-For the currently verified image on this board, set the PC HDMI output to
-640×480 near 60 Hz and use:
-
-```sh
-.venv/bin/python Start-PYNQ-Z2-Captrue.py --scenario external --external-mode vga
 ```
 
 Follow the serial login steps below. After the launcher prepares the receiver,

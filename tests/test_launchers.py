@@ -218,7 +218,7 @@ def test_process_guard_ignores_own_sudo_ancestors_but_rejects_other_capture(tmp_
         runtime.reject_capture_processes(tmp_path)
 
 
-@pytest.mark.parametrize('scenario,mode', [('loop', '1080p30'), ('external', '1080p60')])
+@pytest.mark.parametrize('scenario,mode', [('loop', '1080p30'), ('external', '1080p30')])
 def test_board_workflow_saves_endpoint_only_after_listening(scenario, mode, monkeypatch):
     commands, saved = [], []
     info = dict(runtimes=['/board/src'], profiles=[dict(mode=mode, loop=scenario == 'loop',
@@ -313,9 +313,10 @@ def test_capture_attaches_prepared_image_without_reloading(tmp_path, monkeypatch
     assert events[-1][1][events[-1][1].index('--prepared-receipt') + 1] == str(receipt)
 
 
-def test_external_default_requires_1080p60_without_silent_vga_fallback():
+def test_external_default_requires_1080p30_without_silent_fallback():
     vga = dict(mode='vga', loop=False, bitfile='vga')
-    full_hd = dict(mode='1080p60', loop=False, bitfile='full-hd')
-    assert launchers.select_profile(dict(profiles=[full_hd, vga]), 'external') == full_hd
-    with pytest.raises(RuntimeError, match='No 1080p60'):
+    full_hd = dict(mode='1080p30', loop=False, bitfile='full-hd')
+    fast = dict(mode='1080p60', loop=False, bitfile='unqualified')
+    assert launchers.select_profile(dict(profiles=[full_hd, vga, fast]), 'external') == full_hd
+    with pytest.raises(RuntimeError, match='No 1080p30'):
         launchers.select_profile(dict(profiles=[vga]), 'external')

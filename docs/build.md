@@ -1,41 +1,10 @@
 # PYNQ-Z2 M1 build
 
-## 1080p60 external-input build
-
-The [first routed build](results/2026-10-17/1080p60-default.md) failed 14
-deserializer minimum-period checks (−0.320 ns) and was not deployed. EDID
-validation passed; hardware timing qualification did not.
-
-The PC launcher's external scenario defaults to `1080p60`: 1920×1080
-progressive at 60 Hz, 148.5 MHz pixel clock, totals 2200×1125, positive sync,
-and receiver `kClkRange=1`. Its EDID advertises only that detailed timing in
-8-bit RGB. Install this profile's paired bitfile, HWH and manifest on the board;
-the launcher refuses to substitute a VGA or 1080p30 image.
-
-Using the pinned generator environment and vendor tools described below:
-
-```sh
-python -m gateware.generate --width 1920 --height 1080 \
-  --output artifacts/1080p60-gate-001/litex_capture.v
-python scripts/build_capture.py --mode 1080p60 \
-  --output artifacts/1080p60-rx-001 \
-  --gateware artifacts/1080p60-gate-001/litex_capture.v \
-  --stage bitstream
-```
-
-This is an RX-only profile. The local-loop output fixture remains 1080p30.
-The requested input cadence is separate from the 2 FPS capture target.
-The new profile requires its own CAD and physical evidence; previous VGA and
-1080p30 results do not qualify it. PYNQ documents the pipeline's ability to
-process 1080p60 after blanking intervals, and separately notes that PYNQ-Z2
-1080p operation does not meet the official HDMI electrical specification:
-[video pipeline](https://github.com/Xilinx/PYNQ/blob/93ddd21ab623883590a8c8b07f0b157b2855da4b/docs/source/pynq_libraries/video.rst),
-[board limitations](https://pynq.readthedocs.io/en/latest/pynq_overlays/pynqz2/pynqz2_base_overlay.html).
-
 ## 1080p30 build
 
-The qualified VGA build below remains the default. The new explicit
-`1080p30` profile targets 1920×1080 progressive at 74.25 MHz, with totals
+The PC launcher's external scenario defaults to `1080p30`. The qualified VGA
+profile remains available through `--external-mode vga`. The `1080p30` profile
+targets 1920×1080 progressive at 74.25 MHz, with totals
 2200×1125 and receiver `kClkRange=2`. Its pixel timing is separate from the
 142.857132 MHz capture AXI clock. The [fresh build005](results/2026-10-17/1080p30-build-005.md)
 passed CAD and strict timing/CDC/DRC checks. Real J9→J10 short captures,
@@ -110,6 +79,38 @@ receiver procedures and complete PS7 configuration into an isolated project;
 it does not change or bypass that upstream version check. This is a separate
 integration port to the locally installed Vivado/Vitis 2025.2, requiring its own
 validation.
+
+## 1080p60 external-input build
+
+The [first routed build](results/2026-10-17/1080p60-default.md) failed 14
+deserializer minimum-period checks (−0.320 ns) and was not deployed. EDID
+validation passed; hardware timing qualification did not.
+
+The optional `--external-mode 1080p60` profile requests 1920×1080
+progressive at 60 Hz, 148.5 MHz pixel clock, totals 2200×1125, positive sync,
+and receiver `kClkRange=1`. Its EDID advertises only that detailed timing in
+8-bit RGB. Install this profile's paired bitfile, HWH and manifest on the board;
+the launcher refuses to substitute a VGA or 1080p30 image.
+
+Using the pinned generator environment and vendor tools described below:
+
+```sh
+python -m gateware.generate --width 1920 --height 1080 \
+  --output artifacts/1080p60-gate-001/litex_capture.v
+python scripts/build_capture.py --mode 1080p60 \
+  --output artifacts/1080p60-rx-001 \
+  --gateware artifacts/1080p60-gate-001/litex_capture.v \
+  --stage bitstream
+```
+
+This is an RX-only profile. The local-loop output fixture remains 1080p30.
+The requested input cadence is separate from the 2 FPS capture target.
+The new profile requires its own CAD and physical evidence; previous VGA and
+1080p30 results do not qualify it. PYNQ documents the pipeline's ability to
+process 1080p60 after blanking intervals, and separately notes that PYNQ-Z2
+1080p operation does not meet the official HDMI electrical specification:
+[video pipeline](https://github.com/Xilinx/PYNQ/blob/93ddd21ab623883590a8c8b07f0b157b2855da4b/docs/source/pynq_libraries/video.rst),
+[board limitations](https://pynq.readthedocs.io/en/latest/pynq_overlays/pynqz2/pynqz2_base_overlay.html).
 
 ## Reproduce
 
