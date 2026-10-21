@@ -1,0 +1,15 @@
+
+[?2004l[?2004hxilinx@pynq:~$ sudo -n env XILINX_XRT=/usr /usr/local/share/pynq-venv/bin/python -u /tmp/lcd-demo-006/run_lcd_demo-final.py /tmp/lcd-demo-006 --seconds 15; printf "\nCONSOLE_DONE_f08f80627a904cd5a2b9f266247f5e05:%s\n" "$?"
+[?2004l{"stage": "load", "bitfile": "/tmp/lcd-demo-006/capture.bit"}
+{"stage": "detect_input", "timeout_seconds": 10}
+Traceback (most recent call last):
+  File "/tmp/lcd-demo-006/run_lcd_demo-final.py", line 112, in <module>
+    main()
+  File "/tmp/lcd-demo-006/run_lcd_demo-final.py", line 91, in main
+    frontend.start(init_timeout=10)
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/lib/video/dvi.py", line 45, in start
+    self._capture = pynq.lib._video._capture(
+LookupError: _video._capture initialization failed [1]: No incoming video signal detected
+
+CONSOLE_DONE_f08f80627a904cd5a2b9f266247f5e05:1
+[?2004hxilinx@pynq:~$ 

@@ -11,6 +11,33 @@ from pathlib import Path
 import time
 
 
+def load_overlay(bitfile, *, download):
+    from pynq import Device, Overlay
+
+    bitfile = Path(bitfile).resolve()
+    device = Device.active_device
+    # PYNQ 3's graph parser cannot resolve scalar taps on AXIS interfaces.
+    # This selects its legacy HWH parser; Overlay still performs a full download.
+    parser = device.get_bitfile_metadata(str(bitfile), partial=True)
+    parser.systemgraph = None
+    if download:
+        from pynq.pl_server.embedded_device import _get_bitstream_handler
+        # The legacy parser does not replace PYNQ's graph-metadata pickle.
+        _get_bitstream_handler(str(bitfile))._clear_cache()
+    original = device.get_bitfile_metadata
+
+    def metadata(path, partial=False):
+        if Path(path).resolve() != bitfile or partial:
+            raise RuntimeError('unexpected bitfile request during LCD overlay load')
+        return parser
+
+    device.get_bitfile_metadata = metadata
+    try:
+        return Overlay(str(bitfile), device=device, download=download)
+    finally:
+        device.get_bitfile_metadata = original
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('build', type=Path)
@@ -30,12 +57,12 @@ def main():
         if hashlib.sha256((build / filename).read_bytes()).hexdigest() != manifest[key]:
             parser.error(f'{filename} hash does not match manifest')
 
-    from pynq import Overlay, MMIO
+    from pynq import MMIO
     from pynq.lib.video.dvi import HDMIInFrontend
 
     print(json.dumps({'stage': 'attach' if args.attach else 'load',
                       'bitfile': str(build / 'capture.bit')}), flush=True)
-    overlay = Overlay(str(build / 'capture.bit'), download=not args.attach)
+    overlay = load_overlay(build / 'capture.bit', download=not args.attach)
     if not overlay.is_loaded():
         raise RuntimeError('requested overlay is not loaded')
 

@@ -71,11 +71,18 @@ sudo -n env XILINX_XRT=/usr /usr/local/share/pynq-venv/bin/python -u \
     run_lcd_demo.py /path/to/demo-build --seconds 30
 ```
 
-The runner checks the bit/HWH hashes, loads the generic overlay, asserts HPD,
+The runner checks the bit/HWH hashes, loads the overlay, asserts HPD,
 detects the source and observes LCD counters without starting VDMA. It leaves
 the demo running after its observation period. `--attach` observes the same
 already-loaded image without reprogramming; `--prepare-only` asserts HPD without
 native source detection. Do not run this observer concurrently with PC capture.
+
+On the tested PYNQ 3.0.1 image, the default graph metadata parser rejects the
+scalar AXIS tap in the generated HWH. The runner selects PYNQ's legacy HWH
+parser for this bitfile and restores the device method after construction.
+Programming still uses the normal full-overlay download. It clears the previous
+graph metadata pickle before download because the legacy parser does not replace
+it; the bitstream and HWH files are not edited. Other PYNQ versions are unverified.
 
 `uploaded_frames` counts live uploads only, excluding initial color bars. Status
 bits 4:0 are the controller state; 5 memory initialized; 6 panel ready; 7 capturing;
@@ -140,12 +147,28 @@ not loaded. The next revision registers the complete RAM write command together
 before the memory port, with a drain state before declaring initialization
 complete. Both simulations pass, including checks that the last startup pixel
 is stored before initialization completes and no write command overlaps an LCD
-upload. Build006 is running. Physical image verification remains pending. The changes do not relax timing requirements.
+upload. Build006 passed the unchanged export checks: setup slack +0.291 ns,
+hold slack +0.015 ns, and zero failing setup/hold endpoints. It reused 38 cached
+IP synthesis results. The Luna watcher confirmed successful completion and all
+four SPI output registers in OLOGIC. The changes do not relax timing requirements.
 AMD documents the explicit block-memory inference setting in
 [RAM_STYLE](https://docs.amd.com/r/2023.2-English/ug912-vivado-properties/RAM_STYLE).
-On-board results are pending. The earlier
+
+On-board loading first failed in PYNQ's graph metadata parser before programming.
+The legacy-parser adapter passed metadata parsing and full programming, but the
+native input detector timed out on two fresh loads with its 10-second budget.
+A subsequent attach detected 1920x1080 and counted 75 live uploads in 15.022
+seconds, approximately 4.993 uploads/s. Fresh-load detector behavior is still
+under investigation; physical image verification remains pending. The earlier
 [slow wiring probe](lcd-spi-smoke.md) and its user-confirmed colors are evidence
 for that probe only, not this new bitstream.
+
+The exported bitstream SHA-256 is
+`7309bffd254a46ab0da1020760fafc974f118341934d740b4f9a204aa9b6ed80`.
+The [build manifest](results/2026-10-22/lcd-build-006-manifest.json),
+[initial parser failure](results/2026-10-22/lcd-run-006-parser-failure.log),
+[fresh-load detector timeout](results/2026-10-22/lcd-run-006-detector-timeout.log),
+and [successful attach](results/2026-10-22/lcd-attach-006.log) preserve these results.
 
 ## Review scope
 

@@ -1,0 +1,44 @@
+
+[?2004l[?2004hxilinx@pynq:~$ test ! -e /tmp/lcd-demo-006 && tar -xzf /tmp/lcd-demo-006-20261022.tar.gz -C /tmp && sudo -n env XILINX_XRT=/usr /usr/local/share/pynq-venv/bin/python -u /tmp/lcd-demo-006/run_lcd_demo.py /tmp/lcd-demo-006 --seconds 15; printf "\nCONSOLE_DONE_cc85447f453a4e8da20e5872fe3e4058:%s\n" "$?"
+[?2004ltar: lcd-demo-006/capture.bit: time stamp 2026-10-21 17:42:24 is 126038483.89804059 s in the future
+tar: lcd-demo-006/capture.hwh: time stamp 2026-10-21 17:36:33 is 126038132.875904067 s in the future
+tar: lcd-demo-006/build-manifest.json: time stamp 2026-10-21 17:42:43.0517437 is 126038502.926795287 s in the future
+tar: lcd-demo-006/run_lcd_demo.py: time stamp 2026-10-21 16:29:58.503764 is 126034138.378132368 s in the future
+{"stage": "load", "bitfile": "/tmp/lcd-demo-006/capture.bit"}
+Traceback (most recent call last):
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/pl_server/embedded_device.py", line 252, in get_parser
+    parser = self._get_cache() 
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/pl_server/embedded_device.py", line 228, in _get_cache
+    raise CacheMetadataError(f"No cached metadata present")
+pynq.pl_server.embedded_device.CacheMetadataError: No cached metadata present
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/tmp/lcd-demo-006/run_lcd_demo.py", line 85, in <module>
+    main()
+  File "/tmp/lcd-demo-006/run_lcd_demo.py", line 38, in main
+    overlay = Overlay(str(build / 'capture.bit'), download=not args.attach)
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/overlay.py", line 319, in __init__
+    self.device.set_bitfile_name(self.bitfile_name)
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/pl_server/device.py", line 118, in set_bitfile_name
+    self.parser = self.get_bitfile_metadata(self.bitfile_name)
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/pl_server/embedded_device.py", line 690, in get_bitfile_metadata
+    parser = _get_bitstream_handler(bitfile_name).get_parser(partial=partial)
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/pl_server/embedded_device.py", line 254, in get_parser
+    parser = RuntimeMetadataParser(Metadata(input=self._filepath.with_suffix(".hwh")))
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynqmetadata/frontends/metadata.py", line 40, in Metadata
+    return HwhFrontend(_hwhfile=input)
+  File "<string>", line 25, in __init__
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynqmetadata/frontends/hwh_frontend.py", line 219, in __post_init__
+    self.parse()
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynqmetadata/frontends/hwh_frontend.py", line 241, in parse
+    self.connect_signals()
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynqmetadata/frontends/hwh_frontend.py", line 657, in connect_signals
+    dst_signal = dst_core.lookup(
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynqmetadata/models/metadata_object.py", line 185, in lookup
+    raise MetadataObjectNotFound(
+pynqmetadata.errors.query_errors.MetadataObjectNotFound: m_axis_video_tready[port]:m_axis_video_tready[signal] cannot be found in capture:video_hdmi_in_frontend_v_vid_in_axi4s_0[block] children=dict_keys(['C_ADDR_WIDTH[parameter]', 'C_ADDR_WIDTH_PIXEL_REMAP_420[parameter]', 'C_COMPONENTS_PER_PIXEL[parameter]', 'C_FAMILY[parameter]', 'C_HAS_ASYNC_CLK[parameter]', 'C_INCLUDE_PIXEL_DROP[parameter]', 'C_INCLUDE_PIXEL_REMAP_420[parameter]', 'C_M_AXIS_COMPONENT_WIDTH[parameter]', 'C_M_AXIS_TDATA_WIDTH[parameter]', 'C_NATIVE_COMPONENT_WIDTH[parameter]', 'C_NATIVE_DATA_WIDTH[parameter]', 'C_PIXELS_PER_CLOCK[parameter]', 'C_VID_NATIVE_DE[parameter]', 'C_M_AXIS_VIDEO_DATA_WIDTH[parameter]', 'C_M_AXIS_VIDEO_FORMAT[parameter]', 'Component_Name[parameter]', 'EDK_IPTYPE[parameter]', 'CLK_DOMAIN[parameter]', 'FREQ_HZ[parameter]', 'HAS_TKEEP[parameter]', 'HAS_TLAST[parameter]', 'HAS_TREADY[parameter]', 'HAS_TSTRB[parameter]', 'INSERT_VIP[parameter]', 'LAYERED_METADATA[parameter]', 'PHASE[parameter]', 'TDATA_NUM_BYTES[parameter]', 'TDEST_WIDTH[parameter]', 'TID_WIDTH[parameter]', 'TUSER_WIDTH[parameter]', 'video_out[port]', 'vtiming_out[port]', 'vid_io_in[port]', 'aclk[port]', 'aclken[port]', 'aresetn[port]', 'axis_enable[port]', 'fid[port]', 'overflow[port]', 'underflow[port]', 'vid_io_in_ce[port]', 'vid_io_in_clk[port]', 'vid_io_in_reset[port]'])
+
+CONSOLE_DONE_cc85447f453a4e8da20e5872fe3e4058:1
+[?2004hxilinx@pynq:~$ 

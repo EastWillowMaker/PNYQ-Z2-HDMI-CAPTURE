@@ -1,0 +1,24 @@
+
+[?2004l[?2004hxilinx@pynq:~$ sudo -n env XILINX_XRT=/usr /usr/local/share/pynq-venv/bin/python -u /tmp/lcd-demo-006/run_lcd_demo-legacy2.py /tmp/lcd-demo-006 --attach --seconds 15; printf "\nCONSOLE_DONE_10613bbd0d1d4913bfffd1875907cf9f:%s\n" "$?"
+[?2004l{"stage": "attach", "bitfile": "/tmp/lcd-demo-006/capture.bit"}
+{"stage": "detect_input", "timeout_seconds": 10}
+{"stage": "input_detected", "geometry": [1920, 1080]}
+{"elapsed_seconds": 1.0011548789998415, "lcd_status": 4202, "uploads": 730, "upload_rate": 4.994232266035625}
+{"elapsed_seconds": 2.0025657939995654, "lcd_status": 4202, "uploads": 735, "upload_rate": 4.993593733581055}
+{"elapsed_seconds": 3.003952211000069, "lcd_status": 4202, "uploads": 740, "upload_rate": 4.993421648011582}
+{"elapsed_seconds": 4.005451353999888, "lcd_status": 4202, "uploads": 745, "upload_rate": 4.993195081505054}
+{"elapsed_seconds": 5.006933573999959, "lcd_status": 4202, "uploads": 750, "upload_rate": 4.993076027575078}
+{"elapsed_seconds": 6.008537830999558, "lcd_status": 4202, "uploads": 755, "upload_rate": 4.99289525069185}
+{"elapsed_seconds": 7.010117441999682, "lcd_status": 4202, "uploads": 760, "upload_rate": 4.9927836858059855}
+{"elapsed_seconds": 8.011701841000104, "lcd_status": 4202, "uploads": 765, "upload_rate": 4.992697031646747}
+{"elapsed_seconds": 9.013366596000196, "lcd_status": 4202, "uploads": 770, "upload_rate": 4.992585125736411}
+{"elapsed_seconds": 10.01496175200009, "lcd_status": 4330, "uploads": 775, "upload_rate": 4.992530299979877}
+{"elapsed_seconds": 11.016574069999479, "lcd_status": 4330, "uploads": 780, "upload_rate": 4.992477665972122}
+{"elapsed_seconds": 12.018090898999617, "lcd_status": 4330, "uploads": 785, "upload_rate": 4.992473472221315}
+{"elapsed_seconds": 13.019562178000342, "lcd_status": 4330, "uploads": 790, "upload_rate": 4.992487390231371}
+{"elapsed_seconds": 14.020981943000152, "lcd_status": 4330, "uploads": 795, "upload_rate": 4.99251766278373}
+{"elapsed_seconds": 15.022452778000115, "lcd_status": 4330, "uploads": 800, "upload_rate": 4.992526926750272}
+Observer finished; gateware remains running. No optical latency measured.
+
+CONSOLE_DONE_10613bbd0d1d4913bfffd1875907cf9f:0
+[?2004hxilinx@pynq:~$ 
