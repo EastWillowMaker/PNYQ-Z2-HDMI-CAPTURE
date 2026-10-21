@@ -12,6 +12,14 @@ _Avoid_: Packet, screenshot
 A complete source frame received by the PC capture client, with its metadata.
 _Avoid_: Preview frame
 
+**LCD preview**:
+A local view of the HDMI input that preserves the complete image and its aspect
+ratio. It may skip source frames to keep the displayed picture current.
+
+**LCD update rate**:
+The number of new source images displayed on the LCD per second, distinct from
+the HDMI input refresh rate and the PC delivered frame rate.
+
 **Input refresh rate**:
 The number of source frames presented by the HDMI source per second.
 
@@ -26,6 +34,10 @@ _Avoid_: Active bypass
 **RGB888**:
 A pixel representation with three eight-bit channels ordered red, green, blue.
 _Avoid_: RGB444 packed
+
+**RGB565 preview**:
+The LCD preview's color representation, with five red, six green and five blue
+bits per pixel. It does not change the RGB888 representation delivered to the PC.
 
 **Intentional sampling**:
 Deliberate selection of some complete source frames for capture.

@@ -1,0 +1,22 @@
+
+[?2004l[?2004hxilinx@pynq:~$ sudo -n /usr/local/share/pynq-venv/bin/python -u /tmp/lcd-spi-smoke-20261022/lcd_spi_smoke.py --load-base --read-touch --samples 20 --timeout 180; printf "\nCONSOLE_DONE_8ab1f206f776485fb69f6b6174073463:%s\n" "$?"
+[?2004lLoading base.bit; this is a slow wiring probe, not a video benchmark.
+/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/pl_server/device.py:56: UserWarning: No devices found, is the XRT environment sourced?
+  warnings.warn(
+Traceback (most recent call last):
+  File "/tmp/lcd-spi-smoke-20261022/lcd_spi_smoke.py", line 194, in <module>
+    main()
+  File "/tmp/lcd-spi-smoke-20261022/lcd_spi_smoke.py", line 145, in main
+    base = BaseOverlay("base.bit")
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/overlays/base/base.py", line 57, in __init__
+    super().__init__(bitfile, **kwargs)
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/overlay.py", line 315, in __init__
+    super().__init__(bitfile_name, dtbo, partial=False, device=device)
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/bitstream.py", line 88, in __init__
+    device = Device.active_device
+  File "/usr/local/share/pynq-venv/lib/python3.10/site-packages/pynq/pl_server/device.py", line 71, in active_device
+    raise RuntimeError("No Devices Found")
+RuntimeError: No Devices Found
+
+CONSOLE_DONE_8ab1f206f776485fb69f6b6174073463:1
+[?2004hxilinx@pynq:~$ 

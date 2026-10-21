@@ -1,0 +1,32 @@
+
+[?2004l[?2004hxilinx@pynq:~$ sudo -n env XILINX_XRT=/usr /usr/local/share/pynq-venv/bin/python -u /tmp/lcd-spi-smoke-20261022/lcd_spi_smoke.py --load-base --read-touch --samples 20 --timeout 180; printf "\nCONSOLE_DONE_2b9dd4d684f6463e9091ec52baf4c7cb:%s\n" "$?"
+[?2004lLoading base.bit; this is a slow wiring probe, not a video benchmark.
+{"rows_written": 80}
+{"rows_written": 160}
+{"rows_written": 240}
+{"rows_written": 320}
+{"write_status": "transmitted_not_visually_verified", "pixels": 153600, "elapsed_seconds": 58.80571146300002, "lcd_readback": "not_available_on_header"}
+Expect eight bars: red, green, blue, white, black, yellow, cyan, magenta; white border and a white square near the top-left.
+Touch ADC samples follow. Press different screen locations to check response; these are not LCD register reads.
+{"sample": 0, "x": 0, "y": 4095, "pen_n": 1, "read_status": "raw_unverified"}
+{"sample": 1, "x": 0, "y": 4095, "pen_n": 1, "read_status": "raw_unverified"}
+{"sample": 2, "x": 0, "y": 4095, "pen_n": 1, "read_status": "raw_unverified"}
+{"sample": 3, "x": 0, "y": 4095, "pen_n": 1, "read_status": "raw_unverified"}
+{"sample": 4, "x": 0, "y": 4095, "pen_n": 1, "read_status": "raw_unverified"}
+{"sample": 5, "x": 0, "y": 4095, "pen_n": 1, "read_status": "raw_unverified"}
+{"sample": 6, "x": 0, "y": 4095, "pen_n": 1, "read_status": "raw_unverified"}
+{"sample": 7, "x": 0, "y": 4095, "pen_n": 1, "read_status": "raw_unverified"}
+{"sample": 8, "x": 0, "y": 4095, "pen_n": 1, "read_status": "raw_unverified"}
+{"sample": 9, "x": 0, "y": 4095, "pen_n": 1, "read_status": "raw_unverified"}
+{"sample": 10, "x": 0, "y": 4095, "pen_n": 1, "read_status": "raw_unverified"}
+{"sample": 11, "x": 0, "y": 4095, "pen_n": 1, "read_status": "raw_unverified"}
+{"sample": 12, "x": 0, "y": 4095, "pen_n": 1, "read_status": "raw_unverified"}
+{"sample": 13, "x": 0, "y": 4095, "pen_n": 1, "read_status": "raw_unverified"}
+{"sample": 14, "x": 0, "y": 4095, "pen_n": 1, "read_status": "raw_unverified"}
+{"sample": 15, "x": 0, "y": 4095, "pen_n": 1, "read_status": "raw_unverified"}
+{"sample": 16, "x": 0, "y": 4095, "pen_n": 1, "read_status": "raw_unverified"}
+{"sample": 17, "x": 0, "y": 4095, "pen_n": 1, "read_status": "raw_unverified"}
+{"sample": 18, "x": 0, "y": 4095, "pen_n": 1, "read_status": "raw_unverified"}
+{"sample": 19, "x": 0, "y": 4095, "pen_n": 1, "read_status": "raw_unverified"}
+
+CONSOLE_DONE_2b9dd4d684f6463e9091ec52baf4c7cb:0

@@ -1,5 +1,63 @@
 # Requirements and decision record
 
+## LCD preview design interview (2026-10-21)
+
+This section supersedes the earlier LCD deferral and software-first M4 proposal
+for the current design interview. It records accepted requirements, not a finished
+design or authorization inferred from historical implementation sessions.
+
+- Waveshare 3.5inch RPi LCD (C), with gateware scaling and SPI pixel transmission.
+  Software initialization and capture configuration are allowed.
+- Freshness takes priority over displaying every source frame. Skip older preview
+  frames instead of accumulating delay.
+- Initial target: 30 new displayed frames/s and source-to-visible latency at most
+  100 ms, subject to hardware feasibility checks. Measurement criteria remain open.
+- Preserve the entire source image and its aspect ratio. Rotation is allowed to
+  minimize black borders. On input-resolution changes, choose between 0 and 90
+  degrees to maximize occupied LCD area; retain the current orientation on a tie.
+  The image may appear sideways on a fixed mounting, requiring physical display
+  rotation for upright viewing. Initial orientation remains an implementation detail.
+- Operate simultaneously with PC capture and preserve its existing contract.
+  Preview frame skipping must be independent of PC delivery.
+- First qualification covers the existing VGA and 1080p progressive input modes
+  at their verified timings. Other resolutions and interlaced input are excluded
+  from this initial scope; the exact timing inventory must be verified.
+- Occasional LCD scanout tearing is acceptable if needed to meet freshness.
+  Every transmitted image must nevertheless derive from one complete source
+  frame. This does not permit mixing source frames during image construction.
+- The user delegates scaling-method selection to the implementer. Evaluate image
+  quality, FPGA resource cost and timing; no particular filter is yet accepted
+  or proven feasible.
+- Replace stale video with a clear "No signal" or "Unsupported mode" status
+  screen when appropriate. Resume preview automatically when supported input
+  returns. Detection and recovery timing remain to be specified.
+- Initial scope is display-only; touch input is excluded.
+- On 2026-10-22 the user accepted RGB565 for the LCD preview while PC capture
+  retains unchanged RGB888.
+- On 2026-10-22 the user confirmed the RPi header mapping and authorized a
+  simple SPI read/write diagnostic. The [standalone wiring probe](lcd-spi-smoke.md)
+  is separate from the final gateware implementation. Optional touch-ADC reads
+  exercise the available MISO path; they do not add touch to the preview scope
+  or establish LCD readback.
+
+On 2026-10-22 the user authorized a quick demo and explicitly removed FPS and
+latency as completion gates for that demo. The initial 30 fps / 100 ms numbers remain
+historical design targets, not demo pass criteria. The user has an external
+camera and requests a simple camera preview for aligning it with the LCD.
+The [local camera alignment page](lcd-camera-preview.md) addresses that request;
+it is not an optical latency measurement tool.
+
+The demo may use a simpler single-frame BRAM buffer and nearest-neighbor scaling
+to demonstrate the required gateware pixel path. Full-design recovery and
+performance qualification remain separate follow-up work, with omissions reported.
+
+Detection/recovery timing and the detailed architecture are proposed in the
+[LCD design](superpowers/specs/2026-10-22-lcd-preview-design.md), pending final
+shared-understanding confirmation. See also
+[the gateware decision](adr/0002-gateware-lcd-preview.md).
+
+## Earlier capture decisions
+
 Date: 2026-10-16 (Asia/Taipei). The accepted fixed-mode M1 is complete; see
 [aggregate evidence and limits](results/2026-10-16/m1-completion.md). Earlier
 failures and per-run flags remain in dated records. M2–M4 remain deferred.

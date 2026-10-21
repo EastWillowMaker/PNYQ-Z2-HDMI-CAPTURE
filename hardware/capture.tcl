@@ -141,6 +141,9 @@ connect_bd_net [get_bd_pins video/hdmi_in/hdmi_in_hpd_irq] [get_bd_pins irq/In1]
 connect_bd_net [get_bd_pins video/hdmi_in/vtc_in_irq] [get_bd_pins irq/In2]
 connect_bd_net [get_bd_pins irq/dout] [get_bd_pins system_interrupts/intr]
 connect_bd_net [get_bd_pins system_interrupts/irq] [get_bd_pins ps7_0/IRQ_F2P]
+if {[info exists ::env(HDMI_LCD_DEMO_TCL)]} {
+    source $::env(HDMI_LCD_DEMO_TCL)
+}
 assign_bd_address
 validate_bd_design
 set bd_criticals [get_msg_config -count -severity {CRITICAL WARNING}]
