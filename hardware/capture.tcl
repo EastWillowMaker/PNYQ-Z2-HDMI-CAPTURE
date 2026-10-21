@@ -13,6 +13,9 @@ if {$hdmi_output && $mode ne "1080p30"} {
     error "HDMI test output requires the 1080p30 capture mode"
 }
 create_project capture [file join $output vivado] -part xc7z020clg400-1
+if {[info exists ::env(HDMI_LCD_DEMO_IP_CACHE)]} {
+    config_ip_cache -use_cache_location $::env(HDMI_LCD_DEMO_IP_CACHE)
+}
 set ip_repos [list [file join $output rx_ip] [file join $output hls]]
 if {$hdmi_output} {lappend ip_repos [file join $output tx_ip]}
 set_property ip_repo_paths $ip_repos [current_project]

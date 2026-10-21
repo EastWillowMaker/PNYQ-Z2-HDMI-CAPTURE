@@ -153,22 +153,43 @@ module lcd_demo #(
     reg [15:0] spi_shift_word;
     reg [4:0] spi_bits_remaining;
     reg [2:0] spi_divider;
+    reg lcd_sck_raw;
+    reg lcd_mosi_raw;
+    reg lcd_cs_raw;
+    reg lcd_dc_raw;
+    reg accepted_stream_fire;
+    reg [23:0] accepted_pixel_data;
+    reg accepted_pixel_sof;
+    reg accepted_pixel_eol;
+    reg accepted_receiver_reset;
+    reg accepted_fifo_fault;
 
     (* ram_style = "block" *) reg [15:0] framebuffer [0:FRAMEBUFFER_PIXELS-1];
 
-    wire stream_fire = pixel_valid && pixel_ready;
+    initial begin
+        lcd_sck = 1'b0;
+        lcd_mosi = 1'b0;
+        lcd_cs = 1'b1;
+        lcd_dc = 1'b1;
+        lcd_sck_raw = 1'b0;
+        lcd_mosi_raw = 1'b0;
+        lcd_cs_raw = 1'b1;
+        lcd_dc_raw = 1'b1;
+    end
+
+    wire stream_fire = accepted_stream_fire;
     wire capture_enabled = (state == ST_WAIT_FRAME) && !frame_pending;
-    wire frame_pixel = capture_enabled && stream_fire && !receiver_reset &&
-                       (pixel_sof || capture_active);
-    wire [X_COORD_WIDTH-1:0] current_source_x = pixel_sof ?
+    wire frame_pixel = capture_enabled && stream_fire && !accepted_receiver_reset &&
+                       (accepted_pixel_sof || capture_active);
+    wire [X_COORD_WIDTH-1:0] current_source_x = accepted_pixel_sof ?
         {X_COORD_WIDTH{1'b0}} : source_x;
-    wire [Y_COORD_WIDTH-1:0] current_source_y = pixel_sof ?
+    wire [Y_COORD_WIDTH-1:0] current_source_y = accepted_pixel_sof ?
         {Y_COORD_WIDTH{1'b0}} : source_y;
-    wire [X_INDEX_WIDTH-1:0] current_scaled_x = pixel_sof ?
+    wire [X_INDEX_WIDTH-1:0] current_scaled_x = accepted_pixel_sof ?
         {X_INDEX_WIDTH{1'b0}} : scaled_x;
-    wire [FRAMEBUFFER_ADDR_WIDTH-1:0] current_row_base = pixel_sof ?
+    wire [FRAMEBUFFER_ADDR_WIDTH-1:0] current_row_base = accepted_pixel_sof ?
         ((FIT_Y_OFFSET * PANEL_WIDTH) + FIT_X_OFFSET) : capture_row_base;
-    wire current_row_selected = pixel_sof ? (Y_TARGET_FIRST == 0) :
+    wire current_row_selected = accepted_pixel_sof ? (Y_TARGET_FIRST == 0) :
                                 (source_y == y_target);
     wire [X_ERROR_WIDTH:0] x_error_sum =
         {1'b0, x_error} + {1'b0, X_REMAINDER_N};
@@ -184,17 +205,21 @@ module lcd_demo #(
     wire [Y_ERROR_WIDTH-1:0] y_error_after_sample =
         y_carry ? y_error_sum - Y_DENOMINATOR_EXT :
                   y_error_sum[Y_ERROR_WIDTH-1:0];
-    wire x_sample = pixel_sof ? (X_TARGET_FIRST == 0) : (source_x == x_target);
+    wire x_sample = accepted_pixel_sof ? (X_TARGET_FIRST == 0) :
+                    (source_x == x_target);
     wire [Y_COORD_WIDTH-1:0] source_y_after_line = current_source_y + 1'b1;
     wire eol_matches = (current_source_x < IN_WIDTH) &&
-                       (pixel_eol == (current_source_x == IN_WIDTH_LAST));
+                       (accepted_pixel_eol ==
+                        (current_source_x == IN_WIDTH_LAST));
     wire [FRAMEBUFFER_ADDR_WIDTH-1:0] sample_address =
         current_row_base + current_scaled_x;
     wire sample_write = frame_pixel &&
-        (pixel_sof || !candidate_bad) && !fifo_fault && eol_matches &&
+        (accepted_pixel_sof || !candidate_bad) && !accepted_fifo_fault &&
+        eol_matches &&
         current_row_selected && x_sample && !await_boundary;
     wire [15:0] rgb565_pixel =
-        {pixel_data[23:19], pixel_data[15:10], pixel_data[7:3]};
+        {accepted_pixel_data[23:19], accepted_pixel_data[15:10],
+         accepted_pixel_data[7:3]};
     wire framebuffer_init_write = state == ST_FRAMEBUFFER_INIT;
     wire framebuffer_write_enable = !rst &&
         (framebuffer_init_write || sample_write);
@@ -212,7 +237,7 @@ module lcd_demo #(
     assign status[7] = capture_active;
     assign status[8] = candidate_bad;
     assign status[9] = frame_pending && pending_live;
-    assign status[10] = receiver_reset;
+    assign status[10] = accepted_receiver_reset;
     assign status[11] = spi_busy;
     assign status[12] = lcd_reset;
     assign status[13] = await_boundary;
@@ -388,21 +413,22 @@ module lcd_demo #(
             uploaded_frames <= 32'd0;
             spi_start <= 1'b0;
             spi_tx_word <= 16'd0;
-            lcd_cs <= 1'b1;
-            lcd_dc <= 1'b1;
+            lcd_cs_raw <= 1'b1;
+            lcd_dc_raw <= 1'b1;
             lcd_reset <= 1'b0;
         end else begin
             spi_start <= 1'b0;
 
-            if (fifo_fault && !previous_fifo_fault &&
+            if (accepted_fifo_fault && !previous_fifo_fault &&
                 fifo_fault_count != 8'hff)
                 fifo_fault_count <= fifo_fault_count + 8'd1;
-            previous_fifo_fault <= fifo_fault;
+            previous_fifo_fault <= accepted_fifo_fault;
 
-            if (fifo_fault && capture_active && !pixel_sof)
+            if (accepted_fifo_fault && capture_active && !accepted_pixel_sof)
                 candidate_bad <= 1'b1;
 
-            if (receiver_reset || !capture_active || state != ST_WAIT_FRAME) begin
+            if (accepted_receiver_reset || !capture_active ||
+                state != ST_WAIT_FRAME) begin
                 frame_idle_count <= 32'd0;
             end else if (frame_pixel) begin
                 frame_idle_count <= 32'd0;
@@ -417,7 +443,7 @@ module lcd_demo #(
                 frame_idle_count <= frame_idle_count + 1'b1;
             end
 
-            if (receiver_reset) begin
+            if (accepted_receiver_reset) begin
                 if (capture_active && rejected_frame_count != 8'hff)
                     rejected_frame_count <= rejected_frame_count + 8'd1;
                 capture_active <= 1'b0;
@@ -486,8 +512,8 @@ module lcd_demo #(
                 end
 
                 ST_INIT_LAUNCH: begin
-                    lcd_dc <= init_item[16];
-                    lcd_cs <= 1'b0;
+                    lcd_dc_raw <= init_item[16];
+                    lcd_cs_raw <= 1'b0;
                     spi_tx_word <= init_item[15:0];
                     spi_start <= 1'b1;
                     state <= ST_INIT_WAIT;
@@ -495,7 +521,7 @@ module lcd_demo #(
 
                 ST_INIT_WAIT: begin
                     if (spi_done) begin
-                        lcd_cs <= 1'b1;
+                        lcd_cs_raw <= 1'b1;
                         if (init_word_index == INIT_WORD_COUNT - 1) begin
                             delay_count <= 32'd0;
                             state <= ST_INIT_SLEEP_WAIT;
@@ -516,8 +542,8 @@ module lcd_demo #(
                 end
 
                 ST_DISPLAY_ON_LAUNCH: begin
-                    lcd_dc <= 1'b0;
-                    lcd_cs <= 1'b0;
+                    lcd_dc_raw <= 1'b0;
+                    lcd_cs_raw <= 1'b0;
                     spi_tx_word <= 16'h0029;
                     spi_start <= 1'b1;
                     state <= ST_DISPLAY_ON_WAIT;
@@ -525,7 +551,7 @@ module lcd_demo #(
 
                 ST_DISPLAY_ON_WAIT: begin
                     if (spi_done) begin
-                        lcd_cs <= 1'b1;
+                        lcd_cs_raw <= 1'b1;
                         delay_count <= 32'd0;
                         state <= ST_DISPLAY_WAKE_WAIT;
                     end
@@ -551,8 +577,8 @@ module lcd_demo #(
                 end
 
                 ST_WINDOW_LAUNCH: begin
-                    lcd_dc <= window_item[16];
-                    lcd_cs <= 1'b0;
+                    lcd_dc_raw <= window_item[16];
+                    lcd_cs_raw <= 1'b0;
                     spi_tx_word <= window_item[15:0];
                     spi_start <= 1'b1;
                     state <= ST_WINDOW_WAIT;
@@ -560,7 +586,7 @@ module lcd_demo #(
 
                 ST_WINDOW_WAIT: begin
                     if (spi_done) begin
-                        lcd_cs <= 1'b1;
+                        lcd_cs_raw <= 1'b1;
                         if (window_word_index == 4'd10) begin
                             pixel_address <= {FRAMEBUFFER_ADDR_WIDTH{1'b0}};
                             state <= ST_PIXEL_SETUP;
@@ -572,8 +598,8 @@ module lcd_demo #(
                 end
 
                 ST_PIXEL_SETUP: begin
-                    lcd_dc <= 1'b1;
-                    lcd_cs <= 1'b0;
+                    lcd_dc_raw <= 1'b1;
+                    lcd_cs_raw <= 1'b0;
                     state <= ST_PIXEL_READ;
                 end
 
@@ -590,7 +616,7 @@ module lcd_demo #(
                 ST_PIXEL_WAIT: begin
                     if (spi_done) begin
                         if (pixel_address == FRAMEBUFFER_PIXELS - 1) begin
-                            lcd_cs <= 1'b1;
+                            lcd_cs_raw <= 1'b1;
                             if (upload_live)
                                 uploaded_frames <= uploaded_frames + 32'd1;
                             state <= ST_WAIT_FRAME;
@@ -603,11 +629,11 @@ module lcd_demo #(
 
                 default: begin
                     state <= ST_FRAMEBUFFER_INIT;
-                    lcd_cs <= 1'b1;
+                    lcd_cs_raw <= 1'b1;
                 end
             endcase
 
-            if (receiver_reset && state == ST_WAIT_FRAME) begin
+            if (accepted_receiver_reset && state == ST_WAIT_FRAME) begin
                 capture_active <= 1'b0;
                 candidate_bad <= 1'b0;
                 await_boundary <= 1'b0;
@@ -616,7 +642,7 @@ module lcd_demo #(
                 if (await_boundary) begin
                     capture_active <= 1'b0;
                     await_boundary <= 1'b0;
-                    if (pixel_sof) begin
+                    if (accepted_pixel_sof) begin
                         if (!candidate_bad) begin
                             frame_pending <= 1'b1;
                             pending_live <= 1'b1;
@@ -630,12 +656,12 @@ module lcd_demo #(
                             rejected_frame_count <= rejected_frame_count + 8'd1;
                     end
                 end else begin
-                    if (pixel_sof) begin
+                    if (accepted_pixel_sof) begin
                         if (capture_active && rejected_frame_count != 8'hff)
                             rejected_frame_count <= rejected_frame_count + 8'd1;
-                        candidate_bad <= fifo_fault;
+                        candidate_bad <= accepted_fifo_fault;
                         capture_active <= 1'b1;
-                    end else if (fifo_fault) begin
+                    end else if (accepted_fifo_fault) begin
                         candidate_bad <= 1'b1;
                     end
 
@@ -649,7 +675,7 @@ module lcd_demo #(
                         if (x_sample) begin
                             scaled_x <= current_scaled_x + 1'b1;
                             if (FIT_WIDTH > 1) begin
-                                if (pixel_sof) begin
+                                if (accepted_pixel_sof) begin
                                     x_target <= X_TARGET_SECOND_N;
                                     x_error <= X_ERROR_SECOND;
                                 end else begin
@@ -659,7 +685,7 @@ module lcd_demo #(
                             end
                         end
 
-                        if (pixel_eol) begin
+                        if (accepted_pixel_eol) begin
                             source_x <= {X_COORD_WIDTH{1'b0}};
                             x_target <= X_TARGET_FIRST_N;
                             x_error <= X_ERROR_FIRST;
@@ -670,7 +696,7 @@ module lcd_demo #(
                             end else begin
                                 source_y <= source_y_after_line;
                                 if (current_row_selected && FIT_HEIGHT > 1) begin
-                                    if (pixel_sof) begin
+                                    if (accepted_pixel_sof) begin
                                         y_target <= Y_TARGET_SECOND_N;
                                         y_error <= Y_ERROR_SECOND;
                                     end else begin
@@ -685,7 +711,7 @@ module lcd_demo #(
                             source_x <= current_source_x + 1'b1;
                         end
 
-                        if (pixel_sof) begin
+                        if (accepted_pixel_sof) begin
                             source_y <= {Y_COORD_WIDTH{1'b0}};
                             y_target <= Y_TARGET_FIRST_N;
                             y_error <= Y_ERROR_FIRST;
@@ -710,13 +736,45 @@ module lcd_demo #(
 
     always @(posedge clk) begin
         if (rst) begin
+            accepted_stream_fire <= 1'b0;
+            accepted_pixel_data <= 24'd0;
+            accepted_pixel_sof <= 1'b0;
+            accepted_pixel_eol <= 1'b0;
+            accepted_receiver_reset <= 1'b0;
+            accepted_fifo_fault <= 1'b0;
+        end else begin
+            accepted_stream_fire <= pixel_valid && pixel_ready;
+            accepted_pixel_data <= pixel_data;
+            accepted_pixel_sof <= pixel_sof;
+            accepted_pixel_eol <= pixel_eol;
+            accepted_receiver_reset <= receiver_reset;
+            accepted_fifo_fault <= fifo_fault;
+        end
+    end
+
+    always @(posedge clk) begin
+        if (rst) begin
+            lcd_sck <= 1'b0;
+            lcd_mosi <= 1'b0;
+            lcd_cs <= 1'b1;
+            lcd_dc <= 1'b1;
+        end else begin
+            lcd_sck <= lcd_sck_raw;
+            lcd_mosi <= lcd_mosi_raw;
+            lcd_cs <= lcd_cs_raw;
+            lcd_dc <= lcd_dc_raw;
+        end
+    end
+
+    always @(posedge clk) begin
+        if (rst) begin
             spi_busy <= 1'b0;
             spi_done <= 1'b0;
             spi_shift_word <= 16'd0;
             spi_bits_remaining <= 5'd0;
             spi_divider <= 3'd0;
-            lcd_sck <= 1'b0;
-            lcd_mosi <= 1'b0;
+            lcd_sck_raw <= 1'b0;
+            lcd_mosi_raw <= 1'b0;
         end else begin
             spi_done <= 1'b0;
             if (spi_start && !spi_busy) begin
@@ -724,15 +782,15 @@ module lcd_demo #(
                 spi_shift_word <= spi_tx_word;
                 spi_bits_remaining <= 5'd16;
                 spi_divider <= 3'd0;
-                lcd_sck <= 1'b0;
-                lcd_mosi <= spi_tx_word[15];
+                lcd_sck_raw <= 1'b0;
+                lcd_mosi_raw <= spi_tx_word[15];
             end else if (spi_busy) begin
                 if (spi_divider == SPI_HALF_PERIOD - 1) begin
                     spi_divider <= 3'd0;
-                    if (!lcd_sck) begin
-                        lcd_sck <= 1'b1;
+                    if (!lcd_sck_raw) begin
+                        lcd_sck_raw <= 1'b1;
                     end else begin
-                        lcd_sck <= 1'b0;
+                        lcd_sck_raw <= 1'b0;
                         spi_shift_word <= {spi_shift_word[14:0], 1'b0};
                         if (spi_bits_remaining == 1) begin
                             spi_bits_remaining <= 5'd0;
@@ -740,15 +798,15 @@ module lcd_demo #(
                             spi_done <= 1'b1;
                         end else begin
                             spi_bits_remaining <= spi_bits_remaining - 1'b1;
-                            lcd_mosi <= spi_shift_word[14];
+                            lcd_mosi_raw <= spi_shift_word[14];
                         end
                     end
                 end else begin
                     spi_divider <= spi_divider + 1'b1;
                 end
             end else begin
-                lcd_sck <= 1'b0;
-                lcd_mosi <= 1'b0;
+                lcd_sck_raw <= 1'b0;
+                lcd_mosi_raw <= 1'b0;
             end
         end
     end

@@ -1,8 +1,5 @@
 # Optional bring-up branch; capture.tcl sources this before address assignment.
 set demo_dir [file dirname [info script]]
-if {[file isdirectory [file join $output ip-cache]]} {
-    config_ip_cache -use_cache_location [file join $output ip-cache]
-}
 add_files [file join $demo_dir lcd_demo.v]
 add_files [file join $demo_dir lcd_demo_faults.v]
 add_files -fileset constrs_1 [file join $demo_dir lcd_demo.xdc]

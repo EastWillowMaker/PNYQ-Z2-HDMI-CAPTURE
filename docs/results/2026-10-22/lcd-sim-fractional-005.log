@@ -1,0 +1,2 @@
+PASS: SPI init/window/pixels, atomic frames, RGB565, recovery
+hardware/lcd_demo_tb.sv:461: $finish called at 3568805000 (1ps)

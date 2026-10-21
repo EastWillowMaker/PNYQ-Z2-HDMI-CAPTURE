@@ -50,9 +50,9 @@ not modified. It stages new receiver IP and preserves existing artifacts.
 ```sh
 python3 scripts/build_lcd_demo.py \
     --mode 1080p30 --with-hdmi-output \
-    --output artifacts/lcd-demo-build-004 \
+    --output artifacts/lcd-demo-build-005 \
     --reuse-hls artifacts/1080p30-loop-005/hls \
-    --reuse-ip-cache artifacts/lcd-demo-build-003/vivado/capture.cache/ip \
+    --reuse-ip-cache artifacts/lcd-demo-build-004/ip-cache \
     --gateware artifacts/1080p30-gate-001/litex_capture.v \
     --vivado /home/eastwillow/Xilinx/2025.2/Vivado/bin/vivado
 ```
@@ -99,7 +99,7 @@ The default 32x16 to 8x4 and fractional 16x16 to 11x11 simulations pass,
 including every diagnostic and live panel pixel. The fractional case exercises
 non-integer scaling; it is not a full-size VGA simulation. The checker also
 covers malformed and overlong input, faults and recovery. Logs are retained in
-`artifacts/lcd-demo-session/sim-integer-004.log` and `sim-fractional-004.log`.
+`artifacts/lcd-demo-session/sim-integer-005.log` and `sim-fractional-005.log`.
 
 Build001 failed block-design validation before synthesis: the scalar tap replaced
 inferred AXIS connections without explicitly including the frontend driver.
@@ -121,9 +121,19 @@ long routes from fabric registers to pins. The generated `lcd_spi_clock` did
 resolve correctly at 56 ns (17.857 MHz). This bitstream was not exported or
 loaded. The next revision shortens scaler logic and places the three SPI data
 and control output registers in I/O blocks; timing budgets remain unchanged.
-Build004 is running with this revision. The final RTL passed static review and both pixel simulations pass;
-routed timing and the on-board image remain unverified. The copied
-IP cache did not avoid the IP synthesis jobs in this run.
+Build004 also failed export: setup slack was -1.320 ns, with the worst path
+from the source underflow counter through fault detection to the framebuffer
+write enable. The three requested IOB registers could not be packed because
+their outputs required fabric routing (Place 30-722). The copied IP cache did
+not avoid the synthesis jobs. Neither failed bitstream was loaded.
+
+The next revision adds a register stage for accepted pixels together with fault
+and reset signals, and a dedicated output stage for all four SPI signals. The
+SPI stage delays SCK, MOSI, CS and DC together by one system-clock cycle. The
+build selects a copied IP cache before creating IP. Both pixel simulations pass after these changes, including stalled-SOF and
+partial-frame reset cases. Build005 is running and reports 37 cached IP synthesis results reused;
+routed timing and the physical image remain pending. Static review found no
+material input/output alignment defect in this revision. The changes do not relax timing requirements.
 AMD documents the explicit block-memory inference setting in
 [RAM_STYLE](https://docs.amd.com/r/2023.2-English/ug912-vivado-properties/RAM_STYLE).
 On-board results are pending. The earlier
@@ -134,8 +144,8 @@ for that probe only, not this new bitstream.
 
 Read the LCD RTL first, then `hardware/lcd_demo_attach.tcl` and
 `hardware/lcd_demo.xdc`, followed by `scripts/build_lcd_demo.py` and
-`tools/run_lcd_demo.py`. The existing `hardware/capture.tcl` changes only by
-sourcing the optional demo attachment before address assignment.
+`tools/run_lcd_demo.py`. The existing `hardware/capture.tcl` adds optional demo cache selection before
+IP creation and sources the demo attachment before address assignment.
 
 The build entry point stages the demo sources and calls `capture.tcl`, which
 sources `lcd_demo_attach.tcl`. The generated block design connects the receiver

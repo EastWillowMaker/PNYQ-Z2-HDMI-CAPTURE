@@ -5,7 +5,7 @@ set_property -dict {PACKAGE_PIN F19 IOSTANDARD LVCMOS33 SLEW SLOW DRIVE 8} [get_
 set_property -dict {PACKAGE_PIN Y7 IOSTANDARD LVCMOS33 SLEW SLOW DRIVE 8} [get_ports lcd_dc]
 set_property -dict {PACKAGE_PIN F20 IOSTANDARD LVCMOS33 SLEW SLOW DRIVE 8} [get_ports lcd_reset]
 set_property -dict {PACKAGE_PIN W19 IOSTANDARD LVCMOS33 SLEW SLOW DRIVE 8} [get_ports touch_cs]
-set_property IOB TRUE [get_ports {lcd_mosi lcd_cs lcd_dc}]
+set_property IOB TRUE [get_ports {lcd_sck lcd_mosi lcd_cs lcd_dc}]
 
 # DIV=4 gives eight system-clock cycles per SPI period. The external timing
 # budget is a demo assumption, not qualification of the LCD bridge's limits.

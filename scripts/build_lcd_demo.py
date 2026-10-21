@@ -86,6 +86,9 @@ def main():
     if a.stage == 'prepare':
         return
     env = dict(os.environ, HDMI_LCD_DEMO_TCL=str(demo / 'lcd_demo_attach.tcl'))
+    env.pop('HDMI_LCD_DEMO_IP_CACHE', None)
+    if a.reuse_ip_cache:
+        env['HDMI_LCD_DEMO_IP_CACHE'] = str(out / 'ip-cache')
     subprocess.run([a.vivado, '-mode', 'batch', '-source', str(ROOT / 'hardware/capture.tcl'),
                     '-log', str(out / 'vivado.log'), '-journal', str(out / 'vivado.jou'),
                     '-tclargs', str(vendor), str(out), str(out / 'litex_capture.v'),

@@ -283,6 +283,47 @@ module lcd_demo_tb #(
         end
     endtask
 
+    task check_ready_handshake;
+        begin
+            @(negedge clk);
+            pixel_data = source_pixel(0, 0);
+            pixel_sof = 1'b1;
+            pixel_eol = 1'b0;
+            pixel_valid = 1'b1;
+            pixel_ready = 1'b0;
+            @(negedge clk);
+            pixel_valid = 1'b0;
+            pixel_sof = 1'b0;
+            pixel_ready = 1'b1;
+            repeat (3) @(posedge clk);
+            if (status[7])
+                $fatal(1, "A stalled SOF was captured without a handshake");
+
+            @(negedge clk);
+            pixel_data = source_pixel(0, 0);
+            pixel_sof = 1'b1;
+            pixel_eol = 1'b0;
+            pixel_valid = 1'b1;
+            pixel_ready = 1'b0;
+            @(negedge clk);
+            pixel_ready = 1'b1;
+            @(negedge clk);
+            pixel_valid = 1'b0;
+            pixel_sof = 1'b0;
+            repeat (3) @(posedge clk);
+            if (!status[7])
+                $fatal(1, "SOF was not captured when ready accepted it");
+
+            @(negedge clk);
+            receiver_reset = 1'b1;
+            repeat (2) @(negedge clk);
+            receiver_reset = 1'b0;
+            repeat (3) @(posedge clk);
+            if (status[7])
+                $fatal(1, "Receiver reset did not flush the partial frame");
+        end
+    endtask
+
     task wait_for_live_upload(input [31:0] expected_count);
         integer timeout;
         begin
@@ -350,6 +391,8 @@ module lcd_demo_tb #(
                      lcd_cs, lcd_sck, lcd_mosi, lcd_reset);
             $fatal(1, "LCD pins did not return to their idle levels");
         end
+
+        check_ready_handshake();
 
         send_transfer(24'hffffff, 1'b1, 1'b1, 1'b0);
         repeat (100) @(posedge clk);
