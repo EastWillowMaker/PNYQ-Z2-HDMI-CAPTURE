@@ -1,0 +1,71 @@
+
+[?2004l[?2004hxilinx@pynq:~$ sudo -n env XILINX_XRT=/usr /usr/local/share/pynq-venv/bin/python -u /tmp/lcd-startup-probe-006.py; printf "\nCONSOLE_DONE_6f5a31a649474709ad276c06b275dc44:%s\n" "$?"
+[?2004l{"t": 0.018, "lock": 1, "lcd": "0x1023", "uploads": 0, "vtc_ctrl": "0x0", "vtc_status": "0x0", "vtc_det_status": "0x0", "vtc_size": "0x0"}
+{"t": 0.272, "lock": 1, "lcd": "0x1026", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 0.523, "lock": 1, "lcd": "0x1870", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 0.774, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 1.025, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 1.276, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 1.527, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 1.778, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 2.029, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 2.28, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 2.531, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 2.782, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 3.033, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 3.284, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 3.535, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 3.786, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 4.037, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 4.289, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 4.54, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 4.791, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 5.042, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 5.292, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 5.543, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 5.794, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 6.045, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 6.296, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 6.547, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 6.798, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 7.049, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 7.3, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 7.551, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 7.802, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 8.053, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 8.304, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 8.555, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 8.806, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 9.057, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 9.308, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+DETECTION_ERROR LookupError('_video._capture initialization failed [1]: No incoming video signal detected')
+{"t": 9.559, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 9.81, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 10.061, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 10.311, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 10.562, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 10.813, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 11.063, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 11.314, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 11.565, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 11.816, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 12.066, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 12.317, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 12.568, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 12.818, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 13.069, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 13.32, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 13.571, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 13.821, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 14.072, "lock": 1, "lcd": "0x106a", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0x600", "vtc_det_status": "0x2", "vtc_size": "0x0"}
+{"t": 14.323, "lock": 1, "lcd": "0x1870", "uploads": 0, "vtc_ctrl": "0xa", "vtc_status": "0xf00", "vtc_det_status": "0x7", "vtc_size": "0x4380780"}
+{"t": 14.573, "lock": 1, "lcd": "0x1870", "uploads": 1, "vtc_ctrl": "0xa", "vtc_status": "0xf00", "vtc_det_status": "0x7", "vtc_size": "0x4380780"}
+{"t": 14.824, "lock": 1, "lcd": "0x10ea", "uploads": 3, "vtc_ctrl": "0xa", "vtc_status": "0xf00", "vtc_det_status": "0x7", "vtc_size": "0x4380780"}
+{"t": 15.075, "lock": 1, "lcd": "0x1870", "uploads": 4, "vtc_ctrl": "0xa", "vtc_status": "0xf00", "vtc_det_status": "0x7", "vtc_size": "0x4380780"}
+{"t": 15.326, "lock": 1, "lcd": "0x1870", "uploads": 5, "vtc_ctrl": "0xa", "vtc_status": "0xf00", "vtc_det_status": "0x7", "vtc_size": "0x4380780"}
+{"t": 15.577, "lock": 1, "lcd": "0x1870", "uploads": 6, "vtc_ctrl": "0xa", "vtc_status": "0xf00", "vtc_det_status": "0x7", "vtc_size": "0x4380780"}
+{"t": 15.827, "lock": 1, "lcd": "0x10ea", "uploads": 8, "vtc_ctrl": "0xa", "vtc_status": "0xf00", "vtc_det_status": "0x7", "vtc_size": "0x4380780"}
+{"t": 16.078, "lock": 1, "lcd": "0x1870", "uploads": 9, "vtc_ctrl": "0xa", "vtc_status": "0xf00", "vtc_det_status": "0x7", "vtc_size": "0x4380780"}
+
+CONSOLE_DONE_6f5a31a649474709ad276c06b275dc44:0
+[?2004hxilinx@pynq:~$ 

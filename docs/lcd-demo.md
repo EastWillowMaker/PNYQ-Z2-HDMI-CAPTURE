@@ -9,6 +9,9 @@ The existing changing 1080p30 HDMI pattern passes through that cable and the HDM
 receiver before the new preview tap. The camera alignment preview is separately
 available at [localhost](http://127.0.0.1:8767/); the user confirmed it works with
 the Brio 100 and can frame the LCD. It does not record or measure optical latency.
+Build006 now runs this loopback on the board. A fresh load detected 1920x1080
+and counted 75 live uploads in 15.022 seconds. Local Brio snapshots show the
+captured pattern on the panel and changes between observations.
 
 ## Data path and limits
 
@@ -76,6 +79,10 @@ detects the source and observes LCD counters without starting VDMA. It leaves
 the demo running after its observation period. `--attach` observes the same
 already-loaded image without reprogramming; `--prepare-only` asserts HPD without
 native source detection. Do not run this observer concurrently with PC capture.
+Input detection uses PYNQ's 60-second default; the tested loopback takes about
+14 seconds to produce valid video after programming. A missing input can take
+up to that timeout to report failure. `--seconds` controls observation time
+after successful detection.
 
 On the tested PYNQ 3.0.1 image, the default graph metadata parser rejects the
 scalar AXIS tap in the generated HWH. The runner selects PYNQ's legacy HWH
@@ -158,8 +165,29 @@ On-board loading first failed in PYNQ's graph metadata parser before programming
 The legacy-parser adapter passed metadata parsing and full programming, but the
 native input detector timed out on two fresh loads with its 10-second budget.
 A subsequent attach detected 1920x1080 and counted 75 live uploads in 15.022
-seconds, approximately 4.993 uploads/s. Fresh-load detector behavior is still
-under investigation; physical image verification remains pending. The earlier
+seconds, approximately 4.993 uploads/s. A concurrent register probe then showed
+pixel-clock lock throughout startup and detector enable remaining set. VTC
+dimensions and lock arrived between 14.072 and 14.323 seconds; the first live
+LCD upload followed by 14.573 seconds. This disproved the suspected lost-enable
+reset for that run and showed that the 10-second limit was too short. VTC
+register interpretation follows AMD's
+[driver definitions](https://github.com/Xilinx/embeddedsw/blob/xilinx_v2022.1/XilinxProcessorIPLib/drivers/vtc/src/xvtc_hw.h).
+
+With the timeout restored to PYNQ's 60-second default, a fresh full load passed
+input detection and all 15 observation samples. The live counter advanced from
+5 to 80 in 15.021992 seconds (4.992680 uploads/s), with no rejected-frame or
+FIFO-fault count in the sampled LCD status. The runner's halted-VDMA and disabled
+PC-gate checks passed. This is a measured demo rate, not a performance guarantee.
+
+The Brio was idle, so GStreamer captured two local 1920x1080 JPEG snapshots
+about 35.66 seconds apart. The assistant inspected both: the LCD shows the
+analytic loopback pattern rather than the startup bars. The patterned LCD
+region changes primarily in red, consistent with the source's changing frame
+term; sampled tabletop and board regions provide a static comparison. The
+camera view is rotated relative to logical landscape and is soft and reflective.
+These images establish visible output and change, not pixel-exact color,
+electrical margin, or optical latency. The panel fit and exact RGB565 pixels
+are checked by the pin-level simulation. The earlier
 [slow wiring probe](lcd-spi-smoke.md) and its user-confirmed colors are evidence
 for that probe only, not this new bitstream.
 
@@ -169,6 +197,22 @@ The [build manifest](results/2026-10-22/lcd-build-006-manifest.json),
 [initial parser failure](results/2026-10-22/lcd-run-006-parser-failure.log),
 [fresh-load detector timeout](results/2026-10-22/lcd-run-006-detector-timeout.log),
 and [successful attach](results/2026-10-22/lcd-attach-006.log) preserve these results.
+The final evidence is the [startup trace](results/2026-10-22/lcd-startup-probe-006.log),
+[fresh-load run](results/2026-10-22/lcd-run-006-startup.log), and
+[first](results/2026-10-22/lcd-webcam-006-a.jpg) and
+[second](results/2026-10-22/lcd-webcam-006-b.jpg) camera images.
+
+The final runner SHA-256 is
+`0ddea17a8fb8269958c54fd93350681f6fa3b3f3ddb3487f00fad0f865dab2a6`.
+It is installed on the board as `/tmp/lcd-demo-006/run_lcd_demo.py`.
+The [postflight check](results/2026-10-22/lcd-postflight-006.log) verified that
+hash, method restoration, absence of the stale metadata pickle, halted VDMA,
+disabled PC capture, and a live upload counter that had reached 971.
+The matching host package is
+`artifacts/lcd-demo-session/lcd-demo-006-verified.tar.gz` (SHA-256
+`a2b7170323e1daf7da4b719370b0ae00f9c81193a6f0bf953ae627bf458a805e`).
+The FPGA remains running after the observer exits; the files under `/tmp` do
+not provide automatic boot persistence.
 
 ## Review scope
 
@@ -190,6 +234,9 @@ a required precondition.
 
 An independent static review covered these connections, endpoint scaling,
 frame closure, fault handling, SPI initialization and the corrected RAM ports.
-It found no material defect in that scope. Physical SPI timing, the displayed
-image and simultaneous PC capture require their own evidence; static review
-and reduced-size simulation do not establish them.
+It found no material defect in that scope. A further independent review checked
+the legacy metadata adapter, cache invalidation, method restoration, and the
+startup timeout against the pinned PYNQ 3.0.1 sources and board trace. The routed
+timing report and camera observations add implementation and visible-output
+evidence. Electrical margin, physical reconnect recovery, other PYNQ versions,
+VGA on the board and simultaneous PC capture remain unverified.

@@ -86,9 +86,9 @@ def main():
                           'uploads': lcd.read(8), 'vdma_halted': True}), flush=True)
         return
 
-    print(json.dumps({'stage': 'detect_input', 'timeout_seconds': 10}), flush=True)
+    print(json.dumps({'stage': 'detect_input', 'timeout_seconds': 60}), flush=True)
     frontend = HDMIInFrontend(overlay.video.hdmi_in.frontend.description)
-    frontend.start(init_timeout=10)
+    frontend.start(init_timeout=60)
     mode = frontend.mode
     if [mode.width, mode.height] != manifest['geometry']:
         raise RuntimeError(f'input {mode.width}x{mode.height} differs from build profile')

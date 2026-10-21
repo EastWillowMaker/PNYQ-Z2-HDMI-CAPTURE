@@ -1,0 +1,8 @@
+
+[?2004l[?2004hxilinx@pynq:~$ cp /tmp/lcd-demo-006/run_lcd_demo.py /tmp/lcd-demo-006/run_lcd_demo-original.py && cp /tmp/lcd-demo-006/run_lcd_demo-startup.py /tmp/lcd-demo-006/run_lcd_demo.py && sudo -n env XILINX_XRT=/usr /usr/local/share/pynq-venv/bin/python -u -c 'from pathlib import Path; import runpy,json,hashlib; from pynq import Device,MMIO; import pynq.pl_server.embedded_device as e; d=Device.active_device; method=d.get_bitfile_metadata; o=runpy.run_path("/tmp/lcd-demo-006/run_lcd_demo.py")["load_overlay"]("/tmp/lcd-demo-006/capture.bit",download=False); assert d.get_bitfile_metadata==method; assert not Path(e.__file__).with_name("_current_metadata.pkl").exists(); print("METHOD_RESTORED_CACHE_ABSENT"); print("RUNNER_SHA256",hashlib.sha256(Path("/tmp/lcd-demo-006/run_lcd_demo.py").read_bytes()).hexdigest()); print(json.dumps({n:{hex(a):hex(MMIO(o.ip_dict[n]["phys_addr"],o.ip_dict[n]["addr_range"]).read(a)) for a in offsets} for n,offsets in [("video/axi_vdma",[0x30,0x34]),("video/capture_control",[0]),("video/lcd_status",[0,8])]}))'; printf "\nCONSOLE_DONE_ef5fb6ce17fd4a278d888421c9e0dac4:%s\n" "$?"
+[?2004lMETHOD_RESTORED_CACHE_ABSENT
+RUNNER_SHA256 0ddea17a8fb8269958c54fd93350681f6fa3b3f3ddb3487f00fad0f865dab2a6
+{"video/axi_vdma": {"0x30": "0x10002", "0x34": "0x10001"}, "video/capture_control": {"0x0": "0x0"}, "video/lcd_status": {"0x0": "0x1870", "0x8": "0x3cb"}}
+
+CONSOLE_DONE_ef5fb6ce17fd4a278d888421c9e0dac4:0
+[?2004hxilinx@pynq:~$ 
