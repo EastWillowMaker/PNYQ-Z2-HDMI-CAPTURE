@@ -47,6 +47,7 @@ module lcd_demo_tb #(
     reg saw_init_f1 = 1'b0;
     reg saw_init_first_parameter = 1'b0;
     reg saw_correct_window = 1'b0;
+    reg init_drain_checked = 1'b0;
     integer i;
 
     always #5 clk = ~clk;
@@ -148,6 +149,26 @@ module lcd_demo_tb #(
     always @(posedge clk) begin
         if (touch_cs !== 1'b1)
             $fatal(1, "Touch chip select must remain inactive");
+    end
+
+    always @(posedge clk) begin
+        if (rst) begin
+            init_drain_checked = 1'b0;
+        end else begin
+            if (dut.state >= 5'd11 && dut.state <= 5'd16 &&
+                dut.framebuffer_write_enable_q)
+                $fatal(1, "Framebuffer write command overlapped LCD upload");
+
+            if (!init_drain_checked && dut.memory_initialized) begin
+                if (dut.framebuffer_write_enable_q)
+                    $fatal(1, "Framebuffer init completed with a write pending");
+                if (dut.framebuffer[PANEL_PIXELS - 1] !==
+                    expected_diagnostic_pixel(PANEL_WIDTH - 1,
+                                              PANEL_HEIGHT - 1))
+                    $fatal(1, "Final diagnostic framebuffer write did not drain");
+                init_drain_checked = 1'b1;
+            end
+        end
     end
 
     function [23:0] source_pixel(input integer x, input integer y);

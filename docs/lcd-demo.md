@@ -50,9 +50,9 @@ not modified. It stages new receiver IP and preserves existing artifacts.
 ```sh
 python3 scripts/build_lcd_demo.py \
     --mode 1080p30 --with-hdmi-output \
-    --output artifacts/lcd-demo-build-005 \
+    --output artifacts/lcd-demo-build-006 \
     --reuse-hls artifacts/1080p30-loop-005/hls \
-    --reuse-ip-cache artifacts/lcd-demo-build-004/ip-cache \
+    --reuse-ip-cache artifacts/lcd-demo-build-005/ip-cache \
     --gateware artifacts/1080p30-gate-001/litex_capture.v \
     --vivado /home/eastwillow/Xilinx/2025.2/Vivado/bin/vivado
 ```
@@ -99,7 +99,7 @@ The default 32x16 to 8x4 and fractional 16x16 to 11x11 simulations pass,
 including every diagnostic and live panel pixel. The fractional case exercises
 non-integer scaling; it is not a full-size VGA simulation. The checker also
 covers malformed and overlong input, faults and recovery. Logs are retained in
-`artifacts/lcd-demo-session/sim-integer-005.log` and `sim-fractional-005.log`.
+`artifacts/lcd-demo-session/sim-integer-006.log` and `sim-fractional-006.log`.
 
 Build001 failed block-design validation before synthesis: the scalar tap replaced
 inferred AXIS connections without explicitly including the frontend driver.
@@ -131,9 +131,16 @@ The next revision adds a register stage for accepted pixels together with fault
 and reset signals, and a dedicated output stage for all four SPI signals. The
 SPI stage delays SCK, MOSI, CS and DC together by one system-clock cycle. The
 build selects a copied IP cache before creating IP. Both pixel simulations pass after these changes, including stalled-SOF and
-partial-frame reset cases. Build005 is running and reports 37 cached IP synthesis results reused;
-routed timing and the physical image remain pending. Static review found no
-material input/output alignment defect in this revision. The changes do not relax timing requirements.
+partial-frame reset cases. Build005 reused 37 cached IP synthesis results. Its routed report confirms all
+four SPI output registers in OLOGIC sites: CS X1Y120, SCK X0Y18, MOSI X0Y20,
+and DC X0Y24. Static review found no material input/output alignment defect.
+Overall setup still failed at -0.968 ns (162 endpoints); the reported worst
+paths drive framebuffer write enables and startup-pattern data. This image was
+not loaded. The next revision registers the complete RAM write command together
+before the memory port, with a drain state before declaring initialization
+complete. Both simulations pass, including checks that the last startup pixel
+is stored before initialization completes and no write command overlaps an LCD
+upload. Build006 is running. Physical image verification remains pending. The changes do not relax timing requirements.
 AMD documents the explicit block-memory inference setting in
 [RAM_STYLE](https://docs.amd.com/r/2023.2-English/ug912-vivado-properties/RAM_STYLE).
 On-board results are pending. The earlier

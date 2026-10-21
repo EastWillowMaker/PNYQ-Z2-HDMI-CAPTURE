@@ -115,6 +115,7 @@ module lcd_demo #(
     localparam [4:0] ST_PIXEL_READ = 5'd14;
     localparam [4:0] ST_PIXEL_LAUNCH = 5'd15;
     localparam [4:0] ST_PIXEL_WAIT = 5'd16;
+    localparam [4:0] ST_FRAMEBUFFER_DRAIN = 5'd17;
 
     reg [4:0] state;
     reg [31:0] delay_count;
@@ -163,6 +164,9 @@ module lcd_demo #(
     reg accepted_pixel_eol;
     reg accepted_receiver_reset;
     reg accepted_fifo_fault;
+    reg framebuffer_write_enable_q;
+    reg [FRAMEBUFFER_ADDR_WIDTH-1:0] framebuffer_write_address_q;
+    reg [15:0] framebuffer_write_data_q;
 
     (* ram_style = "block" *) reg [15:0] framebuffer [0:FRAMEBUFFER_PIXELS-1];
 
@@ -464,12 +468,7 @@ module lcd_demo #(
                         framebuffer_init_addr <= {FRAMEBUFFER_ADDR_WIDTH{1'b0}};
                         framebuffer_init_x <= 16'd0;
                         framebuffer_init_y <= 16'd0;
-                        memory_initialized <= 1'b1;
-                        frame_pending <= 1'b1;
-                        pending_live <= 1'b0;
-                        lcd_reset <= 1'b1;
-                        delay_count <= 32'd0;
-                        state <= ST_POWERUP_WAIT;
+                        state <= ST_FRAMEBUFFER_DRAIN;
                     end else begin
                         framebuffer_init_addr <= framebuffer_init_addr + 1'b1;
                         if (framebuffer_init_x == PANEL_WIDTH - 1) begin
@@ -479,6 +478,15 @@ module lcd_demo #(
                             framebuffer_init_x <= framebuffer_init_x + 1'b1;
                         end
                     end
+                end
+
+                ST_FRAMEBUFFER_DRAIN: begin
+                    memory_initialized <= 1'b1;
+                    frame_pending <= 1'b1;
+                    pending_live <= 1'b0;
+                    lcd_reset <= 1'b1;
+                    delay_count <= 32'd0;
+                    state <= ST_POWERUP_WAIT;
                 end
 
                 ST_POWERUP_WAIT: begin
@@ -725,8 +733,20 @@ module lcd_demo #(
     end
 
     always @(posedge clk) begin
-        if (framebuffer_write_enable)
-            framebuffer[framebuffer_write_address] <= framebuffer_write_data;
+        if (rst) begin
+            framebuffer_write_enable_q <= 1'b0;
+            framebuffer_write_address_q <= {FRAMEBUFFER_ADDR_WIDTH{1'b0}};
+            framebuffer_write_data_q <= 16'd0;
+        end else begin
+            framebuffer_write_enable_q <= framebuffer_write_enable;
+            framebuffer_write_address_q <= framebuffer_write_address;
+            framebuffer_write_data_q <= framebuffer_write_data;
+        end
+    end
+
+    always @(posedge clk) begin
+        if (!rst && framebuffer_write_enable_q)
+            framebuffer[framebuffer_write_address_q] <= framebuffer_write_data_q;
     end
 
     always @(posedge clk) begin
